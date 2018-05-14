@@ -126,10 +126,12 @@ public class ClientIntegrationTest {
     @Test
     public void createClient() {
 
-        Functionality functionality = new Functionality();
-        functionality.setFunctionalityNumber("99");
-        functionality.setDescription("description");
-        functionality.setTitle("title");
+        Functionality functionality = new
+                Functionality.FunctionalityBuilder()
+                .functionalityNumber("99")
+                .description("description")
+                .sectionTitle("title")
+                .build();
 
         ResponseEntity<Functionality> responseEntity =
                 restTemplate.postForEntity(SLASH + FUNCTIONALITY,

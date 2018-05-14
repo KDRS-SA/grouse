@@ -24,7 +24,7 @@ var requirementsController = app.controller('RequirementsController',
 
     $scope.selectedProject = null;
     $scope.progressBarText = null;
-    $scope.selectedMenuItem = null;
+    $scope.selectedFunctionality = null;
     $scope.documentHref = null;
     $scope.token = GetUserToken();
 
@@ -64,23 +64,23 @@ var requirementsController = app.controller('RequirementsController',
     }
 
     /**
-     * menuItem_selected
+     * functionality_selected
      *
-     * Sets the chosen menuitem from GUI. Retrieves any related metadata.
+     * Sets the chosen functionality from GUI. Retrieves any related metadata.
      */
-    $scope.menuItem_selected = function (menuItem) {
-      console.log("menuItem[" + JSON.stringify(menuItem) + "] selected.\n");
-      $scope.selectedMenuItem = menuItem;
+    $scope.functionality_selected = function (functionality) {
+      console.log("functionality[" + JSON.stringify(functionality) + "] selected.\n");
+      $scope.selectedFunctionality = functionality;
     };
 
     /**
-     * menuItem_selected
+     * functionality_selected
      *
-     * Sets the chosen menuitem from GUI. Retrieves any related metadata.
+     * Sets the chosen functionality from GUI. Retrieves any related metadata.
      */
-    $scope.selectForDelete = function (menuItem) {
-      console.log("menuItem[" + JSON.stringify(menuItem) + "] selected.\n");
-      $scope.selectedMenuItem = menuItem;
+    $scope.selectForDelete = function (functionality) {
+      console.log("functionality[" + JSON.stringify(functionality) + "] selected.\n");
+      $scope.selectedFunctionality = functionality;
 
     };
 
@@ -163,10 +163,10 @@ var requirementsController = app.controller('RequirementsController',
       console.log("addRequirement selected.");
 
       // Make sure you push the one returned from the database
-      for (var rel in $scope.selectedMenuItem.links) {
-        var relation = $scope.selectedMenuItem.links[rel].rel;
+      for (var rel in $scope.selectedFunctionality.links) {
+        var relation = $scope.selectedFunctionality.links[rel].rel;
         if (relation == REL_REQUIREMENT) {
-          var urlForProjectRequirementCreation = $scope.selectedMenuItem.links[rel].href;
+          var urlForProjectRequirementCreation = $scope.selectedFunctionality.links[rel].href;
           console.log("Checking urlForProjectRequirementCreation[" + urlForProjectRequirementCreation);
           $http({
             method: 'POST',
@@ -179,7 +179,7 @@ var requirementsController = app.controller('RequirementsController',
           }).then(function successCallback(response) {
             console.log("POST urlForProjectRequirementCreation [" + urlForProjectRequirementCreation +
               "] returned " + JSON.stringify(response));
-            $scope.selectedMenuItem.referenceProjectRequirement.push(response.data);
+            $scope.selectedFunctionality.referenceProjectRequirement.push(response.data);
           }, function errorCallback(response) {
             alert("Kunne ikke slette prosjekt krav. " +
               JSON.stringify(response));
@@ -194,9 +194,9 @@ var requirementsController = app.controller('RequirementsController',
 
     $scope.deleteRequirementAndRow = function (index) {
       console.log("deleteRequirementAndRow selected. Index is [" + index + "]");
-      console.log("Working on [" + JSON.stringify($scope.selectedMenuItem.referenceProjectRequirement[index]) + "]");
+      console.log("Working on [" + JSON.stringify($scope.selectedFunctionality.referenceProjectRequirement[index]) + "]");
 
-      var requirement = $scope.selectedMenuItem.referenceProjectRequirement[index].requirementText;
+      var requirement = $scope.selectedFunctionality.referenceProjectRequirement[index].requirementText;
       if ($window.confirm("Er du sikker du vil slette følgende krav: \n" + requirement)) {
         var token = GetUserToken();
         /*
@@ -206,11 +206,11 @@ var requirementsController = app.controller('RequirementsController',
                return;
               }
         */
-        console.log("Working on [" + JSON.stringify($scope.selectedMenuItem.referenceProjectRequirement[index].links) + "]");
-        for (var rel in $scope.selectedMenuItem.referenceProjectRequirement[index].links) {
-          var relation = $scope.selectedMenuItem.referenceProjectRequirement[index].links[rel].rel;
+        console.log("Working on [" + JSON.stringify($scope.selectedFunctionality.referenceProjectRequirement[index].links) + "]");
+        for (var rel in $scope.selectedFunctionality.referenceProjectRequirement[index].links) {
+          var relation = $scope.selectedFunctionality.referenceProjectRequirement[index].links[rel].rel;
           if (relation == REL_SELF) {
-            var urlForProjectRequirementDeletion = $scope.selectedMenuItem.referenceProjectRequirement[index].links[rel].href;
+            var urlForProjectRequirementDeletion = $scope.selectedFunctionality.referenceProjectRequirement[index].links[rel].href;
             console.log("Checking urlForProjectRequirementDeletion[" + urlForProjectRequirementDeletion);
             $http({
               method: 'DELETE',
@@ -219,7 +219,7 @@ var requirementsController = app.controller('RequirementsController',
             }).then(function successCallback(response) {
               console.log("DELETE urlForProjectRequirementDeletion [" + urlForProjectRequirementDeletion +
                 "] returned " + JSON.stringify(response));
-              $scope.selectedMenuItem.referenceProjectRequirement.splice(index, 1);
+              $scope.selectedFunctionality.referenceProjectRequirement.splice(index, 1);
             }, function errorCallback(response) {
               alert("Kunne ikke slette prosjekt krav. " +
                 JSON.stringify(response));
@@ -266,8 +266,8 @@ var requirementsController = app.controller('RequirementsController',
           }).then(function successCallback(response) {
             console.log("GET [" + urlForFunctionalityRetrieval +
               "] returned " + JSON.stringify(response));
-            $scope.menuItems = response.data;
-            $scope.selectedMenuItem = null;
+            $scope.functionalities = response.data;
+            $scope.selectedFunctionality = null;
           }, function errorCallback(response) {
             alert("Kunne ikke hente funksjonalitetsbeskrivelse for prosjekt. " +
               JSON.stringify(response));
@@ -282,23 +282,42 @@ var requirementsController = app.controller('RequirementsController',
      * continueSelected
      *
      * When a user accepts a subset of defined requirements are acceptable
-     * this method is called. The menuItem gets a success status and the progress
+     * this method is called. The functionality gets a success status and the progress
      * bar is updated.
      *
      */
     $scope.continueSelected = function () {
       console.log("continueSelected selected.\n");
-      console.log("Attempting to find [" + $scope.selectedMenuItem.functionalityNumber + "]");
-      $scope.selectedMenuItem.showMe = !$scope.selectedMenuItem.showMe;
-      $scope.selectedMenuItem.processed = true;
-      // Find out how far we have progressed through all requirements
-      // set progress bare accordingly.
+      console.log("Attempting to find [" + $scope.selectedFunctionality.functionalityNumber + "]");
+      $scope.selectedFunctionality.showMe = !$scope.selectedFunctionality.showMe;
+      $scope.selectedFunctionality.processed = true;
+      for (var val in $scope.functionalities) {
+        if ($scope.selectedFunctionality === $scope.functionalities[val]) {
+          $scope.functionalities[val].active = false;
+          $scope.functionalities[val].done = true;
+          var nextOne = parseInt(val) + 1;
+          // You are not the last one so
+          // point to the next next one
+          if (nextOne !== $scope.functionalities.length) {
+            $scope.functionalities[nextOne].active = true;
+            $scope.selectedFunctionality = $scope.functionalities[nextOne];
+            break;
+          }
+          // Force a loop around if they don't start at 0
+          else {
+            $scope.functionalities[0].active = true;
+            $scope.selectedFunctionality = $scope.functionalities[0];
+          }
+        }
+      }
 
       var countTrue = 0;
       var countFalse = 0;
+      // Find out how far we have progressed through all requirements
+      // set progress bar accordingly.
 
-      for (var rel in $scope.menuItems) {
-        $scope.menuItems[rel].processed === true ? countTrue++ : countFalse++;
+      for (var rel in $scope.functionalities) {
+        $scope.functionalities[rel].processed === true ? countTrue++ : countFalse++;
       }
 
       console.log("Number that is true is [" + countTrue + "]");
@@ -397,4 +416,45 @@ var requirementsController = app.controller('RequirementsController',
         }
       }
     };
+
+
+    $scope.selectFunctionality = function (functionality, index) {
+      $scope.selectedFunctionality = functionality;
+      $scope.selectedFunctionality.active = true;
+      $scope.indexValue = index;
+
+      for (var i in $scope.functionalities) {
+        console.log("Current val is [" + i + "] index is [" + index + "]");
+        if (i != index) {
+          $scope.functionalities[i].active = false;
+        }
+        else {
+          $scope.functionalities[i].active = true;
+        }
+        console.log("Current functionality is " + JSON.stringify($scope.functionalities[i]));
+      }
+    };
+
+    $scope.checkFinished = function () {
+
+      var numberDone = 0;
+
+      for (var val in $scope.functionalities) {
+
+        if ($scope.functionalities[val].done === true) {
+          numberDone++;
+        }
+      }
+
+      // Finished so set entire card to success
+      if (numberDone === $scope.functionalities.length) {
+        $scope.funk1 = true;
+      }
+    };
+
+    $scope.chooseAndContinue = function () {
+
+    }
+
+
   }]);

@@ -78,6 +78,21 @@ public class Functionality implements Serializable {
     @JoinColumn(name="parent")
     private Functionality referenceParentFunctionality;
 
+
+    public Functionality() {
+    }
+
+    private Functionality (FunctionalityBuilder functionalityBuilder) {
+        this.functionalityNumber = functionalityBuilder.id;
+        this.title = functionalityBuilder.sectionTitle;
+        this.description = functionalityBuilder.description;
+        this.explanation = functionalityBuilder.explanation;
+        this.consequence = functionalityBuilder.consequence;
+        this.type = functionalityBuilder.type;
+        this.showMe = functionalityBuilder.showMe;
+    }
+
+
     public String getTitle() {
         return title;
     }
@@ -142,4 +157,62 @@ public class Functionality implements Serializable {
     public void setReferenceParentFunctionality(Functionality referenceParentFunctionality) {
         this.referenceParentFunctionality = referenceParentFunctionality;
     }
+
+    public static class FunctionalityBuilder {
+
+        private String id;
+        private String sectionTitle;
+        private String functionalityNumber;
+        private String description;
+        private String explanation;
+        private String consequence;
+        private String type;
+        private Boolean showMe;
+
+        public FunctionalityBuilder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public FunctionalityBuilder sectionTitle(String sectionTitle) {
+            this.sectionTitle = sectionTitle;
+            return this;
+        }
+
+        public FunctionalityBuilder functionalityNumber(String functionalityNumber) {
+            this.functionalityNumber = functionalityNumber;
+            return this;
+        }
+
+        public FunctionalityBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public FunctionalityBuilder explanation(String explanation) {
+            this.explanation = explanation;
+            return this;
+        }
+
+        public FunctionalityBuilder consequence(String consequence) {
+            this.consequence = consequence;
+            return this;
+        }
+
+        public FunctionalityBuilder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public FunctionalityBuilder showMe(Boolean showMe) {
+            this.showMe = showMe;
+            return this;
+        }
+
+        public Functionality build() {
+            return new Functionality(this);
+        }
+
+    }
+
 }

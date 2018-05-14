@@ -46,7 +46,7 @@ public class RequirementService
         Requirement originalRequirement = getRequirementOrThrow(id);
 
         originalRequirement.setRequirementText(requirement.getRequirementText());
-        originalRequirement.setOrder(requirement.getOrder());
+        originalRequirement.setShowOrder(requirement.getShowOrder());
         originalRequirement.setPriority(requirement.getPriority());
 
         return originalRequirement;
@@ -60,8 +60,8 @@ public class RequirementService
     /**
      * Internal helper method. Rather than having a find and try catch in
      * multiple methods, we have it here once. If you call this, be aware
-     * that you will only ever get a valid Requirement back. If there is no
-     * valid Requirement, a EntityNotFoundException exception is thrown
+     * that you will only ever get a valid SRequirement back. If there is no
+     * valid SRequirement, a EntityNotFoundException exception is thrown
      *
      * @param id The systemId of the requirement object to retrieve
      * @return the requirement object
@@ -71,6 +71,6 @@ public class RequirementService
         return requirementRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
-                                "No Requirement exists with Id " + id));
+                                "No SRequirement exists with Id " + id));
     }
 }

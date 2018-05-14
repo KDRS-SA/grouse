@@ -135,4 +135,24 @@ VALUES (
 );
 
 
+INSERT INTO requirements (id, show_order, priority, functionality,
+                          requirement_text)
+VALUES (
+  38, 1, '1', '1.4.4',
+  'Det skal kunne opprettes underarkiv til et arkiv.'
+);
+
+INSERT INTO requirements (id, show_order, priority, functionality,
+                          requirement_text)
+VALUES (
+  39, 1, '1', '1.4.4',
+  'Ved avslutting av en arkivdel skal alle sakene i arkivdelen kunne avsluttes i én operasjon. Funksjonen skal være rettighetsstyrt.'
+);
+
+INSERT INTO requirements (id, show_order, priority, functionality,
+                          requirement_text)
+VALUES (
+  40, 1, '1', '1.4.4',
+  'Det skal være mulig å avslutte mange arkivsaker samtidig. Funksjonen skal være rettighetsstyrt.'
+);
 

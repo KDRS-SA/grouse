@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapters>
+  <chapter>
+    <chapterType>text</chapterType>
+    <chapterTitle>Dokumentets struktur</chapterTitle>
+    <section>
+      <sectionTitle>Dokumentets struktur</sectionTitle>
+      <sectionOrder>1</sectionOrder>
+      <description>
+        ORG_NAVN skal ha et elektronisk sak-/arkivsystem som er godkjent etter
+        NOARK5-standarden. I dette ligger at kommunen forutsetter at alle obligatoriske krav etter
+        NOARK5-standarden er oppfylt i det/de systemene som tilbys. Obligatoriske krav i henhold
+        til NOARK5-standarden vil derfor ikke beskrives nærmere i dette dokumentet.
+        Tilbyder plikter å gjøre spesifikt oppmerksom på eventuelle obligatoriske krav som ikke
+        er oppfylt etter standarden, samt å beskrive hvilke løsninger som eventuelt erstatter
+        uoppfylte krav.
+      </description>
+    </section>
+  </chapter>
+  <chapter>
+    <chapterType>text</chapterType>
+    <chapterTitle>Overordnet beskrivelse av ønsket løsning</chapterTitle>
+    <section>
+      <sectionTitle>Innledning</sectionTitle>
+      <sectionOrder>1</sectionOrder>
+      <description>
+        Dette kapittelet gir en overordnet beskrivelse av ønsket løsning. De konkrete kravene til
+        løsningen finnes i de følgende kapitlene. Enkelte krav vil fremstå mer detaljert enn andre.
+        Krav til funksjonalitet for å løse oppgaver beskrives som hovedregel uten føringer for hvordan
+        oppgavene eventuelt kan ha sammenheng eller løses ved felles funksjoner. Løsningen skal
+        oppfylle de krav som er angitt. Hvordan krav til funksjonalitet løses i detalj, spesifiseres
+        nærmere i samråd med leverandør. Detaljspesifikasjoner skal inngå som del av løsnings-
+        beskrivelsen og danne grunnlag for akseptanse og godkjenning.
+      </description>
+    </section>
+    <section>
+      <sectionTitle>Sentrale hensyn</sectionTitle>
+      <sectionOrder>2</sectionOrder>
+      <description>
+        For ORG_NAVN er det svært viktig at den løsningen som velges har en funksjonalitet som
+        støtter opp om kommunens kommende arbeidsprosesser, og at brukergrensesnittet er utformet
+        på en måte som fremmer bruk av systemet i tråd med lovpålagte krav og kommunens egne
+        regler og rutiner.
+        Det er et overordnet mål at all saksbehandling i ORG_NAVN skal kunne foregå
+        fullelektronisk.
+        Ny sak- og arkivløsning skal håndtere all saksbehandling fullelektronisk slik at man ikke blir
+        tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen.
+        Jf. forskrift om offentlege arkiv § 2-9 om elektronisk journalføring gjelder følgende « For
+        elektronisk journalføring skal offentlege organ normalt nytte eit arkivsystem som følgjer
+        krava i Noark-standarden. Nye system skal vere godkjende av Riksarkivaren før dei blir tekne
+        i bruk.»
+        Ny systemløsning må være i henhold til NOARK5-standarden, og skal ha endelig
+        godkjenning av Riksarkivaren.
+        ORG_NAVN vil gjennom anskaffelse av nytt sak- og arkivsystem også tilstrebe
+        at så høy andel som mulig av den arkivverdige dokumentproduksjonen fanges opp og
+        arkiveres i sak- og arkivsystemet. Leverandøren må derfor tilby et produkt hvor løsninger og
+        brukergrensesnittet mot den alminnelige saksbehandler er på et slikt nivå at lojalitet til valgt
+        løsning blir best mulig. Fullverdig og komplett integrasjon mot e-postklient som muliggjør
+        direkte saksbehandling og arkivering er en forutsetning.
+        I tillegg til disse momentene vil det være særdeles viktig for Kunden hvordan system-
+        løsningen tilrettelegger for integrasjon med fagsystemer og andre eksterne systemer. Siden
+        ORG_NAVN er under etablering vil organisjonens IKT-portefølje være under utvikling.
+        Leverandør må derfor ta høyde for forventninger om integrasjonsmuligheter for fagsystemer
+        som pr dato ikke er valgt.
+        Valgt systemløsning skal ved driftssetting ha integrasjon mot sentrale løsninger som e-post,
+        tekstbehandler, internettportal, kartløsning etc. Valgt løsning skal legge til rette for at
+        organisjonens nye fagsystemer så enkelt som mulig kan integreres med denne, og at man
+        oppnår elektronisk kommunikasjon mellom sak- og arkivløsning og fagsystem som sikrer at
+        dokumentasjon fra fagsystemene kan arkiveres og gjenfinnes i NOARK5-kjernen.
+      </description>
+    </section>
+  </chapter>
+  <chapter>
+    <chapterType>text</chapterType>
+    <chapterTitle>Krav til ønsket løsning - veiledning til besvarelse</chapterTitle>
+    <section>
+      <sectionTitle>Innledning</sectionTitle>
+      <sectionOrder>1</sectionOrder>
+      <description>
+      </description>
+    </section>
+    <section>
+      <sectionTitle>Om utfylling av tabellene</sectionTitle>
+      <sectionOrder>2</sectionOrder>
+      <description>
+        Nedenfor er en kort beskrivelse av hensikten med kolonnene i tabellene, og hvordan krav-
+        tabellene skal fylles ut.
+        Kolonnen «Pri» (prioritet): Angir Kunden sin prioritering av kravene.
+        O= Obligatorisk, 1 = Svært viktig for oppdragsgiver, 2= Viktig for oppdragsgiver
+        Obligatoriske krav skal tilfredsstilles. Manglende tilfredsstillelse av disse eller forbehold
+        knyttet til disse vil kunne regnes som vesentlige forbehold/vesentlig avvik og kan medføre
+        avvisning av tilbudet.
+        7Krav merket med 1 eller 2 er viktige og det forventes at disse tilfredsstilles. Hvis kravet ikke
+        kan tilfredsstilles slik det er beskrevet, bes leverandøren kommentere hvordan dette behovet
+        kan ivaretas i løsningen på andre måter.
+        I tillegg er det i denne kolonnen noen krav som er markert med (i). Dette betyr at leveran-
+        døren bes gi utfyllende informasjon/beskrive. Denne informasjonen inngår som del av
+        vurderingen av leverandørens oppfyllelse av kundens krav og formål med anskaffelsen.
+        Kolonnen «Svar»: Her skal tilbyder svare i henhold til oppsettet nedenfor.
+
+        OBS SETT INN TABELL HER!!!
+
+        NB! Kategorier J-C og J-D
+        Dersom ikke annet er angitt forplikter leverandøren seg til at tilpasning/utvikling inngår i
+        standard-produktet
+        Kolonnen «Ref» (referanse): Her skal det refereres til det punkt i løsningsbeskrivelsen hvor
+        svaret utdypes. Løsningsbeskrivelsen vil være sentral når det gjelder å sammenligne tilbud der
+        det er svart «Ja» på at leverandør kan tilfredsstille kravet.
+        Til en del av tabellene er det også tatt inn en formålsbeskrivelse. Disse gir viktige føringer for
+        løsning på/håndtering av tilhørende krav, og leverandørens svar vil bli vurdert opp imot disse.
+        Leverandøren skal til hver av tabellene også vurdere om basisløsningen de tilbyr inneholder
+        annen funksjonalitet som støtter opp under formålet, men som ikke eksplisitt er stilt opp som
+        et krav. Dette kommenteres særskilt.
+
+        OBS SETT INN TABELL HER!!!
+      </description>
+    </section>
+  </chapter>
+  <chapter>
+    <chapterType>requirments</chapterType>
+    <chapterTitle>Funksjonelle krav til ønsket løsning</chapterTitle>
+    <section>
+      <sectionOrder>1</sectionOrder>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <priority>O (i)</priority>
+          <requirementText>Løsning. Leverandøren skal gi en oversiktlig, overordnet og kortfattet beskrivelse av funksjonalitet, arkitektur, grensesnitt og virkemåte for den tilbudte løsningen. Herunder skal også funksjoner som er under utvikling eller under planlegging beskrives tilsvarende, og det skal angis planlagt ferdig-dato.</requirementText>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>2</sectionOrder>
+      <sectionTitle>Krav til oppfyllelse av NOARK5-krav O og B</sectionTitle>
+      <description>Kravene i dette kapittelet sikrer at alle obligatoriske (O) og betingede obligatoriske (B) Noark5-krav oppfylles.</description>
+      <explanation>Noark-standarden består av obligatoriske, betinget obligatoriske og valgfrie krav. Obligatoriske og betinget obligatoriske krav må være oppfylt for at løsningen skal anses å være Noark5-godkjent. Dette er en forutsetning for å kunne ivareta kravene stilt i den generelle lovgivningen som berører offentlig forvaltning.Det anbefales at det settes krav til at leverandøren om at korrekt og fullstendig uttrekk skal kunne produseres uten betydelig kostnad for kommunen. Uttrekket skal kunne godkjennes av kommunens arkivdepot.</explanation>
+      <consequence>Ved manglende kravstilling omkring disse spørsmålene kan det være mulig at den leverte løsningen ikke tilfredsstiller de lovpålagte kravene til denne type arkivløsning.</consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>0</showOrder>
+          <requirementText>Å ivareta kravene stilt i den generelle lovgivningen som berører offentlig forvaltning.</requirementText>
+          <priority></priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Tilbudt løsning skal være godkjent jfr. NOARK5-standarden. Kopi av egenerklæringsskjema for NOARK5-godkjenning skal vedlegges.</requirementText>
+          <priority>0</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Tilbudt sak- og arkivløsning skal oppfylle alle obligatoriske krav til indre og ytre kjerne jf. NOARK5-standarden.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Tilbudt sak- og arkivløsning skal oppfylle alle obligatoriske krav jf. NOARK5-standardens kapittel 7 - 13.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Tilbudt sak- og arkivløsning skal oppfylle alle krav tilindre og ytre kjerne merket B (Betinget obligatorisk) med unntak av de som spesifikt gjelder fagsystemer.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Leverandøren skal ta ansvar for at uttrekk til arkivdepot fra levert løsning er korrekt og blir godkjent av oppdragsgivers arkivdepot.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>«Track a case» - Spor saken: Det bør være mulig for innbyggerne å følge med på status for innmeldt sak. Eksempelvis ved bruk av eget sporingsnummer</requirementText>
+          <priority>1</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>3</sectionOrder>
+      <sectionTitle>Krav til ivaretakelse av spesielle bestemmelser</sectionTitle>
+      <description>Kravene her gjenspeiler at elektronisk saksbehandling i offentlig og kommunal sektor er underlagt ulike lover og forskrifter.</description>
+      <explanation>Elektronisk saksbehandling er underlagt lovbestemte krav for elektronisk signatur. Kravene skal også sikre integritet, konfidensialitet, autentisitet.
+        For å sikre at organisasjonen etterlever disse bestemmelsene, må kravene i dette kapittelet oppfylles, og det anbefales at kravene stilles som obligatoriske.</explanation>
+      <consequence>Ved manglende kravoppfyllelse innenfor disse områdene vil det være store svakheter og mangler med den tilbudte løsningen.</consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Elektronisk saksbehandling er en forutsetning og kravene i eForvaltningsforskriften må følges.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Løsningen skal tilfredsstille kravene i Kravspesifikasjonen for PKI i offentlig sektor. https://www.regjeringen.no/nb/dep/fad/aktuelt/nyheter/2010/ny-kravspesifikasjon-for-pki-i-offentlig.html?id=621773 (v. 2.0)</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Løsningen skal tilfredsstille kravene som følger av personvernforordningen.</requirementText>
+          <priority>O</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>4</sectionOrder>
+      <sectionTitle>Krav til brukergrensesnitt og brukervennlighet</sectionTitle>
+      <description>Kravene her sørger for at løsningen støtter brukernes oppgaver både visuelt og strukturelt, fremmer bruk av systemet på en egnet måte, og letter arbeidshverdagen ved å være så intuitiv som mulig, samt ved å tilby brukeren målrettet hjelp med oppgavene ved behov.</description>
+      <explanation>En løsning med god brukervennlighet og et intuitivt brukergrensesnitt gir økt motivasjon i organisasjonen til å benytte løsningen i den daglige saksbehandlingen. Krav som stilles her vil derfor øke muligheten for god dokumentfangst og sikker dokumentforvaltning.</explanation>
+      <consequence>Dersom valgt løsning er vanskelig å bruke, viser erfaringer at betydelige deler av saksbehandlingen foregår på utsiden av sak/arkiv-løsningen, og at organisasjonen dermed taper dokumentasjon som kan være av vesentlig verdi både for organisasjonen selv og for innbyggerne.</consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>0</showOrder>
+          <requirementText>Å sørge for at systemløsningen som velges både visuelt og strukturelt støtter brukernes oppgaver, fremmer bruk av systemet på en egnet måte, og letter arbeidshverdagen ved å være så intuitiv som mulig, samt ved å tilby brukeren målrettet hjelp medoppgavene ved behov.</requirementText>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Løsningen skal ha samme utseende/utforming av brukergrensesnitt for alle brukergrupper slik at intern brukerstøtte på tvers av fagområder lettes, og brukere lett kan kjenne seg igjen.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Løsningen skal fungere på en slik måte at brukeren kun har tilgang til/må forholde seg til informasjon og funksjoner som er relevante for den rollen brukeren har, og den oppgaven som skal utføres. Et eksempel på dette kan være at brukeren kun skal forholde seg til skjermbilder og funksjoner relevante for den sakstypen som behandles.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Løsningen skal inneholde en hjelpefunksjon som tilbyr målrettet hjelp til brukeren når denne er i gang med en arbeidsoperasjon. Med målrettet menes at brukeren skal få tilgang til hjelp knyttet til den oppgaven / det arbeidsområdet som er relevant, og skal slippe å lete igjennom dokumentasjon for å finne denne informasjonen. Hjelpefunksjonen skal oppdateres samtidig med oppgraderinger, nye versjoner etc. av programvaren for øvrig.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Navigasjon i løsningen skal utelukkende baseres på løsningens menyelementer eller andre funksjoner for navigasjon. Det skal ikke være nødvendig for brukeren å benytte navigasjonsmulighetene i nettleser for å f.eks. gå ett eller flere steg «tilbake» i løsningen eller for å avbryte en arbeidsprosess/oppgave.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Løsningen skal være konsistent på alle områder, inkludert menyer, prinsipper for navigasjon, tilbakemeldinger til brukerne, etc.</requirementText>
+          <priority> 1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>Feilmeldinger og andre meldinger skal være på norsk. Dersom brukeren setter i gang en oppgave som det forventes vil ta tid, må brukeren få beskjed om dette.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>7</showOrder>
+          <requirementText>Feilmeldinger og andre meldinger bør være allment forståelige.</requirementText>
+          <priority>2</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>5</sectionOrder>
+      <sectionTitle>Krav til grunnleggende funksjonalitet for journalføring og arkivering</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <section>
+        <sectionOrder>1</sectionOrder>
+        <sectionTitle>Krav til arkivstruktur, arkiv og arkivdeler</sectionTitle>
+        <description>Kravene i dette kapittelet gir organisasjonen utvidet muligheter til å strukturere og å dele opp arkivet på ønsket måte og tillegger løsningen viktig automatisert funksjonalitet når arkivdeler skal avsluttes.</description>
+        <explanation>Her beskrives kravene som få strukturere arkivet i logiske deler og hjelpefunksjoner for å kunne gjennomføre operasjoner på logiske strukturer  på en effektiv måte. Det er viktig at denne type funksjoner er rettighetsstyrt slik at kun brukere med tillatelse til å benytte disse har tilgang.
+          Ikke alle løsninger trenger underarkiv. Hvis underakriv er noe som passers deres organisatorsik arkivinndeling, anbefales kravet å ansees som obligatorisk.</explanation>
+        <consequence>Dersom løsningen ikke støtter disse kravene vil det være potensielt kostnadskrevende å generere uttrekk.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>Det skal kunne opprettes underarkiv til et arkiv.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Ved avslutting av en arkivdel skal alle sakene i arkivdelen kunne avsluttes i én operasjon. Funksjonen skal være rettighetsstyrt.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Det skal være mulig å avslutte mange arkivsaker samtidig. Funksjonen skal være rettighetsstyrt.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>2</sectionOrder>
+        <sectionTitle>Krav til klassifikasjonssystem og klasse</sectionTitle>
+        <description>Kravene i dette avsnittet sikrer at organisasjonen skal kunne beskrive de ulike klassifikasjonssystemene som benyttes.</description>
+        <explanation>En organisasjon vil ofte ha behov for å kunne benytte ulike klassifikasjonssystemer som for eksempel k-koder, fødselsnummer, gårds- og bruksnummer eller eventuelle egne arkivnøkler. Alle klassifikasjonssystemer skal kunne beskrives slik at man i ettertid kan finne ut hva ulike koder betyr.</explanation>
+        <consequence>For på en effektiv måte å kunne benytte klassifikasjonssystemer korrekt er det helt nødvendig å kunne beskrive klasser og klassifikasjonssystemet.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.3.6 (V): En Klasse kan ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Klasser.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 5.3.8 (V) Et klassifikasjonssystem skal kunne beskrives med forskjellige klassifikasjonstyper. Eksempel på verdier: «Funksjonsbasert, hierarkisk», «Emnebasert, hierarkisk arkivnøkkel», «Emnebasert, ett nivå», «K-koder», «Mangefasettert, ikke hierarki», «Objektbasert», «Fødselsnummer», «Gårds- og bruksnummer»</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Det skal være mulig å ha flere klassifikasjonssystem tilgjengelig samtidig. Ved ny versjon av et klassifikasjonssystem skal det ikke gjøres endringer på avsluttede arkivsaker.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>Det skal være mulig å få en oversikt over aktive arkivsaker som vil få ny kode ved endring i klassifikasjonssystemet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    <section>
+      <sectionOrder>X</sectionOrder>
+      <sectionTitle></sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+
+      </requirements>
+    </section>
+
+-->
+
+
+  </chapter>
+  <chapter>
+    <chapterTitle>2222222 Funksjonelle krav til ønsket løsning</chapterTitle>
+  </chapter>
+
+</chapters>

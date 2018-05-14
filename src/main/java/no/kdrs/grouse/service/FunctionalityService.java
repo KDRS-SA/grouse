@@ -33,8 +33,8 @@ public class FunctionalityService
     @Override
     public List<Functionality> findByShowMeAndReferenceParentFunctionality(
             Boolean menuItem, String parent) {
-        Functionality functionality = new Functionality();
-        functionality.setFunctionalityNumber(parent);
+        Functionality functionality = new Functionality.
+                FunctionalityBuilder().functionalityNumber(parent).build();
         return functionalityRepository.
                 findByShowMeAndReferenceParentFunctionality(
                         menuItem, functionality);

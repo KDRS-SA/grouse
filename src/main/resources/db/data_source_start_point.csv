@@ -1,0 +1,34 @@
+noarkRequirement, showOrder, requirementText, priority
+
+#4.4.1 Krav til arkivstruktur, arkiv og arkivdeler
+false,1,"Det skal kunne opprettes underarkiv til et arkiv.",1
+false,2,"Ved avslutting av en arkivdel skal alle sakene i arkivdelen kunne avsluttes i én operasjon. Funksjonen skal være rettighetsstyrt.",1
+false,3,"Det skal være mulig å avslutte mange arkivsaker samtidig. Funksjonen skal være rettighetsstyrt.",1
+
+#4.4.2 Krav til klassifikasjonssystem og klasse
+true,1,"NOARK 5.3.6 (V): En Klasse kan ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Klasser.",2
+true,2,"NOARK 5.3.8 (V) Et klassifikasjonssystem skal kunne beskrives med forskjellige klassifikasjonstyper. Eksempel på verdier: «Funksjonsbasert, hierarkisk», «Emnebasert, hierarkisk arkivnøkkel», «Emnebasert, ett nivå», «K-koder», «Mangefasettert, ikke hierarki», «Objektbasert», «Fødselsnummer», «Gårds- og bruksnummer»",O
+false,3,"Det skal være mulig å ha flere klassifikasjonssystem tilgjengelig samtidig. Ved ny versjon av et klassifikasjonssystem skal det ikke gjøres endringer på avsluttede arkivsaker.",O
+false,4,"Det skal være mulig å få en oversikt over aktive arkivsaker som vil få ny kode ved endring i klassifikasjonssystemet.",1
+
+
+#4.3 Krav til brukergrensesnitt og brukervennlighet
+false,0, "Å sørge for at systemløsningen som velges både visuelt og strukturelt støtter brukernes oppgaver, fremmer bruk av systemet på en egnet måte, og letter arbeidshverdagen ved å være så intuitiv som mulig, samt ved å tilby brukeren målrettet hjelp medoppgavene ved behov.",
+false,1,"Løsningen skal ha samme utseende/utforming av brukergrensesnitt for alle brukergrupper slik at intern brukerstøtte på tvers av fagområder lettes, og brukere lett kan kjenne seg igjen.",1
+false,2,"Løsningen skal fungere på en slik måte at brukeren kun har tilgang til/må forholde seg til informasjon og funksjoner som er relevante for den rollen brukeren har, og den oppgaven som skal utføres. Et eksempel på dette kan være at brukeren kun skal forholde seg til skjermbilder og funksjoner relevante for den sakstypen som behandles.",1
+false,3,"Løsningen skal inneholde en hjelpefunksjon som tilbyr målrettet hjelp til brukeren når denne er i gang med en arbeidsoperasjon. Med målrettet menes at brukeren skal få tilgang til hjelp knyttet til den oppgaven / det arbeidsområdet som er relevant, og skal slippe å lete igjennom dokumentasjon for å finne denne informasjonen. Hjelpefunksjonen skal oppdateres samtidig med oppgraderinger, nye versjoner etc. av programvaren for øvrig.",1
+false,4,"Navigasjon i løsningen skal utelukkende baseres på løsningens menyelementer eller andre funksjoner for navigasjon. Det skal ikke være nødvendig for brukeren å benytte navigasjonsmulighetene i nettleser for å f.eks. gå ett eller flere steg «tilbake» i løsningen eller for å avbryte en arbeidsprosess/oppgave.",O
+false,5,"Løsningen skal være konsistent på alle områder, inkludert menyer, prinsipper for navigasjon, tilbakemeldinger til brukerne, etc.", 1
+false,6,"Feilmeldinger og andre meldinger skal være på norsk. Dersom brukeren setter i gang en oppgave som det forventes vil ta tid, må brukeren få beskjed om dette.",O
+false,7,"Feilmeldinger og andre meldinger bør være allment forståelige.",2
+#4.2 Krav til ivaretakelse av spesielle bestemmelser
+false,1,"Elektronisk saksbehandling er en forutsetning og kravene i eForvaltningsforskriften må følges.",O
+false,2, "Løsningen skal tilfredsstille kravene i Kravspesifikasjonen for PKI i offentlig sektor. https://www.regjeringen.no/nb/dep/fad/aktuelt/nyheter/2010/ny-kravspesifikasjon-for-pki-i-offentlig.html?id=621773 (v. 2.0)",O
+# 4.1
+false,0, "Å ivareta kravene stilt i den generelle lovgivningen som berører offentlig forvaltning."
+false,1, "Tilbudt løsning skal være godkjent jfr. NOARK5-standarden. Kopi av egenerklæringsskjema for NOARK5-godkjenning skal vedlegges.",0
+false,2, "Tilbudt sak- og arkivløsning skal oppfylle alle obligatoriske krav til indre og ytre kjerne jf. NOARK5-standarden.",O
+false,3, "Tilbudt sak- og arkivløsning skal oppfylle alle obligatoriske krav jf. NOARK5-standardens kapittel 7 - 13.",O
+false,4, "Tilbudt sak- og arkivløsning skal oppfylle alle krav tilindre og ytre kjerne merket B (Betinget obligatorisk) med unntak av de som spesifikt gjelder fagsystemer.",O
+false,5, "Leverandøren skal ta ansvar for at uttrekk til arkivdepot fra levert løsning er korrekt og blir godkjent av oppdragsgivers arkivdepot.",O
+false,6, "«Track a case» - Spor saken: Det bør være mulig for innbyggerne å følge med på status for innmeldt sak. Eksempelvis ved bruk av eget sporingsnummer",1

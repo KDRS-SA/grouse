@@ -99,7 +99,7 @@ public class ProjectService
      * <p>
      * The following steps are performed:
      * 1. Retrieve User object from loggedin user and associate with project
-     * 2. Copy all Requirement objects and create ProjectRequirement objects
+     * 2. Copy all SRequirement objects and create ProjectRequirement objects
      * 3. Copy all Functionality objects and create ProjectFunctionality objects
      * <p>
      * This is done as each project needs their own copy to work on.
@@ -156,6 +156,7 @@ public class ProjectService
             projectFunctionality.setShowMe(
                     functionality.getShowMe());
             projectFunctionality.setProcessed(false);
+            projectFunctionality.setActive(false);
             projectFunctionality.setReferenceProject(project);
             projectFunctionalityRepository.save(projectFunctionality);
         }
@@ -169,7 +170,7 @@ public class ProjectService
         for (Requirement requirement : requirements) {
             ProjectRequirement projectRequirement = new ProjectRequirement();
             projectRequirement.setReferenceProject(project);
-            projectRequirement.setOrder(requirement.getOrder());
+            projectRequirement.setOrder(requirement.getShowOrder());
             projectRequirement.setPriority(requirement.getPriority());
             projectRequirement.setRequirementText(
                     requirement.getRequirementText());

@@ -74,7 +74,7 @@ public class UserController {
                     getMethod("downloadDocument", Long.class,
                             HttpServletResponse.class), project.getProjectId()).
                     withRel(DOCUMENT));
-// Same for Requirement
+// Same for SRequirement
 //            project.add(linkTo(methodOn(ProjectController.class).
 //                    getRequirementsForFunctionality(project.getProjectId()))
 //            .withRel(REQUIREMENT)            );

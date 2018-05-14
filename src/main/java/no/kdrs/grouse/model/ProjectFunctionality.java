@@ -96,6 +96,14 @@ public class ProjectFunctionality
     @Column(name = "processed")
     private Boolean processed;
 
+
+    /**
+     * Used by the GUI. Should not really be here, but leaving it here
+     * while developing
+     */
+    @Column(name = "active")
+    private Boolean active;
+
     /**
      * Type of requirement e.g. 'funksjonell', 'teknisk', 'integrasjon'
      */
@@ -179,6 +187,14 @@ public class ProjectFunctionality
 
     public void setProcessed(Boolean processed) {
         this.processed = processed;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public String getType() {

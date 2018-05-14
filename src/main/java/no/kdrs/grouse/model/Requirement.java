@@ -2,6 +2,10 @@ package no.kdrs.grouse.model;
 
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
@@ -10,6 +14,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "requirements")
+@XmlRootElement(name = "requirement")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Requirement implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,12 +30,14 @@ public class Requirement implements Serializable {
      * Used to identify an order that the requirements have to follow
      * Order == 0, is a formål
      */
+    @XmlElement
     @Column(name = "show_order")
-    private Integer order;
+    private Integer showOrder;
 
     /**
      * requirementText (no:tekst)*
      */
+    @XmlElement
     @Column(name = "requirement_text", length = 10000)
     private String requirementText;
 
@@ -43,6 +51,7 @@ public class Requirement implements Serializable {
      *   1 - Svært viktig for oppdragsgiver
      *   2 - Viktig for oppdragsgiver
      */
+     @XmlElement
     @Column(name = "priority")
     private String priority;
 
@@ -51,8 +60,15 @@ public class Requirement implements Serializable {
      * An actual requirement number from the standard
      * e.g 5.2.1
      */
+    @XmlElement
     @Column(name = "noark_requirement_number")
-    private String requirementNumber;
+    private String noarkRequirementNumber;
+
+    @XmlElement
+    private Boolean noarkRequirement;
+
+    @XmlElement
+    private String noarkRequirementType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "functionality",
@@ -67,12 +83,12 @@ public class Requirement implements Serializable {
         this.id = id;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getShowOrder() {
+        return showOrder;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setShowOrder(Integer showOrder) {
+        this.showOrder = showOrder;
     }
 
     public String getRequirementText() {
@@ -99,11 +115,35 @@ public class Requirement implements Serializable {
         this.referenceFunctionality = referenceFunctionality;
     }
 
+    public String getNoarkRequirementNumber() {
+        return noarkRequirementNumber;
+    }
+
+    public void setNoarkRequirementNumber(String noarkRequirementNumber) {
+        this.noarkRequirementNumber = noarkRequirementNumber;
+    }
+
+    public Boolean getNoarkRequirement() {
+        return noarkRequirement;
+    }
+
+    public void setNoarkRequirement(Boolean noarkRequirement) {
+        this.noarkRequirement = noarkRequirement;
+    }
+
+    public String getNoarkRequirementType() {
+        return noarkRequirementType;
+    }
+
+    public void setNoarkRequirementType(String noarkRequirementType) {
+        this.noarkRequirementType = noarkRequirementType;
+    }
+
     @Override
     public String toString() {
-        return "Requirement{" +
+        return "SRequirement{" +
                 "id=" + id +
-                ", order=" + order +
+                ", showOrder=" + showOrder +
                 ", requirementText='" + requirementText + '\'' +
                 ", priority='" + priority + '\'' +
                 '}';
