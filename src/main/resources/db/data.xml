@@ -772,7 +772,8 @@
             <noarkRequirement>true</noarkRequirement>
             <showOrder>1</showOrder>
             <requirementText>NOARK 6.1.5 (V) Følgende statusverdier skal være tilgjengelige for Saksmappe: «Opprettet av saksbehandler», «Avsluttet av saksbehandler», «Unntatt
-              prosesstyring»</requirementText>
+              prosesstyring»
+            </requirementText>
             <priority>1</priority>
           </requirement>
           <requirement>
@@ -825,8 +826,10 @@
           <requirement>
             <noarkRequirement>false</noarkRequirement>
             <showOrder>5</showOrder>
-            <requirementText>Løsningen skal støtte, og ha grensesnitt for spesifisering av ekstra metadata for enkelte dokumenttyper (spesielt foto/video/audio-filer). Det skal være mulig å registrere «følgende metadata for denne typen dokumenter: «Dato når bildet/opptaket er tatt (dato), «Opphavsrett (tekst), «Kontekst/formål for bildet/opptaket» (fritekst), «Stedsnavn for opptaket/sted bilde ble tatt (tekst)», «Geolokalisering av stedet hvor bildet/opptaket ble tatt / gjort med koordinater fra f.eks. kamera og smarttelefon». Dersom slike koordinater ikke finnes bør systemet kunne hente koordinater fra en kartløsning via Geointegrasjon.
-              Gitt at krav i kap 10.2, Krav til integrasjon mot kartsystem, oppfylles skal informasjon om geolokalisering kunne hentes fra disse systemene.</requirementText>
+            <requirementText>Løsningen skal støtte, og ha grensesnitt for spesifisering av ekstra metadata for enkelte dokumenttyper (spesielt foto/video/audio-filer). Det skal være mulig å registrere «følgende metadata for denne typen dokumenter: «Dato når bildet/opptaket er tatt (dato), «Opphavsrett (tekst), «Kontekst/formål for bildet/opptaket» (fritekst), «Stedsnavn for opptaket/sted bilde ble tatt (tekst)», «Geolokalisering av stedet hvor bildet/opptaket ble tatt / gjort med koordinater fra f.eks. kamera og smarttelefon». Dersom slike koordinater ikke finnes bør systemet kunne hente
+              koordinater fra en kartløsning via Geointegrasjon.
+              Gitt at krav i kap 10.2, Krav til integrasjon mot kartsystem, oppfylles skal informasjon om geolokalisering kunne hentes fra disse systemene.
+            </requirementText>
             <priority>1</priority>
           </requirement>
         </requirements>
@@ -850,7 +853,7 @@
       </section>
       <section>
         <sectionOrder>10</sectionOrder>
-        <sectionTitle>Krav til oppsplitting og sammenslåing av mapper, flytting av registreringer </sectionTitle>
+        <sectionTitle>Krav til oppsplitting og sammenslåing av mapper, flytting av registreringer</sectionTitle>
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
@@ -1193,7 +1196,8 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>2</showOrder>
             <requirementText>Det skal i tillegg til automatisk fortløpende konvertering være mulig for brukeren å konvertere filer til godkjent arkivformat både
-              manuelt for en og en fil og samlet for et definert sett av filer som av en eller annen årsak ikke har blitt konvertert</requirementText>
+              manuelt for en og en fil og samlet for et definert sett av filer som av en eller annen årsak ikke har blitt konvertert
+            </requirementText>
             <priority>1</priority>
           </requirement>
           <requirement>
@@ -1269,8 +1273,6 @@
           </requirement>
         </requirements>
       </section>
-
-
     </section>
     <section>
       <sectionOrder>6</sectionOrder>
@@ -1281,7 +1283,36 @@
       <type>funksjonell</type>
       <showMe>true</showMe>
       <requirements>
-
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>NOARK 7.1.1 (V): Det skal finnes funksjoner for å etablere et register med navn og adresser til korrespondansepartnere (adresseregister), og dette skal kunne benyttes til oppslag ved registrering av avsendere, mottakere og parter i en sak.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Det skal ikke være mulig å opprette sideordnede eller underordnede adresseregistre. Dersom dette likevel er mulig, skal funksjonen være rettighetsstyrt.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Det skal være enkelt å registrere avsender / mottaker på journalposter uten at disse finnes/må finnes i adresseregisteret.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Adresseregisteret skal kunne inneholde e-postadresser, og det må ved sending av e-post fra løsningen være enkelt å hente opp e-postadresser fra adresseregisteret.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Når en kontakt er registrert på en journalpost (uten å være registrert i adresseregisteret) skal det være enkelt å overføre de registrerte opplysningene fra journalposten til adresseregisteret.</requirementText>
+          <priority>1</priority>
+        </requirement>
       </requirements>
     </section>
     <section>
@@ -1289,6 +1320,617 @@
       <sectionTitle>Krav til saksbehandlingsløsninger</sectionTitle>
       <type>funksjonell</type>
       <showMe>true</showMe>
+      <section>
+        <sectionOrder>1</sectionOrder>
+        <sectionTitle>Krav til saksoppfølging</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 7.2.1 (V): Det skal finnes funksjoner for å hente fram eksterne og interne dokumenter fra journalposter som har behandlingsfrist i et angitt tidsrom.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>2</sectionOrder>
+        <sectionTitle>Krav til dokumentproduksjon</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 7.3.1 (V): Det skal være mulig for flere personer å utarbeide og redigere et stort dokument samtidig</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 7.3.2 (V): Det skal være mulig å opprette dokument og dokumentmaler som fritt skal kunne defineres og seksjoneres i forskjellige deler til ulike brukere/forfattere</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 7.3.4 (V): Den som oppretter et dokument, dokumenteieren, bør ha rettigheter til å dele opp dokumentet i seksjoner og tildele lese-, kommentar-,remiss- og skriverettigheter til de enkelte seksjonene.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 7.3.7 (V): Dokumenteier skal kunne tildele annen bruker rollen som dokument- og seksjonseier.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 7.3.8 (V): For personer som har kommentar-rettigheter til et dokument eller seksjon, men ikke skriverettigheter, skal det være mulig å knytte kommentarnotater til dokumentet. Det skal enkelt kunne identifiseres hvilken del av teksten som er kommentert og hvem som har gjort det.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 7.3.9 (V): For hver seksjon skal dokumenteier kunne tildele lese-, kommentar-, remiss- og eventuelt skriverettigheter til en enhet/avdeling, en definert rolle eller en definert bruker, heretter som en fellesbenevnelse benevnt «bruker».</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 7.3.10 (V): Ved tildeling av lese- og skrive-rettigheter til en avdeling, skal alle på avdelingen kunne lese, åpne og skrive/redigere dokumentet eller seksjonen(e) som er det gitt rettigheter til.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 7.3.11 (V): Ved tildeling av lese- og skrive-rettigheter til en rolle, skal alle som har rollen kunne lese, åpne og skrive/redigere dokumentet eller seksjonen(e) som er det gitt rettigheter til.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>NOARK 7.3.12 (V): Når en bruker har åpnet en seksjon for skriving/redigering, skal den ikke kunne åpnes av andre, dvs er den låst for lesing og skriving/redigering av andre.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>NOARK 7.3.16 (V): Seksjoner brukeren ikke har leserettigheter til, skal fjernes fysisk for brukeren.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>NOARK 7.3.17 (V): Når bruker er ferdig med seksjonen og avslutter den, bør låsingen oppheves. Alle med leserettigheter bør kunne lese seksjonen og brukere med skrive-/redigeringsrettigheter bør kunne skrive/redigere i seksjonen.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>NOARK 7.3.18 (V): Det skal være mulig ut fra dokumentoversikten å se hvem som er tildelt, og jobber med et dokument og seksjon.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>NOARK 7.3.19 (V): Et seksjonert dokument bør bare kunne leses av den som har rettigheter til å lese en eller flere seksjoner i dokumentet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>14</showOrder>
+            <requirementText>NOARK 7.3.20 (V): Et seksjonert dokument bør bare kunne åpnes av bruker som dokumenteier har gitt rettigheter til.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>15</showOrder>
+            <requirementText>NOARK 7.3.24 (V): Leserettighetene til et dokument som er under arbeid, skal kunne avgrenses til roller og personer som gjennom parametersetting har generelle rettigheter til dette, eller de roller og personer som dokumenteier gir eksplisitte rettigheter.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>16</showOrder>
+            <requirementText>NOARK 7.3.25 (V): Det skal være parameterstyrte muligheter til å definere leserettighetene til alle dokumenter som er under arbeid.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>17</showOrder>
+            <requirementText>NOARK 7.3.26 (V): Det skal være parameterstyrte muligheter til å definere leserettighetene til ett eller flere bestemte dokument som er under arbeid, spesifikt for det enkelte dokumentet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>18</showOrder>
+            <requirementText>NOARK 7.3.27 (V): Det skal være mulig for dokumenteier å overstyre parametersettingen.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>19</showOrder>
+            <requirementText>NOARK 7.3.28 (V): Når et egenprodusert dokument som er under arbeid sendes på arbeidsflyt, saksflyt eller dokumentflyt, skal alle mottakere av flyten automatisk autoriseres for lesetilgang til dokumentet uavhengig av rolle, administrativ enhet eller autorisasjon.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>20</showOrder>
+            <requirementText>Det skal være versjonshåndtering knyttet til dokumenter.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>3</sectionOrder>
+        <sectionTitle>Krav til maler</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 7.4.1 (V): Det skal finnes funksjoner for å etablere dokumentmaler for alle dokumentkategorier som en virksomhet benytter.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 7.4.2 (V): Det skal finnes funksjoner for å utforme og bruke egendefinerte dokumentmaler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 7.4.3 (V): Det skal finnes funksjoner for å etablere nye dokumentmaler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 7.4.4 (V): Det skal finnes funksjoner for at virksomheten selv kan lage/utarbeide dokumentmaler uten ekstern bistand.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 7.4.5 (V): Det skal være mulig å legge inn to kategorier standardtekst i dokumentmalene, tekst som kan endres av saksbehandler og tekst som ikke kan endres av saksbehandler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 7.4.6 (V): Informasjon fra felt i Komplett Noark 5 skal kunne overføres automatisk til korresponderende felt i dokumentmalen.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 7.4.7 (V): Informasjon fra et felt i dokumentmalen skal kunne overføres automatisk til korresponderende felt i Komplett Noark 5.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 7.4.8 (V): Ved skjerming av dokumenter, skal henvisning til hjemmel kunne skrives inn eller velges fritt av saksbehandler og løsningen plasserer teksten på angitt sted i dokumentmalen</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>Det skal være mulig å definere maler i minimum følgende dokumentformater; Word/tekstbehandler, Excel/regneark, Powerpoint/presentasjoner</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>Dokumentmalene skal kunne tilrettelegges med felt som fletter inn informasjon fra alle felt i sak-/arkivløsningen.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>Dersom flettefelter som ligger i malen ikke brukes i dokumentet som skrives, dvs. feltet er tomt, skal det ikke vises noe informasjon i dokumentet når det er ferdig produsert/flettet (feltkoder eller annet).</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>Det skal være mulig å flette opplysninger på nytt ved endringer etter første gangs lagring.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>Den enkelte bruker skal til enhver tid kun ha tilgang til de malene som er relevante knyttet til egen rolle og til den sakstypen vedkommende arbeider med.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>14</showOrder>
+            <requirementText>Det skal være mulig å tilrettelegge malene slik at de stilene og den layout som er definert ikke kan endres av bruker (som ikke har tilgang til å administrere maler).</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>15</showOrder>
+            <requirementText>Leverandøren skal som del av implementerings-prosjektet tilrettelegge standardmaler for brev, notat og møtebehandling. Disse skal danne grunnlag for at kommunen selv kan videreutvikle varianter av malene.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>16</showOrder>
+            <requirementText>Leverandøren skal levere dokumentasjon / bruksanvisning som gir Kunden nøyaktig innføring i hvordan maler skal opprettes og videreutvikles. Dokumentasjonen skal være tilpasset den løsningen som leveres Kunden.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>17</showOrder>
+            <requirementText>Det skal være mulig å legge inn eksterne skjemaer/ blanketter slik at de kan benyttes på lik linje som maler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>4</sectionOrder>
+        <sectionTitle>Krav til saks- og dokumenthistorikk</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 7.5.1 (V): Det skal være mulig, på en enkel måte, å spore fakta for den enkelte sak, både uavsluttete og avsluttete.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 7.5.2 (V): Det skal være mulig å se hva som har vært gjort med saken, når det har skjedd og hvem som utførte handlingen (person eller løsning).</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 7.5.3 (V): Det skal være mulig å se nye saksmapper eller dokumenter som ikke er fordelt, påbegynt eller åpnet.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 7.5.4 (V): Det skal være mulig å se hva som er status for saksmappen eller dokumentet, dvs. om det har status ikke er fordelt, status ikke påbegynt eller status ikke åpnet.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 7.5.5 (V): Det skal være mulig å se at saksmapper og dokumenter ligger hos saksbehandler og venter på handling fra ham/henne.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 7.5.6 (V): Det skal være mulig å se at saksmapper og dokumenter er sendt til godkjenning internt.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 7.5.7 (V): Det skal være mulig å se at saksmapper eller dokumenter er til behandling hos et eksternt organ, f. eks. hos klageorgan, annet behandlende organ eller i rettsapparatet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 7.5.8 (V): Det skal være mulig å la alle dokumenter som inngår i saksmappen samt referanser til andre dokumenter (fra Internett, sakarkivet med mer) som inngår i et saksforhold, følge saksmappen.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>5</sectionOrder>
+        <sectionTitle>Krav til dokumentflyt</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 7.6.1 (V): Et dokument som er under produksjon, skal kunne sendes fram og tilbake i linjen det nødvendige antall ganger.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 7.6.2 (V): Autoriserte roller og personer skal kunne se hvor dokumentet befinner seg til enhver tid.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 7.6.3 (V): Dokumentet skal bli sperret for endringer når det (videre)sendes, ev. det opprettes en ny versjon ved hver (videre)forsendelse.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 7.6.4 (V): All funksjonalitet for korrektur og merknader i tilknyttet tekstbehandlingssystem skal kunne brukes på et dokument som er under produksjon.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 7.6.5 (V): Det skal være mulig å registrere merknader til dokumentet.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 7.6.6 (V): Mottaker av et dokument på flyt, skal bli varslet om at han/hun har mottatt et dokument.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 7.6.7 (V): Det skal være mulig å gi en forpliktende «signatur» i alle ledd.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 7.6.8 (V): Det skal være mulig å la vedlegg til hoveddokumentet og referanser til andre vedlegg (fra Internett, sakarkivet med mer) følge dokumentet</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>NOARK 7.6.9 (V): Det skal være mulig å sende et dokument som er under produksjon, til trinnvis godkjenning (sekvensielt)</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>NOARK 7.6.10 (V): Det skal være mulig å sende et dokument som er under produksjon, til høring til flere samtidig (parallelt)</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>NOARK 7.6.11 (V): For dokument som er under produksjon, og som sendes på sekvensiell eller parallell dokumentflyt, skal det kunne parameterstyres om det automatisk skal opprettes nye versjoner for alle mottakere i flyten.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>NOARK 7.6.12 (V): Det skal kunne parameterstyres om versjonering skal forekomme bare for enkelte roller, enheter, grupper eller personer. Dette skal kunne gjøres fast eller på ad-hoc-basis.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>Det skal være enkelt for brukeren etter behov å gi saksbehandlere og ledere i kommunen tilgang til å arbeide med dokumenter i fellesskap.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>6</sectionOrder>
+        <sectionTitle>Krav til arbeidsflyt</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 7.7.1 (V): Det skal være mulig å ekspedere (sende) en oppgave, en sak eller et dokument som er ferdig fra saksbehandler på arbeidsflyt internt.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 7.7.2 (V): Det skal være mulig å legge opp en arbeidsflyt (både forhåndsdefinert og ad-hoc) med forhåndsdefinerte aktiviteter og milepæler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 7.7.3 (V): Det skal være mulig å forhåndsdefinere både sekvensiell arbeidsflyt og samtidig arbeidsflyt</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 7.7.4 (V): Det skal være mulig å legge inn kontrollfunksjonalitet for de enkelte aktiviteter, f. eks. at arbeidsoppgaven eller saken ikke går videre i flyten før alle aktiviteter er utført.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 7.7.5 (V): Det skal være mulig å legge inn tidsbestemte aktiviteter, for eksempel hvis en sak ikke er åpnet på et angitt antall dager så skal den automatisk sendes videre i løsningen til en alias e.l.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 7.7.7 (V): Det skal være mulig å ekspedere (sende) en oppgave, en sak eller et dokument som er ferdig fra saksbehandler, på trinnvis arbeidsflyt internt, dvs at det automatisk sendes videre til neste trinn når det foregående er ferdig med oppgaven.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 7.7.8 (V): Det skal være mulig for alle mottakere i den trinnvise, interne arbeidsflyten å knytte en merknad eller et dokument til den opprinnelige oppgaven, saken eller dokumentet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 7.7.9 (V): Når et dokument som er ferdig fra saksbehandler sendes på arbeidsflyt internt, skal dokumentet som er i arbeidsflyten ikke kunne endres eller slettes.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>NOARK 7.7.10 (V): Det skal være mulig å overstyre den forhåndsdefinerte arbeidsflyten av autorisert personale.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>NOARK 7.7.11(V): Det skal være mulig å gi en forpliktende «signatur» i alle ledd.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>NOARK 7.7.12 (V): Sporingselementer fra en arbeidsflyt skal logges og bevares. Sporingselementene er: Hvem har mottatt oppgaven/saken/dokumentet, Hvem har lest eller redigert oppgaven / saken / dokumentet, Hvordan har den enkelte mottaker håndtert oppgaven/saken/dokumentet (f. eks. godkjent/ikke godkjent),Hva har vedkommende gjort (f. eks. lest/ redigert/videresendt) Ev. forpliktende «signatur», Kommentarer som er lagt inn i arbeidsflyten/oppgaven/saken/dokumentet</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>NOARK 7.7.13 (V): Det skal finnes en funksjon for å søke fram eksterne og interne dokumenter med behandlingsfrist i et angitt tidsrom.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>NOARK 7.7.14 (V): Søket skal kunne begrenses med utgangspunkt i saksbehandlende enhet og saksbehandler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>14</showOrder>
+            <requirementText>NOARK 7.7.15 (V): Det skal finnes en funksjon for automatisert varsling av interne eller eksterne tidsfrister som er i ferd med å bli overskredet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>15</showOrder>
+            <requirementText>Det skal være mulig å konfigurere/sette opp saks- og dokumentflyt i løsningen. Det skal være mulig å sette en saks- og dokumentflyt som «låser» de stegene og funksjonene som er tilgjengelige.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>16</showOrder>
+            <requirementText>Det skal være mulig å angi verdi (antall virkedager) for forventet saksbehandlingstid per sakstype, slik at det ved sakens opprettelse tilordnes en dato for «forfall» / «forventet ferdigbehandlet» eller ny aktivitet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>17</showOrder>
+            <requirementText>Saker som ikke er ferdigbehandlet innen angitt«forfallsdato» skal markeres på en tydelig måte</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>7</sectionOrder>
+        <sectionTitle>Øvrige krav til saksbehandlerfunksjonalitet</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 10.2.1 (V): Det skal være mulig å sette opp varslinger (f. eks. i form av meldingsbokser) når tidsfrister er overskredet m.v.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Løsningen skal kunne håndtere all saksbehandling elektronisk slik at man ikke blir tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen. Eventuelle begrensninger og forutsetninger knyttet til dette skal beskrives.</requirementText>
+            <priority>1(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Løsningen skal muliggjøre sikker og effektiv journalføring av sms/chat. Løsningen må også håndtere innkommende svar på sendte sms/chat. Leverandøren skal beskrive hvordan løsningen håndterer dette – ved utsendelse av sms/chat fra selve løsningen, alternativt også mulighet for journalføring av sms til og fra mobiltelefon.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>Leverandøren skal beskrive hvordan tilbudt løsning tilrettelegger for forenklet registrering jf. NOARK5, og hvilke utfordringer bruk av forenklet registrering kan medføre for den enkelte bruker, og for kommunen.</requirementText>
+            <priority>O(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>Mottaker av notater skal enkelt kunne avskrive disse, dvs. det skal ikke være behov for mer enn én operasjon for å registrere et notat som mottatt og avskrevet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>Det skal være lett å få oversikt over egne restanser – henvendelser/dokumenter</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>Det skal være mulig å flette svarbrev til mange på en enkel måte, dvs. å produsere likelydende brev til mange mottakere.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>Saksbehandler skal kunne legge på flere mottakere på en inngående journalpost og ekspedere dokumenter og vedlegg selv (dvs. videresende dette som en ny utgående post). Ekspedering må skje med godkjente arkivformat.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>Det skal være enkelt å knytte til vedlegg som skal være med til en journalpost.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>Et hoveddokument må kunne være vedlegg på en annen journalpost.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>Leder skal kunne flytte arkivsaker mellom de ulike saksbehandlerne innenfor egen organisasjonsenhet. Endringer skal logges.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>Dersom det gjøres endringer i systemets registre for faste data/kodeverk skal historikk for disse registrene beholdes. Historikk skal imidlertid ikke være tilgjengelig for brukerne i det daglige. Eks. skal ikke utgåtte arkivnøkler være tilgjengelige for bruk/synlige.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>Det skal være mulig å laste inn dokumenter publisert på internett (også eksterne sider) på en enkel måte.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
     </section>
 
     <section>
@@ -1299,9 +1941,42 @@
       <consequence></consequence>
       <type>funksjonell</type>
       <showMe>true</showMe>
-      <requirements>
+      <section>
+        <sectionOrder></sectionOrder>
+        <sectionTitle></sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
 
-      </requirements>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder></sectionOrder>
+        <sectionTitle></sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder></sectionOrder>
+        <sectionTitle></sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+
+        </requirements>
+      </section>
     </section>
 
 
