@@ -1,5 +1,157 @@
 noarkRequirement, showOrder, requirementText, priority
 
+# 4.5.
+
+
+# 4.5.
+
+
+# 4.5.8 Krav til frysing av metadata for registrering
+NOARK 6.1.25 (V)
+Følgende statusverdier for Journalpost skal være
+tilgjengelig:
+• Midlertidig registrering av innkommet dokument
+• Saksbehandler har registrert innkommet dokument
+• Reservert dokument, dvs. egenprodusert dokument
+er under arbeid
+• Ferdigstilt fra saksbehandler
+• Godkjent av leder O
+31 NOARK 6.1.28 (V) Det skal ikke være mulig å slette en
+Registrering med status ”Ferdigstilt fra saksbehandler”
+eller ”Godkjent av leder”. O
+32 NOARK 6.1.35 (V) For Registreringer av inngående
+dokumenter med status ”midlertidig registrert” eller
+”registrert av saksbehandler” skal alle metadata på
+registrering kunne endres. O
+33 NOARK 6.1.36 (V) For Registrering av egenproduserte
+dokumenter (journalposttype ”utgående dokument”,
+”Organinternt dokument for oppfølging”, ”Organinternt
+dokument uten oppfølging” etc.) med status ”Registrert av
+saksbehandler” og ”Ferdigstilt fra saksbehandler” bør det
+for autorisert personale være mulig å endre alle metadata.
+Det bør være mulig å parametersette roller, enheter,
+grupper og personer som skal være autorisert. Endringer
+skal logges. 1
+34 Løsningen skal støtte, og ha grensesnitt for spesifisering
+av ekstra metadata for enkelte dokumenttyper (spesielt
+foto/video/audio-filer). Det skal være mulig å registrere
+følgende metadata for denne typen dokumenter:
+▪ Dato når bildet/opptaket er tatt (dato)
+▪ Opphavsrett (tekst)
+▪ Kontekst/formål for bildet/opptaket (fritekst) 1
+
+
+▪ Stedsnavn for opptaket/sted bilde ble tatt (tekst)
+▪ Geolokalisering av stedet hvor bildet/opptaket ble
+tatt / gjort med koordinater fra f.eks. kamera og
+smarttelefon.
+▪ Dersom slike koordinater ikke finnes bør systemet
+kunne hente koordinater fra en kartløsning via
+Geointegrasjon
+Gitt at krav i kap 10.2, Krav til integrasjon mot
+kartsystem, oppfylles skal informasjon om
+geolokalisering kunne hentes fra disse systemene.
+
+
+# 4.5.7 Krav til frysing av metadata for mappe
+
+NOARK 6.1.5 (V) Følgende statusverdier skal være
+tilgjengelige for Saksmappe:
+• Opprettet av saksbehandler
+• Avsluttet av saksbehandler
+• Unntatt prosesstyring
+Pri
+1
+16Nr. Krav til frysing av metadata for mappe
+Pri
+28 NOARK 6.1.14 (V) Når statusen til en Saksmappe settes
+til avsluttet, bør det på Saksmappe fortsatt være mulig å
+endre de øvrige metadataene. Endringer skal logges. 2
+29 NOARK 6.1.15 (V) En avsluttet Saksmappe skal kunne
+åpnes igjen av autoriserte roller og personer. Det skal være
+mulig å parameterstyre hvem som er autorisert for å åpne
+en mappe. Åpning av mappe skal logges.
+
+
+
+
+# 4.5.6 Krav til sletting av dokumenter
+true,1,"NOARK 5.13.19 (V): Det skal være mulig å utføre sletting av mange inaktive dokumentversjoner samtidig, f.eks. alle inaktive dokumentversjoner som er funnet etter et søk.",1
+true,2,"NOARK 5.13.23 (V): Det skal være mulig å slette mange dokumentvarianter samtidig, f.eks. alle dokumentvarianter som er funnet etter et søk.",1
+true,3,"NOARK 5.13.27 (V): Det skal være mulig å slette mange produksjonsformater samtidig, f.eks. alle produksjonsformater som er funnet etter et søk.",1
+
+# 4.5.5 Krav til administrasjon av kjernen
+true,1,"NOARK 5.13.9 (V) Det bør være mulig å parameterstyre at status ”Dokumentet er ferdigstilt” skal settes automatisk på Dokumentbeskrivelse ved andre statuser på Mappe eller Registrering",2
+
+# 4.5.4 Krav til avlevering
+true,1,"NOARK 5.12: Samtlige krav under kapittel 5.12 skal være oppfylt.",O
+
+# 4.5.3 Krav til periodisering
+true,1,"NOARK 5.11.10 (V): Det skal være mulig å overføre i en samlet, automatisert prosess.",O
+
+# 4.5.2 Krav til bevaring og kassasjon
+true,1,"NOARK 5.10.14 (V): Andre regler for beregning av bevaringsdato skal kunne være mulig.",O
+false,2,"Kommunen skal selv kunne definere kassasjonstidspunkt.",O
+false,3,"Ved kassasjon skal dokumentene slettes fullstendig og ikke «bare fjerne koblingen» mellom journalpost og dokument. Det skal fremgå av løsningen at dokumentet er kassert.",O
+
+# 4.5.1 Krav til søkefunksjonalitet
+true,1,"NOARK 5.9.14 (V): Det skal finnes en tjeneste / funksjon for å avbryte søk som er satt i gang.",1
+true,2,"NOARK 5.9.15 (V): Søkefunksjonene bør være innrettet slik at en ved søk på et ord i bokmålsform også får treff for de tilsvarende nynorskformene og omvendt.",2
+false,3,"Det skal være mulig å velge å søke i hele løsningen på tvers av strukturer, saker etc. Det skal også være mulig å begrense søket etter eget behov.",O
+false,4,"Det skal være mulig å søke i flere databaser samtidig, dvs. i produksjonsbaser og historiske baser. Leverandøren skal beskrive hvordan dette behovet kan løses.",1(i)
+false,5,"Grensesnittet for søk skal være intuitivt for bruker, dvs. brukeren skal ikke behøve å kjenne til feltkoder el., og skal ha samme grensesnitt/layout som resten av løsningen.",1
+false,6,"Alle metadata registrert i løsningen skal være søkbare / skal kunne brukes som søkekriterier enkeltvis eller i kombinasjon.",O
+false,7,"Det bør være mulig å utføre fritekstsøk i innholdet i dokumenter, og søk i fritekstfelter. Dette bør være mulig enkeltvis eller i kombinasjon med søk i metadata.",2
+false,8,"Leverandøren skal beskrive eventuelle begrensninger i søkemuligheter knyttet til kravene ovenfor (1 til 7).",O(i)
+false,9,"Det skal være mulig for brukeren å lagre egendefinerte søk for senere bruk.",1
+false,10,"Det skal være mulig for Kunden selv å definere søk som settes opp som «standard» for alle brukere eller utvalgte grupper av brukere.",1
+false,11,"Løsningen bør ha en synonymordliste slik at brukerne kan få opp treff basert på synonymer.",1
+false,12,"Småord skal ikke tas med i indekseringen (såkalte stoppord).",O
+false,13,"Det skal være mulig å redigere listen over stoppord.",O
+false,14,"Det bør være mulig å «spare» søkeresultatet slik at man som bruker kan åpne og arbeide med flere elementer fra resultatet uten at selve søkeresultatet blir borte og søk må utføres på nytt.",2
+false,15,"Alle søkeresultater skal kunne hentes opp i utskriftsvennlig visning, og skrives ut.",1
+false,16,"Det skal være mulig å sortere søkeresultatet.",1
+false,17,"Det skal være mulig å få søkeresultatet gruppert.",1
+
+#4.4.9 Krav til dokumentfangst
+true,1,"NOARK 5.8.3 (V): Datafangsten skal skje på en slik måte at dokumentets utseende (layout integritet) blir opprettholdt.",O
+true,2,"NOARK 5.8.4 (V): Det skal finnes funksjonalitet for helautomatisk dokumentfangst.",O
+true,3,"NOARK 5.8.7 (V): Ved helautomatisk dokumentfangst skal det være mulig å knytte dokumenter til en eller flere mapper eller klasser i arkivstrukturen.",O
+
+#4.4.8 Krav til merknader
+true,3,"NOARK 5.7.20 (V): Det skal være mulig å fritt definere typer merknader.", O
+
+#4.4.7 Krav til kryssreferanse
+true,1,"NOARK 5.7.5 (V): Fra en Klasse bør det kunne refereres til en eller flere andre Klasser.",1
+true,2,"NOARK 5.7.14 (V): Det bør finnes en tjeneste/funksjon som kan lagre, gjenfinne, endre og slette en Kryssreferanse mellom Klasser",1
+
+#4.4.6 Krav til nøkkelord
+true,1,"NOARK 5.7.1 (V): En Klasse skal kunne ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Klasser.",1
+true,2,"NOARK 5.7.2 (V): En Basismappe skal kunne ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere
+Basismapper",1
+true,3,"NOARK 5.7.3 (V): En Basisregistrering skal kunne ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Basisregistreringer.",1
+true,4,"NOARK 5.7.4 (V): Det skal finnes en tjeneste / funksjon for å knytte ett eller flere nøkkelord til klasser, mapper og registreringer (unntatt forenklet registrering).",1
+
+#4.4.5 Krav til dokumentbeskrivelse og dokumentobjekt
+true,1,"NOARK 5.6.5 (V): En dokumentbeskrivelse for et fysisk dokument (f.eks. papir) skal kunne ha referanse til oppbevaringssted for dokumentet.",2
+
+#4.4.4 Krav til registrering
+true,1,"NOARK 5.5.12 (V): Det skal finnes en tjeneste / funksjon for å ajourholde Journalenhet på en Registrering (Journalpost).",1
+
+#4.4.3 Krav til klassifikasjonssystem
+true,1,"NOARK 5.3.6 (V): En Klasse kan ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Klasser.",2
+true,2,"NOARK 5.3.8 (V) Et klassifikasjonssystem skal kunne beskrives med forskjellige klassifikasjonstyper. Eksempel på verdier: «Funksjonsbasert, hierarkisk»
+«Emnebasert, hierarkisk arkivnøkkel», «Emnebasert, ettnivå», «K-koder», «Mangefasettert, ikke hierarki»,«Objektbasert», «Fødselsnummer», «Gårds- og bruksnummer»",O
+false,3,"Det skal være mulig å ha flere klassifikasjonssystem tilgjengelig samtidig. Ved ny versjon av et klassifikasjonssystem skal det ikke gjøres endringer på avsluttede arkivsaker.",O
+false,4,"Det skal være mulig å få en oversikt over aktive arkivsaker som vil få ny kode ved endring i klassifikasjonssystemet.",1
+
+#4.4.2 Krav til mappe
+true,1,"NOARK 5.4.5 (V): En Basismappe skal kunne inngå i andre Basismapper i et hierarki. Disse er kalt undermapper, og er i modellen skissert med en egenrelasjon.",2
+true,2,"NOARK 5.4.11 (V) En Saksmappe skal kunne ha registrert ingen eller en Journalenhet og en Journalenhet kan inngå i ingen, en eller flere Saksmapper.",1
+true,3,"NOARK 5.4.16 (V) Det skal finnes en tjeneste / funksjon for å ajourholde Journalenhet på en Saksmappe.",1
+true,4,"NOARK 5.4.19 (V) Det skal finnes en tjeneste / funksjon for å legge opp og ajourholde undermapper for en Basismappe (mappehierarki).",2
+false,5,"Det skal være mulig å lage prosjektmapper med undermapper organisert på en slik måte at det vil være lett for saksbehandler å finne egne saker / 	dokumenter.",1
+
 #4.4.1 Krav til arkivstruktur, arkiv og arkivdeler
 false,1,"Det skal kunne opprettes underarkiv til et arkiv.",1
 false,2,"Ved avslutting av en arkivdel skal alle sakene i arkivdelen kunne avsluttes i én operasjon. Funksjonen skal være rettighetsstyrt.",1

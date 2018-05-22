@@ -190,7 +190,8 @@
       <sectionTitle>Krav til ivaretakelse av spesielle bestemmelser</sectionTitle>
       <description>Kravene her gjenspeiler at elektronisk saksbehandling i offentlig og kommunal sektor er underlagt ulike lover og forskrifter.</description>
       <explanation>Elektronisk saksbehandling er underlagt lovbestemte krav for elektronisk signatur. Kravene skal også sikre integritet, konfidensialitet, autentisitet.
-        For å sikre at organisasjonen etterlever disse bestemmelsene, må kravene i dette kapittelet oppfylles, og det anbefales at kravene stilles som obligatoriske.</explanation>
+        For å sikre at organisasjonen etterlever disse bestemmelsene, må kravene i dette kapittelet oppfylles, og det anbefales at kravene stilles som obligatoriske.
+      </explanation>
       <consequence>Ved manglende kravoppfyllelse innenfor disse områdene vil det være store svakheter og mangler med den tilbudte løsningen.</consequence>
       <type>funksjonell</type>
       <showMe>true</showMe>
@@ -257,7 +258,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>Løsningen skal være konsistent på alle områder, inkludert menyer, prinsipper for navigasjon, tilbakemeldinger til brukerne, etc.</requirementText>
-          <priority> 1</priority>
+          <priority>1</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -285,8 +286,9 @@
         <sectionOrder>1</sectionOrder>
         <sectionTitle>Krav til arkivstruktur, arkiv og arkivdeler</sectionTitle>
         <description>Kravene i dette kapittelet gir organisasjonen utvidet muligheter til å strukturere og å dele opp arkivet på ønsket måte og tillegger løsningen viktig automatisert funksjonalitet når arkivdeler skal avsluttes.</description>
-        <explanation>Her beskrives kravene som få strukturere arkivet i logiske deler og hjelpefunksjoner for å kunne gjennomføre operasjoner på logiske strukturer  på en effektiv måte. Det er viktig at denne type funksjoner er rettighetsstyrt slik at kun brukere med tillatelse til å benytte disse har tilgang.
-          Ikke alle løsninger trenger underarkiv. Hvis underakriv er noe som passers deres organisatorsik arkivinndeling, anbefales kravet å ansees som obligatorisk.</explanation>
+        <explanation>Her beskrives kravene som få strukturere arkivet i logiske deler og hjelpefunksjoner for å kunne gjennomføre operasjoner på logiske strukturer på en effektiv måte. Det er viktig at denne type funksjoner er rettighetsstyrt slik at kun brukere med tillatelse til å benytte disse har tilgang.
+          Ikke alle løsninger trenger underarkiv. Hvis underakriv er noe som passers deres organisatorsik arkivinndeling, anbefales kravet å ansees som obligatorisk.
+        </explanation>
         <consequence>Dersom løsningen ikke støtter disse kravene vil det være potensielt kostnadskrevende å generere uttrekk.</consequence>
         <type>funksjonell</type>
         <showMe>true</showMe>
@@ -346,29 +348,477 @@
           </requirement>
         </requirements>
       </section>
+
+      <section>
+        <sectionOrder>3</sectionOrder>
+        <sectionTitle>Krav til mappe</sectionTitle>
+        <description>Kravene er ment å sikre fleksibilitet i arkivstrukturen.</description>
+        <explanation>Kravene i dette avsnittet kan være relevante i for flere typer organisasjoner. For kommuner som skal anskaffe sak/arkiv-system, vil det være anbefalt å stille kravene selv om man ikke anser dem som relevante.</explanation>
+        <consequence>Dersom systemet ikke åpner for “mappe i mappe”, vil man kunne oppleve at arkivstrukturen blir noe mindre fleksibel.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.4.5 (V): En Basismappe skal kunne inngå i andre Basismapper i et hierarki. Disse er kalt undermapper, og er i modellen skissert med en egenrelasjon.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 5.4.11 (V) En Saksmappe skal kunne ha registrert ingen eller en Journalenhet og en Journalenhet kan inngå i ingen, en eller flere Saksmapper.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 5.4.16 (V) Det skal finnes en tjeneste / funksjon for å ajourholde Journalenhet på en Saksmappe.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 5.4.19 (V) Det skal finnes en tjeneste / funksjon for å legge opp og ajourholde undermapper for en Basismappe (mappehierarki).</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>Det skal være mulig å lage prosjektmapper med undermapper organisert på en slik måte at det vil være lett for saksbehandler å finne egne saker / dokumenter.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>4</sectionOrder>
+        <sectionTitle>Krav til registrering</sectionTitle>
+        <description>Kravet gir anledning til å endre journalenhet på en registrering.</description>
+        <explanation>Dersom en registrering har blitt foretatt på feil journalenhet, må man ha mulighet til å endre til riktig journalenhet.</explanation>
+        <consequence>Dersom denne funksjonen ikke finnes, vil det kunne ha konsekvenser for mulighet for gjenfinning av registreringen.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.5.12 (V): Det skal finnes en tjeneste / funksjon for å ajourholde Journalenhet på en Registrering (Journalpost).</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>5</sectionOrder>
+        <sectionTitle>Krav til dokumentbeskrivelse og dokumentobjekt</sectionTitle>
+        <description>Kravet gir anledning til å endre journalenhet på en registrering.</description>
+        <explanation>Dersom en registrering har blitt foretatt på feil journalenhet, må man ha mulighet til å endre til riktig journalenhet.</explanation>
+        <consequence>Dersom denne funksjonen ikke finnes, vil det kunne ha konsekvenser for mulighet for gjenfinning av registreringen.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.6.5 (V): En dokumentbeskrivelse for et fysisk dokument (f.eks. papir) skal kunne ha referanse til oppbevaringssted for dokumentet.ri</requirementText>
+            <priority>2</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>6</sectionOrder>
+        <sectionTitle>Krav til nøkkelord</sectionTitle>
+        <description>Oppfyllelse av kravene gir mulighet til å definere egendefinerte nøkkelord knyttet til ulike deler av systemet; klasse, sak (mappe), og journalføring (registrering).</description>
+        <explanation>Ved å benytte nøkkelord kan det gjøres søk og filtrering på de ulike delene i systemet. Med nøkkelord søk vil en kunne søke på tvers av arkivstrukturen.</explanation>
+        <consequence>Manglende mulighet for å definere nøkkelord, vil gi ansatte i organisasjonen mindre mulighet til å søke opp saker og dokumenter på en enkel måte.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.7.1 (V): En Klasse skal kunne ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Klasser.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 5.7.2 (V): En Basismappe skal kunne ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere
+              Basismapper
+            </requirementText>
+            <priority></priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 5.7.3 (V): En Basisregistrering skal kunne ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Basisregistreringer.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 5.7.4 (V): Det skal finnes en tjeneste / funksjon for å knytte ett eller flere nøkkelord til klasser, mapper og registreringer (unntatt forenklet registrering).</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>7</sectionOrder>
+        <sectionTitle>Krav til kryssreferanse</sectionTitle>
+        <description>Kravene gir mulighet til å kryssreferere mellom Klasser, saker og journalposter.</description>
+        <explanation>Kryssreferanse benyttes ofte i forhold til presedenssaker, men kan eksempelvis også benyttes til å referere mellom ulike saker knyttet til en og samme objektklassifisering (for eksempel fødselsnummer, gårds- og bruksnummer e.l.)</explanation>
+        <consequence>Manglende oppfyllelse av mulighet til kryssreferanser vil gjøre at tilgangen til relevant informasjon begrenses, og at beslutningsgrunnlaget i saksbehandlingen kan bli mangelfullt.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.7.5 (V): Fra en Klasse bør det kunne refereres til en eller flere andre Klasser.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 5.7.14 (V): Det bør finnes en tjeneste/funksjon som kan lagre, gjenfinne, endre og slette en Kryssreferanse mellom Klasser</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>8</sectionOrder>
+        <sectionTitle>Krav til merknader</sectionTitle>
+        <description>Kravet gir anledning til at organisasjonen fritt kan definere hvilke typer merknader som skal kunne opprettes i tillegg til de merknadstypene som ligger inne som standard i løsningen.</description>
+        <explanation>Merknadstyper benyttes for å definere hva slags merknad som legges inn (arkivmerknad, saksbehandlingsmerknad e.l) Merknadstyper kan også gi anledning til å sette opp automatiske søk i løsningen.</explanation>
+        <consequence>Kravet gir anledning til at organisasjonen fritt kan definere hvilke typer merknader som skal kunne opprettes i tillegg til de merknadstypene som ligger inne som standard i løsningen.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.7.20 (V): Det skal være mulig å fritt definere typer merknader.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>9</sectionOrder>
+        <sectionTitle>Krav til dokumentfangst</sectionTitle>
+        <description>Kravene er knyttet til helautomatisk fangst av dokumenter fra digitale søknader og lignende</description>
+        <explanation>Det er viktig for løsningen at det er enkelt å integrere arkivsystemet med andre digitale løsninger slik at dokumenter kan fanges på en effektiv og sikker måte inn til arkivsystemet. Dersom organisasjonen rutinemessig behandler søknader/saker knyttet til enkelte systemer, bør man stille et egendefinert krav knyttet til dette eller disse systemene.</explanation>
+        <consequence>Dersom løsningen ikke åpner for helautomatisk dokumentfangst, må alle dokumenter registreres og arkiveres manuelt i systemet, noe vil øke bemanningsbehovet i arkivtjenesten.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.8.3 (V): Datafangsten skal skje på en slik måte at dokumentets utseende (layout integritet) blir opprettholdt.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 5.8.4 (V): Det skal finnes funksjonalitet for helautomatisk dokumentfangst.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 5.8.7 (V): Ved helautomatisk dokumentfangst skal det være mulig å knytte dokumenter til en eller flere mapper eller klasser i arkivstrukturen.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+
+    </section>
+    <section>
+      <sectionOrder>5</sectionOrder>
+      <sectionTitle>Krav til gjenfinning – søk og rapporter</sectionTitle>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <section>
+        <sectionOrder>1</sectionOrder>
+        <sectionTitle>Kravene i dette avsnittet er ment å sikre at søk etter dokumentasjon i løsningen skal kunne foregå enkelt, raskt og sikkert.</sectionTitle>
+        <description>En god søkefunksjon vil være essensielt for at organisasjonen skal kunne hente ut gevinstene knyttet til større datafangst og en høyere datakvalitet.</description>
+        <explanation>Ved manglende eller for dårlig søkefunksjonalitet, vil gjenfinning av dokumentasjon vanskeliggjøres samtidig som organisasjonens opplevelse av løsningen svekkes. Dette vil i sin tur kunne gå ut over de ansattes lojalitet til løsningen.</explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.9.14 (V): Det skal finnes en tjeneste / funksjon for å avbryte søk som er satt i gang.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 5.9.15 (V): Søkefunksjonene bør være innrettet slik at en ved søk på et ord i bokmålsform også får treff for de tilsvarende nynorskformene og omvendt.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Det skal være mulig å velge å søke i hele løsningen på tvers av strukturer, saker etc. Det skal også være mulig å begrense søket etter eget behov.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>Det skal være mulig å søke i flere databaser samtidig, dvs. i produksjonsbaser og historiske baser. Leverandøren skal beskrive hvordan dette behovet kan løses.</requirementText>
+            <priority>1(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>Grensesnittet for søk skal være intuitivt for bruker, dvs. brukeren skal ikke behøve å kjenne til feltkoder el., og skal ha samme grensesnitt/layout som resten av løsningen.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>Alle metadata registrert i løsningen skal være søkbare / skal kunne brukes som søkekriterier enkeltvis eller i kombinasjon.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>Det bør være mulig å utføre fritekstsøk i innholdet i dokumenter, og søk i fritekstfelter. Dette bør være mulig enkeltvis eller i kombinasjon med søk i metadata.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>Leverandøren skal beskrive eventuelle begrensninger i søkemuligheter knyttet til kravene ovenfor (1 til 7).</requirementText>
+            <priority>O(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>Det skal være mulig for brukeren å lagre egendefinerte søk for senere bruk.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>Det skal være mulig for Kunden selv å definere søk som settes opp som «standard» for alle brukere eller utvalgte grupper av brukere.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>Løsningen bør ha en synonymordliste slik at brukerne kan få opp treff basert på synonymer.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>Småord skal ikke tas med i indekseringen (såkalte stoppord).</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>Det skal være mulig å redigere listen over stoppord.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>14</showOrder>
+            <requirementText>Det bør være mulig å «spare» søkeresultatet slik at man som bruker kan åpne og arbeide med flere elementer fra resultatet uten at selve søkeresultatet blir borte og søk må utføres på nytt.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>15</showOrder>
+            <requirementText>Alle søkeresultater skal kunne hentes opp i utskriftsvennlig visning, og skrives ut.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>16</showOrder>
+            <requirementText>Det skal være mulig å sortere søkeresultatet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>17</showOrder>
+            <requirementText>Det skal være mulig å få søkeresultatet gruppert.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>2</sectionOrder>
+        <sectionTitle>Krav til bevaring og kassasjon</sectionTitle>
+        <description>Kravene i avsnittet gir organisasjonen mulighet til å styre kassasjon av egen dokumentasjon.</description>
+        <explanation>Kassasjon betyr sletting eller fysisk destruksjon av dokument. Dersom organisasjonen benytter anledningen til å kassere arkivmateriale, er kravene i dette avsnittet viktige. Kravene bør i så tilfelle settes som obligatoriske.</explanation>
+        <consequence>Dersom funksjonaliteten i kravene ikke er tilstede i løsningen, mister organisasjonen mulighet til selv å styre og kontrollere eget kassasjonsreglement.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.10.14 (V): Andre regler for beregning av bevaringsdato skal kunne være mulig.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Kommunen skal selv kunne definere kassasjonstidspunkt.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Ved kassasjon skal dokumentene slettes fullstendig og ikke «bare fjerne koblingen» mellom journalpost og dokument. Det skal fremgå av løsningen at dokumentet er kassert.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>3</sectionOrder>
+        <sectionTitle>Krav til periodisering</sectionTitle>
+        <description>Kravene sørger for en smidig og automatisert periodisering.</description>
+        <explanation>Når en arkivdel skal periodiseres må løsningen håndterer eksisterende saksmapper. Kravene sikrer at dette skjer på en automatisert måte.</explanation>
+        <consequence>Dersom funksjonaliteten i kravene mangler vil det påføre organisasjonen betydelig merarbeid når en arkivdel skal periodiseres.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.11.10 (V): Det skal være mulig å overføre i en samlet, automatisert prosess.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>4</sectionOrder>
+        <sectionTitle>Krav til avlevering</sectionTitle>
+        <description>Kravene sørger for at systemer er i henhold til gjeldende lovverk om arkivuttrekk.</description>
+        <explanation>Alle Noark-løsninger skal kunne lage uttrekk som kan deponeres hos et arkivdepot.</explanation>
+        <consequence>Dette er satt til et obligatorisk krav og kan ikke velges bort</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.12: Samtlige krav under kapittel 5.12 skal være oppfylt.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>5</sectionOrder>
+        <sectionTitle>Krav til administrasjon av kjernen</sectionTitle>
+        <description>Kravene gir organisasjonen mulighet til å selv bestemme om en dokumentbeskrivelse automatisk skal få status “Dokumentet er ferdigstilt” når en mappe (saksmappe) avsluttes eller en journalpost ferdigstilles.</description>
+        <explanation>Saksstatus (mappe), journalpoststatus (registrering) og dokumentstatus er statuser som forteller hvor i saksbehandlingen saken, journalposten eller dokumentet befinner seg. Korrekt bruk av statuser er viktig for at dokumentflyten og arkiveringsprosessen skal gå så smidig som mulig. Kravet gjør at arbeidet med disse statusene foregår på en enklere og mer automatisert måte.</explanation>
+        <consequence>Dersom kravet ikke oppfylles øker kontrollbehovet og dermed arbeidsmengden i arkivtjenesten. Samtidig øker risikoen for at dokumenter blir stående med feil status, noe som kan få konsekvenser for dokumentflyt og arkivuttrekk.</consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.13.9 (V) Det bør være mulig å parameterstyre at status ”Dokumentet er ferdigstilt” skal settes automatisk på Dokumentbeskrivelse ved andre statuser på Mappe eller Registrering</requirementText>
+            <priority>2</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>6</sectionOrder>
+        <sectionTitle>Krav til sletting av dokumenter</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 5.13.19 (V): Det skal være mulig å utføre sletting av mange inaktive dokumentversjoner samtidig, f.eks. alle inaktive dokumentversjoner som er funnet etter et søk.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 5.13.23 (V): Det skal være mulig å slette mange dokumentvarianter samtidig, f.eks. alle dokumentvarianter som er funnet etter et søk.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 5.13.27 (V): Det skal være mulig å slette mange produksjonsformater samtidig, f.eks. alle produksjonsformater som er funnet etter et søk.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>7</sectionOrder>
+        <sectionTitle>Krav til frysing av metadata og dokument</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>8</sectionOrder>
+        <sectionTitle></sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>9</sectionOrder>
+        <sectionTitle></sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+
+        </requirements>
+      </section>
+
+
+    </section>
+    <section>
+      <sectionOrder>6</sectionOrder>
+      <sectionTitle>Krav til adresseregister</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>7</sectionOrder>
+      <sectionTitle>Krav til saksbehandlingsløsninger</sectionTitle>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
     </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
     <section>
-      <sectionOrder>X</sectionOrder>
+      <sectionOrder>6</sectionOrder>
       <sectionTitle></sectionTitle>
       <description></description>
       <explanation></explanation>
@@ -380,7 +830,22 @@
       </requirements>
     </section>
 
--->
+
+    <!--
+        <section>
+          <sectionOrder>X</sectionOrder>
+          <sectionTitle></sectionTitle>
+          <description></description>
+          <explanation></explanation>
+          <consequence></consequence>
+          <type>funksjonell</type>
+          <showMe>true</showMe>
+          <requirements>
+
+          </requirements>
+        </section>
+
+    -->
 
 
   </chapter>
