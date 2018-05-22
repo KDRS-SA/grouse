@@ -1,29 +1,210 @@
 noarkRequirement, showOrder, requirementText, priority
 
 
+#4.13.1 Overordnede krav til administrasjon av løsningen
 
-#4.8.
-#4.8.
-#4.8.7
 
-#4.8.6
+#4.12.2 Krav til andre rapporter og statistikker
+true,1,"NOARK 6.5.12 (V): Krav til rapporten Offentlig journal - Rapporten skal i tillegg valgfritt kunne inneholde en eller flere av opplysningene nedenfor (så fremt de finnes i løsningen): Saksmappeinformasjon, Fra Saksmappe: AdministrativEnhet, saksansvarlig, tilgangsrestriksjon, skjermingshjemmel, Journalpostinformasjon, Fra Journalpost (sortert etter registreringsID hvis ikke annet er angitt): tilgangsrestriksjon skjermingsHjemmel administrativEnhet, saksbehandler",1
+true,2,"NOARK 6.5.24 (V): Krav til rapporten restanseliste - Det skal være mulig å definere rapporten slik at bestemte saksområder ikke skal tas med på restanselisten. Dette kan f. eks. være saksmapper/journalposter med bestemte ordningsverdier eller som behandles av bestemte administrative enheter.",1
+false,3,"Løsningen skal kunne gi oversikt over saksgang: Saker avsluttet pr. saksbehandler og avdeling, Saker i arbeid pr. saksbehandler og avdeling, Milepæler, Saker som er mangelfulle, Saker som er komplette",1
+false,4,"Det skal være mulig å ta ut rapporter fra løsningen som fremskaffer de tallene som skal sendes inn i forbindelse med KOSTRA-rapporteringen. Beskriv hvordan.",1 (i)
+false,5,"Rapporter/statistikk skal kunne fremstilles i: tekstbehandlingssystemet (Word), regneark (Excel), PDF/A, HTML",1
+false,6,"Brukeren skal selv, for det enkelte rapportuttak, kunne bestemme hvilket format rapporten skal lages i.",1
+false,7,"Alle rapporter skal kunne lagres og skrives ut.",1
+false,8,"Rapporter som tas ut til tekstbehandlingsverktøy og regneark skal kunne redigeres av brukeren (innholdet i rapporten skal kunne behandles videre f.eks ved bruk av funksjoner og diagrammer i Excel).",1
+false,9,"Det skal være mulig for brukeren å lage egne rapporter. Disse rapportene skal kunne lages basert på utførte søk, og rapportene skal kunne lagres for senere bruk.",1
+false,10,"Det skal være mulig for Kunden selv å definere nye «standardrapporter» som tilgjengelig gjøres for alle brukere eller for en gruppe brukere.",1
 
-#4.8.5
+#4.12.1 Krav til anbefalte statistikker og rapporter jf. NOARK5
+false,0,"Å gi kommunen mulighet til å skaffe seg informasjon om størrelse og sammensetning over tid for data lagret i løsningen."
+false,1,"Løsningen skal tilfredsstille alle valgfrie krav til statistikker og rapporter jf. NOARK5-standardens kapittel 10.1 (Krav 10.1.1 – 10.1.38). Leverandøren skal oppgi krav som eventuelt ikke er innfridd. Leverandøren skal også angi hvilke krav som ikke er tilfredsstilt med en standardrapport.",1
+false,2,"Leverandøren skal redegjøre for hvordan bruker på alternative og brukervennlige måter kan fremskaffe den informasjonen som rapportene i nevnte krav har som formål å presentere.",1(i)
+
+#4.11.2 Krav til sikkerhet og tilgjengelighet for offentlig journal
+false,1,"Løsningen for publisering og presentasjon av offentlig journal på internett må være sikret på en slik måte at data i offentlig journal (spesielt personopplysninger) ikke blir registrert i eksterne søkemotorer. Leverandøren skal redegjøre for hvordan dette er ivaretatt.",O(i)
+false,2,"Leverandøren skal beskrive hvordan løsningen for publisering av offentlig journal ivaretar kravene til universell utforming.", O(i)
+
+#4.11.1 Funksjonalitet og presentasjon
+false,1,"Leverandøren skal gi en overordnet beskrivelse av tilbudt løsning for publisering av offentlige dokumenter via kommunens internettsider. Med offentlige dokumenter menes ALLE offentlige dokumenter fra forvaltningen, herunder offentlig journal, møte- og utvalgsdokumenter, dokumentasjon fra administrativt arkiv etc.",O (i)
+false,2,"Publiseringsløsninger skal følge Datatilsynets retningslinjer.",1
+false,3,"Det skal være mulig å gjøre offentlig journal direkte tilgjengelig via kommunens nettsted.",O
+false,4,"Den offentlige versjonen av et dokument skal kunne gjøres direkte tilgjengelig fra offentlig journal på internett.",O
+false,5,"Det skal være valgfritt for kommunen å publisere dokumentene tilknyttet journalpostene i offentlig journal. Det skal være mulig å velge å publisere dokumentene kun for visse typer saker eller for visse deler av organisasjonen.", O
+false,6,"Publisering av dokumenter skal kun skje i godkjent arkivformat.",O
+false,7,"Offentlig journal skal kunne legges ut automatisk, og til tidspunkt definert av kommunen. Det skal med andre ord ikke være nødvendig med manuelle operasjoner for å utføre selve publiseringen av offentlig journal.",1
+false,8,"Løsningen skal gjøre det mulig å definere en enkel godkjenningsprosess som sikrer at offentlig journal ikke publiseres før denne er godkjent av definerte brukere (eks arkivleder). Godkjenningsprosessen skal tilrettelegge for at bruker enkelt kan fjerne dokumenter som ikke skal publiseres.",O
+false,9,"Det skal være mulig for publikum å bestille innsyn i dokumenter som ikke er publisert. Å bestille innsyn skal kunne gjøres via en dedikert funksjon knyttet til sak og dokument.",1
+false,10,"Når det sendes anmodning om innsyn i en journalpost skal avsenders e-postadresse automatisk registreres inn i løsningen slik at ekspedering av forespurte dokumenter kan gjøres raskt og effektivt.",1
+false,11,"Det skal være mulig for kommunen selv å definere hvilken e-postadresse melding om innsynsbegjæring skal sendes til.",O
+false,12,"Ved offentliggjøring/publisering av tillegg til sakskart som allerede er publisert, må ikke tillegg erstatte allerede publiserte dokumenter",1
+
+#4.10 Krav til funksjonalitet for byggesaksmodul
+false,1,"Løsningen skal inneholde en byggesaksmodul. Byggesaksmodulen skal være oppdatert i henhold til gjeldende Plan- og bygningslov, inkl revisjon av 1.juli 2015.",O
+false,2,"Løsningen skal inneholde predefinerte registreringsfelter for sakstypene bygg, plan og deling.",1
+false,3,"Løsningen skal inneholde mulighet for predefinerte registreringsfelter for sakstype VAR, Geodata og landbruk.",1
+false,4,"Løsningen skal ha mulighet for egendefinisjon av milepæler/frister.",1
+false,5,"Status for saksflyt i byggesaksbehandlingen skal vises i saksgang som inneholder mer enn 2 arbeidsflyter (milepæler). Status for saksflyt skal vises i kartet eventuelt i innsynsmodulen.",1
+false,6,"«Forenklet tjenestegrensesnitt i henhold til geointegrasjon skal inngå i byggesaksmodulen, jf kap 10.2».",1
+false,7,"Løsningen skal ha funksjonalitet for visning av eiendom i kartutsnitt. Jf Kap 10.2",1 
+false,8,"Løsningen skal gi mulighet for å hente digital adresseliste fra matrikkel/kartsystemer (via geointegrasjon)",1
+false,9,"Byggesaksmodulen skal kunne gi mulighet for føring av de metadata som skal føres i matrikkelen. Dataene skal være søkbare.",1
+false,10,"Løsningen skal ha mulighet til å registrere flere eiendommer i en sak.",1
+false,11,"Løsningen skal være kompatibel med digital søknad fra eksterne leverandører. Eksempelvis (byggsøk, E-søknad, elektroniske skjema fra K24:7/ DIBK sin løsning)", O
+false,12,"Løsningen skal være mulig å integrere mot andre innsynsløsninger enn leverandørens egen løsning.",1
+
+
+#4.9.7 Krav til utvalgsbehandling – administrasjon av møtebehandlingen
+true,1,"NOARK 9.4.31 (V): Det skal være mulig å loggføre hvilke behandlingsnivåer som har behandlet en Møtemappe eller Møteregistrering.",O
+true,2,"NOARK 9.4.32 (V): Alle informasjonselementer i møtebehandlingen skal ha tilgjengelig informasjon om hvilken status elementet har i saksbehandlingsprosessen.",1
+true,3,"NOARK 9.4.33 (V): Det skal ikke være mulig å registrere møtebehandling for et beslutningsorgan som er avsluttet.",O
+true,4,"NOARK 9.4.34 (V): Det skal finnes en funksjon for å lage saksliste.",O
+true,5,"NOARK 9.4.35 (V): Det skal finnes en funksjon for å hente frem [en allerede produsert] saksliste.",O
+true,6,"NOARK 9.4.36 (V): Det skal være mulig å endre saksliste fram til møtetidspunkt. Endringene skal logges.",O
+true,7,"NOARK 9.4.37 (V): Det skal ikke være mulig å endre saksliste etter at møtet er avsluttet.",O
+true,8,"NOARK 9.4.38 (V): Det skal ikke være mulig å slette saksliste etter at møtet er avsluttet.",O
+true,9,"NOARK 9.4.39 (V): Det skal være en funksjon for å hente saksframlegg og vedlegg.",O
+true,10,"NOARK 9.4.41 (V): Det skal ikke være mulig å slette saksframlegg og vedlegg etter at møtet er avsluttet.",O
+true,11,"NOARK 9.4.42 (V): Det skal finnes en funksjon for å sende møteinnkalling til møtedeltakerne.",O
+true,12,"NOARK 9.4.43 (V): Det skal finnes en funksjon for å produsere saksprotokoller.",O
+true,13,"NOARK 9.4.44 (V): Det skal være mulig å endre saksprotokoller før de er godkjent.",O
+true,14,"NOARK 9.4.45 (V): Det skal ikke være mulig å endre saksprotokoller etter at de er godkjent.",O
+true,15,"NOARK 9.4.46 (V): Det skal finnes en funksjon som sikrer at saksprotokoller automatisk kan knyttes til den saken der den har sitt utspring.",O
+true,16,"NOARK 9.4.47 (V): Det skal ikke være mulig å slette saksprotokoller som er godkjent.",O
+true,17,"NOARK 9.4.48 (V): Det skal ikke være mulig å slette en møtebok.",O
+true,18,"NOARK 9.4.49 (V): Det skal finnes en funksjon for å lage en offentlig variant av en møtebok, ved at taushetsbelagte opplysninger og opplysninger unntatt offentlighet skjermes.",O
+true,19,"NOARK 9.4.50 (V): Det skal finnes en funksjon for å publisere den offentlige varianten av møteboken på internett. (se også krav til publisering av offentlige dokumenter)",O
+true,20,"NOARK 9.4.51 (V): Det skal finnes en funksjon for å journalføre og arkivere den offentlige varianten av møteboken",O
+true,21,"NOARK 9.4.52 (V): Det skal finnes en funksjon for å avslutte en møtesak.",O
+false,22,"Det skal være mulig å produsere sakskart til overordnet politisk organ. Sakskartet skal vise behandling og vedtak fra tidligere politiske behandlinger og forslag til vedtak.",O
+
+#4.9.6 Krav til utvalgsbehanling – etter møtet
+true,1,"NOARK 9.4.27 (V): Det skal finnes en funksjon som tillater beslutningsorganets medlemmer å komme med en samlet merknad til protokollen innen en definert tidsfrist.",O
+true,2,"NOARK 9.4.28 (V): Det skal finnes en funksjon som tillater beslutningsorganets medlemmer å komme med individuelle merknader til protokollen innen en definert tidsfrist.",O
+true,3,"NOARK 9.4.29 (V): Det skal finnes en funksjon som tillater registrering av godkjenning av protokollen.",O
+true,4,"NOARK 9.4.30 (V): Det skal finnes en funksjon som tillater registrering av den enkelte møtedeltakers godkjenning / ikke godkjenning av protokollen.",O
+true,5,"Bare brukere som er definert som møtesekretærer i administrator skal gjøre registreringer i/endringer i alle dokumenter tilknyttet utvalgsbehandlingen fra en sak blir satt på sakskartet til den blir tilbakesendt saksbehandler/administrasjonen.",O
+true,6,"Ved endring av tekst i møteprotokoll skal endringen automatisk skje i saksprotokoll.",1
+true,7,"Det skal være mulig å hente rapport over fremmøte og utbetaling av møtegodtgjørelse.",O
+true,8,"Interpellasjoner som foreligger fra et utvalgsmedlem eller parti må kunne registreres som egen sakstype med mulighet for senere å knytte denne til en arkivsak.",O
+
+#4.9.5 Krav til utvalgsbehandling – selve møtet
+true,1,"NOARK 9.4.23 (V): Det skal være mulig for at autoriserte roller eller personer å registrere vedtak underveis i møtet.",O
+true,2,"NOARK 9.4.24 (V): Det skal finnes en funksjon for at vedtak som blir registrert underveis i møtet, blir lagret i tilknytning til saken som informasjonselementer av typen MV («møtevedtak»).",O
+true,3,"NOARK 9.4.25 (V): Det skal finnes en funksjon for at vedtak som blir registrert underveis i møtet, blir lagret i tilknytning til saken med status «ikke godkjent vedtak».",O
+true,4,"NOARK 9.4.26 (V): Det skal finnes en funksjon for at et vedtaksdokument får status som «godkjent vedtak» når protokollen er godkjent i henhold til godkjenningsrutinene.",O
+false,5,"I utkast til møteprotokoll skal det kunne registreres hvilke forslag som fremmes, avstemmingsresultat og utvalgets vedtak.",O
+false,6,"Saksprotokoll for den enkelte sak skal kunne produseres i møtet og overføres til kommunens internettsider. Se også krav til publisering av offentlige dokumenter.",O
+false,7,"Saksprotokoll skal registreres som egen journalpost i arkivsystemet og være lett tilgjengelig fra utvalgsbehandlingen.",O
+
+#4.9.4 Krav til utvalgsbehandling – forberede møte
+true,1,"NOARK 9.4.17 (V): Det skal være mulig å fastsette møter fram i tid.",O
+true,2,"NOARK 9.4.18 (V): Det skal finnes en funksjon for å sette sammen sakliste ut fra saksframlegg og vedlegg som er lagret på saken.",O
+true,3,"NOARK 9.4.19 (V): Det skal være mulig å kunne merke at en sak til møtet skal være lukket, dvs. gå for lukkede dører.",O
+true,4,"NOARK 9.4.20 (V): Det skal være mulig å sette opp en behandlingsprosess for hver sak som skal behandles, dvs. hvilke beslutningsorganer saken skal opp i. Dette skal komme fram i sakspapirene til hver sak.",O
+true,5,"NOARK 9.4.21 (V): Det skal finnes en funksjon for å håndtere vararepresentanter for ordinære representanter som ikke kan møte.",O
+true,6,"NOARK 9.4.22 (V): Det skal finnes en funksjon for å sende ut innkalling til alle møtedeltakerne.",O
+false,7,"Melding om at sakskart, saksframlegg og vedlegg som er lagt ut på kommunens internettsider skal automatisk sendes til utvalgets medlemmer, varamedlemmer og abonnenter.",1
+false,8,"Vedlegg skal legge seg etter saken de tilhører når sakspapirer blir flettet.",1
+false,9,"Det skal være mulig å melde opp tilleggssaker / produsere tilleggssakspapirer etter at sakspapirene er ferdige.",O
+
+#4.9.3 Krav til utvalgsbehandling – administrere beslutningsorgan
+true,1,"NOARK 9.4.1 (V): Det skal finnes en funksjon for oppretting, endring og nedleggelse av beslutningsorganer. Endringer skal logges.",O
+true,2,"NOARK 9.4.2 (V): Det skal være mulig å innordne et
+beslutningsorgan i organisasjonsstrukturen.", O
+true,3,"NOARK 9.4.3 (V): Det skal være mulig å kunne tilknytte beslutningsorganet til den administrative strukturen i Noark5.",O
+true,4,"NOARK 9.4.4 (V): Det skal være mulig å tilordne representanter og vararepresentanter i et beslutningsorgan.",O
+true,5,"NOARK 9.4.5 (V): Det skal være mulig å registrere opplysninger om representanter og vararepresentanter i et beslutningsorgan.",O
+true,6,"NOARK 9.4.6 (V): Det skal være mulig å hente fram opplysninger om representanter og vararepresentanter i et beslutningsorgan.",O
+true,7,"NOARK 9.4.7 (V): Det skal være mulig å endre opplysninger om representanter og vararepresentanter i et beslutningsorgan. Endringene skal logges.",O
+true,8,"NOARK 9.4.8 (V): Det skal være mulig å registrere dato for representanter og vararepresentanters inntreden i et beslutningsorgan.",O
+true,9,"NOARK 9.4.9 (V): Det skal finnes tjenester/funksjoner for å registrere dato for representanter og vararepresentanters uttreden fra et beslutningsorgan.",O
+true,10,"NOARK 9.4.10 (V): Det skal ikke være mulig å slette opplysninger om representanter og vararepresentanter som er eller har vært medlemmer av et fungerende beslutningsorgan.",O
+true,11,"NOARK 9.4.11 (V): Det skal være mulig å tilordne roller til representanter i beslutningsorganet (leder, nestleder, sekretær osv.)",O
+true,12,"NOARK 9.4.12 (V): Det skal være mulig å lagre historikk over hvem som har vært medlemmer / deltatt i ulike utvalg og verv.",O
+true,13,"NOARK 9.4.13 (V): Det skal finnes tjenester/funksjoner for å hente fram et eller flere beslutningsorgan.",O
+true,14,"NOARK 9.4.14 (V): Det skal skal være mulig å registrere dato for opprettelse av et beslutningsorgan.",O
+true,15,"NOARK 9.4.15 (V): Det skal være mulig å registrere dato for nedleggelse av et beslutningsorgan.",O
+true,16,"NOARK 9.4.16 (V): Det skal ikke være mulig å slette et beslutningsorgan som er eller har vært i funksjon.",O
+false,17,"Fra registeret over politikere skal det kunne tas ut adresse-etiketter.",1
+false,18,"Registeret (over politikere) skal være en del av systemets adresseregister (ajourhold skal skje kun ett sted).",O
+falsen,19,"Det skal kunne registreres hvem som deltar på det enkelte møtet. Det skal kunne tas ut rapport på hver enkelt deltaker som viser hvilke møter denne har deltatt i.",O
+
+#4.9.2 Krav til utvalgsbehandling – generelle krav
+false,1,"Løsningen skal registrere og styre saksgangen i alle saker som skal behandles i ett eller flere politiske organer.",O
+false,2,"Løsningen skal vise hvilken status ulike saker har fra de blir meldt opp til behandling, til de er behandlet i avsluttende politisk organ og sendt tilbake til administrasjonen.",O
+false,3,"Det skal være mulig å produsere sakskart til politiske organer. Vedlegg skal enkelt kunne knyttes til sakskartet.",O
+false,4,"Det skal være mulig å produsere samlet saksframstilling og melding om vedtak. Samlet saksframstilling skal ligge etter siste politiske behandling,etter dato. Saksprotokoller, samlet saksframstilling og melding om vedtak skal legges i den arkivsak de tilhører, og det skal fremgå hvem som har produsert dokumentene.",O
+false,5,"Sidedeling i saksframlegg skal være lik sidedeling i sakspapirene (dokumentmaler i samme størrelse).",O
+false,6,"Saksframlegg skal bare kunne produseres fra den administrative saksmappen.",O
+false,7,"Det skal være enkelt å hente dokumenter fra den administrative saken som vedlegg i den politiske saken. Dokumentene skal da automatisk konverteres til PDF/A",O
+false,8,"Administrative saker skal kunne endres fra delegert behandling til politisk behandling (Det motsatte må også være mulig).",O
+false,9,"Uregistrerte saker skal i størst mulig grad kunne knyttes til den virksomhet/avdeling som det er naturlig å knytte den til. Leverandøren skal beskrive hvordan problematikk knyttet til uregistrerte / etteranmeldte saker til utvalg håndteres i løsningen.",2(i)
+
+#4.9.1 Krav til utvalgsbehandling – administrativ sak
+true,1,"NOARK 9.3.1 (V): Det skal finnes funksjoner for at en møtesak skal kunne hente all informasjon om saken fra den administrative saken.",O
+true,2,"NOARK 9.3.2 (V): Det skal være mulig å angi at saksframlegget må være ferdig utarbeidet av saksbehandler før saken meldes til beslutningsorganet.",O
+
+#4.8.11 Krav til integritetssikring ved elektronisk signering
+true,1,"NOARK 8.6.27 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som manuelt eller automatisk kan digitalt signere utgående e-post med dokumenter ut fra definerte signeringsregler i tilknytning til arkiv, mappe, eller dokument (”authenticity”)",1
+true,2,"NOARK 8.6.28 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som kan verifisere at avsender av en innkommende e-post er den han utgir seg for å være (”authenticity”).",1
+true,3,"NOARK 8.6.29 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som kan verifisere at dokumentene ikke er endret etter ekspedering via e-post (content
+integrity).",1
+
+#4.8.10 Krav til kryptering av e-post
+true,1,"NOARK 8.6.23 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som manuelt eller automatisk kan håndtere kryptering av utgående e-post med dokumenter (vedlegg) og dekryptering av innkommende e-post med dokumenter ut fra definerte krypteringsregler i tilknytning til arkiv, mappe eller dokument.",1
+true,2,"NOARK 8.6.24 (V): Innenfor et arkiv skal regler for kryptering av dokumenter kunne spesifiseres på et hvert hierarkisk nivå i arkivstrukturen i Noark 5-løsningen.",1
+true,3,"NOARK 8.6.25 (V): Regler for kryptering av dokumenter skal arves av underliggende nivå i arkivstrukturen.",1
+true,4,"NOARK 8.6.26 (V): Det skal være mulig å kunne sette opp både roller og brukere av Noark 5-løsningen på en slik måte at de kan overstyre reglene for kryptering ved forsendelse som er definert som standard.", 1
+
+#4.8.9 Krav til konfidensialitet
+true,1,"NOARK 8.6.18 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som sikrer at kun adressaten skal kunne lese e-postmelding og tilhørende dokumenter (content confidentiality).",1
+true,,"NOARK 8.6.19 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som kan sikre at alle brukere kan ha egen e-postadresseliste (message flow confidentiality).",1
+true,2,"NOARK 8.6.20 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som kan sikre at ingen kan bruke andre sine e-postadresser uten å være gitt autorisasjon. (secure access management).",1
+true,3,"NOARK 8.6.21 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som manuelt eller automatisk kan adressere mottakere i ”blindkopi” (bcc=blind carbon copy) for utgående e-post med dokumenter ut fra definerte adresseringsregler i tilknytning til arkiv, mappe eller dokument.",1
+
+#4.8.8 Krav til ikke-benekting ved bruk av e-post
+true,1,"NOARK 8.6.15 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som sikrer at meldingen virkelig ble levert til adressat (proof of delivery).",1
+true,2,"NOARK 8.6.16 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som kan bevise at avsender virkelig sendte aktuell e-post, selv om avsender kan ønske å benekte det (non-repudiation of origin).",1
+true,3,"NOARK 8.6.17 (V): Noark 5-løsningen skal ha sikkerhetsfunksjoner som kan bevise at avsender virkelig har mottatt aktuell e-post, selv om mottaker kan ønske å benekte det (non-repudiation of delivery).",1
+
+#4.8.7 Krav til tidsstempling av e-post
+true,1,"NOARK 8.6.14 (V): Noark 5-løsningen bør ha sikkerhetsfunksjoner som manuelt eller automatisk kan dokumentere i ettertid når en e-post ble sendt ut fra eller kom inn til organet ut fra definerte loggingsregler i tilknytning til arkiv, arkivdel, mappe eller dokument.",1
+
+#4.8.6 Krav til sikkerhetshåndtering av e-post
+false,0, "Å ivareta hensyn til: 1) Tilgjengelighet – at informasjon er tilgjengelig for autoriserte brukere, 2) Konfidensialitet – at informasjon ikke skal bli kjent for uvedkommende, 3) Integritet – at informasjon ikke endres uautorisert"
+true,1,"NOARK 8.6.2 (V): Innkommende e-post skal alltid kontrolleres opp mot de sikkerhetsmekanismer som er definert for Noark 5-løsningen.",O
+true,2,"NOARK 8.6.3 (V): Noark 5-løsningen skal kunne kvittere for mottatt e-post med og uten vedlegg (ut fra kvitteringsregler i løsningen).",1
+true,3,"NOARK 8.6.4 (V): Det skal være mulig å bruke automatisk kvittering på e-post (for eksempel idet e-post/dokument registreres).",1
+true,4,"NOARK 8.6.5 (V): Kvittering for at mottaker har mottatt e-posten, skal være tilgjengelig og forståelig for saksbehandler som har sendt e-posten.",2
+true,5,"NOARK 8.6.6 (V): Hvis automatisk kvittering for mottak av e-post mottak er brukt, bør det fremgå at kvitteringen er automatisk.",2
+true,6,"NOARK 8.6.7 (V): Noark 5-løsningen skal ha en funksjon for å tilføre kvitteringsopplysninger (levert, åpnet/lest, feilet) fra e-postsystemet til Noark 5-løsningens mottakeropplysninger på registreringen.",1
+true,7,"NOARK 8.6.8 (V): Utgående e-post skal alltid kontrolleres opp mot de sikkerhetsmekanismer som er definert for Noark 5-løsningen.",1
+true,8,"NOARK 8.6.9 (V): Sikkerhetsnivået i Noark 5-løsningen skal gjøre det mulig å hindre at dokumenter sendes via e-post.",1
+true,9,"NOARK 8.6.10 (V): Saksbehandler skal få varsel om tilgangskode og generelle begrensninger som er satt på gitte dokumenter (mapper, klasseringer) dersom disse forsøkes ekspedert per e-post.",1
+true,10,"NOARK 8.6.11 (V): Det bør være mulig å sette opp roller og brukere av Noark 5-løsningen på en slik måte at de kan overstyre sperrer mot utsendelse som er definert som standard.",2
+true,11,"NOARK 8.6.12 (V): Innenfor et arkiv skal sperrer mot utsendelse kunne spesifiseres på ethvert hierarkisk nivå i arkivstrukturen. Sperrer mot utsendelse skal arves av underliggende nivå.",1
+true,12,"NOARK 8.6.13 (V): Det bør være mulig å sette opp Noark 5-løsningen slik at skjermede dokumenter kan sendes til bestemte, predefinerte mottakere.",2
+
+#4.8.5 Krav til å sende kopi av saksdokumenter per e-post
+true,1,"NOARK 8.5.3 (V): Det bør være mulig å sende kopi av en mappe, det vil si alle hoveddokument og vedlegg fra alle registreringer i mappen.",1
+true,2,"NOARK 8.5.4 (V): Det skal være mulig å beholde strukturen ved en slik forsendelse slik at det er mulig å se hvilke saksdokumenter som henger sammen.",1
+true,3,"NOARK 8.5.5 (V): Det skal være mulig å sende kopi og velge ut at bare hoveddokumentet sendes.",1
 
 #4.8.4 Krav til import / registrering av innkommet e-post
-true,,"NOARK 8.4.1 (V): Informasjon fra e-posten, e-posthodet, e-postmelding og vedlegg skal på en oversiktlig måte presenteres tilrettelagt for videre registrering av hele eller deler av e-postforsendelsen.",1
-true,,"NOARK 8.4.2 (V): Det skal være mulig for saksbehandler å se innholdet i vedleggene til en e-post via en funksjon for hurtigvisning, eller med lenke til programmet som kan lese filene.",1
-true,,"NOARK 8.4.3 (V): Det skal være mulig for saksbehandler å angi hva som skal registreres som hoveddokument og hva som skal være vedlegg fra en postforsendelse.",1
-true,,"NOARK 8.4.4 (V): Det skal være mulig å velge at kun enkelte vedlegg til forsendelsen som mottas, skal registreres. Selve e-posten skal alltid registreres.",1
-true,,"NOARK 8.4.5 (V): Det skal være mulig å dokumentere i merknadsfelt eller lignende hvorfor enkelte vedlegg ikke arkiveres, om det skyldes dokumentformat eller andre årsaker.",1
-true,,"NOARK 8.4.6 (V): Det skal være mulig at det for en saksbehandler kan settes opp en systemparameter som resulterer i at saksbehandler enten automatisk blir satt som saksansvarlig ved oppretting av ny mappe, eller ikke blir satt som saksansvarlig ved oppretting av ny mappe. Det skal være mulig å overstyre dette.", 1
-true,,"NOARK 8.4.7 (V): Det skal være mulig at det settes opp en systemparameter som gjør at saksbehandler enten automatisk blir satt som ansvarlig saksbehandler ved oppretting av ny registrering, eller ikke blir satt som ansvarlig saksbehandler ved oppretting av ny registrering. Det skal være mulig å overstyre dette." 1
-true,,"NOARK 8.4.8 (V): Noark 5- skal ha funksjonalitet for at det er avsenders/mottakers/kopimottakers ”display navn” (hvis det finnes) som inngår i det arkiverte dokumentet som dannes på basis av e-posthode og e-postmelding.",1
-true,,"NOARK 8.4.9 (V): Det skal være funksjonalitet for at det er avsenders/mottakers/kopimottakers «display navn» (hvis det finnes) som inngår som avsender- / mottakermetadata i journalen.",1
-true,,"NOARK 8.4.10 (V): Det skal være mulig å velge om man vil opprette en ny mappe eller bruke en eksisterende mappe via en direkte tilgjengelig funksjon under journalføring / arkivering av innkommende e-post.", 1
-true,,"NOARK 8.4.11 (V): Det skal være mulig å søke frem en mappe/ en registrering via en hurtigsøksfunksjon basert på saksnummer, avsender, dato eller emne (innhold) for å registrere e-post. Denne muligheten skal være direkte tilgjengelig som en funksjon under registrering av e-post.",1
-false,,"Det skal være mulig for saksbehandler å angi rekkefølgen på vedlegg, samt angi hvorvidt selve e-postmeldingen importeres som vedlegg eller hoveddokument.",1
-false,,"Ved journalføring av e-post og vedlegg til e-post skal disse arve tilgangsbegrensningene som er påført journalposten.",1
+true,1,"NOARK 8.4.1 (V): Informasjon fra e-posten, e-posthodet, e-postmelding og vedlegg skal på en oversiktlig måte presenteres tilrettelagt for videre registrering av hele eller deler av e-postforsendelsen.",1
+true,2,"NOARK 8.4.2 (V): Det skal være mulig for saksbehandler å se innholdet i vedleggene til en e-post via en funksjon for hurtigvisning, eller med lenke til programmet som kan lese filene.",1
+true,3,"NOARK 8.4.3 (V): Det skal være mulig for saksbehandler å angi hva som skal registreres som hoveddokument og hva som skal være vedlegg fra en postforsendelse.",1
+true,4,"NOARK 8.4.4 (V): Det skal være mulig å velge at kun enkelte vedlegg til forsendelsen som mottas, skal registreres. Selve e-posten skal alltid registreres.",1
+true,5,"NOARK 8.4.5 (V): Det skal være mulig å dokumentere i merknadsfelt eller lignende hvorfor enkelte vedlegg ikke arkiveres, om det skyldes dokumentformat eller andre årsaker.",1
+true,6,"NOARK 8.4.6 (V): Det skal være mulig at det for en saksbehandler kan settes opp en systemparameter som resulterer i at saksbehandler enten automatisk blir satt som saksansvarlig ved oppretting av ny mappe, eller ikke blir satt som saksansvarlig ved oppretting av ny mappe. Det skal være mulig å overstyre dette.", 1
+true,7,"NOARK 8.4.7 (V): Det skal være mulig at det settes opp en systemparameter som gjør at saksbehandler enten automatisk blir satt som ansvarlig saksbehandler ved oppretting av ny registrering, eller ikke blir satt som ansvarlig saksbehandler ved oppretting av ny registrering. Det skal være mulig å overstyre dette." 1
+true,8,"NOARK 8.4.8 (V): Noark 5- skal ha funksjonalitet for at det er avsenders/mottakers/kopimottakers ”display navn” (hvis det finnes) som inngår i det arkiverte dokumentet som dannes på basis av e-posthode og e-postmelding.",1
+true,9,"NOARK 8.4.9 (V): Det skal være funksjonalitet for at det er avsenders/mottakers/kopimottakers «display navn» (hvis det finnes) som inngår som avsender- / mottakermetadata i journalen.",1
+true,10,"NOARK 8.4.10 (V): Det skal være mulig å velge om man vil opprette en ny mappe eller bruke en eksisterende mappe via en direkte tilgjengelig funksjon under journalføring / arkivering av innkommende e-post.", 1
+true,11,"NOARK 8.4.11 (V): Det skal være mulig å søke frem en mappe/ en registrering via en hurtigsøksfunksjon basert på saksnummer, avsender, dato eller emne (innhold) for å registrere e-post. Denne muligheten skal være direkte tilgjengelig som en funksjon under registrering av e-post.",1
+false,11,"Det skal være mulig for saksbehandler å angi rekkefølgen på vedlegg, samt angi hvorvidt selve e-postmeldingen importeres som vedlegg eller hoveddokument.",1
+false,12,"Ved journalføring av e-post og vedlegg til e-post skal disse arve tilgangsbegrensningene som er påført journalposten.",1
 
 #4.8.3 Ekspedering av dokumenter med epost / som e-post
 true,1,"NOARK 8.2.1 (V): Det skal finnes en tjeneste / funksjon for å ekspedere en e-post med eventuelle vedlegg som organets saksdokument, direkte fra Noark 5-løsningen.",O
