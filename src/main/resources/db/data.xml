@@ -733,9 +733,9 @@
       <section>
         <sectionOrder>6</sectionOrder>
         <sectionTitle>Krav til sletting av dokumenter</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene gir organisasjonen mer fleksibilitet når arkivtjenesten ønsker å rydde opp mengden av versjoner og varianter av dokumenter tilknyttet en registrering (journalpost).</description>
+        <explanation>Dokumentproduksjonen i en organisasjon vil over tid medføre at det blir opprettet mange dokumentversjoner som ikke er arkivverdige. Det kan derfor være ønskelig å kunne slette slike dokumenter på en effektiv måte. Det er viktig å huske at denne funksjonen må brukes med stor grad av forsiktighet, slik at det ikke slettes dokumentversjoner som har dokumentasjonsverdi for organisasjonen.</explanation>
+        <consequence>Dersom kravene ikke oppfylles, vil eventuell sletting måtte gjøres manuelt dokument for dokument.</consequence>
         <type>funksjonell</type>
         <showMe>true</showMe>
         <requirements>
@@ -761,38 +761,512 @@
       </section>
       <section>
         <sectionOrder>7</sectionOrder>
-        <sectionTitle>Krav til frysing av metadata og dokument</sectionTitle>
+        <sectionTitle>Krav til frysing av metadata for mappe</sectionTitle>
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
         <type>funksjonell</type>
         <showMe>true</showMe>
         <requirements>
-
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.1.5 (V) Følgende statusverdier skal være tilgjengelige for Saksmappe: «Opprettet av saksbehandler», «Avsluttet av saksbehandler», «Unntatt
+              prosesstyring»</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.1.14 (V) Når statusen til en Saksmappe settes til avsluttet, bør det på Saksmappe fortsatt være mulig å endre de øvrige metadataene. Endringer skal logges.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 6.1.15 (V) En avsluttet Saksmappe skal kunne åpnes igjen av autoriserte roller og personer. Det skal være mulig å parameterstyre hvem som er autorisert for å åpne en mappe. Åpning av mappe skal logges.</requirementText>
+            <priority>O</priority>
+          </requirement>
         </requirements>
       </section>
       <section>
         <sectionOrder>8</sectionOrder>
-        <sectionTitle></sectionTitle>
+        <sectionTitle>Krav til frysing av metadata for registrering</sectionTitle>
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
         <type>funksjonell</type>
         <showMe>true</showMe>
         <requirements>
-
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.1.25 (V) Følgende statusverdier for Journalpost skal være tilgjengelig: «Midlertidig registrering av innkommet dokument», «Saksbehandler har registrert innkommet dokument», «Reservert dokument, dvs. egenprodusert dokument er under arbeid», «Ferdigstilt fra saksbehandler», «Godkjent av leder»</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.1.28 (V) Det skal ikke være mulig å slette en Registrering med status ”Ferdigstilt fra saksbehandler» eller ”Godkjent av leder».</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 6.1.35 (V) For Registreringer av inngående dokumenter med status «midlertidig registrert» eller «registrert av saksbehandler» skal alle metadata på registrering kunne endres.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 6.1.36 (V) For Registrering av egenproduserte dokumenter (journalposttype «utgående dokument», «Organinternt dokument for oppfølging», «Organinternt dokument uten oppfølging» etc.) med status «Registrert av saksbehandler» og «Ferdigstilt fra saksbehandler» bør det for autorisert personale være mulig å endre alle metadata. Det bør være mulig å parametersette roller, enheter, grupper og personer som skal være autorisert. Endringer skal logges.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>Løsningen skal støtte, og ha grensesnitt for spesifisering av ekstra metadata for enkelte dokumenttyper (spesielt foto/video/audio-filer). Det skal være mulig å registrere «følgende metadata for denne typen dokumenter: «Dato når bildet/opptaket er tatt (dato), «Opphavsrett (tekst), «Kontekst/formål for bildet/opptaket» (fritekst), «Stedsnavn for opptaket/sted bilde ble tatt (tekst)», «Geolokalisering av stedet hvor bildet/opptaket ble tatt / gjort med koordinater fra f.eks. kamera og smarttelefon». Dersom slike koordinater ikke finnes bør systemet kunne hente koordinater fra en kartløsning via Geointegrasjon.
+              Gitt at krav i kap 10.2, Krav til integrasjon mot kartsystem, oppfylles skal informasjon om geolokalisering kunne hentes fra disse systemene.</requirementText>
+            <priority>1</priority>
+          </requirement>
         </requirements>
       </section>
       <section>
         <sectionOrder>9</sectionOrder>
-        <sectionTitle></sectionTitle>
+        <sectionTitle>Krav til frysing av dokument og metadata for dokumentbeskrivelse</sectionTitle>
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
         <type>funksjonell</type>
         <showMe>true</showMe>
         <requirements>
-
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.1.40 (V) Metadata for Dokumentbeskrivelse for hoveddokument bør kunne fylles ut automatisk på basis av metadata fra Registrering ved oppretting.</requirementText>
+            <priority>2</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>10</sectionOrder>
+        <sectionTitle>Krav til oppsplitting og sammenslåing av mapper, flytting av registreringer </sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.2.6 (V) Hvis registreringsID på Basisregistrering i et sakarkiv benytter det anbefalte formatet åå/nnnnnn-nnnn (dvs. kombinasjonen av saksnummer (mappeID) og dokumentnummer i saken), bør registreringsID endres automatisk. Registreringen bør automatisk tildeles første ledige dokumentnummer i Mappen den flyttes til.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.2.7 (V) Registreringer som ikke flyttes i Mappe det flyttes Registreringer fra, skal ikke få endret registreringsID.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 6.2.8 (V) Det bør være mulig å flytte flere Registreringer som er tilknyttet samme Mappe i en samlet operasjon.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 6.2.11 (V) Det skal være mulig å parameterstyre at andre, spesielt autoriserte brukere også skal kunne ha tillatelse til å utføre flytting av Registreringer.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 6.2.12 (V) Det bør være mulig å parameterstyre at alle brukere kan flytte Registreringer de selv er saksbehandler for, hvis status er «midlertidig registrert» eller «registrert av saksbehandler».</requirementText>
+            <priority>2</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>11</sectionOrder>
+        <sectionTitle>Krav til presedens</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.2.26 (V): Det skal være mulig å opprette en presedens knyttet til en sak eller en journalpost</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.2.27 (V): Det bør være mulig å opprette et register over hvilke verdier man skal kunne velge presedensHjemmel fra.</requirementText>
+            <priority>2</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>12</sectionOrder>
+        <sectionTitle>Krav til masseimport utløst fra NOARK5-kjerne</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.3.9 (V) Noark 5-løsningen skal inneholde masseimportfunksjonalitet som henter dokumenter fra en angitt plassering og knytte disse til klasser, mapper, registreringer eller dokumentbeskrivelser.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.3.10 (V): Ved masseimport skal det være mulig å velge om alle importerte dokumenter skal knyttes til én og samme arkivenhet på samme nivå i arkivstrukturen eller om hvert enkelt dokument skal knyttes til forskjellige arkivenheter i arkivstrukturen.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 6.3.11 (V): Ved masseimport skal det være mulig å knytte importerte dokumenter til en allerede eksisterende klasse, mappe, registrering eller dokumentbeskrivelse.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 6.3.12 (V): Ved masseimport skal det være mulig å definere og utfylle metadatasettet for dokumentene som skal importeres, kun én gang.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 6.3.13 (V): Noark 5-kjernen skal ha automatikk for å fange dokumenter som er generert og overført fra andre system.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 6.3.14 (V): Noark 5-kjernen skal ha mulighet til å håndtere inputkø ved masseimport. Merknad: For håndtering av inputkøen kan det for eksempel være ønskelig å se køene, pause en eller flere køer, starte en eller alle køene på nytt, slette en kø.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 6.3.15 (V): Noark 5-kjernen skal kunne fange metadata knyttet til alle dokumentene som overføres, automatisk. Det skal være mulig å overstyre dette ved manglede eller feil metadata.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>13</sectionOrder>
+        <sectionTitle>Krav til elektroniske skjema for utfylling over internett</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.3.20 (V) Det bør finnes funksjonalitet for å hente inn både relevante svardata og transaksjonsopplysninger fra elektroniske skjemaer, og legge disse inn som mappe, registrering, dokumentbeskrivelse og dokument i en automatisert prosess.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.3.25 (V) For dynamiske skjemaer bør informasjon om aktuell versjon av skjema og presentasjonsprogramvare lagres sammen med eller som del av resultatdatasettet, innfelt i den skjemaversjonen som ble brukt ved utfylling av skjemaet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>14</sectionOrder>
+        <sectionTitle>Krav til elektronisk dokumentutveksling Pri</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.3.26 (V) Det skal finnes funksjoner for sikker, automatisert dokumentutveksling mellom Noark-løsninger, basert på XML-skjema for dokumentutveksling.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Det skal være mulig å sende og motta krypterte dokumenter. Leverandøren skal beskrive hvordan løsningen ivaretar dette.</requirementText>
+            <priority>1(i)</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>15</sectionOrder>
+        <sectionTitle>Krav til migrering mellom NOARK-løsninger</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.3.33 (V) Det skal være mulig å importere alle metadata som er definert i denne standarden med tilhørende dokumenter basert på avleveringsformatet.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.3.34 (V): Det skal være mulig å eksportere deler av arkivstrukturen, f.eks. en arkivdel eller en klasse.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 6.3.35 (V): Det skal være mulig å importere deler av arkivstrukturen, f.eks. en arkivdel eller en klasse.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>16</sectionOrder>
+        <sectionTitle>Krav til tilgjengeliggjøring av offentlig journal på internett</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.5.40 (V) Det skal være mulig å eksportere uttrekk for tilgjengeliggjøring av offentlig journal.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.5.46 (V) Personnavn som tilgjengelig gjøres direkte på en webside skal merkes for utelukking fra indeksering av indekseringstjenester.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 6.5.48 (V) Personnavn bør merkes med XML-taggene &lt;personnavn&gt; &lt;/personnavn&gt; før de eksporteres.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 6.4.49 (V) Det skal være mulig å tilgjengelig gjøre arkivdokumenter knyttet til de enkelte journalpostene i offentlig journal på Internett.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 6.5.52 (V) Tilgjengeliggjøring av offentlig journal og eventuelle arkivdokumenter på Internett skal etableres med hindre mot automatisert indeksering fra eksterne aktører, f.eks. søkemotorer.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>17</sectionOrder>
+        <sectionTitle>Krav til sikkerhet i kjernen</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.6.8 (V) Det bør kunne brukes andre og sterkere autentiseringsmåter som alternativ til passord</requirementText>
+            <priority>2</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>18</sectionOrder>
+        <sectionTitle>Krav til rettighetsangivelser</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.6.18 (V) For hver arkivdel, klasse, mappe,registrering og dokumentbeskrivelse bør det kunne registreres hvilke personlig identifiserte brukere som har lesetilgang</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.6.19 (V) For hver arkivdel, klasse, mappe, registrering og dokumentbeskrivelse bør det kunne registreres hvilke personlig identifiserte brukere som har oppdateringstilgang</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>19</sectionOrder>
+        <sectionTitle>Krav til skjerming</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 6.6.26 (V) Skjerming bør kunne arves til mappe, journalpost, dokumentbeskrivelse og dokumentobjekt. Arvede verdier skal kunne overstyres.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 6.6.27 (V) Skjerming av Klasse bør kunne arves til mappe, journalpost, dokumentbeskrivelse og dokumentobjekt.Arvede verdier skal kunne overstyres</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 6.6.41 og 12.3.2 (V): Dersom tilgangskoden er merket med indikasjon på at det bare er anledning til å unnta visse opplysninger i dokumentet fra innsyn, kan det opprettes en «offentlig variant» av dokumentet der disse opplysningene ikke finnes, som derfor kan unntas fra skjerming</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 12.3.1 (V): Det skal synliggjøres i journalen om en registrering med en tilgangskode inneholder ett eller flere dokumenter som ikke er merket med tilgangskode</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 12.3.3 (V): Løsningen skal vise hvilke opplysningstyper som er angitt at skal skjermes. Det at en gitt opplysning er avkrysset for skjerming skal vises både for de som har tilgang til å se de skjermede opplysningene og for de som ikke har tilgang til å se dem</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 12.3.4 (V): Dokumentbeskrivelsen skal arve registreringens tilgangskode som standardverdi, dersom ikke dokumentbeskrivelsen har tilgangskode fra før, og dersom den ikke fra før er tilknyttet en annen registrering</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>Dersom det skjer endringer av graderingsangivelser på journalopplysninger eller filer, skal løsningen gi en påminning om å endre gradering på tilknyttede journal opplysninger/filer.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>20</sectionOrder>
+        <sectionTitle>Krav knyttet til arkivformat og dokumentformat</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>Alle egenproduserte og importerte filer skal automatisk konverteres til det til enhver tid godkjente arkivformatet. Konvertering skal skje i sammenheng med angivelse av status.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Det skal i tillegg til automatisk fortløpende konvertering være mulig for brukeren å konvertere filer til godkjent arkivformat både
+              manuelt for en og en fil og samlet for et definert sett av filer som av en eller annen årsak ikke har blitt konvertert</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Alle arkiverte dokumenter skal finnes i produksjonsformat, også etter at arkivformat er generert.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>Produksjonsformatet pekt på i kravet over skal være enkelt tilgjengelig for saksbehandler slik at tekst kan gjenbrukes eller produksjonsformatet kan benyttes til å opprette nye versjoner av dokumentet.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>Dersom godkjent arkivformat endres skal leverandøren sørge for at løsningen på en enkel måte håndterer konvertering av filer på tidligere godkjent format til nytt godkjent arkivformat. Med enkelt menes en form for masseoppdatering.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>Løsningen skal ha funksjonalitet for å lagre kartdata både på ascii og binær form</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>Løsningen skal ha funksjonalitet for å lagre lydfiler, bildefiler og multimediafiler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>21</sectionOrder>
+        <sectionTitle>Krav knyttet til masseoppdatering</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>I noen tilfeller er det ønskelig å kunne gjøre endringer i mange saker eller journalposter samtidig. Løsningen skal ha mulighet for at arkivarene kan gjøre slike endringer. Endringene gjelder typisk elementer som; status, saksbehandler, arkivkode, enhet, arkivdel, klassering, unntakshjemler, skjermingsregler og bevarings-/kassasjonsregler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Ved masseendring skal endringene som vil foretas ved endring vises visuelt før endringene gjøres, slik at brukeren kan verifisere endringene før kjøring.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Løsningen skal ha funksjoner for masseavskrivning og masseavslutning av saker og journalposter. Funksjonen skal være rettighetsstyrt.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>Det skal være mulig å endre saksbehandler på mange saker i én operasjon, dvs. endre til én ny saksbehandler.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>Oppdatering av K-koder skal være inkludert i tilbudt løsning.</requirementText>
+            <priority>O</priority>
+          </requirement>
         </requirements>
       </section>
 
