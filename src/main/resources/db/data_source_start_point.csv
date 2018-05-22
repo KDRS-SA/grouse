@@ -1,6 +1,71 @@
 noarkRequirement, showOrder, requirementText, priority
 
 
+
+#4.8.
+#4.8.
+#4.8.7
+
+#4.8.6
+
+#4.8.5
+
+#4.8.4 Krav til import / registrering av innkommet e-post
+true,,"NOARK 8.4.1 (V): Informasjon fra e-posten, e-posthodet, e-postmelding og vedlegg skal på en oversiktlig måte presenteres tilrettelagt for videre registrering av hele eller deler av e-postforsendelsen.",1
+true,,"NOARK 8.4.2 (V): Det skal være mulig for saksbehandler å se innholdet i vedleggene til en e-post via en funksjon for hurtigvisning, eller med lenke til programmet som kan lese filene.",1
+true,,"NOARK 8.4.3 (V): Det skal være mulig for saksbehandler å angi hva som skal registreres som hoveddokument og hva som skal være vedlegg fra en postforsendelse.",1
+true,,"NOARK 8.4.4 (V): Det skal være mulig å velge at kun enkelte vedlegg til forsendelsen som mottas, skal registreres. Selve e-posten skal alltid registreres.",1
+true,,"NOARK 8.4.5 (V): Det skal være mulig å dokumentere i merknadsfelt eller lignende hvorfor enkelte vedlegg ikke arkiveres, om det skyldes dokumentformat eller andre årsaker.",1
+true,,"NOARK 8.4.6 (V): Det skal være mulig at det for en saksbehandler kan settes opp en systemparameter som resulterer i at saksbehandler enten automatisk blir satt som saksansvarlig ved oppretting av ny mappe, eller ikke blir satt som saksansvarlig ved oppretting av ny mappe. Det skal være mulig å overstyre dette.", 1
+true,,"NOARK 8.4.7 (V): Det skal være mulig at det settes opp en systemparameter som gjør at saksbehandler enten automatisk blir satt som ansvarlig saksbehandler ved oppretting av ny registrering, eller ikke blir satt som ansvarlig saksbehandler ved oppretting av ny registrering. Det skal være mulig å overstyre dette." 1
+true,,"NOARK 8.4.8 (V): Noark 5- skal ha funksjonalitet for at det er avsenders/mottakers/kopimottakers ”display navn” (hvis det finnes) som inngår i det arkiverte dokumentet som dannes på basis av e-posthode og e-postmelding.",1
+true,,"NOARK 8.4.9 (V): Det skal være funksjonalitet for at det er avsenders/mottakers/kopimottakers «display navn» (hvis det finnes) som inngår som avsender- / mottakermetadata i journalen.",1
+true,,"NOARK 8.4.10 (V): Det skal være mulig å velge om man vil opprette en ny mappe eller bruke en eksisterende mappe via en direkte tilgjengelig funksjon under journalføring / arkivering av innkommende e-post.", 1
+true,,"NOARK 8.4.11 (V): Det skal være mulig å søke frem en mappe/ en registrering via en hurtigsøksfunksjon basert på saksnummer, avsender, dato eller emne (innhold) for å registrere e-post. Denne muligheten skal være direkte tilgjengelig som en funksjon under registrering av e-post.",1
+false,,"Det skal være mulig for saksbehandler å angi rekkefølgen på vedlegg, samt angi hvorvidt selve e-postmeldingen importeres som vedlegg eller hoveddokument.",1
+false,,"Ved journalføring av e-post og vedlegg til e-post skal disse arve tilgangsbegrensningene som er påført journalposten.",1
+
+#4.8.3 Ekspedering av dokumenter med epost / som e-post
+true,1,"NOARK 8.2.1 (V): Det skal finnes en tjeneste / funksjon for å ekspedere en e-post med eventuelle vedlegg som organets saksdokument, direkte fra Noark 5-løsningen.",O
+true,2,"NOARK 8.2.3 (V): Det skal finnes en tjeneste / funksjon for å ekspedere e-post som saksdokument ved bruk av utvekslingsformat.",1
+true,3,"NOARK 8.3.1 (V): Det skal finnes en tjeneste/funksjon for å ekspedere saksdokumenter via e-post fra Noark 5-løsningen.",O
+true,4,"NOARK 8.3.2 (V): Ved ekspedering av saksdokumenter per e-post skal løsningen fylle ut e-postens emnefelt med innholdsbeskrivelsen fra Registrering.",1
+true,5,"NOARK 8.3.6 (V): Ved ekspedering av dokumenter per e-post skal løsningen sette organets sentrale epost-adresse som forslag til avsender.",O
+true,6,"NOARK 8.3.7 (V): Det skal være mulig å overstyre Noark 5-løsningen, til en annen e-postadresse som autentisert saksbehandler har tilgang og rettigheter til. Merknad: Dette kan eksempelvis være saksbehandlende avdelings e-postadresse eller saksbehandlers epost-adresse",1
+true,7,"NOARK 8.3.8 (V): Overstyring av «avsenders epost-adresse» skal kunne gjøres også på permanent basis.",O
+true,8,"NOARK 8.3.9 (V): Ved ekspedering av saksdokumenter via e-post skal løsningen sette opp alle «predefinerte mottakere» (mottakerliste) som er knyttet til aktuelle Registrering som forslag til e-post mottaker.",O
+true,9,"NOARK 8.3.10 (V): Muligheten for å endre e-postens mottakerliste skal være tilgjengelig som en funksjon under ekspedering av e-post.",O
+true,10,"NOARK 8.3.11 (V): Hvis e-postadressene ved en ekspedering endres i forhold til standard mottakerliste skal det lagres informasjon om dette.",O
+true,11,"NOARK 8.3.12 (V): Det skal være mulig å manuelt overstyre predefinert e-postadresse i mottakerfeltet ved ekspedering.",O
+true,12,"NOARK 8.3.13 (V): Ved ekspedering av dokumenter per e-post skal det finnes en tjeneste/funksjon for å angi hvilke dokumenter som skal utgå fra ekspederingen.",O
+true,13,"NOARK 8.3.14 (V): Det skal finnes en tjeneste / funksjon for å registrere merknader til de saksdokumenter som ikke medfølger en ekspedering.",1
+true,14,"NOARK 8.3.15 (V): Ved ekspedering skal løsningen generere meldingstekst som gir kort informasjon om de saksdokumenter som eventuelt ikke medfølger e-postforsendelsen.",1
+true,15,"NOARK 8.3.16 (V): For de saksdokumenter som ikke medfølger ekspedering skal systemgenerert meldingstekst samt eventuelle merknader registrert av saksbehandler alltid medfølge e-postekspederingen.",1
+true,16,"NOARK 8.3.18 (V): Ved ekspedering skal det utføres kontroll mot utvekslingsformatet.",1
+true,17,"NOARK 8.3.20 (V): Avbrutt ekspedering skal likevel kunne sendes når den godkjennes av saksbehandler med autorisasjon til å utføre den prosessen.",1
+false,18,"Ekspedering av dokumenter skal kunne gjøres direkte fra bildet der saksbehandler jobber med saken (saksbildet).",O
+false,19,"Dersom dokumentet som skal ekspederes ikke er konvertert til arkivformat, skal konvertering automatisk skje ved ekspedering slik at mottaker får dokumentet i arkivformat.",O
+false,20,"Ved gradering av vedlegg til en journalpost skal det være mulig å ekspedere hoveddokument og offentlige vedlegg uten manuell behandling. Systemet skal kun ekspedere offentlige dokumenter.",O
+false,21,"Ved ekspedering av saksprotokoll per e-post skal vedlegg tilknyttet den politiske saken automatisk legges som vedleggsfiler til hoveddokumentet. Det må være mulig å fjerne vedlegg fra listen og legge til andre vedlegg.",O
+false,22,"All ekspedering av e-post med vedlegg skal logges, slik at det er mulig å dokumentere hva som er sendt, når det er sendt og til hvem det er sendt.",O
+false,23,"Det bør være mulig å utføre «masseutsending» der man fra løsningen angir at mottakerne ikke skal se hvem andre e-posten er sendt til (blindkopi).",2
+false,24,"Løsningen skal ha egne parametere for avsender av e-post. Administrator skal kunne velge hvilken adresse som skal stå som avsender på utgående e-post fra løsningen.",1
+false,25,"Løsningen skal ha flere valg for avsender av utgående e- post. Følgende alternativer må kunne defineres: 1) Kommunens generelle e-postadresse med Reply-To kommunens generelle e-postadresse, 2) Brukers e-postadresse med Reply-To kommunens generelle e-postadresse, 3) Brukers e-postadresse med Reply-To brukers e-postadresse",1
+
+#4.8.2 Krav til dokumentfangst, e-posthode og e-postmelding
+true,1,"NOARK 8.1.7 (V): Det skal finnes en tjeneste / funksjon som gjør det mulig automatisk å journalføre og arkivere dokumenter mottatt via e-post.",1
+true,1,"NOARK 8.1.12 (V): Det skal være mulig å parameterstyre løsningen ved ekspedering av e-post som saksdokument eller ekspedering av saksdokument per e-post slik at NOARK5-løsningen: 1)Automatisk journalfører og arkiverer e-posten med eventuelle vedlegg, 2) Automatisk håndterer e-posten med eventuelle vedlegg i tråd med forhåndsdefinerte regler i løsningen, 3) Automatisk gir melding til bruker med spørsmål om e-posten med eventuelle vedlegg skal journalføres og arkiveres 4) Baseres på manuelle rutiner",1
+true,1,"NOARK 8.1.13 (V): Det skal være mulig å parameterstyre NOARK5-løsningen ved mottak av e-post med eventuelle vedlegg slik at NOARK5-løsningen: 1) Automatisk journalfører og arkiverer (og eventuelt også fordeler) e-posten, 2) Automatisk håndterer e-posten med eventuelle vedlegg i tråd med forhåndsdefinerte regler i løsningen, 3) Automatisk gir melding til bruker med spørsmål om e-posten med eventuelle vedlegg skal journalføres og arkiveres, 3) Baseres på manuelle rutiner",1
+
+#4.8.1 Overordnede krav til e-postfunksjonalitet
+false,0,"Sikre at all kommunikasjon mottatt og sendt via e-post blir journalført, samt effektivisere hverdagen ved å tilrettelegge for utstrakt bruk av e-post i saksbehandlingen."
+true,1,"Det skal være full integrasjon med kommunens e-postsystem.",O
+true,2,"NOARK 8.1.2 (V): I løsningen skal det være mulig å ekspedere e-post som saksdokument.",O
+true,3,"NOARK 8.1.3 (V): I løsningen skal det være mulig å ekspedere saksdokumenter som e-post direkte fra aktuelle moduler.",O
+true,4,"NOARK 8.1.4 (V): Innkommende e-post (med og uten vedlegg) skal kunne registreres direkte fra organets valgte e-postløsning.",O
+true,5,"NOARK 8.1.5 (V): I løsningen skal det være mulig å sende saksdokumenter (som kopi) som vedlegg til e-post direkte fra aktuelle moduler.",O
+true,6,"NOARK 8.1.6 (V): Det skal finnes en tjeneste / funksjon for at selve meldingsteksten i en egenprodusert e-post skal kunne sendes på dokumentflytinternt i organet før ekspedering, på samme måten som et vanlig tekstdokument.",1
+
 # 4.7.7 Øvrige krav til saksbehandlerfunksjonalitet
 true,1,"NOARK 10.2.1 (V): Det skal være mulig å sette opp varslinger (f. eks. i form av meldingsbokser) når tidsfrister er overskredet m.v.",1
 false,2,"Løsningen skal kunne håndtere all saksbehandling elektronisk slik at man ikke blir tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen. Eventuelle begrensninger og forutsetninger knyttet til dette skal beskrives.",1(i)
