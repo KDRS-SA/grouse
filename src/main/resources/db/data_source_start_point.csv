@@ -8,28 +8,6 @@ false,4,"De historiske basene skal være lukket for registreringer, men det skal
 false,5,"Det skal være mulig for nye brukere (brukere tilsatt etter at konvertering er foretatt) å gis tilgang til de historiske basene.",O
 false,6,"Leverandøren skal utarbeide en plan for konverteringen, samt rapporter, sjekklister, skjemaer og andre nødvendig dokumenter for å sikre kontroll med konverteringen. Planen skal godkjennes av kunden innen konvertering påbegynnes.",O
 
-# 7.1.4 Krav til integrasjon mot fagsystemer og interne og eksterne systemer
-false,0,"Sikre økt dokumentfangst, og lovmessig lagring av data fra forsystemer og fagsystemer."
-false,1,"Leverandøren skal i tilbudet prissette hver integrasjon i tråd med ansvaret leverandøren påtar seg for implementering, kvalitetssikring og vedlikehold av integrasjonen. Nødvendig 3. parts programvare for integrasjonen skal tas med i tilbudet.",O
-false,2,"Systemet skal kunne publisere postliste, eventuelt fulltekstdokumenter fra postliste og publisering av politisk saksbehandling og dokumenter til organisasjonens internettside.",O
-false,3,"Overføring av dokumenter til politisk behandling til alle typer enheter (PC, mobil, nettbrett o.l.)",1
-
-# 7.1.3 Krav til integrasjon mot kartsystem
-false,1,"Det er særlig viktig for den nye organisasjonen at det legges til rette for å kunne hente oppdatert kartinformasjon og registerinformasjon (Matrikkelen) inn i sakssystemet. I valg av nytt sakssystem vil det derfor legges stor vekt på tilrettelegging for geointegrasjon. I skrivende stund er det ennå ikke bestemt hvilket kartsystem den nye organisasjonen satser på å ta i bruk.", O(i)
-false,2,"Sak-arkivløsningen skal støtte siste versjon av Geointegrasjonstandarden (Plandialog).",O
-false,3,"Løsningen skal blant annet gi mulighet for: 1) Kontroll av oppgitt adresse i Matrikkelen, 2) Starte kartsystem og vise aktuell arealplan 3) Hente hjemmelshaver til sak – arkiv for eiendommer innenfor et planområde eller annet digitalisert område i kartsystemet 4) Starte kartsystem og vise aktuell eiendom . OBS. Listen er ikke uttømmende.",1
-false,4,"Løsningen skal legge til rette for geointegrasjon mot oppmålingssaker. (Oppmålingsdialog)",1
-false,5,"Det skal redegjøres for mulig geointegrasjon mot byggesaker (Byggesaksdialog)",1(i)
-
-# 7.1.2 Krav til mottak av elektroniske skjema
-false,0,"Å sikre organisasjonens innbyggere en enkel og papirløs metode for innsending av søknader etc til forvaltningen. Effektivisere arbeidet i forvaltningen med registrering og behandling av mottatte skjema."
-true,1,"NOARK 6.3.20 (V) Det skal finnes funksjonalitet for å hente inn både relevante svardata og transaksjonsopplysninger fra elektroniske skjemaer, og legge disse inn som mappe, registrering, dokumentbeskrivelse og dokument i en automatisert prosess.",1
-true,1,"NOARK 6.3.25 (V) For dynamiske skjemaer skal informasjon om aktuell versjon av skjema og presentasjonsprogramvare lagres sammen med eller som del av resultatdatasettet, innfelt i den skjemaversjonen som ble brukt ved utfylling av skjemaet.",1
-false,2,"I en tid med stadig økende digitalisering av offentlige tjenester er det behov for en egen «skjemamodul» integrert med sak/arkiv-systemet. Leverandøren bes opplyse om en slik modul er på plass, og evt. hvilke eksterne skjemamoduler det er utviklet integrasjon mot. Leverandør bes også beskrive i hvilken grad Kunden 	selv kan designe egne skjemaer dersom en skjemamodul er på plass, samt liste opp de «ferdige» skjemaene Kunden i så fall vil få tilgang til.",1(i)
-false,3,"Løsningen skal tilrettelegges for mottak av elektroniske skjema som er tilgjengeliggjort via organisasjonens internettsider."1
-false,4,"Tilrettelegging for mottak av elektroniske skjema skal gjøres slik at organisasjonen selv kan implementere elektroniske skjema i sak- og arkivløsningen ettersom man får ytterligere skjema tilgjengeliggjort elektronisk på internettsidene. Leverandøren skal gi en kort beskrivelse av hvordan løsningen tilrettelegger for dette.",1(i)
-false,5,"Leverandøren skal gi en beskrivelse av hvilke krav som stilles til de elektroniske skjemaene, og eventuelle andre forhold på kundens side, for at leverandøren skal kunne oppfylle NOARK5-krav 6.3.20 til 6.3.25 (krav til elektroniske skjema for utfylling over internett).",1(i)
-
 # 7.1.1 KRAV TIL SKANNING
 false,1,"Leverandøren skal ta det totale ansvaret for at den tilbudte skannerløsningen (programvare og oppsett) fungerer sammen med tilbudt sak- og arkivløsning.",O
 false,2,"Det skal være mulig å skanne inn dokumenter enkeltvis og deretter importere disse som en egen journalpost, eller som vedlegg til eksisterende journalpost.",O
@@ -47,7 +25,29 @@ false,13,"Løsningen skal støtte bruk av et utvalg av de mest brukte skannerpro
 false,14,"Organisasjonen legger opp til sentralt postmottak. Leverandøren skal beskrive hvilket utstyr og oppsett som anbefales for å sørge for at tilbudt skannerløsning fungerer optimalt. Eventuelle absolutte minstekrav skal også beskrives. Leverandøren skal komme med anbefaling til bla; 1) Skannere, 2) Oppsett av skannere og skannerprogramvare i nettverk / infrastrukturen",O(i)
 
 
-# 6.1. Overordnede og generelle krav til grensesnitt
+# 6.1.4 Krav til integrasjon mot fagsystemer og interne og eksterne systemer
+false,0,"Sikre økt dokumentfangst, og lovmessig lagring av data fra forsystemer og fagsystemer."
+false,1,"Leverandøren skal i tilbudet prissette hver integrasjon i tråd med ansvaret leverandøren påtar seg for implementering, kvalitetssikring og vedlikehold av integrasjonen. Nødvendig 3. parts programvare for integrasjonen skal tas med i tilbudet.",O
+false,2,"Systemet skal kunne publisere postliste, eventuelt fulltekstdokumenter fra postliste og publisering av politisk saksbehandling og dokumenter til organisasjonens internettside.",O
+false,3,"Overføring av dokumenter til politisk behandling til alle typer enheter (PC, mobil, nettbrett o.l.)",1
+
+# 6.1.3 Krav til integrasjon mot kartsystem
+false,1,"Det er særlig viktig for den nye organisasjonen at det legges til rette for å kunne hente oppdatert kartinformasjon og registerinformasjon (Matrikkelen) inn i sakssystemet. I valg av nytt sakssystem vil det derfor legges stor vekt på tilrettelegging for geointegrasjon. I skrivende stund er det ennå ikke bestemt hvilket kartsystem den nye organisasjonen satser på å ta i bruk.", O(i)
+false,2,"Sak-arkivløsningen skal støtte siste versjon av Geointegrasjonstandarden (Plandialog).",O
+false,3,"Løsningen skal blant annet gi mulighet for: 1) Kontroll av oppgitt adresse i Matrikkelen, 2) Starte kartsystem og vise aktuell arealplan 3) Hente hjemmelshaver til sak – arkiv for eiendommer innenfor et planområde eller annet digitalisert område i kartsystemet 4) Starte kartsystem og vise aktuell eiendom . OBS. Listen er ikke uttømmende.",1
+false,4,"Løsningen skal legge til rette for geointegrasjon mot oppmålingssaker. (Oppmålingsdialog)",1
+false,5,"Det skal redegjøres for mulig geointegrasjon mot byggesaker (Byggesaksdialog)",1(i)
+
+# 6.1.2 Krav til mottak av elektroniske skjema
+false,0,"Å sikre organisasjonens innbyggere en enkel og papirløs metode for innsending av søknader etc til forvaltningen. Effektivisere arbeidet i forvaltningen med registrering og behandling av mottatte skjema."
+true,1,"NOARK 6.3.20 (V) Det skal finnes funksjonalitet for å hente inn både relevante svardata og transaksjonsopplysninger fra elektroniske skjemaer, og legge disse inn som mappe, registrering, dokumentbeskrivelse og dokument i en automatisert prosess.",1
+true,1,"NOARK 6.3.25 (V) For dynamiske skjemaer skal informasjon om aktuell versjon av skjema og presentasjonsprogramvare lagres sammen med eller som del av resultatdatasettet, innfelt i den skjemaversjonen som ble brukt ved utfylling av skjemaet.",1
+false,2,"I en tid med stadig økende digitalisering av offentlige tjenester er det behov for en egen «skjemamodul» integrert med sak/arkiv-systemet. Leverandøren bes opplyse om en slik modul er på plass, og evt. hvilke eksterne skjemamoduler det er utviklet integrasjon mot. Leverandør bes også beskrive i hvilken grad Kunden 	selv kan designe egne skjemaer dersom en skjemamodul er på plass, samt liste opp de «ferdige» skjemaene Kunden i så fall vil få tilgang til.",1(i)
+false,3,"Løsningen skal tilrettelegges for mottak av elektroniske skjema som er tilgjengeliggjort via organisasjonens internettsider.",1
+false,4,"Tilrettelegging for mottak av elektroniske skjema skal gjøres slik at organisasjonen selv kan implementere elektroniske skjema i sak- og arkivløsningen ettersom man får ytterligere skjema tilgjengeliggjort elektronisk på internettsidene. Leverandøren skal gi en kort beskrivelse av hvordan løsningen tilrettelegger for dette.",1(i)
+false,5,"Leverandøren skal gi en beskrivelse av hvilke krav som stilles til de elektroniske skjemaene, og eventuelle andre forhold på kundens side, for at leverandøren skal kunne oppfylle NOARK5-krav 6.3.20 til 6.3.25 (krav til elektroniske skjema for utfylling over internett).",1(i)
+
+# 6.1.1 Overordnede og generelle krav til grensesnitt
 false,1,"Det er svært viktig for oppdragsgiver at valgt system er tilrettelagt for komplett Noark5 tjenestegrensesnitt som skal kunne benyttes mot alle tjenester i Noark5-systemet, uavhengig av konformitetsnivåene i standarden. Leverandøren skal redegjøre for hvilke planer som foreligger i forhold til implementering av Noark5 tjenestegrensesnitt. Tidsplan skal inngå i redegjørelsen.", O(i)
 false,2,"Systemet skal håndtere eksport/import av data i åpne standarder, blant annet for å sikre integrasjon med framtidige portalløsninger.",O
 false,3,"Systemet skal ha mulighet for datafangst ved bruk av IOS, Android Microsoft og eventuelt andre håndholdte enheter. Leverandør bes beskrive løsningen.",1(i)
@@ -64,7 +64,7 @@ false,11,"Leverandøren skal redegjøre for hvordan NOARK5-kjernen er bygd opp f
 false,1,"Leverandøren skal opplyse om eventuelle ytterligere krav som stilles til komplett løsning, og som ikke er etterspurt her i andre krav. Både minimumskrav og anbefalte krav beskrives.", 1(i)
 false,2,"Systemet skal fungere med Microsoft Exchange 2013 som epostserver løsning.",1(i)
 false,3,"Systemet skal fungere tilfredsstillende med Microsoft Outlook som epost-klient.",1(i)
-false,4,"Organisasjonen har en eksisterende lisensavtale med Microsoft. Ved behov for Microsoft lisenser skal Leverandøren opplyse om hvilke lisenser som er påkrevet.",
+false,4,"Organisasjonen har en eksisterende lisensavtale med Microsoft. Ved behov for Microsoft lisenser skal Leverandøren opplyse om hvilke lisenser som er påkrevet."
 false,5,"Redegjør for hvordan løsningen ivaretar de sju overordnede prinsipper for IKT-arkitektur beskrevet i Difis dokument ”Overordnede IKT-arkitekturprinsipper for offentlig sektor”.",1(i)
 
 
@@ -81,7 +81,7 @@ false,7,"Leverandøren skal beskrive løsningens skalerbarhet mht ytelse ved øk
 false,1,"Skal kjøres på virtuell plattform",1(i)
 false,2,"Dokumenter skal lagres i database og ikke direkte i filsystemet.",1
 false,3,"Leverandøren skal beskrive anbefalt design for / arkitekturmessig oppsett av samtlige servere og applikasjoner som løsningen består av.",1
-false,4,"Leverandøren skal foreta dette etter at kontrakt er signert."
+false,4,"Leverandøren skal foreta dette etter at kontrakt er signert.",1(i)
 false,5,"Beskriv anbefalt maskinvarekrav til de servertypene som den anbefalte løsningen består av; databaseserver (e), applikasjonsserver (e), evt. webserver(e) etc.",1(i)
 false,6,"Organisasjonen har 4 stk Dell R730 servere med 2 cpu’er, 12 kjerner som plattform for VMWare. Systemet er planlagt implementert der.",
 false,7,"Når nye versjoner/oppgraderinger lanseres, skal leverandøren utarbeide dokumentasjon på gjennomføringen. Kundens it-personell får derved mulighet til å gjennomføre oppgraderingen selv. 6 Leverandøren skal dokumentere at saksbehandlerklienten kan kjøres i et Citrix-miljø på Citrix-servere, hvilke versjoner de har erfaringer fra, og minimumskravet til Citrix-versjon på server.",1(i)
@@ -89,14 +89,14 @@ false,8,"Systemet må fungere problemfritt i et Windows 2008 R2 eller nyere serv
 false,9,"Beskriv anbefalt løsning for komplett backup av systemet (tekniske spesifikasjoner).",1(i)
 
 #5.1.2 Tekniske krav
-false,1,"Systemet skal kjøres på virtuell plattform (i dag benyttes VMware)"
-false,2,"Systemet skal kunne kjøres med databasen MS SQL versjon 2008 og nyere."
-false,3,"Det bes opplyst hvilke andre nettlesere enn Microsoft Internet Explorer systemet støtter.",
-false,4," Systemet skal kunne kjøres på Citrix 7.0 og nyere versjoner",
-false,5,"For eventuelle framtidig konvertering må det være mulig å eksportere data fra systemet til eksterne filer."
-false,6,"Eksisterende historiske data skal overføres/konverteres til historisk base i det nye systemet.",
-false,7,"Klienter må kunne rulles ut vha. utrullingsverktøy Altiris og MS SCCM. Det må også gjelde alle fremtidige oppgraderinger av klienter.",
-false,8,"Når det kommer nye versjoner av Internet Explorer, Citrix, MS sql eller virtuelle servere, må leverandør si noe om hvor lang tid det vil ta før sak/arkiv-systemet støtter nyeste versjon",
+false,1,"Systemet skal kjøres på virtuell plattform (i dag benyttes VMware)",O
+false,2,"Systemet skal kunne kjøres med databasen MS SQL versjon 2008 og nyere.",O
+false,3,"Det bes opplyst hvilke andre nettlesere enn Microsoft Internet Explorer systemet støtter.",1(i)
+false,4," Systemet skal kunne kjøres på Citrix 7.0 og nyere versjoner",O
+false,5,"For eventuelle framtidig konvertering må det være mulig å eksportere data fra systemet til eksterne filer.",O
+false,6,"Eksisterende historiske data skal overføres/konverteres til historisk base i det nye systemet.",O
+false,7,"Klienter må kunne rulles ut vha. utrullingsverktøy Altiris og MS SCCM. Det må også gjelde alle fremtidige oppgraderinger av klienter.",O
+false,8,"Når det kommer nye versjoner av Internet Explorer, Citrix, MS sql eller virtuelle servere, må leverandør si noe om hvor lang tid det vil ta før sak/arkiv-systemet støtter nyeste versjon",O(i)
 
 #5.1.1 Krav til arkivdatabase
 false,1,"Arkivdatabasen skal være strukturert i henhold til Noark 5 kravene og lagre all arkivdata i denne strukturen.",1
