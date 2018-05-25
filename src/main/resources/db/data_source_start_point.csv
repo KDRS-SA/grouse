@@ -1,8 +1,246 @@
 noarkRequirement, showOrder, requirementText, priority
 
+# 8.1 Krav til konvertering
+false,1,"Alle metadata fra de aktive databasene og de historiske databasene i eksisterende journalsystem skal konverteres til valgt løsning, uten tap av data og struktur. Dette gjelder for alle de tre kommuners databaser.",O
+false,2,"Alle dokumenter fra aktive databaser og historiske baser skal konverteres over i ny løsning og enkelt tilgjengeliggjøres for saksbehandlerne.",1
+false,3,"De dokumentene som ikke er lagret i godkjent arkivformat skal konverteres til godkjent arkivformat.",O
+false,4,"De historiske basene skal være lukket for registreringer, men det skal være mulighet for søking og uttak av rapporter.",O
+false,5,"Det skal være mulig for nye brukere (brukere tilsatt etter at konvertering er foretatt) å gis tilgang til de historiske basene.",O
+false,6,"Leverandøren skal utarbeide en plan for konverteringen, samt rapporter, sjekklister, skjemaer og andre nødvendig dokumenter for å sikre kontroll med konverteringen. Planen skal godkjennes av kunden innen konvertering påbegynnes.",O
+
+# 7.1.4 Krav til integrasjon mot fagsystemer og interne og eksterne systemer
+false,0,"Sikre økt dokumentfangst, og lovmessig lagring av data fra forsystemer og fagsystemer."
+false,1,"Leverandøren skal i tilbudet prissette hver integrasjon i tråd med ansvaret leverandøren påtar seg for implementering, kvalitetssikring og vedlikehold av integrasjonen. Nødvendig 3. parts programvare for integrasjonen skal tas med i tilbudet.",O
+false,2,"Systemet skal kunne publisere postliste, eventuelt fulltekstdokumenter fra postliste og publisering av politisk saksbehandling og dokumenter til organisasjonens internettside.",O
+false,3,"Overføring av dokumenter til politisk behandling til alle typer enheter (PC, mobil, nettbrett o.l.)",1
+
+# 7.1.3 Krav til integrasjon mot kartsystem
+false,1,"Det er særlig viktig for den nye organisasjonen at det legges til rette for å kunne hente oppdatert kartinformasjon og registerinformasjon (Matrikkelen) inn i sakssystemet. I valg av nytt sakssystem vil det derfor legges stor vekt på tilrettelegging for geointegrasjon. I skrivende stund er det ennå ikke bestemt hvilket kartsystem den nye organisasjonen satser på å ta i bruk.", O(i)
+false,2,"Sak-arkivløsningen skal støtte siste versjon av Geointegrasjonstandarden (Plandialog).",O
+false,3,"Løsningen skal blant annet gi mulighet for: 1) Kontroll av oppgitt adresse i Matrikkelen, 2) Starte kartsystem og vise aktuell arealplan 3) Hente hjemmelshaver til sak – arkiv for eiendommer innenfor et planområde eller annet digitalisert område i kartsystemet 4) Starte kartsystem og vise aktuell eiendom . OBS. Listen er ikke uttømmende.",1
+false,4,"Løsningen skal legge til rette for geointegrasjon mot oppmålingssaker. (Oppmålingsdialog)",1
+false,5,"Det skal redegjøres for mulig geointegrasjon mot byggesaker (Byggesaksdialog)",1(i)
+
+# 7.1.2 Krav til mottak av elektroniske skjema
+false,0,"Å sikre organisasjonens innbyggere en enkel og papirløs metode for innsending av søknader etc til forvaltningen. Effektivisere arbeidet i forvaltningen med registrering og behandling av mottatte skjema."
+true,1,"NOARK 6.3.20 (V) Det skal finnes funksjonalitet for å hente inn både relevante svardata og transaksjonsopplysninger fra elektroniske skjemaer, og legge disse inn som mappe, registrering, dokumentbeskrivelse og dokument i en automatisert prosess.",1
+true,1,"NOARK 6.3.25 (V) For dynamiske skjemaer skal informasjon om aktuell versjon av skjema og presentasjonsprogramvare lagres sammen med eller som del av resultatdatasettet, innfelt i den skjemaversjonen som ble brukt ved utfylling av skjemaet.",1
+false,2,"I en tid med stadig økende digitalisering av offentlige tjenester er det behov for en egen «skjemamodul» integrert med sak/arkiv-systemet. Leverandøren bes opplyse om en slik modul er på plass, og evt. hvilke eksterne skjemamoduler det er utviklet integrasjon mot. Leverandør bes også beskrive i hvilken grad Kunden 	selv kan designe egne skjemaer dersom en skjemamodul er på plass, samt liste opp de «ferdige» skjemaene Kunden i så fall vil få tilgang til.",1(i)
+false,3,"Løsningen skal tilrettelegges for mottak av elektroniske skjema som er tilgjengeliggjort via organisasjonens internettsider."1
+false,4,"Tilrettelegging for mottak av elektroniske skjema skal gjøres slik at organisasjonen selv kan implementere elektroniske skjema i sak- og arkivløsningen ettersom man får ytterligere skjema tilgjengeliggjort elektronisk på internettsidene. Leverandøren skal gi en kort beskrivelse av hvordan løsningen tilrettelegger for dette.",1(i)
+false,5,"Leverandøren skal gi en beskrivelse av hvilke krav som stilles til de elektroniske skjemaene, og eventuelle andre forhold på kundens side, for at leverandøren skal kunne oppfylle NOARK5-krav 6.3.20 til 6.3.25 (krav til elektroniske skjema for utfylling over internett).",1(i)
+
+# 7.1.1 KRAV TIL SKANNING
+false,1,"Leverandøren skal ta det totale ansvaret for at den tilbudte skannerløsningen (programvare og oppsett) fungerer sammen med tilbudt sak- og arkivløsning.",O
+false,2,"Det skal være mulig å skanne inn dokumenter enkeltvis og deretter importere disse som en egen journalpost, eller som vedlegg til eksisterende journalpost.",O
+false,3,"Det skal være mulighet for bunkeskanning og direkte knytting av dokumenter til riktig journalpost f.eks. v.h.a. strekkoder. Leverandøren må beskrive hvilke krav til utstyr (printere, etiketter ol.) som finnes for at strekkoder skal kunne leses av løsningen.",O(i)
+false,4,"Skannerløsningen skal håndtere skanning av både ensidige og dobbeltsidige dokumenter.",O
+false,5,"Skannerløsningen skal håndtere skanning av minimum følgende formater; A3, A4, A5.",O
+false,6,"Skannerløsningen skal håndtere dokumenter med og uten farge, og dokumenter med bakgrunnsfarge og vannmerker.",O
+false,7,"Skannerløsningen skal automatisk velge å skanne til farger eller sort/hvitt basert på originaldokumentet.",O
+false,8,"Skannerløsningen skal ha funksjonalitet som sikrer at skannede originaldokumenter ikke kan redigeres.",O
+false,9,"Skannerløsningen skal tilby OCR-tolking av dokumenter som del av skanningen.", O
+false,10,"Tilbudt løsning skal ha mulighet for å omforme teksten i innskannede dokumenter til maskinredigerbar form ved hjelp av OCR-tolking av den innskannede teksten. Primært ønsker kunden at systemet skal støtte OCR-tolking i ettertid, når det er aktuelt å gjenbruke (deler av) teksten i et nytt dokument.",O
+false,11,"Skannerløsningen skal til enhver tid skanne dokumentene til godkjent arkivformat.",O
+false,12,"For saksbehandlere som tar utskrift av skannet dokument skal det fremgå av utskriften hvilken arkivsak og journalnummer dokumentet tilhører.",1
+false,13,"Løsningen skal støtte bruk av et utvalg av de mest brukte skannerprogramvarer. Leverandøren skal beskrive lisensbetingelser og eventuell andre økonomiske betingelser.",O(i)
+false,14,"Organisasjonen legger opp til sentralt postmottak. Leverandøren skal beskrive hvilket utstyr og oppsett som anbefales for å sørge for at tilbudt skannerløsning fungerer optimalt. Eventuelle absolutte minstekrav skal også beskrives. Leverandøren skal komme med anbefaling til bla; 1) Skannere, 2) Oppsett av skannere og skannerprogramvare i nettverk / infrastrukturen",O(i)
+
+
+# 6.1. Overordnede og generelle krav til grensesnitt
+false,1,"Det er svært viktig for oppdragsgiver at valgt system er tilrettelagt for komplett Noark5 tjenestegrensesnitt som skal kunne benyttes mot alle tjenester i Noark5-systemet, uavhengig av konformitetsnivåene i standarden. Leverandøren skal redegjøre for hvilke planer som foreligger i forhold til implementering av Noark5 tjenestegrensesnitt. Tidsplan skal inngå i redegjørelsen.", O(i)
+false,2,"Systemet skal håndtere eksport/import av data i åpne standarder, blant annet for å sikre integrasjon med framtidige portalløsninger.",O
+false,3,"Systemet skal ha mulighet for datafangst ved bruk av IOS, Android Microsoft og eventuelt andre håndholdte enheter. Leverandør bes beskrive løsningen.",1(i)
+false,4,"Systemet skal ha mulighet for dokumentfangst fra ulike typer kommunikasjonskanaler som f.eks SMS, Chat og sosiale media. Løsningen skal angi hvilken kommunikasjonskanal som er benyttet ved lagring av metadata. Leverandøren bes beskrive løsningen.",1(i)
+false,5,"Alle data og konfigurasjonsinnstillinger skal kunne eksporteres og importeres, fortrinnsvis ved hjelp av XML.",1
+false,6,"Løsningen skal være tilrettelagt for sømløs integrering med andre systemer, herunder pålogging, e-post og fagsystemer. Leverandøren skal beskrive tilgjengelige API’er (evt. som referanse til relevant systemdokumentasjon), samt hvilke eventuelle kostnadsposter som normalt må påregnes ved integrasjon av andre systemer med løsningen.",1(i)
+false,7,"Standardiseringsrådets referansekatalog for IKT-standarder i offentlig sektor gir føringer for hvilke åpne offentlige virksomheter må hastøtte for. Beskriv hvordan løsningen forholder seg til disse utvekslingsformatene.",1(i)
+false,8,"Systemet skal ha muligheter til utveksling av data og integrasjon med andre systemer via standardiserte, allment aksepterte, åpne grensesnitt (som f.eks. XML).",1
+false,9,"Systemet skal være kompatibelt med elektronisk signatur valgt for offentlig forvaltning.",1
+false,10,"Systemet skal ha integrasjon mot Noark 5 kjerne, basert på åpen kildekode.",1
+false,11,"Leverandøren skal redegjøre for hvordan NOARK5-kjernen er bygd opp for å oppnå integrasjon og samhandling mellom sak – og arkiv og fagsystemene. Leverandøren skal herunder beskrive muligheter og begrensninger knyttet til løsningen når det gjelder å benytte kjernen som lagringsplass for data fra fagsystemer.",O(i)
+
+# 5.1.5 Generelle tekniske krav 
+false,1,"Leverandøren skal opplyse om eventuelle ytterligere krav som stilles til komplett løsning, og som ikke er etterspurt her i andre krav. Både minimumskrav og anbefalte krav beskrives.", 1(i)
+false,2,"Systemet skal fungere med Microsoft Exchange 2013 som epostserver løsning.",1(i)
+false,3,"Systemet skal fungere tilfredsstillende med Microsoft Outlook som epost-klient.",1(i)
+false,4,"Organisasjonen har en eksisterende lisensavtale med Microsoft. Ved behov for Microsoft lisenser skal Leverandøren opplyse om hvilke lisenser som er påkrevet.",
+false,5,"Redegjør for hvordan løsningen ivaretar de sju overordnede prinsipper for IKT-arkitektur beskrevet i Difis dokument ”Overordnede IKT-arkitekturprinsipper for offentlig sektor”.",1(i)
+
+
+# 5.1.4 Krav til klienter
+false,1,"Gjeldende standard konfigurasjon for pc som benyttes som tykk saksbehandlerklinet er prosessor av type Intel I5 (4. generasjon og høyere) og 8 Gb ram hukommelse. Beskriv maskinvarekrav til PCer som kjører tykk saksbehandlerklienten. Både minimumskrav og anbefalte krav beskrives.",1(i)
+false,2,"Tykk saksbehandlerklient skal kjøres på PC’er med Windows 7 og nyere OS.",1(i)
+false,3,"Systemet skal ha en webbasert saksbehandlerklient der alle webbaserte funksjoner fungerer i de mest brukte nettleserne. Systemet skal fungere i Internet Explorer 11.",1
+false,4,"Hvis systemet forutsetter bruk av et bestemt program (f.eks. ved innskanning eller visning av innskannede dokumenter) skal leverandøren oppgi dette i tilbudet.",1(i)
+false,5,"Leverandøren skal beskrive hvilke tekstbehandlingsprogram som støttes. Systemet skal fungere med Microsoft Office 2010 og nyere. Leverandøren skal også beskrive hvilken politikk Leverandøren har for å sikre kompatibilitet med fremtidige versjoner av de tekstbehandlingsprogram som støttes.",2(i)
+false,6,"Systemet skal oppleves raskt, forutsigbart og konsistent av brukerne når det gjelder ytelse og responstider for både web-basert løsning og tykk saksbehandlerklient. Leverandøren skal beskrive hvordan dette skal oppfylles og hvilke forutsetninger som må være oppfylt (herunder linjekapasitet) for at de etterfølgende eksplisitte krav som stilles skal være mulig.", 1(i)
+false,7,"Leverandøren skal beskrive løsningens skalerbarhet mht ytelse ved økt antall brukere og økt innholdsvolum/saker.",1(i)
+
+# 5.1.3 Krav til servere 
+false,1,"Skal kjøres på virtuell plattform",1(i)
+false,2,"Dokumenter skal lagres i database og ikke direkte i filsystemet.",1
+false,3,"Leverandøren skal beskrive anbefalt design for / arkitekturmessig oppsett av samtlige servere og applikasjoner som løsningen består av.",1
+false,4,"Leverandøren skal foreta dette etter at kontrakt er signert."
+false,5,"Beskriv anbefalt maskinvarekrav til de servertypene som den anbefalte løsningen består av; databaseserver (e), applikasjonsserver (e), evt. webserver(e) etc.",1(i)
+false,6,"Organisasjonen har 4 stk Dell R730 servere med 2 cpu’er, 12 kjerner som plattform for VMWare. Systemet er planlagt implementert der.",
+false,7,"Når nye versjoner/oppgraderinger lanseres, skal leverandøren utarbeide dokumentasjon på gjennomføringen. Kundens it-personell får derved mulighet til å gjennomføre oppgraderingen selv. 6 Leverandøren skal dokumentere at saksbehandlerklienten kan kjøres i et Citrix-miljø på Citrix-servere, hvilke versjoner de har erfaringer fra, og minimumskravet til Citrix-versjon på server.",1(i)
+false,8,"Systemet må fungere problemfritt i et Windows 2008 R2 eller nyere servermiljø. Windows Server 2008 R2 / 2012 R2 er preferert. Leverandør skal oppgi minimum og anbefalt server OS versjon. Dersom det kreves en bestemt versjon som minimum, og dette medfører at Kunden må foreta en oppgradering/nedgradering, vil eventuelle omkostninger i forbindelse med dette bli lagt til ved vurderingen av tilbudet.",1(i)
+false,9,"Beskriv anbefalt løsning for komplett backup av systemet (tekniske spesifikasjoner).",1(i)
+
+#5.1.2 Tekniske krav
+false,1,"Systemet skal kjøres på virtuell plattform (i dag benyttes VMware)"
+false,2,"Systemet skal kunne kjøres med databasen MS SQL versjon 2008 og nyere."
+false,3,"Det bes opplyst hvilke andre nettlesere enn Microsoft Internet Explorer systemet støtter.",
+false,4," Systemet skal kunne kjøres på Citrix 7.0 og nyere versjoner",
+false,5,"For eventuelle framtidig konvertering må det være mulig å eksportere data fra systemet til eksterne filer."
+false,6,"Eksisterende historiske data skal overføres/konverteres til historisk base i det nye systemet.",
+false,7,"Klienter må kunne rulles ut vha. utrullingsverktøy Altiris og MS SCCM. Det må også gjelde alle fremtidige oppgraderinger av klienter.",
+false,8,"Når det kommer nye versjoner av Internet Explorer, Citrix, MS sql eller virtuelle servere, må leverandør si noe om hvor lang tid det vil ta før sak/arkiv-systemet støtter nyeste versjon",
+
+#5.1.1 Krav til arkivdatabase
+false,1,"Arkivdatabasen skal være strukturert i henhold til Noark 5 kravene og lagre all arkivdata i denne strukturen.",1
+false,2,"Arkivdatabasens struktur må være åpen og etterprøvbar.",1
+false,3,"Arkivdatabasen skal være logisk adskilt fra resten av systemet.",1
+false,4,"Arkivdatabasen skal ha Noark5 tjenestegrensesnitt for alle tjenester i basen, uavhengig av konformitetsnivåer.",1
+false,5,"Arkivdatabasen (alle filer og metadata) skal uavhengig av leverandør og teknisk kompetanse kunne eksporteres til arkivformat både løpende og ved avslutning/periodisering.",1
+
+#4.16.1 Krav til validering
+false,1,"Alle data som registreres i systemet skal gjennomgå den samme valideringen og kontrollen uavhengig av om dataene registreres manuelt, eller ved elektronisk overføring.",1
+false,2,"Feilregistreringer eller mangelfull registrering skal varsles umiddelbart i skjermbilder og skal kunne rettes direkte der.",1
+
+#4.15.1 Krav til sporbarhet og kontroll
+true,1,"NOARK 13.2.1 (V): Løsningen skal ha funksjoner som automatisk registrerer og lagrer opplysninger om definerte hendelser som har skjedd med dokumenter og metadata i løsningen.",1
+true,2,"NOARK 13.2.2 (V): Løsningen skal ha et register som spesifiserer hvilke hendelser (definerte regler) som skal utløse registrering av sporingsinformasjon",1
+true,3,"NOARK 13.2.4 (V): Forskjellige typer hendelser skal kunne logges til forskjellige eksterne filer eller databasetabeller. (Visse typer logger, for eksempel for revisjon av tilgangskontroller, må kunne slettes etter en avgrenset tid. Andre typer logger skal tas vare på lenge. Logger som skal slettes og logger som skal tas vare på skal holdes fra hverandre)",1
+true,4,"NOARK 13.2.6 (V): Loggingen skal være konfigurerbar. Som et minimum skal anbefalte loggingsregler kunne settes av eller på av system- eller arkivadministrator",1
+true,5,"NOARK 13.2.8 (V): Sporingsinformasjon skal være enkel å bla i, søke i og analysere, enten ved hjelp av funksjonalitet i sak- og arkivløsningen, eller ved hjelp av et tredjepartsprogram. Leverandøren skal angi hvilket av alternativene som er tilgjengelige.",2(i)
+true,6,"NOARK 13.2.9 (V): Sporingsinformasjon skal kunne leses eller skrives ut sortert etter minst disse kriteriene: 1) Kronologisk etter når hendelsen faktisk ble registrert i loggen, 2) Etter brukers påloggingsidentifikator, deretter kronologisk, 3) Etter organisatorisk enhet, deretter kronologisk",2
+7,"NOARK 13.2.11 (V): Som et konfigurerbart valg skal sporingsinformasjon kunne lagres internt i Noark 5-løsningen. Denne varianten er et alternativ til eksterne logger. Logg som lagres internt i arkivet vil primært være aktuelt for hendelser som det kan være relevant å gjøre tilgjengelig for brukere av ulike eksterne fagsystemer som bruker samme arkiv, for eksempel: 1) Lagring av ny eller endret informasjon i mapper, registreringer, dokumentbeskrivelser, klassifiseringsskjemaer og arkivstruktur, 2) Informasjon om konvertering av dokumenters filformat, lagring av nye varianter eller versjoner av dokumenter",1
+true,8,"NOARK 13.3.6 (V): Pålogging av brukere med ordinære roller, som gis tilgang til NOARK 5 kjernen enten direkte eller indirekte via integrert løsning. Følgende informasjon skal også kunne logges: 1) Valgt rolle eller tilgangsprofil for brukeren 2) Terminalidentitet, alternativt MAC-adresse eller IP-adresse",1
+true,9,"NOARK 13.3.7 (V): For alle typer pålogging skal mislykkede / avviste forsøk logges, med følgende informasjon: 1) Angitt – gyldig eller ugyldig – påloggings identifikator, 2) Angitt passord eller eventuell annen legitimering 3) Dato og tidspunkt for påloggingsforsøket, 4) Terminalidentitet, alternativt MAC-adresse eller IP-adresse",1
+true,10,"NOARK 13.3.8 (V): Logging for å kontrollere at handlinger er i tråd med tjenestlig behov bør være konfigurerbar på detaljert nivå. 1) Angi/avgrense hvilke autorisasjoner (roller, profiler eller lignende) det skal iverksettes logging for 2) Angi om det bare skal registreres at en endring har funnet sted, eller om også gammel verdi/ny verdi skal registreres 3) Angi om lesing av objekter skal logges 4) Angi om søketilslag skal logges 5) Angi om bruk av funksjoner for utskrift skal logges 6) Angi om bruk av funksjoner for lagring eller eksport av dokument eller metadata til filområde eller annet program utenfor Noark 5 kjernen skal logges",1
+true,11,"NOARK 13.4.2 (V): Ved første lagring av nytt inngående elektronisk dokument, som enten er skannet inn eller mottatt elektronisk, skal følgende logges: 1) Identifikator eller filnavn og plassering for dokumentet, som kan brukes til entydig identifikasjon i arkivet 2) Dato og tidspunkt for innskanning eller ankomst til elektronisk mottaksenhet (altså normalt før saksbehandler har begynt behandlingen) 3) Hvem: Løsning, organisatorisk enhet, evt. bruker eller rolle, som har utført lagringen 4) Dokumentformat (filtype, ekstensjon, mime vedleggstype eller lignende) 5) Eventuelt nytt dokumentformat dersom dokumentet er konvertert ved mottak 6) Lesbart = j/n, resultat av kontroll om program for å lese, fremføre eller redigere dokumentformatet var tilgjenglig ved opprettelsestidspunktet",1
+true,12,"NOARK 13.4.3 (V): Ved første lagring av nytt dokument produsert i NOARK 5-løsningen skal følgende logges: 1) Identifikator eller filnavn og plassering for dokumentet, som kan brukes til entydig identifikasjon i arkivet 2) Dato og tidspunkt for første lagring av identifikator som nevnt ovenfor 3) Bruker og rolle som har lagret dokumentet, og eventuelt hvilket fagsystem som er brukt 4) Dokumentets produksjonsformat (filtype, ekstensjon, mime vedleggstype eller lignende)",1
+true,13,"NOARK 13.4.5 (V): Sletting av dokumenter skal logges. Følgende skal logges i tillegg til obligatoriske elementer i kravet ovenfor: 1) Identifikator eller angivelse av filnavn og plassering som dokumentet er slettet fra 2) Kode eller beskrivelse av regel for rutinisert,automatisk sletting (opprydding av overflødige versjoner etc.) 3) Eventuelt angitt begrunnelse ved manuell sletting",1
+true,14,"NOARK 13.4.6 (V): Konvertering av dokumenter (endring av format) skal logges. Følgende kommer i tillegg til obligatoriske loggdata: 1) Gammelt filformat 2) Nytt filformat 3) Tidspunkt for konvertering, oppgavens varighet 4) Eventuelle statuskoder/feilmeldinger fra konverteringsprogrammet", 1
+true,15,"NOARK 13.4.7 (V): Ved systemgenerert/batch konvertering av dokumenter (endring av format) skal også opplysninger om utvalgskriteriene, starttidspunkt og varighet for hele jobben logges.",1 
+true,16,"Løsningen skal tilfredsstille alle valgfrie Noark 5-krav som gjelder logging av hendelser fra og med krav nr 13.4.17 til og med krav nr 13.4.36. Leverandøren skal angi hvilke krav som eventuelt ikke oppfylles, samt angi årsak og konsekvenser av dette.",1(i)
+
+
+#4.14.7 Krav til sikring av elektronisk avsendte og mottatte dokumenter
+true,1,"NOARK 12.4.1 (V): Hvis et inngående kryptert dokument er signert elektronisk av en annen enn den som er oppgitt som avsender, skal Noark 5-løsningen varsle om dette",1
+true,2,"NOARK 12.4.2 (V): Hvis dokument som nevnt ovenfor er sendt med et utvekslingsformat som normalt fører til at det behandles automatisk, skal det overføres til manuell behandling",1
+true,3,"NOARK 12.4.3 (V): Når organet sender ut et elektronisk dokument som er svar på et inngående elektronisk dokument, skal dokumentet sendes ut med minst like høyt sikkerhetsnivå som det inngående dokumentet hadde.",1
+true,4,"NOARK 12.4.4 (V): Dersom mottatte dokumenter skal lagres i kryptert form, skal de først dekrypteres og så krypteres på nytt med signaturer som organet selv har kontroll over, slik at man ikke er avhengig av avsenders offentlige nøkkel ved fremtidig bruk av dokumentet",1
+true,5,"NOARK 12.4.5 (V): Ved avlevering av elektronisk arkiv til arkivinstitusjon skal fortrinnsvis alle krypterte dokumenter dekrypteres",1
+true,6,"NOARK 12.4.6 (V): Dersom krypterte dokumenter skal forbli krypterte ved lagring i arkivinstitusjon, bør de først dekrypteres og så krypteres på nytt med signaturer som arkivinstitusjonen har kontroll over",1
+
+#4.14.6 Krav til håndtering av historiske brukeridenter
+true,1,"NOARK 12.2.16 (V): En påloggingsidentifikator («brukerident») som ikke lenger skal ha tilgang til løsningen skal kunne settes til status «passiv», som ikke gir muligheter for å logge på",1
+true,2,"NOARK 12.2.18 (V): Brukerens «fulle navn», og eventuelle initialer som brukes til å identifisere brukeren som saksbehandler i dokumenter og skjermbilder, skal kunne endres for en gitt brukerident. Endring av navn og initialer for en brukerident er bare aktuelt dersom samme person skifter navn, og ikke for å tildele en tidligere brukt identifikator til en annen person",1
+
+#4.14.5 Krav til identifisering av virksomhetseksterne brukere
+true,1,"NOARK 12.2.5 (V): Eksterne brukere, for eksempel journalister, borgere i alminnelighet, eller borgere og andre virksomheter i egenskap av parter i en sak, skal kunne gis tilgang til særskilt tilrettelagt ekstern løsning, med funksjonalitet begrenset til det aktuelle formålet.",1
+true,2,"NOARK 12.2.7 (V): Eksterne brukere kan autentiseres via ekstern, tredjeparts påloggingstjeneste. (Kravet er primært ment å dekke den offentlige sikkerhetsportalen til tjenesten Minside.no, men kan også få anvendelse for andre påloggingstjenester)",1
+true,3,"NOARK 12.2.9 (V): Ikke-identifiserte eller svakt autentiserte eksterne brukere skal kunne gis tilgang til publiseringsuttrekk som er atskilt fra Noark 5 kjernen, for å gi innsyn i saker og dokumenter",1
+true,4,"NOARK 12.3.7 (V): Dersom en person er autentisert som ekstern bruker, skal vedkommende selv kunne hente ut de opplysninger vedkommende har rett til innsyn i som part eller som registrert person gjennom tilrettelagt fagsystem eller innsynsløsning",1
+
+#4.14.4 Krav til autorisasjon av stedfortredere
+true,1,"NOARK 12.2.52 (V): En bruker skal kunne registreres som fast stedfortreder for en annen bruker",1
+true,2,"NOARK 12.2.53 (V): En bruker skal kunne registreres som tidsavgrenset stedfortreder for en annen bruker, med gyldighet fra dato til dato",1
+true,3,"NOARK 12.2.56 (V): Ved pålogging, eller i andre brukerdialoger der en påloggingsidentifikator kan velge mellom tilgjengelige roller eller tilgangsprofiler, skal det også listes opp hvilke brukere vedkommende har anledning til å være stedfortreder for, og velge å autorisere seg som en av disse",1
+true,4,"NOARK 12.2.57 (V): Stedfortrederen skal i utgangspunktet ha samme autorisasjon som den vedkommende er stedfortreder for",1
+true,5,"NOARK 12.2.58 (V): Dersom den man er stedfortreder for har flere roller, skal det være mulig å avgrense stedfortrederens tilganger til en mindre andel av disse rollene",1
+true,6,"NOARK 12.2.59 (V): For en eller flere angitte roller skal det være mulig å definere at den bestemte rollen ikke skal være delegerbar til stedfortreder.",1
+
+#4.14.3 Krav til autorisasjon og autentisering
+true,1,"NOARK 12.2.12 (V): Det skal kunne angis krav til passordets styrke (kompleksitet, lengde, varighet etc.)",O
+true,2,"NOARK 12.2.13 (V): Det skal kunne brukes andre og sterkere autentiseringsmåter som alternativ til passord",1
+true,3,"NOARK 12.2.15 (V): Dersom en svak autentisering anses tilstrekkelig for å bruke Noark 5-løsningen, skal det likevel legges opp til at påloggingen aksepteres også for en bruker som er sterkere autentisert enn det som egentlig er nødvendig",1
+true,4,"NOARK 12.2.21 (V): Et «need to protect» grunnprinsipp kan velges for lesetilganger i en eller flere eksterne løsninger",1
+true,5,"NOARK 12.2.22 (V): Ulike kombinasjoner av funksjonelle krav som stilles til brukerens autorisasjon skal kunne settes sammen til forskjellige funksjonelle roller, som uttrykker typiske stillingskategorier eller oppgaveporteføljer i virksomheten",1
+false,6,"NOARK 12.2.23 (V): For hver funksjonelle rolle skal det være mulig å definere et regelsett for prosessrelaterte rettigheter.",1
+true,7,"NOARK 12.2.24 (V): En bruker skal kunne ha flere ulike roller",O
+true,8,"NOARK 12.2.34 (V): Tilgangene for en bruker i en rolle skal kunne avgrenses innen angitt element i arkivstrukturen, ett av følgende: 1) Hele Noark 5-løsningen, 2) Logisk arkiv, 3) Arkivdel, 4) Mappe, 5) Registrering",O
+true,9,"NOARK 12.2.35 (V): Tilgangene for en bruker i en rolle skal kunne avgrenses innen angitte organisatoriske grenser, en av følgende: 1) Hele virksomheten, 2) Egen administrativ enhet uten underliggende enheter, 3) Egen administrativ enhet og underliggende enheter, 4) Navngitt annen administrativ enhet",O
+true,10,"NOARK 12.2.36 (V): Løsningen skal ha som et konfigurerbart valg en mulighet for å angi at den som er registrert som saksbehandler for en registrering automatisk også har redigeringsrettigheter til den",1
+true,11,"NOARK 12.2.38 (V): Tilgangene for en bruker i en rolle skal kunne avgrenses til visse saksområder, og (eller sakstyper) og/eller bare til saker produsert av et konkret angitt fagsystem",1
+true,12,"NOARK 12.2.43 (V): Innenfor hver av rollene som en bruker har, skal det kunne defineres en tilgangsprofil som utgjøres av rollens funksjonelle rettigheter i kombinasjon med nedslagsfeltet for rollen",1 
+true,13,"NOARK 12.2.44 (V): Dersom en påloggingsidentifikator har flere forskjellige tilgangsprofiler, skal vedkommende kunne velge blant de tilgangsprofilene som er definert for vedkommende.",O
+true,14,"NOARK 12.2.45 (V): Det skal kunne byttes mellom tilgangsprofiler på en måte som oppleves som enkel for brukeren",1
+false,15,"NOARK 12.2.46 (V): En av brukerens tilgangsprofiler skal kunne angis som standardprofil, som tilordnes ved pålogging hvis ikke annet angis særskilt",O 
+true,16,"NOARK 12.2.47 (V): Det skal være mulig å definere tilgangsprofiler som er slik at samme bruker kan ha definert forskjellige nedslagsfelter for en eller flere av sine roller",O
+false,17,"NOARK 12.2.63 (V): For en gitt, aktiv påloggingsidentifikator skal det være mulig å vise eller skrive ut en oversikt over hvilke rettigheter og fullmakter vedkommende har i Noark 5-løsningen",1
+true,18,"NOARK 12.2.64 (V): Det skal være mulig å vise eller skrive ut oversikt over hvilke fullmakter en bestemt rolle eller tilgangsprofil har i løsningen",1
+true,19,"NOARK 12.2.65 (V): For et gitt objekt i Noark 5-løsningen skal det være mulig å vise eller skrive ut hvilke brukere som har de ulike typene funksjonelle rettigheter til dette objektet",1
+false,20,"Det skal tilrettelegges for «single sign-on» slik at brukerens sentrale passord benyttes, og brukeren slipper å logge seg inn i sak- og arkivløsningen (med passord) etter pålogging mot Organisasjonens nettverk.",1
+false,21,"Det skal kunne tilrettelegges for integrasjon mot Kundens Active Directory.",1
+
+#4.14.2 Krav til roller og rettigheter
+false,1,"Løsningen skal tilfredsstille alle valgfrie krav til roller og tilknyttede rettigheter jf. NOARK5-standardens kapittel 11.2.2 (Krav 11.2.18 – 11.2.32). Leverandøren skal oppgi krav som eventuelt ikke er innfridd og redegjøre for konsekvensene av dette.",1 (i)
+false,2,"Løsningen skal tilfredsstille alle valgfrie krav til brukers relasjon til rolle, administrativ enhet og arkivdel jf. NOARK5-standardens kapittel 11.2.3 (Krav 11.2.33 – 11.2.46). Leverandøren skal oppgi krav som eventuelt ikke er innfridd og redegjøre for konsekvensene av dette.",1(i)
+false,3,"Det må være mulig å gjøre lokale tilpasninger, slik at man kan legge inn de rollene man har behov for i systemet.",1
+false,4,"Rettigheter og tilganger må være lett å administrere. Fortrinnvis basert på gruppemedlemskap.",1
+false,5,"Løsningen må gi støtte for differensiering av tilganger og rettigheter; herunder å gi brukerne ulike tilganger til ulike funksjoner i systemet. Tilgangsnivåene må baseres på roller og grupper.",O
+false,6,"Tilgangskontrollsystemet må ha en logisk oppbygging, det må være lett å lære, lett å bruke og lett å foreta endringer samtidig som sikkerheten ivaretas.",2
+false,7,"Det må være enkelt og raskt å endre tilganger og håndtere systemadministrasjon uten å måtte tilkalle leverandøren",1
+false,8,"Leverandøren skal beskrive hvordan sikkerheten ivaretas i tilgangskontrollsystemet",O(i)
+false,9,"Leverandøren skal beskrive hvordan sikkerheten ivaretas ved ekstern pålogging",O(i)
+
+#4.14.1 Overordnede krav til sikkerhet
+false,1,"Leverandøren skal gi en overordnet beskrivelse av hvordan sikkerheten (slik den defineres i innledningen til kap 7.1) i løsningen ivaretas.",O(i)
+false,2,"Løsningen skal ivareta de krav til sikkerhet som er satt i henhold til lover og forskrifter, herunder Datatilsynets krav til personsikkerhet. Leverandøren må opplyse om hvilke krav som stilles til Kunden, for at dette skal ivaretas.",O(i)
+false,3,"Løsningen skal være sikret på en slik måte at ingen kan få tilgang til informasjon de ikke er autorisert for. Dette gjelder uavhengig av om de benytter Løsningen eller et annet verktøy.",O
+
+
+#4.13.3 Krav til brukeradministrasjon
+true,1,"NOARK 11.2.1 (V): Det skal være mulig å opprette et vilkårlig antall brukere",O
+true,2,"NOARK 11.2.2 (V): Bruker skal bare kunne benytte de funksjoner og den informasjon som vedkommende er autorisert for",O
+true,3,"NOARK 11.2.3 (V): Det skal være mulig å bestemme aten person kan foreta registrering på vegne av en annen, og med dennes rettigheter",O
+true,4,"NOARK 11.2.4 (V): Det skal være mulig å registrere følgende metadata for bruker: 1) Brukerens nåværende, fulle navn, 2) Brukerens initialer, 3) Dato for når bruker ble opprettet, 4) Dato for når bruker utgår, 5) Alle tidligere navn, 6) Alle tidligere initialer",O
+true,5,"NOARK 11.2.5 (V): Det skal være mulig å endre opplysninger om et utvalg brukere. Endringene skal logges.",1
+true,6,"NOARK 11.2.6 (V): Det skal være mulig å endre opplysninger om en brukers navn og initialer.",O
+true,7,"NOARK 11.2.7 (V): Det skal ikke være mulig å slette en brukers navn.",O
+true,8,"NOARK 11.2.8 (V): Det skal finnes funksjoner for å bevare de(t) opprinnelige navnet / navnene på brukeren ved navneendringer",O
+true,9,"NOARK 11.2.9 (V): Alle navn og initialer skal kunne bevares i løsningen sammen med opplysninger om tidsrom for bruk",O
+true,10,"NOARK 11.2.10 (V): Løsningen skal holde rede på hvilke navn og initialer som tilhører samme person",O
+true,11,"NOARK 11.2.11 (V): Det skal være mulig å parameterstyre om et søk på bruker også skal omfatte samme bruker under tidligere navn",O
+true,12,"NOARK 11.2.12 (V): Det skal ikke være mulig å knytte nye mapper eller registreringer til en avsluttet (utgått) bruker",O
+true,13,"NOARK 11.2.13 (V): Det skal ikke være mulig å slette en bruker som har tilknyttet en mappe eller en registrering",O
+true,14,"NOARK 11.2.14 (V): Det skal være mulig å registrere adresse og andre kontoradministrative eller private data knyttet til en bruker, for eksempel telefon, faks, e-post, kontor, hjemmeadresse, mv.",1
+true,15,"NOARK 11.2.15 (V): Det skal være mulig å endre en adresse",O
+true,16,"NOARK 11.2.16 (V): Det skal være mulig å slette en adresse",O
+true,17,"NOARK 11.2.17 (V): Det skal være mulig å hente fram en adresse",O
+
+#4.13.2 Krav til administrativ struktur
+false,0,"Formål Å sikre at Organisasjonen kan organisere sin sak- og arkivløsning etter både en hierarkisk linjeorganisasjon og etter nettverksbaserte eller prosjektorienterte strukturer."
+true,1,"NOARK 11.1.1 (V): Det skal være mulig å opprette en hierarkisk, administrativ struktur med et ubegrenset antall nivåer",O
+true,2,"NOARK 11.1.2 (V): Det skal være mulig å opprette et ubegrenset antall administrative enheter på samme nivå",O
+true,3,"NOARK 11.1.3 (V): Det skal være mulig å opprette en matrisebasert administrativ struktur, som tillater f. eks. nettverksbaserte eller prosjektorienterte organisasjonsformer",O
+true,4,"NOARK 11.1.4 (V): Det skal være mulig å opprette en administrativ struktur som tillater en kombinasjon av hierarkiske og ikke-hierarkiske administrative strukturer",O
+true,5,"NOARK 11.1.5 (V): Det skal være mulig å registrere start- og sluttdato på en hel administrativ struktur",O
+true,6,"NOARK 11.1.6 (V): Det skal være mulig å registrere start- og sluttdato på deler av en administrativ struktur",O
+true,7,"NOARK 11.1.7 (V): Det skal være mulig å hente en eller flere avsluttede administrative strukturer",1
+true,8,"NOARK 11.1.8 (V): Det skal ikke være mulig å slette en administrativ struktur",O
+true,9,"NOARK 11.1.9 (V): Det skal være mulig å endre den administrative strukturen.",O
+true,10,"NOARK 11.1.10 (V): Det skal være mulig å føye til nye administrative enheter på et hvilket som helst nivå i strukturen",O
+true,11,"NOARK 11.1.11 (V): Det skal være mulig å endre opplysninger om en bestemt administrativ enhet. Endringene skal logges.",O
+true,12,"NOARK 11.1.12 (V): Det skal være mulig å endre opplysninger om et utvalg administrative enheter. Endringene skal logges.",O
+true,13,"NOARK 11.1.13 (V): Det skal være mulig å registrere følgende metadata for administrativ enhet: 1) Enhetens nåværende, fulle navn, 2) Enhetens kortnavn, 3) Dato for når enheten ble opprettet, 4) Dato for når enheten utgår, 5) Alle tidligere navn på enheten, 6) Alle tidligere kortnavn på enheten, 7) Adresse til administrativ enhet, inkl. evt. e-post",O
+true,14,"NOARK 11.1.14 (V): Det skal være mulig å endre opplysninger om en administrativ enhets navn",O
+true,15,"NOARK 11.1.15 (V): Det skal ikke være mulig å slette en administrativ enhets navn.",O
+true,16,"NOARK 11.1.16 (V): Det skal finnes funksjoner for å bevare de(t) opprinnelige navnet / navnene på administrative enheter ved navneendringer",O
+true,17,"NOARK 11.1.17 (V): Det skal være mulig å sette start- og sluttdato på en administrativ enhet",O
+true,18,"NOARK 11.1.18 (V): Det skal ikke være mulig å knytte nye mapper eller registreringer til en avsluttet administrativ enhet",O
+true,19,"NOARK 11.1.19 (V): Det skal ikke være mulig å slette en administrativ enhet som har tilknyttet en mappe eller en registrering",O
+true,20,"NOARK 11.1.20 (V): Det skal være mulig å parameterstyre om et søk på administrativ enhet også skal omfatte samme enhet under tidligere navn",O
+true,21,"NOARK 11.1.21 (V): Ved søk på en administrativ enhet, skal søket automatisk også omfatte eventuelle underliggende enheter. Dette skal kunne overstyres.",O
+true,22,"NOARK 11.1.22 (V): Den administrative strukturen skal være helt uavhengig av arkivstrukturen. Et arkiv eller en arkivdel skal derfor kunne dekke: 1) en hel administrativ enhet, 2) deler av en administrativ enhet, 3) flere administrative enheter, 4) andre typer administrative strukturer enn de hierarkiske",O
 
 #4.13.1 Overordnede krav til administrasjon av løsningen
-
+false,0,"Formål Å sikre ivaretakelse av at endringer i organisasjonsstruktur og administrasjon av løsningen kan håndteres smidig og uten behov for systemomarbeidelse."
+false,1,"Kunden vil ha behov for en løsning som tilbyr stor fleksibilitet med tanke på oppbygging og håndtering av strukturen for organisatoriske enheter. Kunden skal kunne strukturere arkivløsningen i henhold til egen organisasjon uten behov for at løsningen omarbeides av leverandøren",O
 
 #4.12.2 Krav til andre rapporter og statistikker
 true,1,"NOARK 6.5.12 (V): Krav til rapporten Offentlig journal - Rapporten skal i tillegg valgfritt kunne inneholde en eller flere av opplysningene nedenfor (så fremt de finnes i løsningen): Saksmappeinformasjon, Fra Saksmappe: AdministrativEnhet, saksansvarlig, tilgangsrestriksjon, skjermingshjemmel, Journalpostinformasjon, Fra Journalpost (sortert etter registreringsID hvis ikke annet er angitt): tilgangsrestriksjon skjermingsHjemmel administrativEnhet, saksbehandler",1
@@ -17,7 +255,7 @@ false,9,"Det skal være mulig for brukeren å lage egne rapporter. Disse rapport
 false,10,"Det skal være mulig for Kunden selv å definere nye «standardrapporter» som tilgjengelig gjøres for alle brukere eller for en gruppe brukere.",1
 
 #4.12.1 Krav til anbefalte statistikker og rapporter jf. NOARK5
-false,0,"Å gi kommunen mulighet til å skaffe seg informasjon om størrelse og sammensetning over tid for data lagret i løsningen."
+false,0,"Å gi Organisasjonen mulighet til å skaffe seg informasjon om størrelse og sammensetning over tid for data lagret i løsningen."
 false,1,"Løsningen skal tilfredsstille alle valgfrie krav til statistikker og rapporter jf. NOARK5-standardens kapittel 10.1 (Krav 10.1.1 – 10.1.38). Leverandøren skal oppgi krav som eventuelt ikke er innfridd. Leverandøren skal også angi hvilke krav som ikke er tilfredsstilt med en standardrapport.",1
 false,2,"Leverandøren skal redegjøre for hvordan bruker på alternative og brukervennlige måter kan fremskaffe den informasjonen som rapportene i nevnte krav har som formål å presentere.",1(i)
 
@@ -26,17 +264,17 @@ false,1,"Løsningen for publisering og presentasjon av offentlig journal på int
 false,2,"Leverandøren skal beskrive hvordan løsningen for publisering av offentlig journal ivaretar kravene til universell utforming.", O(i)
 
 #4.11.1 Funksjonalitet og presentasjon
-false,1,"Leverandøren skal gi en overordnet beskrivelse av tilbudt løsning for publisering av offentlige dokumenter via kommunens internettsider. Med offentlige dokumenter menes ALLE offentlige dokumenter fra forvaltningen, herunder offentlig journal, møte- og utvalgsdokumenter, dokumentasjon fra administrativt arkiv etc.",O (i)
+false,1,"Leverandøren skal gi en overordnet beskrivelse av tilbudt løsning for publisering av offentlige dokumenter via organisasjonens internettsider. Med offentlige dokumenter menes ALLE offentlige dokumenter fra forvaltningen, herunder offentlig journal, møte- og utvalgsdokumenter, dokumentasjon fra administrativt arkiv etc.",O (i)
 false,2,"Publiseringsløsninger skal følge Datatilsynets retningslinjer.",1
-false,3,"Det skal være mulig å gjøre offentlig journal direkte tilgjengelig via kommunens nettsted.",O
+false,3,"Det skal være mulig å gjøre offentlig journal direkte tilgjengelig via organisasjonens nettsted.",O
 false,4,"Den offentlige versjonen av et dokument skal kunne gjøres direkte tilgjengelig fra offentlig journal på internett.",O
-false,5,"Det skal være valgfritt for kommunen å publisere dokumentene tilknyttet journalpostene i offentlig journal. Det skal være mulig å velge å publisere dokumentene kun for visse typer saker eller for visse deler av organisasjonen.", O
+false,5,"Det skal være valgfritt for organisasjonen å publisere dokumentene tilknyttet journalpostene i offentlig journal. Det skal være mulig å velge å publisere dokumentene kun for visse typer saker eller for visse deler av organisasjonen.", O
 false,6,"Publisering av dokumenter skal kun skje i godkjent arkivformat.",O
-false,7,"Offentlig journal skal kunne legges ut automatisk, og til tidspunkt definert av kommunen. Det skal med andre ord ikke være nødvendig med manuelle operasjoner for å utføre selve publiseringen av offentlig journal.",1
+false,7,"Offentlig journal skal kunne legges ut automatisk, og til tidspunkt definert av organisasjonen. Det skal med andre ord ikke være nødvendig med manuelle operasjoner for å utføre selve publiseringen av offentlig journal.",1
 false,8,"Løsningen skal gjøre det mulig å definere en enkel godkjenningsprosess som sikrer at offentlig journal ikke publiseres før denne er godkjent av definerte brukere (eks arkivleder). Godkjenningsprosessen skal tilrettelegge for at bruker enkelt kan fjerne dokumenter som ikke skal publiseres.",O
 false,9,"Det skal være mulig for publikum å bestille innsyn i dokumenter som ikke er publisert. Å bestille innsyn skal kunne gjøres via en dedikert funksjon knyttet til sak og dokument.",1
 false,10,"Når det sendes anmodning om innsyn i en journalpost skal avsenders e-postadresse automatisk registreres inn i løsningen slik at ekspedering av forespurte dokumenter kan gjøres raskt og effektivt.",1
-false,11,"Det skal være mulig for kommunen selv å definere hvilken e-postadresse melding om innsynsbegjæring skal sendes til.",O
+false,11,"Det skal være mulig for organisasjonen selv å definere hvilken e-postadresse melding om innsynsbegjæring skal sendes til.",O
 false,12,"Ved offentliggjøring/publisering av tillegg til sakskart som allerede er publisert, må ikke tillegg erstatte allerede publiserte dokumenter",1
 
 #4.10 Krav til funksjonalitet for byggesaksmodul
@@ -94,7 +332,7 @@ true,2,"NOARK 9.4.24 (V): Det skal finnes en funksjon for at vedtak som blir reg
 true,3,"NOARK 9.4.25 (V): Det skal finnes en funksjon for at vedtak som blir registrert underveis i møtet, blir lagret i tilknytning til saken med status «ikke godkjent vedtak».",O
 true,4,"NOARK 9.4.26 (V): Det skal finnes en funksjon for at et vedtaksdokument får status som «godkjent vedtak» når protokollen er godkjent i henhold til godkjenningsrutinene.",O
 false,5,"I utkast til møteprotokoll skal det kunne registreres hvilke forslag som fremmes, avstemmingsresultat og utvalgets vedtak.",O
-false,6,"Saksprotokoll for den enkelte sak skal kunne produseres i møtet og overføres til kommunens internettsider. Se også krav til publisering av offentlige dokumenter.",O
+false,6,"Saksprotokoll for den enkelte sak skal kunne produseres i møtet og overføres til organisasjonens internettsider. Se også krav til publisering av offentlige dokumenter.",O
 false,7,"Saksprotokoll skal registreres som egen journalpost i arkivsystemet og være lett tilgjengelig fra utvalgsbehandlingen.",O
 
 #4.9.4 Krav til utvalgsbehandling – forberede møte
@@ -104,7 +342,7 @@ true,3,"NOARK 9.4.19 (V): Det skal være mulig å kunne merke at en sak til møt
 true,4,"NOARK 9.4.20 (V): Det skal være mulig å sette opp en behandlingsprosess for hver sak som skal behandles, dvs. hvilke beslutningsorganer saken skal opp i. Dette skal komme fram i sakspapirene til hver sak.",O
 true,5,"NOARK 9.4.21 (V): Det skal finnes en funksjon for å håndtere vararepresentanter for ordinære representanter som ikke kan møte.",O
 true,6,"NOARK 9.4.22 (V): Det skal finnes en funksjon for å sende ut innkalling til alle møtedeltakerne.",O
-false,7,"Melding om at sakskart, saksframlegg og vedlegg som er lagt ut på kommunens internettsider skal automatisk sendes til utvalgets medlemmer, varamedlemmer og abonnenter.",1
+false,7,"Melding om at sakskart, saksframlegg og vedlegg som er lagt ut på organisasjonens internettsider skal automatisk sendes til utvalgets medlemmer, varamedlemmer og abonnenter.",1
 false,8,"Vedlegg skal legge seg etter saken de tilhører når sakspapirer blir flettet.",1
 false,9,"Det skal være mulig å melde opp tilleggssaker / produsere tilleggssakspapirer etter at sakspapirene er ferdige.",O
 
@@ -231,7 +469,7 @@ false,21,"Ved ekspedering av saksprotokoll per e-post skal vedlegg tilknyttet de
 false,22,"All ekspedering av e-post med vedlegg skal logges, slik at det er mulig å dokumentere hva som er sendt, når det er sendt og til hvem det er sendt.",O
 false,23,"Det bør være mulig å utføre «masseutsending» der man fra løsningen angir at mottakerne ikke skal se hvem andre e-posten er sendt til (blindkopi).",2
 false,24,"Løsningen skal ha egne parametere for avsender av e-post. Administrator skal kunne velge hvilken adresse som skal stå som avsender på utgående e-post fra løsningen.",1
-false,25,"Løsningen skal ha flere valg for avsender av utgående e- post. Følgende alternativer må kunne defineres: 1) Kommunens generelle e-postadresse med Reply-To kommunens generelle e-postadresse, 2) Brukers e-postadresse med Reply-To kommunens generelle e-postadresse, 3) Brukers e-postadresse med Reply-To brukers e-postadresse",1
+false,25,"Løsningen skal ha flere valg for avsender av utgående e- post. Følgende alternativer må kunne defineres: 1) Organisasjonens generelle e-postadresse med Reply-To organisasjonens generelle e-postadresse, 2) Brukers e-postadresse med Reply-To organisasjonens generelle e-postadresse, 3) Brukers e-postadresse med Reply-To brukers e-postadresse",1
 
 #4.8.2 Krav til dokumentfangst, e-posthode og e-postmelding
 true,1,"NOARK 8.1.7 (V): Det skal finnes en tjeneste / funksjon som gjør det mulig automatisk å journalføre og arkivere dokumenter mottatt via e-post.",1
@@ -240,7 +478,7 @@ true,1,"NOARK 8.1.13 (V): Det skal være mulig å parameterstyre NOARK5-løsning
 
 #4.8.1 Overordnede krav til e-postfunksjonalitet
 false,0,"Sikre at all kommunikasjon mottatt og sendt via e-post blir journalført, samt effektivisere hverdagen ved å tilrettelegge for utstrakt bruk av e-post i saksbehandlingen."
-true,1,"Det skal være full integrasjon med kommunens e-postsystem.",O
+true,1,"Det skal være full integrasjon med organisasjonens e-postsystem.",O
 true,2,"NOARK 8.1.2 (V): I løsningen skal det være mulig å ekspedere e-post som saksdokument.",O
 true,3,"NOARK 8.1.3 (V): I løsningen skal det være mulig å ekspedere saksdokumenter som e-post direkte fra aktuelle moduler.",O
 true,4,"NOARK 8.1.4 (V): Innkommende e-post (med og uten vedlegg) skal kunne registreres direkte fra organets valgte e-postløsning.",O
@@ -251,7 +489,7 @@ true,6,"NOARK 8.1.6 (V): Det skal finnes en tjeneste / funksjon for at selve mel
 true,1,"NOARK 10.2.1 (V): Det skal være mulig å sette opp varslinger (f. eks. i form av meldingsbokser) når tidsfrister er overskredet m.v.",1
 false,2,"Løsningen skal kunne håndtere all saksbehandling elektronisk slik at man ikke blir tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen. Eventuelle begrensninger og forutsetninger knyttet til dette skal beskrives.",1(i)
 false,3,"Løsningen skal muliggjøre sikker og effektiv journalføring av sms/chat. Løsningen må også håndtere innkommende svar på sendte sms/chat. Leverandøren skal beskrive hvordan løsningen håndterer dette – ved utsendelse av sms/chat fra selve løsningen, alternativt også mulighet for journalføring av sms til og fra mobiltelefon.",1
-false,4,"Leverandøren skal beskrive hvordan tilbudt løsning tilrettelegger for forenklet registrering jf. NOARK5, og hvilke utfordringer bruk av forenklet registrering kan medføre for den enkelte bruker, og for kommunen.",O(i)
+false,4,"Leverandøren skal beskrive hvordan tilbudt løsning tilrettelegger for forenklet registrering jf. NOARK5, og hvilke utfordringer bruk av forenklet registrering kan medføre for den enkelte bruker, og for organisasjonen.",O(i)
 false,5,"Mottaker av notater skal enkelt kunne avskrive disse, dvs. det skal ikke være behov for mer enn én operasjon for å registrere et notat som mottatt og avskrevet.",1
 false,6,"Det skal være lett å få oversikt over egne restanser – henvendelser/dokumenter",O
 false,7,"Det skal være mulig å flette svarbrev til mange på en enkel måte, dvs. å produsere likelydende brev til mange mottakere.",O
@@ -294,7 +532,7 @@ true,9,"NOARK 7.6.9 (V): Det skal være mulig å sende et dokument som er under 
 true,10,"NOARK 7.6.10 (V): Det skal være mulig å sende et dokument som er under produksjon, til høring til flere samtidig (parallelt)",O
 true,11,"NOARK 7.6.11 (V): For dokument som er under produksjon, og som sendes på sekvensiell eller parallell dokumentflyt, skal det kunne parameterstyres om det automatisk skal opprettes nye versjoner for alle mottakere i flyten.",1
 true,12,"NOARK 7.6.12 (V): Det skal kunne parameterstyres om versjonering skal forekomme bare for enkelte roller, enheter, grupper eller personer. Dette skal kunne gjøres fast eller på ad-hoc-basis.",1
-true,13,"Det skal være enkelt for brukeren etter behov å gi saksbehandlere og ledere i kommunen tilgang til å arbeide med dokumenter i fellesskap.",1
+true,13,"Det skal være enkelt for brukeren etter behov å gi saksbehandlere og ledere i organisasjonen tilgang til å arbeide med dokumenter i fellesskap.",1
 
 # 4.7.4 Krav til saks-og dokumenthistorikk
 true,1,"NOARK 7.5.1 (V): Det skal være mulig, på en enkel måte, å spore fakta for den enkelte sak, både uavsluttete og avsluttete.",O
@@ -321,7 +559,7 @@ false,11,"Dersom flettefelter som ligger i malen ikke brukes i dokumentet som sk
 false,12,"Det skal være mulig å flette opplysninger på nytt ved endringer etter første gangs lagring.",O
 false,13,"Den enkelte bruker skal til enhver tid kun ha tilgang til de malene som er relevante knyttet til egen rolle og til den sakstypen vedkommende arbeider med.",O
 false,14,"Det skal være mulig å tilrettelegge malene slik at de stilene og den layout som er definert ikke kan endres av bruker (som ikke har tilgang til å administrere maler).",O 
-false,15,"Leverandøren skal som del av implementerings-prosjektet tilrettelegge standardmaler for brev, notat og møtebehandling. Disse skal danne grunnlag for at kommunen selv kan videreutvikle varianter av malene.",O
+false,15,"Leverandøren skal som del av implementerings-prosjektet tilrettelegge standardmaler for brev, notat og møtebehandling. Disse skal danne grunnlag for at organisasjonen selv kan videreutvikle varianter av malene.",O
 false,16,"Leverandøren skal levere dokumentasjon / bruksanvisning som gir Kunden nøyaktig innføring i hvordan maler skal opprettes og videreutvikles. Dokumentasjonen skal være tilpasset den løsningen som leveres Kunden.",O
 false,17,"Det skal være mulig å legge inn eksterne skjemaer/ blanketter slik at de kan benyttes på lik linje som maler.",1
 
@@ -469,7 +707,7 @@ true,1,"NOARK 5.11.10 (V): Det skal være mulig å overføre i en samlet, automa
 
 # 4.5.2 Krav til bevaring og kassasjon
 true,1,"NOARK 5.10.14 (V): Andre regler for beregning av bevaringsdato skal kunne være mulig.",O
-false,2,"Kommunen skal selv kunne definere kassasjonstidspunkt.",O
+false,2,"Organisasjonen skal selv kunne definere kassasjonstidspunkt.",O
 false,3,"Ved kassasjon skal dokumentene slettes fullstendig og ikke «bare fjerne koblingen» mellom journalpost og dokument. Det skal fremgå av løsningen at dokumentet er kassert.",O
 
 # 4.5.1 Krav til søkefunksjonalitet
