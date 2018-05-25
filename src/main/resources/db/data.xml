@@ -3082,7 +3082,7 @@
     </section>
 
     <section>
-      <sectionOrder></sectionOrder>
+      <sectionOrder>9</sectionOrder>
       <sectionTitle></sectionTitle>
       <description></description>
       <explanation></explanation>
@@ -3285,8 +3285,9 @@
         </requirements>
       </section>
     </section>
+
     <section>
-      <sectionOrder></sectionOrder>
+      <sectionOrder>10</sectionOrder>
       <sectionTitle>Krav til rapporter og statistikker</sectionTitle>
       <type>funksjonell</type>
       <showMe>true</showMe>
@@ -3392,27 +3393,1466 @@
       </section>
     </section>
 
+    <section>
+      <sectionOrder>11</sectionOrder>
+      <sectionTitle>Krav til administrasjon av løsningen</sectionTitle>
 
-    <!--
-        <section>
-          <sectionOrder>X</sectionOrder>
-          <sectionTitle></sectionTitle>
-          <description></description>
-          <explanation></explanation>
-          <consequence></consequence>
-          <type>funksjonell</type>
-          <showMe>true</showMe>
-          <requirements>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <section>
+        <sectionOrder>1</sectionOrder>
+        <sectionTitle>Overordnede krav til administrasjon av løsningen</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>0</showOrder>
+            <requirementText>Formål Å sikre ivaretakelse av at endringer i organisasjonsstruktur og administrasjon av løsningen kan håndteres smidig og uten behov for systemomarbeidelse.</requirementText>
+            <priority></priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>Kunden vil ha behov for en løsning som tilbyr stor fleksibilitet med tanke på oppbygging og håndtering av strukturen for organisatoriske enheter. Kunden skal kunne strukturere arkivløsningen i henhold til egen organisasjon uten behov for at løsningen omarbeides av leverandøren</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>2</sectionOrder>
+        <sectionTitle>Krav til administrativ struktur</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>0</showOrder>
+            <requirementText>Formål Å sikre at kommunen kan organisere sin sak- og arkivløsning etter både en hierarkisk linjeorganisasjon og etter nettverksbaserte eller prosjektorienterte strukturer.</requirementText>
+            <priority></priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 11.1.1 (V): Det skal være mulig å opprette en hierarkisk, administrativ struktur med et ubegrenset antall nivåer</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 11.1.2 (V): Det skal være mulig å opprette et ubegrenset antall administrative enheter på samme nivå</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 11.1.3 (V): Det skal være mulig å opprette en matrisebasert administrativ struktur, som tillater f. eks. nettverksbaserte eller prosjektorienterte organisasjonsformer</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 11.1.4 (V): Det skal være mulig å opprette en administrativ struktur som tillater en kombinasjon av hierarkiske og ikke-hierarkiske administrative strukturer</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 11.1.5 (V): Det skal være mulig å registrere start- og sluttdato på en hel administrativ struktur</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 11.1.6 (V): Det skal være mulig å registrere start- og sluttdato på deler av en administrativ struktur</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 11.1.7 (V): Det skal være mulig å hente en eller flere avsluttede administrative strukturer</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 11.1.8 (V): Det skal ikke være mulig å slette en administrativ struktur</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>NOARK 11.1.9 (V): Det skal være mulig å endre den administrative strukturen.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>NOARK 11.1.10 (V): Det skal være mulig å føye til nye administrative enheter på et hvilket som helst nivå i strukturen</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>NOARK 11.1.11 (V): Det skal være mulig å endre opplysninger om en bestemt administrativ enhet. Endringene skal logges.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>NOARK 11.1.12 (V): Det skal være mulig å endre opplysninger om et utvalg administrative enheter. Endringene skal logges.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>NOARK 11.1.13 (V): Det skal være mulig å registrere følgende metadata for administrativ enhet: 1) Enhetens nåværende, fulle navn, 2) Enhetens kortnavn, 3) Dato for når enheten ble opprettet, 4) Dato for når enheten utgår, 5) Alle tidligere navn på enheten, 6) Alle tidligere kortnavn på enheten, 7) Adresse til administrativ enhet, inkl. evt. e-post</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>14</showOrder>
+            <requirementText>NOARK 11.1.14 (V): Det skal være mulig å endre opplysninger om en administrativ enhets navn</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>15</showOrder>
+            <requirementText>NOARK 11.1.15 (V): Det skal ikke være mulig å slette en administrativ enhets navn.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>16</showOrder>
+            <requirementText>NOARK 11.1.16 (V): Det skal finnes funksjoner for å bevare de(t) opprinnelige navnet / navnene på administrative enheter ved navneendringer</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>17</showOrder>
+            <requirementText>NOARK 11.1.17 (V): Det skal være mulig å sette start- og sluttdato på en administrativ enhet</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>18</showOrder>
+            <requirementText>NOARK 11.1.18 (V): Det skal ikke være mulig å knytte nye mapper eller registreringer til en avsluttet administrativ enhet</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>19</showOrder>
+            <requirementText>NOARK 11.1.19 (V): Det skal ikke være mulig å slette en administrativ enhet som har tilknyttet en mappe eller en registrering</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>20</showOrder>
+            <requirementText>NOARK 11.1.20 (V): Det skal være mulig å parameterstyre om et søk på administrativ enhet også skal omfatte samme enhet under tidligere navn</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>21</showOrder>
+            <requirementText>NOARK 11.1.21 (V): Ved søk på en administrativ enhet, skal søket automatisk også omfatte eventuelle underliggende enheter. Dette skal kunne overstyres.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>22</showOrder>
+            <requirementText>NOARK 11.1.22 (V): Den administrative strukturen skal være helt uavhengig av arkivstrukturen. Et arkiv eller en arkivdel skal derfor kunne dekke: 1) en hel administrativ enhet, 2) deler av en administrativ enhet, 3) flere administrative enheter, 4) andre typer administrative strukturer enn de hierarkiske</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>3</sectionOrder>
+        <sectionTitle>Krav til brukeradministrasjon</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 11.2.1 (V): Det skal være mulig å opprette et vilkårlig antall brukere</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 11.2.2 (V): Bruker skal bare kunne benytte de funksjoner og den informasjon som vedkommende er autorisert for</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 11.2.3 (V): Det skal være mulig å bestemme aten person kan foreta registrering på vegne av en annen, og med dennes rettigheter</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 11.2.4 (V): Det skal være mulig å registrere følgende metadata for bruker: 1) Brukerens nåværende, fulle navn, 2) Brukerens initialer, 3) Dato for når bruker ble opprettet, 4) Dato for når bruker utgår, 5) Alle tidligere navn, 6) Alle tidligere initialer</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 11.2.5 (V): Det skal være mulig å endre opplysninger om et utvalg brukere. Endringene skal logges.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 11.2.6 (V): Det skal være mulig å endre opplysninger om en brukers navn og initialer.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 11.2.7 (V): Det skal ikke være mulig å slette en brukers navn.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 11.2.8 (V): Det skal finnes funksjoner for å bevare de(t) opprinnelige navnet / navnene på brukeren ved navneendringer</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>NOARK 11.2.9 (V): Alle navn og initialer skal kunne bevares i løsningen sammen med opplysninger om tidsrom for bruk</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>NOARK 11.2.10 (V): Løsningen skal holde rede på hvilke navn og initialer som tilhører samme person</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>NOARK 11.2.11 (V): Det skal være mulig å parameterstyre om et søk på bruker også skal omfatte samme bruker under tidligere navn</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>NOARK 11.2.12 (V): Det skal ikke være mulig å knytte nye mapper eller registreringer til en avsluttet (utgått) bruker</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>NOARK 11.2.13 (V): Det skal ikke være mulig å slette en bruker som har tilknyttet en mappe eller en registrering</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>14</showOrder>
+            <requirementText>NOARK 11.2.14 (V): Det skal være mulig å registrere adresse og andre kontoradministrative eller private data knyttet til en bruker, for eksempel telefon, faks, e-post, kontor, hjemmeadresse, mv.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>15</showOrder>
+            <requirementText>NOARK 11.2.15 (V): Det skal være mulig å endre en adresse</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>16</showOrder>
+            <requirementText>NOARK 11.2.16 (V): Det skal være mulig å slette en adresse</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>17</showOrder>
+            <requirementText>NOARK 11.2.17 (V): Det skal være mulig å hente fram en adresse</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
 
-          </requirements>
-        </section>
+    </section>
+    <section>
+      <sectionOrder>12</sectionOrder>
+      <sectionTitle>Krav til sikkerhet, sporbarhet og kontroll</sectionTitle>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
 
-    -->
+      <section>
+        <sectionOrder>1</sectionOrder>
+        <sectionTitle>Overordnede krav til sikkerhet</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>Leverandøren skal gi en overordnet beskrivelse av hvordan sikkerheten (slik den defineres i innledningen til kap 7.1) i løsningen ivaretas.</requirementText>
+            <priority>O(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Løsningen skal ivareta de krav til sikkerhet som er satt i henhold til lover og forskrifter, herunder Datatilsynets krav til personsikkerhet. Leverandøren må opplyse om hvilke krav som stilles til Kunden, for at dette skal ivaretas.</requirementText>
+            <priority>O(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Løsningen skal være sikret på en slik måte at ingen kan få tilgang til informasjon de ikke er autorisert for. Dette gjelder uavhengig av om de benytter Løsningen eller et annet verktøy.</requirementText>
+            <priority>O</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>2</sectionOrder>
+        <sectionTitle>Krav til roller og rettigheter</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>Løsningen skal tilfredsstille alle valgfrie krav til roller og tilknyttede rettigheter jf. NOARK5-standardens kapittel 11.2.2 (Krav 11.2.18 – 11.2.32). Leverandøren skal oppgi krav som eventuelt ikke er innfridd og redegjøre for konsekvensene av dette.</requirementText>
+            <priority>1 (i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>Løsningen skal tilfredsstille alle valgfrie krav til brukers relasjon til rolle, administrativ enhet og arkivdel jf. NOARK5-standardens kapittel 11.2.3 (Krav 11.2.33 – 11.2.46). Leverandøren skal oppgi krav som eventuelt ikke er innfridd og redegjøre for konsekvensene av dette.</requirementText>
+            <priority>1(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>Det må være mulig å gjøre lokale tilpasninger, slik at man kan legge inn de rollene man har behov for i systemet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>Rettigheter og tilganger må være lett å administrere. Fortrinnvis basert på gruppemedlemskap.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>Løsningen må gi støtte for differensiering av tilganger og rettigheter; herunder å gi brukerne ulike tilganger til ulike funksjoner i systemet. Tilgangsnivåene må baseres på roller og grupper.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>Tilgangskontrollsystemet må ha en logisk oppbygging, det må være lett å lære, lett å bruke og lett å foreta endringer samtidig som sikkerheten ivaretas.</requirementText>
+            <priority>2</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>Det må være enkelt og raskt å endre tilganger og håndtere systemadministrasjon uten å måtte tilkalle leverandøren</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>Leverandøren skal beskrive hvordan sikkerheten ivaretas i tilgangskontrollsystemet</requirementText>
+            <priority>O(i)</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>Leverandøren skal beskrive hvordan sikkerheten ivaretas ved ekstern pålogging</requirementText>
+            <priority>O(i)</priority>
+          </requirement>
+        </requirements>
+      </section>
+
+      <section>
+        <sectionOrder>3</sectionOrder>
+        <sectionTitle>Krav til autorisasjon og autentisering</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 12.2.12 (V): Det skal kunne angis krav til passordets styrke (kompleksitet, lengde, varighet etc.)</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 12.2.13 (V): Det skal kunne brukes andre og sterkere autentiseringsmåter som alternativ til passord</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 12.2.15 (V): Dersom en svak autentisering anses tilstrekkelig for å bruke Noark 5-løsningen, skal det likevel legges opp til at påloggingen aksepteres også for en bruker som er sterkere autentisert enn det som egentlig er nødvendig</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 12.2.21 (V): Et «need to protect» grunnprinsipp kan velges for lesetilganger i en eller flere eksterne løsninger</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 12.2.22 (V): Ulike kombinasjoner av funksjonelle krav som stilles til brukerens autorisasjon skal kunne settes sammen til forskjellige funksjonelle roller, som uttrykker typiske stillingskategorier eller oppgaveporteføljer i virksomheten</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 12.2.23 (V): For hver funksjonelle rolle skal det være mulig å definere et regelsett for prosessrelaterte rettigheter.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>7</showOrder>
+            <requirementText>NOARK 12.2.24 (V): En bruker skal kunne ha flere ulike roller</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>8</showOrder>
+            <requirementText>NOARK 12.2.34 (V): Tilgangene for en bruker i en rolle skal kunne avgrenses innen angitt element i arkivstrukturen, ett av følgende: 1) Hele Noark 5-løsningen, 2) Logisk arkiv, 3) Arkivdel, 4) Mappe, 5) Registrering</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>9</showOrder>
+            <requirementText>NOARK 12.2.35 (V): Tilgangene for en bruker i en rolle skal kunne avgrenses innen angitte organisatoriske grenser, en av følgende: 1) Hele virksomheten, 2) Egen administrativ enhet uten underliggende enheter, 3) Egen administrativ enhet og underliggende enheter, 4) Navngitt annen administrativ enhet</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>10</showOrder>
+            <requirementText>NOARK 12.2.36 (V): Løsningen skal ha som et konfigurerbart valg en mulighet for å angi at den som er registrert som saksbehandler for en registrering automatisk også har redigeringsrettigheter til den</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>11</showOrder>
+            <requirementText>NOARK 12.2.38 (V): Tilgangene for en bruker i en rolle skal kunne avgrenses til visse saksområder, og (eller sakstyper) og/eller bare til saker produsert av et konkret angitt fagsystem</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>12</showOrder>
+            <requirementText>NOARK 12.2.43 (V): Innenfor hver av rollene som en bruker har, skal det kunne defineres en tilgangsprofil som utgjøres av rollens funksjonelle rettigheter i kombinasjon med nedslagsfeltet for rollen</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>13</showOrder>
+            <requirementText>NOARK 12.2.44 (V): Dersom en påloggingsidentifikator har flere forskjellige tilgangsprofiler, skal vedkommende kunne velge blant de tilgangsprofilene som er definert for vedkommende.</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>14</showOrder>
+            <requirementText>NOARK 12.2.45 (V): Det skal kunne byttes mellom tilgangsprofiler på en måte som oppleves som enkel for brukeren</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>15</showOrder>
+            <requirementText>NOARK 12.2.46 (V): En av brukerens tilgangsprofiler skal kunne angis som standardprofil, som tilordnes ved pålogging hvis ikke annet angis særskilt</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>16</showOrder>
+            <requirementText>NOARK 12.2.47 (V): Det skal være mulig å definere tilgangsprofiler som er slik at samme bruker kan ha definert forskjellige nedslagsfelter for en eller flere av sine roller</requirementText>
+            <priority>O</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>17</showOrder>
+            <requirementText>NOARK 12.2.63 (V): For en gitt, aktiv påloggingsidentifikator skal det være mulig å vise eller skrive ut en oversikt over hvilke rettigheter og fullmakter vedkommende har i Noark 5-løsningen</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>18</showOrder>
+            <requirementText>NOARK 12.2.64 (V): Det skal være mulig å vise eller skrive ut oversikt over hvilke fullmakter en bestemt rolle eller tilgangsprofil har i løsningen</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>19</showOrder>
+            <requirementText>NOARK 12.2.65 (V): For et gitt objekt i Noark 5-løsningen skal det være mulig å vise eller skrive ut hvilke brukere som har de ulike typene funksjonelle rettigheter til dette objektet</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>20</showOrder>
+            <requirementText>Det skal tilrettelegges for «single sign-on» slik at brukerens sentrale passord benyttes, og brukeren slipper å logge seg inn i sak- og arkivløsningen (med passord) etter pålogging mot Organisasjonens nettverk.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>21</showOrder>
+            <requirementText>Det skal kunne tilrettelegges for integrasjon mot Kundens Active Directory.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>4</sectionOrder>
+        <sectionTitle>Krav til autorisasjon av stedfortredere</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 12.2.52 (V): En bruker skal kunne registreres som fast stedfortreder for en annen bruker</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 12.2.53 (V): En bruker skal kunne registreres som tidsavgrenset stedfortreder for en annen bruker, med gyldighet fra dato til dato</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 12.2.56 (V): Ved pålogging, eller i andre brukerdialoger der en påloggingsidentifikator kan velge mellom tilgjengelige roller eller tilgangsprofiler, skal det også listes opp hvilke brukere vedkommende har anledning til å være stedfortreder for, og velge å autorisere seg som en av disse</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 12.2.57 (V): Stedfortrederen skal i utgangspunktet ha samme autorisasjon som den vedkommende er stedfortreder for</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 12.2.58 (V): Dersom den man er stedfortreder for har flere roller, skal det være mulig å avgrense stedfortrederens tilganger til en mindre andel av disse rollene</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 12.2.59 (V): For en eller flere angitte roller skal det være mulig å definere at den bestemte rollen ikke skal være delegerbar til stedfortreder.</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>5</sectionOrder>
+        <sectionTitle>Krav til identifisering av virksomhetseksterne brukere</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 12.2.5 (V): Eksterne brukere, for eksempel journalister, borgere i alminnelighet, eller borgere og andre virksomheter i egenskap av parter i en sak, skal kunne gis tilgang til særskilt tilrettelagt ekstern løsning, med funksjonalitet begrenset til det aktuelle formålet.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 12.2.7 (V): Eksterne brukere kan autentiseres via ekstern, tredjeparts påloggingstjeneste. (Kravet er primært ment å dekke den offentlige sikkerhetsportalen til tjenesten Minside.no, men kan også få anvendelse for andre påloggingstjenester)</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 12.2.9 (V): Ikke-identifiserte eller svakt autentiserte eksterne brukere skal kunne gis tilgang til publiseringsuttrekk som er atskilt fra Noark 5 kjernen, for å gi innsyn i saker og dokumenter</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 12.3.7 (V): Dersom en person er autentisert som ekstern bruker, skal vedkommende selv kunne hente ut de opplysninger vedkommende har rett til innsyn i som part eller som registrert person gjennom tilrettelagt fagsystem eller innsynsløsning</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>6</sectionOrder>
+        <sectionTitle>Krav til håndtering av historiske brukeridenter</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 12.2.16 (V): En påloggingsidentifikator («brukerident») som ikke lenger skal ha tilgang til løsningen skal kunne settes til status «passiv», som ikke gir muligheter for å logge på</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 12.2.18 (V): Brukerens «fulle navn», og eventuelle initialer som brukes til å identifisere brukeren som saksbehandler i dokumenter og skjermbilder, skal kunne endres for en gitt brukerident. Endring av navn og initialer for en brukerident er bare aktuelt dersom samme person skifter navn, og ikke for å tildele en tidligere brukt identifikator til en annen person</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+      <section>
+        <sectionOrder>7</sectionOrder>
+        <sectionTitle>Krav til sikring av elektronisk avsendte og mottatte dokumenter</sectionTitle>
+        <description></description>
+        <explanation></explanation>
+        <consequence></consequence>
+        <type>funksjonell</type>
+        <showMe>true</showMe>
+        <requirements>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>NOARK 12.4.1 (V): Hvis et inngående kryptert dokument er signert elektronisk av en annen enn den som er oppgitt som avsender, skal Noark 5-løsningen varsle om dette</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>2</showOrder>
+            <requirementText>NOARK 12.4.2 (V): Hvis dokument som nevnt ovenfor er sendt med et utvekslingsformat som normalt fører til at det behandles automatisk, skal det overføres til manuell behandling</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>3</showOrder>
+            <requirementText>NOARK 12.4.3 (V): Når organet sender ut et elektronisk dokument som er svar på et inngående elektronisk dokument, skal dokumentet sendes ut med minst like høyt sikkerhetsnivå som det inngående dokumentet hadde.</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>4</showOrder>
+            <requirementText>NOARK 12.4.4 (V): Dersom mottatte dokumenter skal lagres i kryptert form, skal de først dekrypteres og så krypteres på nytt med signaturer som organet selv har kontroll over, slik at man ikke er avhengig av avsenders offentlige nøkkel ved fremtidig bruk av dokumentet</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>5</showOrder>
+            <requirementText>NOARK 12.4.5 (V): Ved avlevering av elektronisk arkiv til arkivinstitusjon skal fortrinnsvis alle krypterte dokumenter dekrypteres</requirementText>
+            <priority>1</priority>
+          </requirement>
+          <requirement>
+            <noarkRequirement>true</noarkRequirement>
+            <showOrder>6</showOrder>
+            <requirementText>NOARK 12.4.6 (V): Dersom krypterte dokumenter skal forbli krypterte ved lagring i arkivinstitusjon, bør de først dekrypteres og så krypteres på nytt med signaturer som arkivinstitusjonen har kontroll over</requirementText>
+            <priority>1</priority>
+          </requirement>
+        </requirements>
+      </section>
+    </section>
+
+    <section>
+      <sectionOrder>13</sectionOrder>
+      <sectionTitle>Krav til sporbarhet og kontroll</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>NOARK 13.2.1 (V): Løsningen skal ha funksjoner som automatisk registrerer og lagrer opplysninger om definerte hendelser som har skjedd med dokumenter og metadata i løsningen.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>NOARK 13.2.2 (V): Løsningen skal ha et register som spesifiserer hvilke hendelser (definerte regler) som skal utløse registrering av sporingsinformasjon</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>NOARK 13.2.4 (V): Forskjellige typer hendelser skal kunne logges til forskjellige eksterne filer eller databasetabeller. (Visse typer logger, for eksempel for revisjon av tilgangskontroller, må kunne slettes etter en avgrenset tid. Andre typer logger skal tas vare på lenge. Logger som skal slettes og logger som skal tas vare på skal holdes fra hverandre)</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>NOARK 13.2.6 (V): Loggingen skal være konfigurerbar. Som et minimum skal anbefalte loggingsregler kunne settes av eller på av system- eller arkivadministrator</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>NOARK 13.2.8 (V): Sporingsinformasjon skal være enkel å bla i, søke i og analysere, enten ved hjelp av funksjonalitet i sak- og arkivløsningen, eller ved hjelp av et tredjepartsprogram. Leverandøren skal angi hvilket av alternativene som er tilgjengelige.</requirementText>
+          <priority>2(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>NOARK 13.2.9 (V): Sporingsinformasjon skal kunne leses eller skrives ut sortert etter minst disse kriteriene: 1) Kronologisk etter når hendelsen faktisk ble registrert i loggen, 2) Etter brukers påloggingsidentifikator, deretter kronologisk, 3) Etter organisatorisk enhet, deretter kronologisk</requirementText>
+          <priority>2</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>7</noarkRequirement>
+          <showOrder>NOARK 13.2.11 (V): Som et konfigurerbart valg skal sporingsinformasjon kunne lagres internt i Noark 5-løsningen. Denne varianten er et alternativ til eksterne logger. Logg som lagres internt i arkivet vil primært være aktuelt for hendelser som det kan være relevant å gjøre tilgjengelig for brukere av ulike eksterne fagsystemer som bruker samme arkiv, for eksempel: 1) Lagring av ny eller endret informasjon i mapper, registreringer, dokumentbeskrivelser, klassifiseringsskjemaer og arkivstruktur, 2) Informasjon om konvertering av dokumenters filformat, lagring av nye
+            varianter eller versjoner av dokumenter
+          </showOrder>
+          <requirementText>1</requirementText>
+          <priority></priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>8</showOrder>
+          <requirementText>NOARK 13.3.6 (V): Pålogging av brukere med ordinære roller, som gis tilgang til NOARK 5 kjernen enten direkte eller indirekte via integrert løsning. Følgende informasjon skal også kunne logges: 1) Valgt rolle eller tilgangsprofil for brukeren 2) Terminalidentitet, alternativt MAC-adresse eller IP-adresse</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>9</showOrder>
+          <requirementText>NOARK 13.3.7 (V): For alle typer pålogging skal mislykkede / avviste forsøk logges, med følgende informasjon: 1) Angitt – gyldig eller ugyldig – påloggings identifikator, 2) Angitt passord eller eventuell annen legitimering 3) Dato og tidspunkt for påloggingsforsøket, 4) Terminalidentitet, alternativt MAC-adresse eller IP-adresse</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>10</showOrder>
+          <requirementText>NOARK 13.3.8 (V): Logging for å kontrollere at handlinger er i tråd med tjenestlig behov bør være konfigurerbar på detaljert nivå. 1) Angi/avgrense hvilke autorisasjoner (roller, profiler eller lignende) det skal iverksettes logging for 2) Angi om det bare skal registreres at en endring har funnet sted, eller om også gammel verdi/ny verdi skal registreres 3) Angi om lesing av objekter skal logges 4) Angi om søketilslag skal logges 5) Angi om bruk av funksjoner for utskrift skal logges 6) Angi om bruk av funksjoner for lagring eller eksport av dokument eller metadata
+            til filområde eller annet program utenfor Noark 5 kjernen skal logges
+          </requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>11</showOrder>
+          <requirementText>NOARK 13.4.2 (V): Ved første lagring av nytt inngående elektronisk dokument, som enten er skannet inn eller mottatt elektronisk, skal følgende logges: 1) Identifikator eller filnavn og plassering for dokumentet, som kan brukes til entydig identifikasjon i arkivet 2) Dato og tidspunkt for innskanning eller ankomst til elektronisk mottaksenhet (altså normalt før saksbehandler har begynt behandlingen) 3) Hvem: Løsning, organisatorisk enhet, evt. bruker eller rolle, som har utført lagringen 4) Dokumentformat (filtype, ekstensjon, mime vedleggstype eller lignende) 5)
+            Eventuelt nytt dokumentformat dersom dokumentet er konvertert ved mottak 6) Lesbart = j/n, resultat av kontroll om program for å lese, fremføre eller redigere dokumentformatet var tilgjenglig ved opprettelsestidspunktet
+          </requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>12</showOrder>
+          <requirementText>NOARK 13.4.3 (V): Ved første lagring av nytt dokument produsert i NOARK 5-løsningen skal følgende logges: 1) Identifikator eller filnavn og plassering for dokumentet, som kan brukes til entydig identifikasjon i arkivet 2) Dato og tidspunkt for første lagring av identifikator som nevnt ovenfor 3) Bruker og rolle som har lagret dokumentet, og eventuelt hvilket fagsystem som er brukt 4) Dokumentets produksjonsformat (filtype, ekstensjon, mime vedleggstype eller lignende)</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>13</showOrder>
+          <requirementText>NOARK 13.4.5 (V): Sletting av dokumenter skal logges. Følgende skal logges i tillegg til obligatoriske elementer i kravet ovenfor: 1) Identifikator eller angivelse av filnavn og plassering som dokumentet er slettet fra 2) Kode eller beskrivelse av regel for rutinisert,automatisk sletting (opprydding av overflødige versjoner etc.) 3) Eventuelt angitt begrunnelse ved manuell sletting</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>14</showOrder>
+          <requirementText>NOARK 13.4.6 (V): Konvertering av dokumenter (endring av format) skal logges. Følgende kommer i tillegg til obligatoriske loggdata: 1) Gammelt filformat 2) Nytt filformat 3) Tidspunkt for konvertering, oppgavens varighet 4) Eventuelle statuskoder/feilmeldinger fra konverteringsprogrammet</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>15</showOrder>
+          <requirementText>NOARK 13.4.7 (V): Ved systemgenerert/batch konvertering av dokumenter (endring av format) skal også opplysninger om utvalgskriteriene, starttidspunkt og varighet for hele jobben logges.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>16</showOrder>
+          <requirementText>Løsningen skal tilfredsstille alle valgfrie Noark 5-krav som gjelder logging av hendelser fra og med krav nr 13.4.17 til og med krav nr 13.4.36. Leverandøren skal angi hvilke krav som eventuelt ikke oppfylles, samt angi årsak og konsekvenser av dette.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+
+    <section>
+      <sectionOrder>14</sectionOrder>
+      <sectionTitle>Krav til validering</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirement>
+        <noarkRequirement>false</noarkRequirement>
+        <showOrder>1</showOrder>
+        <requirementText>Alle data som registreres i systemet skal gjennomgå den samme valideringen og kontrollen uavhengig av om dataene registreres manuelt, eller ved elektronisk overføring.</requirementText>
+        <priority>1</priority>
+      </requirement>
+      <requirement>
+        <noarkRequirement>false</noarkRequirement>
+        <showOrder>2</showOrder>
+        <requirementText>Feilregistreringer eller mangelfull registrering skal varsles umiddelbart i skjermbilder og skal kunne rettes direkte der.</requirementText>
+        <priority>1</priority>
+      </requirement>
+      <requirements>
+
+      </requirements>
+
+    </section>
 
 
   </chapter>
   <chapter>
-    <chapterTitle>2222222 Funksjonelle krav til ønsket løsning</chapterTitle>
+    <chapterTitle>Tekniske krav til ønsket løsning</chapterTitle>
+
+    <section>
+      <sectionOrder>1</sectionOrder>
+      <sectionTitle>Krav til arkivdatabase</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Arkivdatabasen skal være strukturert i henhold til Noark 5 kravene og lagre all arkivdata i denne strukturen.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Arkivdatabasens struktur må være åpen og etterprøvbar.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Arkivdatabasen skal være logisk adskilt fra resten av systemet.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Arkivdatabasen skal ha Noark5 tjenestegrensesnitt for alle tjenester i basen, uavhengig av konformitetsnivåer.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Arkivdatabasen (alle filer og metadata) skal uavhengig av leverandør og teknisk kompetanse kunne eksporteres til arkivformat både løpende og ved avslutning/periodisering.</requirementText>
+          <priority>1</priority>
+        </requirement>
+      </requirements>
+    </section>
+
+    <section>
+      <sectionOrder>2</sectionOrder>
+      <sectionTitle>Tekniske krav</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Systemet skal kjøres på virtuell plattform (i dag benyttes VMware)</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Systemet skal kunne kjøres med databasen MS SQL versjon 2008 og nyere.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Det bes opplyst hvilke andre nettlesere enn Microsoft Internet Explorer systemet støtter.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Systemet skal kunne kjøres på Citrix 7.0 og nyere versjoner</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>For eventuelle framtidig konvertering må det være mulig å eksportere data fra systemet til eksterne filer.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>Eksisterende historiske data skal overføres/konverteres til historisk base i det nye systemet.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>7</showOrder>
+          <requirementText>Klienter må kunne rulles ut vha. utrullingsverktøy Altiris og MS SCCM. Det må også gjelde alle fremtidige oppgraderinger av klienter.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>8</showOrder>
+          <requirementText>Når det kommer nye versjoner av Internet Explorer, Citrix, MS sql eller virtuelle servere, må leverandør si noe om hvor lang tid det vil ta før sak/arkiv-systemet støtter nyeste versjon</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>3</sectionOrder>
+      <sectionTitle>Krav til servere</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Skal kjøres på virtuell plattform</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Dokumenter skal lagres i database og ikke direkte i filsystemet.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Leverandøren skal beskrive anbefalt design for / arkitekturmessig oppsett av samtlige servere og applikasjoner som løsningen består av.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Leverandøren skal foreta dette etter at kontrakt er signert.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Beskriv anbefalt maskinvarekrav til de servertypene som den anbefalte løsningen består av; databaseserver (e), applikasjonsserver (e), evt. webserver(e) etc.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>Organisasjonen har 4 stk Dell R730 servere med 2 cpu’er, 12 kjerner som plattform for VMWare. Systemet er planlagt implementert der.</requirementText>
+          <priority></priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>7</showOrder>
+          <requirementText>Når nye versjoner/oppgraderinger lanseres, skal leverandøren utarbeide dokumentasjon på gjennomføringen. Kundens it-personell får derved mulighet til å gjennomføre oppgraderingen selv. 6 Leverandøren skal dokumentere at saksbehandlerklienten kan kjøres i et Citrix-miljø på Citrix-servere, hvilke versjoner de har erfaringer fra, og minimumskravet til Citrix-versjon på server.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>8</showOrder>
+          <requirementText>Systemet må fungere problemfritt i et Windows 2008 R2 eller nyere servermiljø. Windows Server 2008 R2 / 2012 R2 er preferert. Leverandør skal oppgi minimum og anbefalt server OS versjon. Dersom det kreves en bestemt versjon som minimum, og dette medfører at Kunden må foreta en oppgradering/nedgradering, vil eventuelle omkostninger i forbindelse med dette bli lagt til ved vurderingen av tilbudet.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>9</showOrder>
+          <requirementText>Beskriv anbefalt løsning for komplett backup av systemet (tekniske spesifikasjoner).</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>4</sectionOrder>
+      <sectionTitle>Krav til klienter</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Gjeldende standard konfigurasjon for pc som benyttes som tykk saksbehandlerklinet er prosessor av type Intel I5 (4. generasjon og høyere) og 8 Gb ram hukommelse. Beskriv maskinvarekrav til PCer som kjører tykk saksbehandlerklienten. Både minimumskrav og anbefalte krav beskrives.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Tykk saksbehandlerklient skal kjøres på PC’er med Windows 7 og nyere OS.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Systemet skal ha en webbasert saksbehandlerklient der alle webbaserte funksjoner fungerer i de mest brukte nettleserne. Systemet skal fungere i Internet Explorer 11.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Hvis systemet forutsetter bruk av et bestemt program (f.eks. ved innskanning eller visning av innskannede dokumenter) skal leverandøren oppgi dette i tilbudet.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Leverandøren skal beskrive hvilke tekstbehandlingsprogram som støttes. Systemet skal fungere med Microsoft Office 2010 og nyere. Leverandøren skal også beskrive hvilken politikk Leverandøren har for å sikre kompatibilitet med fremtidige versjoner av de tekstbehandlingsprogram som støttes.</requirementText>
+          <priority>2(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>Systemet skal oppleves raskt, forutsigbart og konsistent av brukerne når det gjelder ytelse og responstider for både web-basert løsning og tykk saksbehandlerklient. Leverandøren skal beskrive hvordan dette skal oppfylles og hvilke forutsetninger som må være oppfylt (herunder linjekapasitet) for at de etterfølgende eksplisitte krav som stilles skal være mulig.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>7</showOrder>
+          <requirementText>Leverandøren skal beskrive løsningens skalerbarhet mht ytelse ved økt antall brukere og økt innholdsvolum/saker.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>5</sectionOrder>
+      <sectionTitle>Generelle tekniske krav</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Leverandøren skal opplyse om eventuelle ytterligere krav som stilles til komplett løsning, og som ikke er etterspurt her i andre krav. Både minimumskrav og anbefalte krav beskrives.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Systemet skal fungere med Microsoft Exchange 2013 som epostserver løsning.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Systemet skal fungere tilfredsstillende med Microsoft Outlook som epost-klient.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Organisasjonen har en eksisterende lisensavtale med Microsoft. Ved behov for Microsoft lisenser skal Leverandøren opplyse om hvilke lisenser som er påkrevet.</requirementText>
+          <priority></priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Redegjør for hvordan løsningen ivaretar de sju overordnede prinsipper for IKT-arkitektur beskrevet i Difis dokument ”Overordnede IKT-arkitekturprinsipper for offentlig sektor”.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+
   </chapter>
 
+  <chapter>
+    <chapterTitle>Krav til integrasjoner i ønsket løsning</chapterTitle>
+    <section>
+      <sectionOrder>Overordnede og generelle krav til grensesnitt</sectionOrder>
+      <sectionTitle></sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Det er svært viktig for oppdragsgiver at valgt system er tilrettelagt for komplett Noark5 tjenestegrensesnitt som skal kunne benyttes mot alle tjenester i Noark5-systemet, uavhengig av konformitetsnivåene i standarden. Leverandøren skal redegjøre for hvilke planer som foreligger i forhold til implementering av Noark5 tjenestegrensesnitt. Tidsplan skal inngå i redegjørelsen.</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Systemet skal håndtere eksport/import av data i åpne standarder, blant annet for å sikre integrasjon med framtidige portalløsninger.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Systemet skal ha mulighet for datafangst ved bruk av IOS, Android Microsoft og eventuelt andre håndholdte enheter. Leverandør bes beskrive løsningen.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Systemet skal ha mulighet for dokumentfangst fra ulike typer kommunikasjonskanaler som f.eks SMS, Chat og sosiale media. Løsningen skal angi hvilken kommunikasjonskanal som er benyttet ved lagring av metadata. Leverandøren bes beskrive løsningen.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Alle data og konfigurasjonsinnstillinger skal kunne eksporteres og importeres, fortrinnsvis ved hjelp av XML.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>Løsningen skal være tilrettelagt for sømløs integrering med andre systemer, herunder pålogging, e-post og fagsystemer. Leverandøren skal beskrive tilgjengelige API’er (evt. som referanse til relevant systemdokumentasjon), samt hvilke eventuelle kostnadsposter som normalt må påregnes ved integrasjon av andre systemer med løsningen.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>7</showOrder>
+          <requirementText>Standardiseringsrådets referansekatalog for IKT-standarder i offentlig sektor gir føringer for hvilke åpne offentlige virksomheter må hastøtte for. Beskriv hvordan løsningen forholder seg til disse utvekslingsformatene.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>8</showOrder>
+          <requirementText>Systemet skal ha muligheter til utveksling av data og integrasjon med andre systemer via standardiserte, allment aksepterte, åpne grensesnitt (som f.eks. XML).</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>9</showOrder>
+          <requirementText>Systemet skal være kompatibelt med elektronisk signatur valgt for offentlig forvaltning.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>10</showOrder>
+          <requirementText>Systemet skal ha integrasjon mot Noark 5 kjerne, basert på åpen kildekode.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>11</showOrder>
+          <requirementText>Leverandøren skal redegjøre for hvordan NOARK5-kjernen er bygd opp for å oppnå integrasjon og samhandling mellom sak – og arkiv og fagsystemene. Leverandøren skal herunder beskrive muligheter og begrensninger knyttet til løsningen når det gjelder å benytte kjernen som lagringsplass for data fra fagsystemer.</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>2</sectionOrder>
+      <sectionTitle>Krav til mottak av elektroniske skjema</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>0</showOrder>
+          <requirementText>Å sikre organisasjonens innbyggere en enkel og papirløs metode for innsending av søknader etc til forvaltningen. Effektivisere arbeidet i forvaltningen med registrering og behandling av mottatte skjema.</requirementText>
+          <priority></priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>NOARK 6.3.20 (V) Det skal finnes funksjonalitet for å hente inn både relevante svardata og transaksjonsopplysninger fra elektroniske skjemaer, og legge disse inn som mappe, registrering, dokumentbeskrivelse og dokument i en automatisert prosess.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>true</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>NOARK 6.3.25 (V) For dynamiske skjemaer skal informasjon om aktuell versjon av skjema og presentasjonsprogramvare lagres sammen med eller som del av resultatdatasettet, innfelt i den skjemaversjonen som ble brukt ved utfylling av skjemaet.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>I en tid med stadig økende digitalisering av offentlige tjenester er det behov for en egen «skjemamodul» integrert med sak/arkiv-systemet. Leverandøren bes opplyse om en slik modul er på plass, og evt. hvilke eksterne skjemamoduler det er utviklet integrasjon mot. Leverandør bes også beskrive i hvilken grad Kunden selv kan designe egne skjemaer dersom en skjemamodul er på plass, samt liste opp de «ferdige» skjemaene Kunden i så fall vil få tilgang til.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Løsningen skal tilrettelegges for mottak av elektroniske skjema som er tilgjengeliggjort via organisasjonens internettsider.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Tilrettelegging for mottak av elektroniske skjema skal gjøres slik at organisasjonen selv kan implementere elektroniske skjema i sak- og arkivløsningen ettersom man får ytterligere skjema tilgjengeliggjort elektronisk på internettsidene. Leverandøren skal gi en kort beskrivelse av hvordan løsningen tilrettelegger for dette.</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Leverandøren skal gi en beskrivelse av hvilke krav som stilles til de elektroniske skjemaene, og eventuelle andre forhold på kundens side, for at leverandøren skal kunne oppfylle NOARK5-krav 6.3.20 til 6.3.25 (krav til elektroniske skjema for utfylling over internett).</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+
+    <section>
+      <sectionOrder>3</sectionOrder>
+      <sectionTitle>Krav til integrasjon mot kartsystem</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Det er særlig viktig for den nye organisasjonen at det legges til rette for å kunne hente oppdatert kartinformasjon og registerinformasjon (Matrikkelen) inn i sakssystemet. I valg av nytt sakssystem vil det derfor legges stor vekt på tilrettelegging for geointegrasjon. I skrivende stund er det ennå ikke bestemt hvilket kartsystem den nye organisasjonen satser på å ta i bruk.</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Sak-arkivløsningen skal støtte siste versjon av Geointegrasjonstandarden (Plandialog).</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Løsningen skal blant annet gi mulighet for: 1) Kontroll av oppgitt adresse i Matrikkelen, 2) Starte kartsystem og vise aktuell arealplan 3) Hente hjemmelshaver til sak – arkiv for eiendommer innenfor et planområde eller annet digitalisert område i kartsystemet 4) Starte kartsystem og vise aktuell eiendom . OBS. Listen er ikke uttømmende.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Løsningen skal legge til rette for geointegrasjon mot oppmålingssaker. (Oppmålingsdialog)</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Det skal redegjøres for mulig geointegrasjon mot byggesaker (Byggesaksdialog)</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+    <section>
+      <sectionOrder>4</sectionOrder>
+      <sectionTitle>Krav til integrasjon mot fagsystemer og interne og eksterne systemer</sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Det er særlig viktig for den nye organisasjonen at det legges til rette for å kunne hente oppdatert kartinformasjon og registerinformasjon (Matrikkelen) inn i sakssystemet. I valg av nytt sakssystem vil det derfor legges stor vekt på tilrettelegging for geointegrasjon. I skrivende stund er det ennå ikke bestemt hvilket kartsystem den nye organisasjonen satser på å ta i bruk.</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Sak-arkivløsningen skal støtte siste versjon av Geointegrasjonstandarden (Plandialog).</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Løsningen skal blant annet gi mulighet for: 1) Kontroll av oppgitt adresse i Matrikkelen, 2) Starte kartsystem og vise aktuell arealplan 3) Hente hjemmelshaver til sak – arkiv for eiendommer innenfor et planområde eller annet digitalisert område i kartsystemet 4) Starte kartsystem og vise aktuell eiendom . OBS. Listen er ikke uttømmende.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Løsningen skal legge til rette for geointegrasjon mot oppmålingssaker. (Oppmålingsdialog)</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Det skal redegjøres for mulig geointegrasjon mot byggesaker (Byggesaksdialog)</requirementText>
+          <priority>1(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+
+
+  </chapter>
+
+  <chapter>
+    <chapterTitle>Krav til skanning</chapterTitle>
+    <section>
+      <sectionOrder>1</sectionOrder>
+      <sectionTitle></sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Leverandøren skal ta det totale ansvaret for at den tilbudte skannerløsningen (programvare og oppsett) fungerer sammen med tilbudt sak- og arkivløsning.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Det skal være mulig å skanne inn dokumenter enkeltvis og deretter importere disse som en egen journalpost, eller som vedlegg til eksisterende journalpost.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Det skal være mulighet for bunkeskanning og direkte knytting av dokumenter til riktig journalpost f.eks. v.h.a. strekkoder. Leverandøren må beskrive hvilke krav til utstyr (printere, etiketter ol.) som finnes for at strekkoder skal kunne leses av løsningen.</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Skannerløsningen skal håndtere skanning av både ensidige og dobbeltsidige dokumenter.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Skannerløsningen skal håndtere skanning av minimum følgende formater; A3, A4, A5.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>Skannerløsningen skal håndtere dokumenter med og uten farge, og dokumenter med bakgrunnsfarge og vannmerker.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>7</showOrder>
+          <requirementText>Skannerløsningen skal automatisk velge å skanne til farger eller sort/hvitt basert på originaldokumentet.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>8</showOrder>
+          <requirementText>Skannerløsningen skal ha funksjonalitet som sikrer at skannede originaldokumenter ikke kan redigeres.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>9</showOrder>
+          <requirementText>Skannerløsningen skal tilby OCR-tolking av dokumenter som del av skanningen.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>10</showOrder>
+          <requirementText>Tilbudt løsning skal ha mulighet for å omforme teksten i innskannede dokumenter til maskinredigerbar form ved hjelp av OCR-tolking av den innskannede teksten. Primært ønsker kunden at systemet skal støtte OCR-tolking i ettertid, når det er aktuelt å gjenbruke (deler av) teksten i et nytt dokument.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>11</showOrder>
+          <requirementText>Skannerløsningen skal til enhver tid skanne dokumentene til godkjent arkivformat.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>12</showOrder>
+          <requirementText>For saksbehandlere som tar utskrift av skannet dokument skal det fremgå av utskriften hvilken arkivsak og journalnummer dokumentet tilhører.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>13</showOrder>
+          <requirementText>Løsningen skal støtte bruk av et utvalg av de mest brukte skannerprogramvarer. Leverandøren skal beskrive lisensbetingelser og eventuell andre økonomiske betingelser.</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>14</showOrder>
+          <requirementText>Organisasjonen legger opp til sentralt postmottak. Leverandøren skal beskrive hvilket utstyr og oppsett som anbefales for å sørge for at tilbudt skannerløsning fungerer optimalt. Eventuelle absolutte minstekrav skal også beskrives. Leverandøren skal komme med anbefaling til bla; 1) Skannere, 2) Oppsett av skannere og skannerprogramvare i nettverk / infrastrukturen</requirementText>
+          <priority>O(i)</priority>
+        </requirement>
+      </requirements>
+    </section>
+
+  </chapter>
+
+  <chapter>
+    <chapterTitle>Krav til konvertering</chapterTitle>
+    <section>
+      <sectionOrder>1</sectionOrder>
+      <sectionTitle></sectionTitle>
+      <description></description>
+      <explanation></explanation>
+      <consequence></consequence>
+      <type>funksjonell</type>
+      <showMe>true</showMe>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Alle metadata fra de aktive databasene og de historiske databasene i eksisterende journalsystem skal konverteres til valgt løsning, uten tap av data og struktur. Dette gjelder for alle de tre kommuners databaser.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Alle dokumenter fra aktive databaser og historiske baser skal konverteres over i ny løsning og enkelt tilgjengeliggjøres for saksbehandlerne.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>De dokumentene som ikke er lagret i godkjent arkivformat skal konverteres til godkjent arkivformat.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>De historiske basene skal være lukket for registreringer, men det skal være mulighet for søking og uttak av rapporter.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Det skal være mulig for nye brukere (brukere tilsatt etter at konvertering er foretatt) å gis tilgang til de historiske basene.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>Leverandøren skal utarbeide en plan for konverteringen, samt rapporter, sjekklister, skjemaer og andre nødvendig dokumenter for å sikre kontroll med konverteringen. Planen skal godkjennes av kunden innen konvertering påbegynnes.</requirementText>
+          <priority>O</priority>
+        </requirement>
+      </requirements>
+    </section>
+  </chapter>
 </chapters>
