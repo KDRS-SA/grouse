@@ -45,8 +45,6 @@ public class GrouseUserService
     public GrouseUser save(GrouseUser incomingUser) {
         checkGrouseUserExistThenThrow(incomingUser.getUsername());
         GrouseUser user = new GrouseUser();
-        user.setFirstname(incomingUser.getFirstname());
-        user.setLastname(incomingUser.getLastname());
         user.setPassword(encoder.encode(incomingUser.getPassword()));
         user.setUsername(incomingUser.getUsername());
         return userRepository.save(user);
@@ -57,8 +55,6 @@ public class GrouseUserService
             throws EntityNotFoundException {
         GrouseUser originalGrouseUser = getGrouseUserOrThrow(id);
 
-        originalGrouseUser.setFirstname(user.getFirstname());
-        originalGrouseUser.setLastname(user.getLastname());
         originalGrouseUser.setPassword(encoder.encode(user.getPassword()));
 
         return originalGrouseUser;
@@ -87,7 +83,7 @@ public class GrouseUserService
     }
 
     /**
-     * Internal helper method. Check if User exists
+     * Internal helper method. Check if GrouseUser exists
      *
      * @param id The systemId of the user object to check existence
      */

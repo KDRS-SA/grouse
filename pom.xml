@@ -2,255 +2,268 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.kdrs.grouse</groupId>
-    <artifactId>kravspec</artifactId>
-    <version>1.0-SNAPSHOT</version>
+  <groupId>no.kdrs.grouse</groupId>
+  <artifactId>kravspec</artifactId>
+  <version>1.0-SNAPSHOT</version>
 
-    <description>
-        Application to create a Noark 5 requirements document. The application
-        is implemented as a REST application.
-    </description>
+  <description>
+    Application to create a Noark 5 requirements document. The application
+    is implemented as a REST application.
+  </description>
 
-    <parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.0.0.RELEASE</version>
+    <relativePath/>
+  </parent>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <failOnMissingWebXml>false</failOnMissingWebXml>
+    <java.version>1.8</java.version>
+    <!-- commons and utils -->
+    <commons-lang3.version>3.4</commons-lang3.version>
+    <jquery.version>3.2.1</jquery.version>
+    <bootstrap.version>4.0.0-2</bootstrap.version>
+    <angularjs.version>1.6.6</angularjs.version>
+    <font-awesome.version>5.0.9</font-awesome.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- For the REST stuff -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- CRUDRepository etc ..-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- Security etc ..-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.springframework.security.oauth</groupId>
+      <artifactId>spring-security-oauth2</artifactId>
+    </dependency>
+
+    <!-- Hateoas links etc ..-->
+    <dependency>
+      <groupId>org.springframework.hateoas</groupId>
+      <artifactId>spring-hateoas</artifactId>
+    </dependency>
+
+    <!-- Used for things like EqualsBuilder -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+    </dependency>
+
+    <!-- In memory database, used for demo mode only -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+    </dependency>
+
+    <!-- Default profile is production and it uses mysql -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
+    <!-- Used to create a MS Word requirements document -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.17</version>
+    </dependency>
+
+    <!-- logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- WebJar dependencies to download js stuff for GUI -->
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>angularjs</artifactId>
+      <version>${angularjs.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>${bootstrap.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>font-awesome</artifactId>
+      <version>${font-awesome.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>${jquery.version}</version>
+    </dependency>
+
+    <!-- Used for PATCH functionality -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20180130</version>
+    </dependency>
+
+
+    <!-- Testing stuff -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security.oauth</groupId>
+      <artifactId>spring-security-oauth2</artifactId>
+      <version>2.3.0.RELEASE</version>
+    </dependency>
+
+  </dependencies>
+
+
+  <build>
+    <plugins>
+      <!-- spring-boot-maven-plugin -->
+      <plugin>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
         <version>2.0.0.RELEASE</version>
-        <relativePath/>
-    </parent>
+      </plugin>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-        <java.version>1.8</java.version>
-        <!-- commons and utils -->
-        <commons-lang3.version>3.4</commons-lang3.version>
-        <jquery.version>3.2.1</jquery.version>
-        <bootstrap.version>4.0.0-2</bootstrap.version>
-        <angularjs.version>1.6.6</angularjs.version>
-        <font-awesome.version>5.0.9</font-awesome.version>
-    </properties>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <includes>
+            <include>ClientIntegrationTest.java</include>
+          </includes>
+        </configuration>
+      </plugin>
 
-    <dependencies>
-
-        <!-- CRUDRepository etc ..-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <!-- For the REST stuff -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.hateoas</groupId>
-            <artifactId>spring-hateoas</artifactId>
-        </dependency>
-
-        <!-- Used for things like EqualsBuilder -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-        </dependency>
-
-        <!-- In memory database, used for demo mode only -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-
-        <!-- Default profile is production and it uses mysql -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <!-- Used to create a MS Word requirements document -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>3.17</version>
-        </dependency>
-
-        <!-- logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- WebJar dependencies to download js stuff for GUI -->
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angularjs</artifactId>
-            <version>${angularjs.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>${bootstrap.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>font-awesome</artifactId>
-            <version>${font-awesome.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>${jquery.version}</version>
-        </dependency>
-
-        <!-- Used for PATCH functionality -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20180130</version>
-        </dependency>
-
-
-        <!-- Testing stuff -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
-
-    <build>
-        <plugins>
-            <!-- spring-boot-maven-plugin -->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.0.0.RELEASE</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>ClientIntegrationTest.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angularjs</artifactId>
-                                    <version>${angularjs.version}</version>
-                                    <type>jar</type>
-                                    <includes>**/*.js</includes>
-                                    <outputDirectory>
-                                        ${project.basedir}/web/dependencies/vendor/
-                                    </outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>bootstrap</artifactId>
-                                    <version>${bootstrap.version}</version>
-                                    <type>jar</type>
-                                    <includes>**/*.js</includes>
-                                    <outputDirectory>
-                                        ${project.basedir}/web/dependencies/vendor/
-                                    </outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>bootstrap</artifactId>
-                                    <version>${bootstrap.version}</version>
-                                    <type>jar</type>
-                                    <includes>**/*.css</includes>
-                                    <outputDirectory>
-                                        ${project.basedir}/web/dependencies/vendor/
-                                    </outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>font-awesome</artifactId>
-                                    <version>${font-awesome.version}</version>
-                                    <type>jar</type>
-                                    <includes>**/*.css</includes>
-                                    <outputDirectory>
-                                        ${project.basedir}/web/dependencies/vendor/
-                                    </outputDirectory>
-                                </artifactItem>
-                                <!-- 3.3.7-1 version left in temp until
-                                GUI is updated to 4.0 -->
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>bootstrap</artifactId>
-                                    <version>3.3.7-1</version>
-                                    <type>jar</type>
-                                    <includes>**/*.js</includes>
-                                    <outputDirectory>
-                                        ${project.basedir}/web/dependencies/vendor/
-                                    </outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>bootstrap</artifactId>
-                                    <version>3.3.7-1</version>
-                                    <type>jar</type>
-                                    <includes>**/*.css</includes>
-                                    <outputDirectory>
-                                        ${project.basedir}/web/dependencies/vendor/
-                                    </outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>jquery</artifactId>
-                                    <version>${jquery.version}</version>
-                                    <type>jar</type>
-                                    <includes>**/*.js</includes>
-                                    <outputDirectory>
-                                        ${project.basedir}/web/dependencies/vendor/
-                                    </outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>angularjs</artifactId>
+                  <version>${angularjs.version}</version>
+                  <type>jar</type>
+                  <includes>**/*.js</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>bootstrap</artifactId>
+                  <version>${bootstrap.version}</version>
+                  <type>jar</type>
+                  <includes>**/*.js</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>bootstrap</artifactId>
+                  <version>${bootstrap.version}</version>
+                  <type>jar</type>
+                  <includes>**/*.css</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>font-awesome</artifactId>
+                  <version>${font-awesome.version}</version>
+                  <type>jar</type>
+                  <includes>**/*.css</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
+                <!-- 3.3.7-1 version left in temp until
+                GUI is updated to 4.0 -->
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>bootstrap</artifactId>
+                  <version>3.3.7-1</version>
+                  <type>jar</type>
+                  <includes>**/*.js</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>bootstrap</artifactId>
+                  <version>3.3.7-1</version>
+                  <type>jar</type>
+                  <includes>**/*.css</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>jquery</artifactId>
+                  <version>${jquery.version}</version>
+                  <type>jar</type>
+                  <includes>**/*.js</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

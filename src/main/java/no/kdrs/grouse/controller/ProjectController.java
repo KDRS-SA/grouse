@@ -64,14 +64,27 @@ public class ProjectController {
                 .body(projectRequirements);
     }
 
+/*
     @RequestMapping(value = "/{prosjektnummer}/" + FUNCTIONALITY,
+            method = RequestMethod.GET)
+    public ResponseEntity<List<ProjectFunctionality>>
+    getFunctionalityHeadersForProject(
+            @PathVariable("prosjektnummer") Long projectId) {
+        List<ProjectFunctionality> projectFunctionalities =
+                projectService.findFunctionalityForProject(projectId);
+
+
+    }
+*/
+        @RequestMapping(value = "/{prosjektnummer}/" + FUNCTIONALITY,
             method = RequestMethod.GET)
     public ResponseEntity<List<ProjectFunctionality>>
     getFunctionalityForProject(
             @PathVariable("prosjektnummer") Long projectId) {
 
         List<ProjectFunctionality> projectFunctionalities =
-                projectService.findFunctionalityForProject(projectId);
+                projectService.findFunctionalityForProjectByType(projectId,
+                        "mainmenu");
 
         for (ProjectFunctionality projectFunctionality :
                 projectFunctionalities) {

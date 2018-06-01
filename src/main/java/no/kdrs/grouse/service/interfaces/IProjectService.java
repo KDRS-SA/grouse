@@ -23,6 +23,7 @@ public interface IProjectService {
     List<Project> findByReferenceUser (GrouseUser user);
     List<ProjectRequirement> findByProjectIdOrderByProjectName (
             Long projectId, String functionalityNumber);
-    List<ProjectFunctionality> findFunctionalityForProject(Long projectId);
+    List<ProjectFunctionality> findFunctionalityForProjectByType(
+            Long projectId, String type);
 
 }

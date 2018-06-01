@@ -13,6 +13,8 @@ public interface IFunctionalityRepository
     @Override
     List<Functionality> findAll();
 
+    List<Functionality> findAllByOrderByFunctionalityNumber();
+
     List<Functionality> findByShowMeAndReferenceParentFunctionality(
             Boolean menuItem, Functionality parent);
     Functionality findByFunctionalityNumber(String functionalityNumber);

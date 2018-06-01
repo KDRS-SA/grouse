@@ -5,7 +5,7 @@ package no.kdrs.grouse.utils.exception;
  * <p>
  * Just a simple way to identify various Exceptions the application can throw.
  * <p>
- * This one is used when creating a User account, but you want to tell the
+ * This one is used when creating a GrouseUser account, but you want to tell the
  * client the user already exists
  */
 public class UserAlreadyExistsException

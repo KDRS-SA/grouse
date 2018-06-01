@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -70,15 +71,16 @@ public class ProjectService
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List<ProjectFunctionality> findFunctionalityForProject(
-            Long projectId) {
+    public List<ProjectFunctionality> findFunctionalityForProjectByType(
+            Long projectId, String type) {
 
         Project project = new Project();
         project.setProjectId(projectId);
 
         List<ProjectFunctionality> projectRequirements =
                 projectFunctionalityRepository.
-                        findByReferenceProjectAndShowMe(project, true);
+                        findByReferenceProjectAndTypeAndShowMe(project,
+                                type, true);
 
         return projectRequirements;
     }
@@ -98,7 +100,7 @@ public class ProjectService
      * Create a new project.
      * <p>
      * The following steps are performed:
-     * 1. Retrieve User object from loggedin user and associate with project
+     * 1. Retrieve GrouseUser object from loggedin user and associate with project
      * 2. Copy all SRequirement objects and create ProjectRequirement objects
      * 3. Copy all Functionality objects and create ProjectFunctionality objects
      * <p>
@@ -133,18 +135,32 @@ public class ProjectService
 
     @Override
     @SuppressWarnings("unchecked")
+    /**
+     *
+     * It is expecting an ordering of rows in the table to ensure that it's
+     * easy to pick out the child/parent relationship
+     */
     public void createProject_B(Project project) {
 
 
-        ArrayList<Functionality> functionalities =
-                (ArrayList) functionalityRepository.findAll();
+        ArrayList<Functionality> functionalities = (ArrayList)
+                functionalityRepository.
+                        findAllByOrderByFunctionalityNumber();
+
+        ProjectFunctionality newParent = null;
+        String parentFunctionalityNumber = "0";
+
+        HashMap<String, ProjectFunctionality> parents = new HashMap<>();
+
         for (Functionality functionality : functionalities) {
+
             ProjectFunctionality projectFunctionality =
                     new ProjectFunctionality();
-            projectFunctionality.setTitle(
-                    functionality.getTitle());
+
             projectFunctionality.setFunctionalityNumber(
                     functionality.getFunctionalityNumber());
+            projectFunctionality.setTitle(
+                    functionality.getTitle());
             projectFunctionality.setConsequence(
                     functionality.getConsequence());
             projectFunctionality.setDescription(
@@ -158,6 +174,26 @@ public class ProjectService
             projectFunctionality.setProcessed(false);
             projectFunctionality.setActive(false);
             projectFunctionality.setReferenceProject(project);
+
+            Functionality parentFunctionality =
+                    functionality.getReferenceParentFunctionality();
+
+            parents.put(functionality.getFunctionalityNumber(),
+                    projectFunctionality);
+
+            if (parentFunctionality != null) {
+                ProjectFunctionality parentProjectFunctionality =
+                        parents.get(functionality
+                                .getReferenceParentFunctionality().
+                                        getFunctionalityNumber());
+                projectFunctionality.setReferenceParentFunctionality(
+                        parentProjectFunctionality);
+                if (parentProjectFunctionality != null) {
+                    parentProjectFunctionality.
+                            addReferenceChildProjectFunctionality(
+                                    projectFunctionality);
+                }
+            }
             projectFunctionalityRepository.save(projectFunctionality);
         }
     }

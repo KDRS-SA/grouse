@@ -3,6 +3,7 @@
   <chapter>
     <chapterType>text</chapterType>
     <chapterTitle>Dokumentets struktur</chapterTitle>
+    <showMe>false</showMe>
     <section>
       <sectionTitle>Dokumentets struktur</sectionTitle>
       <sectionOrder>1</sectionOrder>
@@ -20,6 +21,7 @@
   <chapter>
     <chapterType>text</chapterType>
     <chapterTitle>Overordnet beskrivelse av ønsket løsning</chapterTitle>
+    <showMe>false</showMe>
     <section>
       <sectionTitle>Innledning</sectionTitle>
       <sectionOrder>1</sectionOrder>
@@ -73,6 +75,7 @@
   <chapter>
     <chapterType>text</chapterType>
     <chapterTitle>Krav til ønsket løsning - veiledning til besvarelse</chapterTitle>
+    <showMe>false</showMe>
     <section>
       <sectionTitle>Innledning</sectionTitle>
       <sectionOrder>1</sectionOrder>
@@ -119,9 +122,10 @@
   <chapter>
     <chapterType>requirments</chapterType>
     <chapterTitle>Funksjonelle krav til ønsket løsning</chapterTitle>
+    <showMe>true</showMe>
     <section>
       <sectionOrder>1</sectionOrder>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -138,7 +142,7 @@
       <description>Kravene i dette kapittelet sikrer at alle obligatoriske (O) og betingede obligatoriske (B) Noark5-krav oppfylles.</description>
       <explanation>Noark-standarden består av obligatoriske, betinget obligatoriske og valgfrie krav. Obligatoriske og betinget obligatoriske krav må være oppfylt for at løsningen skal anses å være Noark5-godkjent. Dette er en forutsetning for å kunne ivareta kravene stilt i den generelle lovgivningen som berører offentlig forvaltning.Det anbefales at det settes krav til at leverandøren om at korrekt og fullstendig uttrekk skal kunne produseres uten betydelig kostnad for kommunen. Uttrekket skal kunne godkjennes av kommunens arkivdepot.</explanation>
       <consequence>Ved manglende kravstilling omkring disse spørsmålene kan det være mulig at den leverte løsningen ikke tilfredsstiller de lovpålagte kravene til denne type arkivløsning.</consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -193,7 +197,7 @@
         For å sikre at organisasjonen etterlever disse bestemmelsene, må kravene i dette kapittelet oppfylles, og det anbefales at kravene stilles som obligatoriske.
       </explanation>
       <consequence>Ved manglende kravoppfyllelse innenfor disse områdene vil det være store svakheter og mangler med den tilbudte løsningen.</consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -222,7 +226,7 @@
       <description>Kravene her sørger for at løsningen støtter brukernes oppgaver både visuelt og strukturelt, fremmer bruk av systemet på en egnet måte, og letter arbeidshverdagen ved å være så intuitiv som mulig, samt ved å tilby brukeren målrettet hjelp med oppgavene ved behov.</description>
       <explanation>En løsning med god brukervennlighet og et intuitivt brukergrensesnitt gir økt motivasjon i organisasjonen til å benytte løsningen i den daglige saksbehandlingen. Krav som stilles her vil derfor øke muligheten for god dokumentfangst og sikker dokumentforvaltning.</explanation>
       <consequence>Dersom valgt løsning er vanskelig å bruke, viser erfaringer at betydelige deler av saksbehandlingen foregår på utsiden av sak/arkiv-løsningen, og at organisasjonen dermed taper dokumentasjon som kan være av vesentlig verdi både for organisasjonen selv og for innbyggerne.</consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -280,7 +284,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -290,7 +294,7 @@
           Ikke alle løsninger trenger underarkiv. Hvis underakriv er noe som passers deres organisatorsik arkivinndeling, anbefales kravet å ansees som obligatorisk.
         </explanation>
         <consequence>Dersom løsningen ikke støtter disse kravene vil det være potensielt kostnadskrevende å generere uttrekk.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -319,7 +323,7 @@
         <description>Kravene i dette avsnittet sikrer at organisasjonen skal kunne beskrive de ulike klassifikasjonssystemene som benyttes.</description>
         <explanation>En organisasjon vil ofte ha behov for å kunne benytte ulike klassifikasjonssystemer som for eksempel k-koder, fødselsnummer, gårds- og bruksnummer eller eventuelle egne arkivnøkler. Alle klassifikasjonssystemer skal kunne beskrives slik at man i ettertid kan finne ut hva ulike koder betyr.</explanation>
         <consequence>For på en effektiv måte å kunne benytte klassifikasjonssystemer korrekt er det helt nødvendig å kunne beskrive klasser og klassifikasjonssystemet.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -355,7 +359,7 @@
         <description>Kravene er ment å sikre fleksibilitet i arkivstrukturen.</description>
         <explanation>Kravene i dette avsnittet kan være relevante i for flere typer organisasjoner. For kommuner som skal anskaffe sak/arkiv-system, vil det være anbefalt å stille kravene selv om man ikke anser dem som relevante.</explanation>
         <consequence>Dersom systemet ikke åpner for “mappe i mappe”, vil man kunne oppleve at arkivstrukturen blir noe mindre fleksibel.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -396,7 +400,7 @@
         <description>Kravet gir anledning til å endre journalenhet på en registrering.</description>
         <explanation>Dersom en registrering har blitt foretatt på feil journalenhet, må man ha mulighet til å endre til riktig journalenhet.</explanation>
         <consequence>Dersom denne funksjonen ikke finnes, vil det kunne ha konsekvenser for mulighet for gjenfinning av registreringen.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -413,7 +417,7 @@
         <description>Kravet gir anledning til å endre journalenhet på en registrering.</description>
         <explanation>Dersom en registrering har blitt foretatt på feil journalenhet, må man ha mulighet til å endre til riktig journalenhet.</explanation>
         <consequence>Dersom denne funksjonen ikke finnes, vil det kunne ha konsekvenser for mulighet for gjenfinning av registreringen.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -430,7 +434,7 @@
         <description>Oppfyllelse av kravene gir mulighet til å definere egendefinerte nøkkelord knyttet til ulike deler av systemet; klasse, sak (mappe), og journalføring (registrering).</description>
         <explanation>Ved å benytte nøkkelord kan det gjøres søk og filtrering på de ulike delene i systemet. Med nøkkelord søk vil en kunne søke på tvers av arkivstrukturen.</explanation>
         <consequence>Manglende mulighet for å definere nøkkelord, vil gi ansatte i organisasjonen mindre mulighet til å søke opp saker og dokumenter på en enkel måte.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -467,7 +471,7 @@
         <description>Kravene gir mulighet til å kryssreferere mellom Klasser, saker og journalposter.</description>
         <explanation>Kryssreferanse benyttes ofte i forhold til presedenssaker, men kan eksempelvis også benyttes til å referere mellom ulike saker knyttet til en og samme objektklassifisering (for eksempel fødselsnummer, gårds- og bruksnummer e.l.)</explanation>
         <consequence>Manglende oppfyllelse av mulighet til kryssreferanser vil gjøre at tilgangen til relevant informasjon begrenses, og at beslutningsgrunnlaget i saksbehandlingen kan bli mangelfullt.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -490,7 +494,7 @@
         <description>Kravet gir anledning til at organisasjonen fritt kan definere hvilke typer merknader som skal kunne opprettes i tillegg til de merknadstypene som ligger inne som standard i løsningen.</description>
         <explanation>Merknadstyper benyttes for å definere hva slags merknad som legges inn (arkivmerknad, saksbehandlingsmerknad e.l) Merknadstyper kan også gi anledning til å sette opp automatiske søk i løsningen.</explanation>
         <consequence>Kravet gir anledning til at organisasjonen fritt kan definere hvilke typer merknader som skal kunne opprettes i tillegg til de merknadstypene som ligger inne som standard i løsningen.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -507,7 +511,7 @@
         <description>Kravene er knyttet til helautomatisk fangst av dokumenter fra digitale søknader og lignende</description>
         <explanation>Det er viktig for løsningen at det er enkelt å integrere arkivsystemet med andre digitale løsninger slik at dokumenter kan fanges på en effektiv og sikker måte inn til arkivsystemet. Dersom organisasjonen rutinemessig behandler søknader/saker knyttet til enkelte systemer, bør man stille et egendefinert krav knyttet til dette eller disse systemene.</explanation>
         <consequence>Dersom løsningen ikke åpner for helautomatisk dokumentfangst, må alle dokumenter registreres og arkiveres manuelt i systemet, noe vil øke bemanningsbehovet i arkivtjenesten.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -535,7 +539,7 @@
     <section>
       <sectionOrder>5</sectionOrder>
       <sectionTitle>Krav til gjenfinning – søk og rapporter</sectionTitle>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -543,7 +547,7 @@
         <description>En god søkefunksjon vil være essensielt for at organisasjonen skal kunne hente ut gevinstene knyttet til større datafangst og en høyere datakvalitet.</description>
         <explanation>Ved manglende eller for dårlig søkefunksjonalitet, vil gjenfinning av dokumentasjon vanskeliggjøres samtidig som organisasjonens opplevelse av løsningen svekkes. Dette vil i sin tur kunne gå ut over de ansattes lojalitet til løsningen.</explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -656,7 +660,7 @@
         <description>Kravene i avsnittet gir organisasjonen mulighet til å styre kassasjon av egen dokumentasjon.</description>
         <explanation>Kassasjon betyr sletting eller fysisk destruksjon av dokument. Dersom organisasjonen benytter anledningen til å kassere arkivmateriale, er kravene i dette avsnittet viktige. Kravene bør i så tilfelle settes som obligatoriske.</explanation>
         <consequence>Dersom funksjonaliteten i kravene ikke er tilstede i løsningen, mister organisasjonen mulighet til selv å styre og kontrollere eget kassasjonsreglement.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -685,7 +689,7 @@
         <description>Kravene sørger for en smidig og automatisert periodisering.</description>
         <explanation>Når en arkivdel skal periodiseres må løsningen håndterer eksisterende saksmapper. Kravene sikrer at dette skjer på en automatisert måte.</explanation>
         <consequence>Dersom funksjonaliteten i kravene mangler vil det påføre organisasjonen betydelig merarbeid når en arkivdel skal periodiseres.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -702,7 +706,7 @@
         <description>Kravene sørger for at systemer er i henhold til gjeldende lovverk om arkivuttrekk.</description>
         <explanation>Alle Noark-løsninger skal kunne lage uttrekk som kan deponeres hos et arkivdepot.</explanation>
         <consequence>Dette er satt til et obligatorisk krav og kan ikke velges bort</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -719,7 +723,7 @@
         <description>Kravene gir organisasjonen mulighet til å selv bestemme om en dokumentbeskrivelse automatisk skal få status “Dokumentet er ferdigstilt” når en mappe (saksmappe) avsluttes eller en journalpost ferdigstilles.</description>
         <explanation>Saksstatus (mappe), journalpoststatus (registrering) og dokumentstatus er statuser som forteller hvor i saksbehandlingen saken, journalposten eller dokumentet befinner seg. Korrekt bruk av statuser er viktig for at dokumentflyten og arkiveringsprosessen skal gå så smidig som mulig. Kravet gjør at arbeidet med disse statusene foregår på en enklere og mer automatisert måte.</explanation>
         <consequence>Dersom kravet ikke oppfylles øker kontrollbehovet og dermed arbeidsmengden i arkivtjenesten. Samtidig øker risikoen for at dokumenter blir stående med feil status, noe som kan få konsekvenser for dokumentflyt og arkivuttrekk.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -736,7 +740,7 @@
         <description>Kravene gir organisasjonen mer fleksibilitet når arkivtjenesten ønsker å rydde opp mengden av versjoner og varianter av dokumenter tilknyttet en registrering (journalpost).</description>
         <explanation>Dokumentproduksjonen i en organisasjon vil over tid medføre at det blir opprettet mange dokumentversjoner som ikke er arkivverdige. Det kan derfor være ønskelig å kunne slette slike dokumenter på en effektiv måte. Det er viktig å huske at denne funksjonen må brukes med stor grad av forsiktighet, slik at det ikke slettes dokumentversjoner som har dokumentasjonsverdi for organisasjonen.</explanation>
         <consequence>Dersom kravene ikke oppfylles, vil eventuell sletting måtte gjøres manuelt dokument for dokument.</consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -765,7 +769,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -796,7 +800,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -840,7 +844,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -857,7 +861,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -898,7 +902,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -921,7 +925,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -974,7 +978,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -997,7 +1001,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1020,7 +1024,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1049,7 +1053,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1090,7 +1094,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1107,7 +1111,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1130,7 +1134,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1183,7 +1187,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1238,7 +1242,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1280,7 +1284,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -1318,7 +1322,7 @@
     <section>
       <sectionOrder>7</sectionOrder>
       <sectionTitle>Krav til saksbehandlingsløsninger</sectionTitle>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -1326,7 +1330,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1343,7 +1347,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1474,7 +1478,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1587,7 +1591,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1646,7 +1650,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1735,7 +1739,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1848,7 +1852,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1938,7 +1942,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -1946,7 +1950,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -1998,7 +2002,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2027,7 +2031,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2188,7 +2192,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2277,7 +2281,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2306,7 +2310,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2395,7 +2399,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2412,7 +2416,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2441,7 +2445,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2476,7 +2480,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2511,7 +2515,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2542,7 +2546,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -2550,7 +2554,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2573,7 +2577,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2638,7 +2642,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2765,7 +2769,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2830,7 +2834,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2883,7 +2887,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -2942,7 +2946,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3087,15 +3091,15 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
-        <sectionOrder>8</sectionOrder>
+        <sectionOrder>1</sectionOrder>
         <sectionTitle>Krav til funksjonalitet for byggesaksmodul</sectionTitle>
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3176,7 +3180,7 @@
     <section>
       <sectionOrder>9</sectionOrder>
       <sectionTitle>Krav til funksjonalitet for publisering av offentlige dokumenter</sectionTitle>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -3184,7 +3188,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3267,7 +3271,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3289,7 +3293,7 @@
     <section>
       <sectionOrder>10</sectionOrder>
       <sectionTitle>Krav til rapporter og statistikker</sectionTitle>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -3297,7 +3301,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3326,7 +3330,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3397,7 +3401,7 @@
       <sectionOrder>11</sectionOrder>
       <sectionTitle>Krav til administrasjon av løsningen</sectionTitle>
 
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
@@ -3405,7 +3409,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3428,7 +3432,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3577,7 +3581,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3689,7 +3693,7 @@
     <section>
       <sectionOrder>12</sectionOrder>
       <sectionTitle>Krav til sikkerhet, sporbarhet og kontroll</sectionTitle>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
 
       <section>
@@ -3698,7 +3702,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3727,7 +3731,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3793,7 +3797,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3930,7 +3934,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -3977,7 +3981,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -4012,7 +4016,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -4035,7 +4039,7 @@
         <description></description>
         <explanation></explanation>
         <consequence></consequence>
-        <type>funksjonell</type>
+        <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
           <requirement>
@@ -4077,14 +4081,13 @@
         </requirements>
       </section>
     </section>
-
     <section>
       <sectionOrder>13</sectionOrder>
       <sectionTitle>Krav til sporbarhet og kontroll</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4191,14 +4194,13 @@
         </requirement>
       </requirements>
     </section>
-
     <section>
       <sectionOrder>14</sectionOrder>
       <sectionTitle>Krav til validering</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirement>
         <noarkRequirement>false</noarkRequirement>
@@ -4217,19 +4219,17 @@
       </requirements>
 
     </section>
-
-
   </chapter>
   <chapter>
     <chapterTitle>Tekniske krav til ønsket løsning</chapterTitle>
-
+    <showMe>true</showMe>
     <section>
       <sectionOrder>1</sectionOrder>
       <sectionTitle>Krav til arkivdatabase</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4271,7 +4271,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4330,7 +4330,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4395,7 +4395,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4448,7 +4448,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4485,16 +4485,16 @@
     </section>
 
   </chapter>
-
   <chapter>
     <chapterTitle>Krav til integrasjoner i ønsket løsning</chapterTitle>
+    <showMe>true</showMe>
     <section>
-      <sectionOrder>Overordnede og generelle krav til grensesnitt</sectionOrder>
-      <sectionTitle></sectionTitle>
+      <sectionOrder>1</sectionOrder>
+      <sectionTitle>Overordnede og generelle krav til grensesnitt</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4571,7 +4571,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4618,14 +4618,13 @@
         </requirement>
       </requirements>
     </section>
-
     <section>
       <sectionOrder>3</sectionOrder>
       <sectionTitle>Krav til integrasjon mot kartsystem</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4666,7 +4665,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4713,7 +4712,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4813,7 +4812,7 @@
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
-      <type>funksjonell</type>
+      <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
         <requirement>
@@ -4854,5 +4853,6 @@
         </requirement>
       </requirements>
     </section>
+
   </chapter>
 </chapters>

@@ -33,10 +33,10 @@ public class ClientIntegrationTest {
     private TestRestTemplate restTemplate;
 
     /**
-     * Test all CRUD operations on the User entity. The following tests are
+     * Test all CRUD operations on the GrouseUser entity. The following tests are
      * run within this test.
      *
-     * 1. Test CREATE of User object
+     * 1. Test CREATE of GrouseUser object
      * 2. Test READ of newly created user object
      * 3. Test UPDATE of newly created user object
      * 4. Test DELETE of newly created user object
@@ -53,8 +53,6 @@ public class ClientIntegrationTest {
         // 1. Test Create
         GrouseUser user = new GrouseUser();
         user.setUsername(username);
-        user.setFirstname(firstName);
-        user.setLastname(lastName);
         user.setPassword(password);
 
         ResponseEntity<GrouseUser> responseEntity =
@@ -64,8 +62,6 @@ public class ClientIntegrationTest {
         GrouseUser returnedUser = responseEntity.getBody();
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertEquals(username, returnedUser.getUsername());
-        assertEquals(firstName, returnedUser.getFirstname());
-        assertEquals(lastName, returnedUser.getLastname());
         assertTrue(encoder.matches(password, returnedUser.getPassword()));
 
         // 2. Test Read
@@ -74,13 +70,9 @@ public class ClientIntegrationTest {
         returnedUser = responseEntity.getBody();
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(username, returnedUser.getUsername());
-        assertEquals(firstName, returnedUser.getFirstname());
-        assertEquals(lastName, returnedUser.getLastname());
         assertTrue(encoder.matches(password, returnedUser.getPassword()));
 
         // 3. Test Update
-        user.setFirstname(firstName + "_");
-        user.setLastname(lastName + "_");
         user.setPassword(password + "_");
 
         HttpEntity<GrouseUser> requestEntity = new HttpEntity<>(user);
@@ -91,8 +83,6 @@ public class ClientIntegrationTest {
 
         returnedUser = response.getBody();
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(firstName + "_", returnedUser.getFirstname());
-        assertEquals(lastName + "_", returnedUser.getLastname());
         assertTrue(encoder.matches(password + "_",
                 returnedUser.getPassword()));
 

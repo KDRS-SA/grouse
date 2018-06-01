@@ -5,7 +5,6 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,9 +110,15 @@ public class ProjectFunctionality
     private String type;
 
     // Link to parent Functionality
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     private ProjectFunctionality referenceParentFunctionality;
+
+
+    @OneToMany(mappedBy = "referenceParentFunctionality")
+    private List<ProjectFunctionality> referenceChildProjectFunctionality =
+            new ArrayList<>();
 
     @OneToMany(mappedBy = "referenceFunctionality")
     private List<ProjectRequirement> referenceProjectRequirement =
@@ -205,16 +210,30 @@ public class ProjectFunctionality
         this.type = type;
     }
 
-    @JsonIgnore
     public ProjectFunctionality getReferenceParentFunctionality() {
         return referenceParentFunctionality;
     }
 
-    @XmlTransient
     public void setReferenceParentFunctionality(
             ProjectFunctionality referenceParentFunctionality) {
         this.referenceParentFunctionality = referenceParentFunctionality;
     }
+
+    public List<ProjectFunctionality> getReferenceChildProjectFunctionality() {
+        return referenceChildProjectFunctionality;
+    }
+
+    public void setReferenceChildProjectFunctionality(
+            List<ProjectFunctionality> referenceChildProjectFunctionality) {
+        this.referenceChildProjectFunctionality =
+                referenceChildProjectFunctionality;
+    }
+
+    public void addReferenceChildProjectFunctionality(
+            ProjectFunctionality projectFunctionality) {
+        this.referenceChildProjectFunctionality.add(projectFunctionality);
+    }
+
 
     public List<ProjectRequirement> getReferenceProjectRequirement() {
         return referenceProjectRequirement;

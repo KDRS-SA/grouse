@@ -11,8 +11,8 @@ import java.util.List;
 public interface IProjectFunctionalityRepository
         extends CrudRepository<ProjectFunctionality, Long> {
 
-    List<ProjectFunctionality> findByReferenceProjectAndShowMe(
-            Project project, Boolean showMe);
+    List<ProjectFunctionality> findByReferenceProjectAndTypeAndShowMe(
+            Project project, String type, Boolean showMe);
 
     List<ProjectFunctionality> findByReferenceProject(Project project);
 

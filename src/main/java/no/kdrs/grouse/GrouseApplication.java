@@ -49,6 +49,9 @@ public class GrouseApplication {
 
             Chapters chapters = (Chapters) jaxbUnmarshaller.unmarshal(data);
 
+
+            // Create a "root" parent in the database, that everyone is a child
+            // to
             Functionality parentFunctionality = new
                     Functionality.FunctionalityBuilder()
                     .id("0")
@@ -59,24 +62,38 @@ public class GrouseApplication {
             Integer chapterCount = 0;
             for (Chapter chapter : chapters.getChapters()) {
                 chapterCount++;
-                Integer sectionCount = -1;
+                Integer sectionCount = 0;
+                Functionality localParentFunctionality = parentFunctionality;
+
+                // Handle the chapter description of functionality
+                Functionality chapterFunctionality = new
+                        Functionality.FunctionalityBuilder()
+                        .id(chapterCount.toString())
+                        .sectionTitle(chapter.getChapterTitle())
+                        .type("mainmenu")
+                        .showMe(chapter.getShowMe())
+                        .build();
+
+                chapterFunctionality.setReferenceParentFunctionality(
+                        parentFunctionality);
+                functionalityRepository.save(chapterFunctionality);
+
                 for (Section section: chapter.getSections()) {
-                    String sectionTitle = section.getSectionTitle();
                     sectionCount++;
                     Functionality functionality = new
                             Functionality.FunctionalityBuilder()
                             .id(chapterCount.toString() + "." +
                                     sectionCount.toString())
                             .sectionTitle(section.getSectionTitle())
+                            .type(section.getType())
                             .description(section.getDescription())
-                            //.functionalityNumber(section.get)
                             .consequence(section.getConsequence())
                             .explanation(section.getExplanation())
                             .showMe(section.getShowMe())
                             .build();
 
                     functionality.setReferenceParentFunctionality(
-                            parentFunctionality);
+                            chapterFunctionality);
                     functionalityRepository.save(functionality);
 
                     Requirements requirements = section.getRequirements();
@@ -93,7 +110,7 @@ public class GrouseApplication {
                         }
                     }
 
-                    ArrayList<Section> childSections= (ArrayList)
+                    ArrayList<Section> childSections = (ArrayList)
                             section.getSections();
 
                     Integer subSectionCount = -1;
