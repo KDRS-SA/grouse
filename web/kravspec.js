@@ -44,13 +44,19 @@ var requirementsController = app.controller('RequirementsController',
         "] returned " + JSON.stringify($scope.currentUser));
    */
    // TODO: THIS IS TO BE DELTED .....
+    $scope.organisationName = "Nye Asker kommune";
+    $scope.projectName = "Nytt Noark 5 løsning";
+
     $scope.currentUser =
         JSON.parse("{\"username\":\"admin@kdrs.no\",\"password\":\"{bcrypt}$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC\",\"firstname\":\"John\",\"lastname\":\"Smith\",\"roles\":[{\"role\":\"ROLE_ADMIN\"},{\"role\":\"ROLE_USER\"}],\"links\":[{\"rel\":\"self\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null},{\"rel\":\"prosjekt\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no/prosjekt\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null}]}");
 
+    $scope.username = "admin@kdrs.no";
 
     $scope.token = JSON.parse("{\"access_token\":\"1\"}");
     $scope.projects = [];//JSON.parse("{\"access_token\":\"1\"}");
 
+
+    // END TODO: DELETE
 
       $scope.projectsView = true;
       $scope.requirementsView = false;
@@ -83,7 +89,7 @@ var requirementsController = app.controller('RequirementsController',
           }).then(function successCallback(response) {
             $scope.projects = response.data;
             // TODO: REMOVE THIS ...
-            $scope.projects = [];//JSON.parse("{\"access_token\":\"1\"}");
+            //$scope.projects = [];//JSON.parse("{\"access_token\":\"1\"}");
             console.log(" GET urlForProjects[" + urlForProjects +
               "] returned " + JSON.stringify(response));
           }, function errorCallback(response) {
@@ -326,7 +332,34 @@ var requirementsController = app.controller('RequirementsController',
       console.log("Attempting to find [" + $scope.selectedFunctionality.functionalityNumber + "]");
       $scope.selectedFunctionality.showMe = !$scope.selectedFunctionality.showMe;
       $scope.selectedFunctionality.processed = true;
-      for (var val in $scope.functionalities) {
+
+      $scope.selectedFunctionality = true;
+
+      for (var parentIndex in $scope.functionalities) {
+        var childFunctionality = $scope.functionalities[parentIndex].referenceChildProjectFunctionality;
+        if (childFunctionality != null) {
+          for (var childIndex in childFunctionality) {
+            console.log("2nd level is: [" + childFunctionality[childIndex].title + "]");
+            // This is the current functionality
+            if ($scope.selectedFunctionality === childFunctionality[childIndex]) {
+
+            }
+            var childChildFunctionality = childFunctionality[childIndex].referenceChildProjectFunctionality;
+            for (var childChildIndex in childChildFunctionality) {
+              console.log("3rd level is: [" + childChildFunctionality[childChildIndex].title + "]");
+              // This is the current functionality
+              if ($scope.selectedFunctionality === childChildFunctionality[childChildIndex]) {
+
+              }
+
+            }
+          }
+        }
+      }
+
+    };
+
+      /*
         if ($scope.selectedFunctionality === $scope.functionalities[val]) {
           $scope.functionalities[val].active = false;
           $scope.functionalities[val].done = true;
@@ -401,7 +434,7 @@ var requirementsController = app.controller('RequirementsController',
       }
     };
 
-
+*/
     /**
      * createProject
      *
@@ -447,23 +480,16 @@ var requirementsController = app.controller('RequirementsController',
 
 
     $scope.selectFunctionality = function (functionality, index) {
+
+      // deselect the previously selected functionality
+      if ($scope.selectedFunctionality != null) {
+        $scope.selectedFunctionality.active = false;
+      }
+
       $scope.selectedFunctionality = functionality;
       $scope.selectedFunctionality.active = true;
 
       console.log("Current functionality is " + JSON.stringify($scope.selectedFunctionality));
-
-      $scope.indexValue = index;
-/*
-      for (var i in $scope.functionalities) {
-        console.log("Current val is [" + i + "] index is [" + index + "]");
-        if (i != index) {
-          $scope.functionalities[i].active = false;
-        }
-        else {
-          $scope.functionalities[i].active = true;
-        }
-        console.log("Current functionality is " + JSON.stringify($scope.functionalities[i]));
-      }*/
     };
 
     $scope.checkFinished = function () {

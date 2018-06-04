@@ -544,10 +544,10 @@
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
-        <sectionTitle>Kravene i dette avsnittet er ment å sikre at søk etter dokumentasjon i løsningen skal kunne foregå enkelt, raskt og sikkert.</sectionTitle>
-        <description>En god søkefunksjon vil være essensielt for at organisasjonen skal kunne hente ut gevinstene knyttet til større datafangst og en høyere datakvalitet.</description>
-        <explanation>Ved manglende eller for dårlig søkefunksjonalitet, vil gjenfinning av dokumentasjon vanskeliggjøres samtidig som organisasjonens opplevelse av løsningen svekkes. Dette vil i sin tur kunne gå ut over de ansattes lojalitet til løsningen.</explanation>
-        <consequence></consequence>
+        <sectionTitle>Krav til søkefunksjonalitet</sectionTitle>
+        <description>Kravene i dette avsnittet er ment å sikre at søk etter dokumentasjon i løsningen skal kunne foregå enkelt, raskt og sikkert.</description>
+        <explanation>En god søkefunksjon vil være essensielt for at organisasjonen skal kunne hente ut gevinstene knyttet til større datafangst og en høyere datakvalitet.</explanation>
+        <consequence>Ved manglende eller for dårlig søkefunksjonalitet, vil gjenfinning av dokumentasjon vanskeliggjøres samtidig som organisasjonens opplevelse av løsningen svekkes. Dette vil i sin tur kunne gå ut over de ansattes lojalitet til løsningen.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
