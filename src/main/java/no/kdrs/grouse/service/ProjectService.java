@@ -145,14 +145,18 @@ public class ProjectService
 
         ArrayList<Functionality> functionalities = (ArrayList)
                 functionalityRepository.
-                        findAllByOrderByFunctionalityNumber();
-
-        ProjectFunctionality newParent = null;
-        String parentFunctionalityNumber = "0";
+                        findAllByOrderById();
 
         HashMap<String, ProjectFunctionality> parents = new HashMap<>();
 
         for (Functionality functionality : functionalities) {
+
+            ProjectFunctionality existingProjectFunctionality
+                    = parents.get(functionality.getFunctionalityNumber());
+
+            if (existingProjectFunctionality != null) {
+                continue;
+            }
 
             ProjectFunctionality projectFunctionality =
                     new ProjectFunctionality();
@@ -181,13 +185,21 @@ public class ProjectService
             parents.put(functionality.getFunctionalityNumber(),
                     projectFunctionality);
 
+            // The root contains a null parent, avoids null pointer
             if (parentFunctionality != null) {
+
+                // Everything else has a parent,
                 ProjectFunctionality parentProjectFunctionality =
                         parents.get(functionality
                                 .getReferenceParentFunctionality().
                                         getFunctionalityNumber());
+
+                // This projectFunctionality sets its parent to the
+                // correct / found parent
                 projectFunctionality.setReferenceParentFunctionality(
                         parentProjectFunctionality);
+
+                // Set the other side of the relationship
                 if (parentProjectFunctionality != null) {
                     parentProjectFunctionality.
                             addReferenceChildProjectFunctionality(
@@ -195,6 +207,56 @@ public class ProjectService
                 }
             }
             projectFunctionalityRepository.save(projectFunctionality);
+
+            // Check if there are any children that need to be copied
+
+            if (functionality.getReferenceChildFunctionality().size() > 0
+                    &&
+                    // Avoid picking the parent, we only want anything at
+                    // level 2
+                    functionality.getReferenceParentFunctionality() != null) {
+
+                for (Functionality childFunctionality : functionality
+                        .getReferenceChildFunctionality()) {
+
+                    existingProjectFunctionality
+                            = parents.get(functionality.getFunctionalityNumber());
+
+                    if (existingProjectFunctionality != null) {
+                        continue;
+                    }
+
+                    ProjectFunctionality childProjectFunctionality =
+                            new ProjectFunctionality();
+
+                    childProjectFunctionality.setFunctionalityNumber(
+                            childFunctionality.getFunctionalityNumber());
+                    childProjectFunctionality.setTitle(
+                            childFunctionality.getTitle());
+                    childProjectFunctionality.setConsequence(
+                            childFunctionality.getConsequence());
+                    childProjectFunctionality.setDescription(
+                            childFunctionality.getDescription());
+                    childProjectFunctionality.setExplanation(
+                            childFunctionality.getExplanation());
+                    childProjectFunctionality.setType(
+                            childFunctionality.getType());
+                    childProjectFunctionality.setShowMe(
+                            childFunctionality.getShowMe());
+
+                    childProjectFunctionality.setProcessed(false);
+                    childProjectFunctionality.setActive(false);
+                    projectFunctionality
+                            .addReferenceChildProjectFunctionality(childProjectFunctionality);
+                    childProjectFunctionality.setReferenceParentFunctionality(projectFunctionality);
+
+                    parents.put(functionality.getFunctionalityNumber(),
+                            childProjectFunctionality);
+
+                    projectFunctionalityRepository.save
+                            (childProjectFunctionality);
+                }
+            }
         }
     }
 
@@ -211,11 +273,10 @@ public class ProjectService
             projectRequirement.setRequirementText(
                     requirement.getRequirementText());
 
-
             Functionality functionality = requirement.getFunctionality();
-
             String functionalityNumber = functionality
                     .getFunctionalityNumber();
+
 
             List<ProjectFunctionality> projectFunctionalityList =
                     projectFunctionalityRepository.

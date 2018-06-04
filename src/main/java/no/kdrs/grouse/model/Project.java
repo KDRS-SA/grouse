@@ -84,6 +84,7 @@ public class Project
 
     @JsonIgnore
     @OneToMany(mappedBy = "referenceProject", fetch = FetchType.LAZY)
+    @OrderBy("projectFunctionalityId ASC")
     private List<ProjectFunctionality> referenceProjectFunctionality;
 
     @JsonIgnore

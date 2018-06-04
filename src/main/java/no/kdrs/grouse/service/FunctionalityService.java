@@ -41,16 +41,30 @@ public class FunctionalityService
     }
 
     @Override
-    public Functionality findById(String id) {
+    public Functionality findById(Long id) {
         return getFunctionalityOrThrow(id);
     }
+
+    @Override
+    public Functionality findByFunctionalityNumber(String functionalityNumber) {
+        Functionality functionality =
+                functionalityRepository.findByFunctionalityNumber
+                        (functionalityNumber);
+        if (functionality == null) {
+            throw new EntityNotFoundException("No Functionality " +
+                    " exists with Id " + functionalityNumber);
+        }
+        return functionality;
+
+    }
+
     @Override
     public Functionality save(Functionality Functionality) {
         return functionalityRepository.save(Functionality);
     }
 
     @Override
-    public Functionality update(String id, Functionality functionality)
+    public Functionality update(Long id, Functionality functionality)
             throws EntityNotFoundException {
         Functionality originalFunctionality = getFunctionalityOrThrow(id);
 
@@ -62,7 +76,7 @@ public class FunctionalityService
     }
     
     @Override
-    public void delete(String id) {
+    public void delete(Long id) {
         functionalityRepository.deleteById(id);
     }
 
@@ -75,7 +89,7 @@ public class FunctionalityService
      * @param id The systemId of the functionality object to retrieve
      * @return the functionality object
      */
-    private Functionality getFunctionalityOrThrow(@NotNull String id)
+    private Functionality getFunctionalityOrThrow(@NotNull Long id)
             throws EntityNotFoundException {
         Functionality functionality =
                 functionalityRepository.findById(id)

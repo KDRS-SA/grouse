@@ -11,11 +11,12 @@ import java.util.List;
  */
 public interface IFunctionalityService {
     List<Functionality> findAll();
-    Functionality findById(String id);
+    Functionality findById(Long id);
+    Functionality findByFunctionalityNumber(String functionalityNumber);
     Functionality save(Functionality functionality);
-    Functionality update(String functionalityId, Functionality functionality)
+    Functionality update(Long id, Functionality functionality)
             throws EntityNotFoundException;
-    void delete(String id);
+    void delete(Long id);
 
     List<Functionality> findByShowMeAndReferenceParentFunctionality(
             Boolean menuItem, String parent);

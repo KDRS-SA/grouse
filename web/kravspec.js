@@ -5,63 +5,104 @@ var app = angular.module('grouse-app', []);
  *
  * Used with kravspec.html to provide the following functionality:
  *
+ * 1. When page loads, check to see that the user is in posession of a valid token
+ * Note. We are not checking for expired token!
+ * 2. TBD, check that token hasn't expired (Make a note of time it is set to expire)
+ * 3.
  *
+ * TBD: Find out how to redirect to login page to to avoid
  */
 var requirementsController = app.controller('RequirementsController',
   ['$scope', '$http', '$window', function ($scope, $http, $window) {
 
-    $scope.currentUser = JSON.parse("{\"username\":\"admin@kdrs.no\",\"password\":\"{bcrypt}$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC\",\"firstname\":\"John\",\"lastname\":\"Smith\",\"roles\":[{\"role\":\"ROLE_ADMIN\"},{\"role\":\"ROLE_USER\"}],\"links\":[{\"rel\":\"self\",\"href\":\"https://nikita.hioa.no/grouse/bruker/admin@kdrs.no\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null},{\"rel\":\"prosjekt\",\"href\":\"https://nikita.hioa.no/grouse/bruker/admin@kdrs.no/prosjekt\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null}]}");
-    $scope.currentUser = JSON.parse("{\"username\":\"admin@kdrs.no\",\"password\":\"{bcrypt}$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC\",\"firstname\":\"John\",\"lastname\":\"Smith\",\"roles\":[{\"role\":\"ROLE_ADMIN\"},{\"role\":\"ROLE_USER\"}],\"links\":[{\"rel\":\"self\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null},{\"rel\":\"prosjekt\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no/prosjekt\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null}]}");
 
-    $scope.projectsView = true;
-    $scope.requirementsView = false;
-    $scope.requirementsView = false;
+    $scope.token = getAccessToken();
+    $scope.username = getUsername();
 
-    $scope.priorityValues = ['O', '1', '2'];
-
-    $scope.newRequirementText ="";
-    $scope.newRequirementPriority ="O";
-
-    $scope.selectedProject = null;
-    $scope.progressBarText = null;
-    $scope.selectedFunctionality = null;
-    $scope.documentHref = null;
-    $scope.token = GetUserToken();
-
-    $scope.progressBarValue = 0;
-
-    console.log("Grouse kravspec.js page load. User token is set to " + $scope.token);
-    console.log("Retrieving projects on page load. Current user is [" + $scope.currentUser + "] .\n");
-
-    var token = GetUserToken();
-    /*
-      if (typeof variable === 'undefined' || variable === null) {
-       alert("Mangler identifikasjons token for å fortsette." +
-             "Kan ikke opprette et nytt prosjekt");
-       return;
-      }
-    */
-    for (var rel in $scope.currentUser.links) {
-      var relation = $scope.currentUser.links[rel].rel;
-      if (relation == REL_PROJECT) {
-        var urlForProjects = $scope.currentUser.links[rel].href;
-        console.log("Checking urlForProjects[" + urlForProjects);
-        $http({
-          method: 'GET',
-          url: urlForProjects,
-          headers: {'Authorization': token}
-        }).then(function successCallback(response) {
-          $scope.projects = response.data;
-          console.log(" GET urlForProjects[" + urlForProjects +
-            "] returned " + JSON.stringify(response));
-        }, function errorCallback(response) {
-          alert("Kunne ikke opprette nytt prosjekt. " +
-            JSON.stringify(response));
-          console.log(" GET urlForProjects[" + urlForProjects +
-            "] returned " + JSON.stringify(response));
-        });
-      }
+    if (typeof $scope.token === 'undefined' || $scope.token == null) {
+      console.log("No valid token defined! Need to log in." + $scope.token);
+//      changeLocation($scope, startPage, false);
+ //     return;
     }
+
+    console.log("Valid token exists! " + JSON.stringify($scope.token));
+
+    // Retrieve the current user and what they can do $scope.username
+    var urlForUserDetails = startingAddress + $scope.username;
+
+    console.log("urlForUserDetails " + urlForUserDetails);
+
+   /* $http({
+      method: 'GET',
+      url: urlForUserDetails,
+      headers: {'Authorization': 'Bearer ' + $scope.token.access_token}
+    }).then(function successCallback(response) {
+      $scope.currentUser = response.data;
+      console.log(" GET urlForUserDetails [" + urlForUserDetails +
+        "] returned " + JSON.stringify(response));
+      console.log(" GET $scope.currentUser  [" + urlForUserDetails +
+        "] returned " + JSON.stringify($scope.currentUser));
+   */
+   // TODO: THIS IS TO BE DELTED .....
+    $scope.currentUser =
+        JSON.parse("{\"username\":\"admin@kdrs.no\",\"password\":\"{bcrypt}$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC\",\"firstname\":\"John\",\"lastname\":\"Smith\",\"roles\":[{\"role\":\"ROLE_ADMIN\"},{\"role\":\"ROLE_USER\"}],\"links\":[{\"rel\":\"self\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null},{\"rel\":\"prosjekt\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no/prosjekt\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null}]}");
+
+
+    $scope.token = JSON.parse("{\"access_token\":\"1\"}");
+    $scope.projects = [];//JSON.parse("{\"access_token\":\"1\"}");
+
+
+      $scope.projectsView = true;
+      $scope.requirementsView = false;
+      $scope.requirementsView = false;
+
+      $scope.priorityValues = ['O', '1', '2'];
+
+      $scope.newRequirementText = "";
+      $scope.newRequirementPriority = "O";
+
+      $scope.selectedProject = null;
+      $scope.progressBarText = null;
+      $scope.selectedFunctionality = null;
+      $scope.documentHref = null;
+
+      $scope.progressBarValue = 0;
+
+      console.log("Grouse kravspec.js page load. User token is set to " + $scope.token.access_token);
+      console.log("Retrieving projects on page load. Current user is [" + $scope.username + "] .\n");
+
+      for (var rel in $scope.currentUser.links) {
+        var relation = $scope.currentUser.links[rel].rel;
+        if (relation == REL_PROJECT) {
+          var urlForProjects = $scope.currentUser.links[rel].href;
+          console.log("Checking urlForProjects[" + urlForProjects);
+          $http({
+            method: 'GET',
+            url: urlForProjects,
+            headers: {'Authorization': 'Bearer ' + $scope.token.access_token}
+          }).then(function successCallback(response) {
+            $scope.projects = response.data;
+            // TODO: REMOVE THIS ...
+            $scope.projects = [];//JSON.parse("{\"access_token\":\"1\"}");
+            console.log(" GET urlForProjects[" + urlForProjects +
+              "] returned " + JSON.stringify(response));
+          }, function errorCallback(response) {
+            alert("Kunne ikke finne prosjektene dine. " +
+              JSON.stringify(response));
+            console.log(" GET urlForProjects[" + urlForProjects +
+              "] returned " + JSON.stringify(response));
+          });
+        }
+      }
+     /* }, function errorCallback(response) {
+      alert("Kunne ikke hente ut opplysninger om bruker. " +
+        JSON.stringify(response));
+      console.log(" GET urlForUserDetails[" + urlForUserDetails +
+        "] returned " + JSON.stringify(response));
+    });*/
+
+
+
 
     /**
      * functionality_selected
@@ -106,7 +147,7 @@ var requirementsController = app.controller('RequirementsController',
           $http({
             method: 'PATCH',
             url: urlForRequirementChange,
-            headers: {'Authorization': token},
+            headers: {'Authorization': 'Bearer ' + $scope.token.access_token},
             data: patchString
           }).then(function successCallback(response) {
             console.log("PATCH [" + urlForRequirementChange +
@@ -143,7 +184,7 @@ var requirementsController = app.controller('RequirementsController',
           $http({
             method: 'PATCH',
             url: urlForRequirementChange,
-            headers: {'Authorization': token},
+            headers: {'Authorization': 'Bearer ' + $scope.token.access_token},
             data: patchString
           }).then(function successCallback(response) {
             console.log("PATCH [" + urlForRequirementChange +
@@ -171,9 +212,9 @@ var requirementsController = app.controller('RequirementsController',
           $http({
             method: 'POST',
             url: urlForProjectRequirementCreation,
-            headers: {'Authorization': token},
-            data : {
-              "requirementText":  $scope.newRequirementText,
+            headers: {'Authorization': 'Bearer ' + $scope.token.access_token},
+            data: {
+              "requirementText": $scope.newRequirementText,
               "priority": $scope.newRequirementPriority
             }
           }).then(function successCallback(response) {
@@ -198,14 +239,7 @@ var requirementsController = app.controller('RequirementsController',
 
       var requirement = $scope.selectedFunctionality.referenceProjectRequirement[index].requirementText;
       if ($window.confirm("Er du sikker du vil slette følgende krav: \n" + requirement)) {
-        var token = GetUserToken();
-        /*
-              if (typeof variable === 'undefined' || variable === null) {
-               alert("Mangler identifikasjons token for å fortsette." +
-                     "Kan ikke opprette et nytt prosjekt");
-               return;
-              }
-        */
+
         console.log("Working on [" + JSON.stringify($scope.selectedFunctionality.referenceProjectRequirement[index].links) + "]");
         for (var rel in $scope.selectedFunctionality.referenceProjectRequirement[index].links) {
           var relation = $scope.selectedFunctionality.referenceProjectRequirement[index].links[rel].rel;
@@ -215,7 +249,7 @@ var requirementsController = app.controller('RequirementsController',
             $http({
               method: 'DELETE',
               url: urlForProjectRequirementDeletion,
-              headers: {'Authorization': token}
+              headers: {'Authorization': 'Bearer ' + $scope.token.access_token}
             }).then(function successCallback(response) {
               console.log("DELETE urlForProjectRequirementDeletion [" + urlForProjectRequirementDeletion +
                 "] returned " + JSON.stringify(response));
@@ -246,14 +280,6 @@ var requirementsController = app.controller('RequirementsController',
       $scope.projectsView = false;
       $scope.requirementsView = true;
 
-      var token = GetUserToken();
-      /*
-      if (typeof variable === 'undefined' || variable === null) {
-       alert("Mangler identifikasjons token for å fortsette." +
-             "Kan ikke opprette et nytt prosjekt");
-       return;
-      }
-      */
       for (var rel in $scope.selectedProject.links) {
         var relation = $scope.selectedProject.links[rel].rel;
         if (relation == REL_FUNCTIONALITY) {
@@ -262,11 +288,20 @@ var requirementsController = app.controller('RequirementsController',
           $http({
             method: 'GET',
             url: urlForFunctionalityRetrieval,
-            headers: {'Authorization': token}
+            headers: {'Authorization': 'Bearer ' + $scope.token.access_token}
           }).then(function successCallback(response) {
             console.log("GET [" + urlForFunctionalityRetrieval +
-              "] returned " + JSON.stringify(response));
-            $scope.functionalities = response.data;
+              "] returned " + JSON.stringify(response.data));
+
+            $scope.functionalities = [];
+            console.log("Check this " + JSON.stringify(response.data[0].links));
+            console.log("Check this " + JSON.stringify(response.data[0].referenceChildProjectFunctionality));
+            angular.forEach(response.data, function(value, key) {
+              console.log("Value is " + JSON.stringify(value.referenceChildProjectFunctionality) + " " + key);
+              console.log(Object.keys(value));
+              $scope.functionalities.push(value);
+            });
+
             $scope.selectedFunctionality = null;
           }, function errorCallback(response) {
             alert("Kunne ikke hente funksjonalitetsbeskrivelse for prosjekt. " +
@@ -333,19 +368,20 @@ var requirementsController = app.controller('RequirementsController',
         // We do this check to avoid regenerating the document every time someone reloads the project
         // But if they go back and change something, we need to set documentCreated to false
         //if ($scope.selectedProject.documentCreated === false) {
-        {for (var rel in $scope.selectedProject.links) {
+        {
+          for (var rel in $scope.selectedProject.links) {
             console.log("checking $scope.selectedProject.links[rel].rel [" + $scope.selectedProject.links[rel].rel + "]");
 
             var relation = $scope.selectedProject.links[rel].rel;
             console.log("relation [" + relation + "]");
-            console.log("REL_DOCUMENT" + REL_DOCUMENT+"]");
+            console.log("REL_DOCUMENT" + REL_DOCUMENT + "]");
             if (relation == REL_DOCUMENT) {
               var urlForDocumentCreation = $scope.selectedProject.links[rel].href;
               console.log("Checking urlForDocumentCreation[" + urlForDocumentCreation);
               $http({
                 method: 'POST',
                 url: urlForDocumentCreation,
-                headers: {'Authorization': token}
+                headers: {'Authorization':  'Bearer ' + $scope.token.access_token}
               }).then(function successCallback(response) {
                 console.log("POST urlForDocumentCreation [" + urlForDocumentCreation +
                   "] returned " + JSON.stringify(response));
@@ -379,16 +415,8 @@ var requirementsController = app.controller('RequirementsController',
      *
      */
     $scope.createProject = function () {
-      console.log("createProject. Current user is [" + $scope.currentUser + "] .\n");
+      console.log("createProject. Current user is [" + JSON.stringify($scope.currentUser) + "] .\n");
 
-      var token = GetUserToken();
-      /*
-            if (typeof variable === 'undefined' || variable === null) {
-             alert("Mangler identifikasjons token for å fortsette." +
-                   "Kan ikke opprette et nytt prosjekt");
-             return;
-            }
-      */
       for (var rel in $scope.currentUser.links) {
         var relation = $scope.currentUser.links[rel].rel;
         if (relation == REL_PROJECT) {
@@ -397,7 +425,7 @@ var requirementsController = app.controller('RequirementsController',
           $http({
             method: 'POST',
             url: urlForProjectCreation,
-            headers: {'Authorization': token},
+            headers: {'Authorization': 'Bearer ' + $scope.token.access_token},
             data: {
               projectName: $scope.projectName,
               organisationName: $scope.organisationName
@@ -421,8 +449,11 @@ var requirementsController = app.controller('RequirementsController',
     $scope.selectFunctionality = function (functionality, index) {
       $scope.selectedFunctionality = functionality;
       $scope.selectedFunctionality.active = true;
-      $scope.indexValue = index;
 
+      console.log("Current functionality is " + JSON.stringify($scope.selectedFunctionality));
+
+      $scope.indexValue = index;
+/*
       for (var i in $scope.functionalities) {
         console.log("Current val is [" + i + "] index is [" + index + "]");
         if (i != index) {
@@ -432,7 +463,7 @@ var requirementsController = app.controller('RequirementsController',
           $scope.functionalities[i].active = true;
         }
         console.log("Current functionality is " + JSON.stringify($scope.functionalities[i]));
-      }
+      }*/
     };
 
     $scope.checkFinished = function () {
@@ -454,6 +485,25 @@ var requirementsController = app.controller('RequirementsController',
 
     $scope.chooseAndContinue = function () {
 
+    };
+
+    $scope.doLogout= function () {
+      $http({
+        method: 'GET',
+        url: urlForLogout,
+        headers: {'Authorization': 'Bearer ' + $scope.token.access_token}
+      }).then(function successCallback(response) {
+        $scope.projects=null;
+        invalidateObjectsOnLogout();
+        console.log(" GET urlForLogout[" + urlForLogout +
+          "] returned " + JSON.stringify(response));
+        changeLocation($scope, startPage, false);
+      }, function errorCallback(response) {
+        alert("Kunne ikke logge ut. " +
+          JSON.stringify(response));
+        console.log(" GET urlForLogout[" + urlForLogout +
+          "] returned " + JSON.stringify(response));
+      });
     }
 
 

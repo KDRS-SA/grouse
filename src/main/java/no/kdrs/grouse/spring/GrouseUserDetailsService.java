@@ -6,9 +6,9 @@ import no.kdrs.grouse.persistence.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-@Service
+//@Profile("!nosecurity")
+//@Service
 public class GrouseUserDetailsService
         implements UserDetailsService {
 

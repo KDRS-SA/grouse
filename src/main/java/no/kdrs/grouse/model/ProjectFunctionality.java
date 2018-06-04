@@ -117,10 +117,12 @@ public class ProjectFunctionality
 
 
     @OneToMany(mappedBy = "referenceParentFunctionality")
+    @OrderBy("projectFunctionalityId ASC")
     private List<ProjectFunctionality> referenceChildProjectFunctionality =
             new ArrayList<>();
 
     @OneToMany(mappedBy = "referenceFunctionality")
+    @OrderBy("order ASC")
     private List<ProjectRequirement> referenceProjectRequirement =
             new ArrayList<>();
 

@@ -8,12 +8,12 @@ import java.util.List;
 
 @Repository
 public interface IFunctionalityRepository
-        extends CrudRepository<Functionality, String> {
+        extends CrudRepository<Functionality, Long> {
 
     @Override
     List<Functionality> findAll();
 
-    List<Functionality> findAllByOrderByFunctionalityNumber();
+    List<Functionality> findAllByOrderById();
 
     List<Functionality> findByShowMeAndReferenceParentFunctionality(
             Boolean menuItem, Functionality parent);

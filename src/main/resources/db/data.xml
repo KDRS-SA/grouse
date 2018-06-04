@@ -124,6 +124,7 @@
     <chapterTitle>Funksjonelle krav til ønsket løsning</chapterTitle>
     <showMe>true</showMe>
     <section>
+      <sectionTitle>Generelt krav</sectionTitle>
       <sectionOrder>1</sectionOrder>
       <type>submenu</type>
       <showMe>true</showMe>
@@ -3084,98 +3085,88 @@
         </requirements>
       </section>
     </section>
-
     <section>
-      <sectionOrder>9</sectionOrder>
-      <sectionTitle></sectionTitle>
+      <sectionOrder>8</sectionOrder>
+      <sectionTitle>Krav til funksjonalitet for byggesaksmodul</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
       <type>submenu</type>
       <showMe>true</showMe>
-      <section>
-        <sectionOrder>1</sectionOrder>
-        <sectionTitle>Krav til funksjonalitet for byggesaksmodul</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
-        <type>submenu</type>
-        <showMe>true</showMe>
-        <requirements>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>1</showOrder>
-            <requirementText>Løsningen skal inneholde en byggesaksmodul. Byggesaksmodulen skal være oppdatert i henhold til gjeldende Plan- og bygningslov, inkl revisjon av 1.juli 2015.</requirementText>
-            <priority>O</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>2</showOrder>
-            <requirementText>Løsningen skal inneholde predefinerte registreringsfelter for sakstypene bygg, plan og deling.</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>3</showOrder>
-            <requirementText>Løsningen skal inneholde mulighet for predefinerte registreringsfelter for sakstype VAR, Geodata og landbruk.</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>4</showOrder>
-            <requirementText>Løsningen skal ha mulighet for egendefinisjon av milepæler/frister.</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>5</showOrder>
-            <requirementText>Status for saksflyt i byggesaksbehandlingen skal vises i saksgang som inneholder mer enn 2 arbeidsflyter (milepæler). Status for saksflyt skal vises i kartet eventuelt i innsynsmodulen.</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>6</showOrder>
-            <requirementText>«Forenklet tjenestegrensesnitt i henhold til geointegrasjon skal inngå i byggesaksmodulen, jf kap 10.2».</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>7</showOrder>
-            <requirementText>Løsningen skal ha funksjonalitet for visning av eiendom i kartutsnitt. Jf Kap 10.2</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>8</showOrder>
-            <requirementText>Løsningen skal gi mulighet for å hente digital adresseliste fra matrikkel/kartsystemer (via geointegrasjon)</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>9</showOrder>
-            <requirementText>Byggesaksmodulen skal kunne gi mulighet for føring av de metadata som skal føres i matrikkelen. Dataene skal være søkbare.</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>10</showOrder>
-            <requirementText>Løsningen skal ha mulighet til å registrere flere eiendommer i en sak.</requirementText>
-            <priority>1</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>11</showOrder>
-            <requirementText>Løsningen skal være kompatibel med digital søknad fra eksterne leverandører. Eksempelvis (byggsøk, E-søknad, elektroniske skjema fra K24:7/ DIBK sin løsning)</requirementText>
-            <priority>O</priority>
-          </requirement>
-          <requirement>
-            <noarkRequirement>false</noarkRequirement>
-            <showOrder>12</showOrder>
-            <requirementText>Løsningen skal være mulig å integrere mot andre innsynsløsninger enn leverandørens egen løsning.</requirementText>
-            <priority>1</priority>
-          </requirement>
-        </requirements>
-      </section>
+      <requirements>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>1</showOrder>
+          <requirementText>Løsningen skal inneholde en byggesaksmodul. Byggesaksmodulen skal være oppdatert i henhold til gjeldende Plan- og bygningslov, inkl revisjon av 1.juli 2015.</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>2</showOrder>
+          <requirementText>Løsningen skal inneholde predefinerte registreringsfelter for sakstypene bygg, plan og deling.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>3</showOrder>
+          <requirementText>Løsningen skal inneholde mulighet for predefinerte registreringsfelter for sakstype VAR, Geodata og landbruk.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>4</showOrder>
+          <requirementText>Løsningen skal ha mulighet for egendefinisjon av milepæler/frister.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>5</showOrder>
+          <requirementText>Status for saksflyt i byggesaksbehandlingen skal vises i saksgang som inneholder mer enn 2 arbeidsflyter (milepæler). Status for saksflyt skal vises i kartet eventuelt i innsynsmodulen.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>6</showOrder>
+          <requirementText>«Forenklet tjenestegrensesnitt i henhold til geointegrasjon skal inngå i byggesaksmodulen, jf kap 10.2».</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>7</showOrder>
+          <requirementText>Løsningen skal ha funksjonalitet for visning av eiendom i kartutsnitt. Jf Kap 10.2</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>8</showOrder>
+          <requirementText>Løsningen skal gi mulighet for å hente digital adresseliste fra matrikkel/kartsystemer (via geointegrasjon)</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>9</showOrder>
+          <requirementText>Byggesaksmodulen skal kunne gi mulighet for føring av de metadata som skal føres i matrikkelen. Dataene skal være søkbare.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>10</showOrder>
+          <requirementText>Løsningen skal ha mulighet til å registrere flere eiendommer i en sak.</requirementText>
+          <priority>1</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>11</showOrder>
+          <requirementText>Løsningen skal være kompatibel med digital søknad fra eksterne leverandører. Eksempelvis (byggsøk, E-søknad, elektroniske skjema fra K24:7/ DIBK sin løsning)</requirementText>
+          <priority>O</priority>
+        </requirement>
+        <requirement>
+          <noarkRequirement>false</noarkRequirement>
+          <showOrder>12</showOrder>
+          <requirementText>Løsningen skal være mulig å integrere mot andre innsynsløsninger enn leverandørens egen løsning.</requirementText>
+          <priority>1</priority>
+        </requirement>
+      </requirements>
     </section>
     <section>
       <sectionOrder>9</sectionOrder>
@@ -4708,7 +4699,7 @@
     <chapterTitle>Krav til skanning</chapterTitle>
     <section>
       <sectionOrder>1</sectionOrder>
-      <sectionTitle></sectionTitle>
+      <sectionTitle>Krav til skanning</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>
@@ -4808,7 +4799,7 @@
     <chapterTitle>Krav til konvertering</chapterTitle>
     <section>
       <sectionOrder>1</sectionOrder>
-      <sectionTitle></sectionTitle>
+      <sectionTitle>Krav til konvertering</sectionTitle>
       <description></description>
       <explanation></explanation>
       <consequence></consequence>

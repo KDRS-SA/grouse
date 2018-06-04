@@ -9,6 +9,7 @@ import no.kdrs.grouse.model.imp.Section;
 import no.kdrs.grouse.persistence.IFunctionalityRepository;
 import no.kdrs.grouse.persistence.IRequirementRepository;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -21,6 +22,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 @SpringBootApplication()
+
+@EnableAutoConfiguration(exclude = {
+        org.springframework.boot.autoconfigure.security.servlet
+                .SecurityAutoConfiguration.class,
+
+})
 public class GrouseApplication {
 
     private IFunctionalityRepository functionalityRepository;
@@ -85,6 +92,7 @@ public class GrouseApplication {
                             .id(chapterCount.toString() + "." +
                                     sectionCount.toString())
                             .sectionTitle(section.getSectionTitle())
+                            .sectionOrder(section.getSectionOrder())
                             .type(section.getType())
                             .description(section.getDescription())
                             .consequence(section.getConsequence())

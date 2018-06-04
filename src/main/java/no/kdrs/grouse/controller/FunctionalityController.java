@@ -44,7 +44,8 @@ public class FunctionalityController {
     public ResponseEntity<Functionality>
     getFunctionality(@PathVariable("funksjon") String functionalityNumber) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(functionalityService.findById(functionalityNumber));
+                .body(functionalityService.findByFunctionalityNumber
+                        (functionalityNumber));
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -56,16 +57,16 @@ public class FunctionalityController {
 
     @RequestMapping(value = "/{funksjon:.+}", method = RequestMethod.PUT)
     public ResponseEntity<Functionality> updateFunctionality(
-            @PathVariable("funksjon") String functionalityId,
+            @PathVariable("funksjon") Long id,
             @RequestBody Functionality functionality)
             throws EntityNotFoundException {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(functionalityService.update(
-                        functionalityId, functionality));
+                        id, functionality));
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteFunctionality(@PathVariable String id) {
+    public ResponseEntity<String> deleteFunctionality(@PathVariable Long id) {
         functionalityService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body("Functionality with id " + id + " was deleted");

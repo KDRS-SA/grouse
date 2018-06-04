@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tsodring on 9/11/17.
@@ -24,6 +26,11 @@ public class Functionality implements Serializable {
      *
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false, updatable = false)
+    private Long id;
+
+
     @Column(name = "functionality_number", nullable = false, updatable = false)
     private String functionalityNumber;
 
@@ -59,6 +66,9 @@ public class Functionality implements Serializable {
     @Column(name = "explanation", length = 10000)
     private String explanation;
 
+    @Column(name = "section_order")
+    private Integer sectionOrder;
+    
     /**
      * Whether or not to be displayed in menu
      *
@@ -78,6 +88,9 @@ public class Functionality implements Serializable {
     @JoinColumn(name="parent")
     private Functionality referenceParentFunctionality;
 
+    @OneToMany(mappedBy = "referenceParentFunctionality")
+    private List<Functionality> referenceChildFunctionality =
+            new ArrayList<>();
 
     public Functionality() {
     }
@@ -90,8 +103,16 @@ public class Functionality implements Serializable {
         this.consequence = functionalityBuilder.consequence;
         this.type = functionalityBuilder.type;
         this.showMe = functionalityBuilder.showMe;
+        this.sectionOrder = functionalityBuilder.sectionOrder;
     }
 
+    public Long getFunctionalityId() {
+        return id;
+    }
+
+    public void setFunctionalityId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -141,6 +162,14 @@ public class Functionality implements Serializable {
         this.showMe = showMe;
     }
 
+    public Integer getSectionOrder() {
+        return sectionOrder;
+    }
+
+    public void setSectionOrder(Integer sectionOrder) {
+        this.sectionOrder = sectionOrder;
+    }
+
     public String getType() {
         return type;
     }
@@ -149,10 +178,19 @@ public class Functionality implements Serializable {
         this.type = type;
     }
 
+    public List<Functionality> getReferenceChildFunctionality() {
+        return referenceChildFunctionality;
+    }
+
+    public void setReferenceChildFunctionality(List<Functionality> referenceChildFunctionality) {
+        this.referenceChildFunctionality = referenceChildFunctionality;
+    }
+
     @JsonIgnore
     public Functionality getReferenceParentFunctionality() {
         return referenceParentFunctionality;
     }
+    
     @XmlTransient
     public void setReferenceParentFunctionality(Functionality referenceParentFunctionality) {
         this.referenceParentFunctionality = referenceParentFunctionality;
@@ -162,6 +200,7 @@ public class Functionality implements Serializable {
 
         private String id;
         private String sectionTitle;
+        private Integer sectionOrder;
         private String functionalityNumber;
         private String description;
         private String explanation;
@@ -176,6 +215,11 @@ public class Functionality implements Serializable {
 
         public FunctionalityBuilder sectionTitle(String sectionTitle) {
             this.sectionTitle = sectionTitle;
+            return this;
+        }
+
+        public FunctionalityBuilder sectionOrder(Integer sectionOrder) {
+            this.sectionOrder = sectionOrder;
             return this;
         }
 

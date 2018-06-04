@@ -26,6 +26,9 @@ public class Section {
     @XmlElement(name = "type")
     private String type;
 
+    @XmlElement(name = "sectionOrder")
+    private Integer sectionOrder;
+
     @XmlElement(name = "showMe")
     private Boolean showMe;
 
@@ -81,6 +84,14 @@ public class Section {
 
     public void setShowMe(Boolean showMe) {
         this.showMe = showMe;
+    }
+
+    public Integer getSectionOrder() {
+        return sectionOrder;
+    }
+
+    public void setSectionOrder(Integer sectionOrder) {
+        this.sectionOrder = sectionOrder;
     }
 
     public Requirements getRequirements() {

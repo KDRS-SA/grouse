@@ -41,5 +41,6 @@ security:
     client:
       client-id: grouse-client
       client-secret: $2a$10$52VgSTgNvk4ROc8YNYdTUesHhQTm2r5oeH1aiCtIgu3rfPQZQzswa
+
 storage:
   location: /tmp
