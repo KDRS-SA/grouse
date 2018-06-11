@@ -3,6 +3,7 @@ package no.kdrs.grouse.service;
 import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.persistence.*;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -125,10 +126,10 @@ public class ProjectService
 
         // TODO: Fixed value but can be overriden
         project.setFileName("kravspec.docx");
-        // TODO: Replace this with logged in user when security is
-        // in place
         GrouseUser user = new GrouseUser();
-        user.setUsername("admin@kdrs.no");
+        String ownedBy = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        user.setUsername(ownedBy);
         project.setReferenceUser(user);
         projectRepository.save(project);
     }
