@@ -1,4 +1,4 @@
-var mainPage = "kravspecb4.html";
+var mainPage = "kravspec.html";
 var startPage = "index.html";
 
 var REQUIREMENT = "krav";

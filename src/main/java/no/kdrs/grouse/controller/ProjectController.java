@@ -89,26 +89,63 @@ public class ProjectController {
         for (ProjectFunctionality projectFunctionality :
                 projectFunctionalities) {
 
-            // Add SELF REL to each projectRequirement
-            for (ProjectRequirement projectRequirement :
+            for (ProjectFunctionality childProjectFunctionality:
                     projectFunctionality
-                            .getReferenceProjectRequirement()) {
+                            .getReferenceChildProjectFunctionality()) {
 
-                projectRequirement.add(linkTo(methodOn(
-                        ProjectRequirementController.class).
-                        getRequirement(projectRequirement.
-                                getProjectRequirementId())).withSelfRel());
+
+                // Add REL to retrieve all requirements
+                childProjectFunctionality.add(linkTo(methodOn(
+                        ProjectFunctionalityController.class).
+                        getProjectFunctionality(projectFunctionality.
+                                getProjectFunctionalityId())).
+                        withRel(REQUIREMENT));
+
+                childProjectFunctionality.add(linkTo(methodOn
+                        (ProjectFunctionalityController.class).
+                        getProjectFunctionality(childProjectFunctionality.
+                                getProjectFunctionalityId())).withSelfRel());
+
+
+                // Add SELF REL to each projectRequirement at this level
+                for (ProjectRequirement projectRequirement :
+                        childProjectFunctionality
+                                .getReferenceProjectRequirement()) {
+                    projectRequirement.add(linkTo(methodOn(
+                            ProjectRequirementController.class).
+                            getRequirement(projectRequirement.
+                                    getProjectRequirementId())).withSelfRel());
+                }
+
+                for (ProjectFunctionality childChildProjectFunctionality2:
+                        childProjectFunctionality
+                                .getReferenceChildProjectFunctionality()) {
+
+                    childChildProjectFunctionality2.add(linkTo(methodOn
+                            (ProjectFunctionalityController.class).
+                            getProjectFunctionality(childChildProjectFunctionality2.
+                                    getProjectFunctionalityId())).withSelfRel());
+
+                    for (ProjectRequirement projectRequirement :
+                            childChildProjectFunctionality2.
+                                    getReferenceProjectRequirement()) {
+                        projectRequirement.add(linkTo(methodOn(
+                                ProjectRequirementController.class).
+                                getRequirement(projectRequirement.
+                                        getProjectRequirementId())).withSelfRel());
+                    }
+                }
             }
 
             // Add REL to retrieve all requirements
             projectFunctionality.add(linkTo(methodOn(
                     ProjectFunctionalityController.class).
-                    getRequirements(projectFunctionality.
+                    getProjectFunctionality(projectFunctionality.
                             getProjectFunctionalityId())).
                     withRel(REQUIREMENT));
             projectFunctionality.add(linkTo(methodOn
                     (ProjectFunctionalityController.class).
-                    getRequirements(projectFunctionality.
+                    getProjectFunctionality(projectFunctionality.
                             getProjectFunctionalityId())).withSelfRel());
         }
         return ResponseEntity.status(HttpStatus.OK)

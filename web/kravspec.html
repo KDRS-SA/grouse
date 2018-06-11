@@ -6,101 +6,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- css resources -->
-  <!-- <link href="dependencies/vendor/META-INF/resources/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"
-        rel="stylesheet" type="text/css"> -->
-  <link href="dependencies/vendor/META-INF/resources/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
+  <link href="dependencies/vendor/META-INF/resources/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"
         rel="stylesheet" type="text/css">
+  <link
+    href="dependencies/vendor/META-INF/resources/webjars/font-awesome/5.0.9/web-fonts-with-css/css/fontawesome-all.css"
+    rel="stylesheet" type="text/css">
 
   <!-- js resources -->
   <script src="dependencies/vendor/META-INF/resources/webjars/angularjs/1.6.6/angular.min.js"></script>
   <script src="dependencies/vendor/META-INF/resources/webjars/jquery/3.2.1/jquery.min.js"></script>
-  <!-- <script src="dependencies/vendor/META-INF/resources/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script> -->
-  <script src="dependencies/vendor/META-INF/resources/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+  <script src="dependencies/vendor/META-INF/resources/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
 
   <!-- internal js resources-->
   <script src="common.js"></script>
   <script src="kravspec.js"></script>
-
 </head>
 
 <body ng-controller="RequirementsController">
+<nav class="navbar navbar-expand-sm bg-light">
+  <a class="navbar-brand" href="#">KDRS Kravspec verktøy (BETA)</a>
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation"
-     style="margin-bottom: 0">
-
-  <div class="navbar-header">
-    <a class="navbar-brand" href="#">KDRS Kravspec verktøy</a>
-  </div>
-
-  <div class="collapse navbar-collapse">
-    <ul class="nav navbar-nav">
-      <li><a href="#">Prosjekter</a></li>
-      <li ng-show="false"><a href="#">Profile</a></li>
-    </ul>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle"
-             data-toggle="dropdown">
-            {{user.firstname}} {{user.lastname}}
-            <span class="glyphicon glyphicon-user pull-right"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Innstillinger<span class="glyphicon glyphicon-cog pull-right"></span></a></li>
-            <li class="divider"></li>
-            <li><a href="#">Logg ut<span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item dropdown">
+      <a class="nav-link " href="#" id="navbardrop" data-toggle="dropdown">
+        <span class="fa fa-bars"></span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a ng-show="userIsAdmin" class="nav-link" href="#">Innstillinger &nbsp; <span class="fas fa-cog"></span></a>
+        <a class="nav-link" href="#" ng-click="doLogout()">Logg ut &nbsp; <span class="fas fa-sign-out-alt"></span></a>
+      </div>
+    </li>
+  </ul>
 </nav>
-<div class="col-lg-12">
-  <div ng-show="projectsView" class="panel panel-default">
-    <div class="panel-heading">
-      <div class="btn-group pull-right">
-        <button data-toggle="modal" data-target="#newProjectModal"
-                class="btn btn-primary btn-sm">Nytt prosjekt
-        </button>
-      </div>
-
-      <!--modal-->
-      <div id="newProjectModal" class="modal fade" tabindex="-1"
-           role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">×</button>
-              <h4>Opprett nytt prosjekt</h4>
-            </div>
-            <div class="modal-body">
-
-              <form role="form">
-                <fieldset>
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-xs-6">
-                        <input type="text" name="projectName" value="" ng-model="projectName"
-                               class="form-control" placeholder="Prosjektnavn"/>
-                      </div>
-                      <div class="col-xs-6">
-                        <input type="text" name="organisationName" value="" ng-model="organisationName"
-                               class="form-control" placeholder="Organisasjonsnavn"/>
-                      </div>
-                    </div>
-                  </div>
-                </fieldset>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" ng-click="createProject()" data-dismiss="modal"
-                      class="btn btn-primary pull-right">Opprett prosjekt
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <h4>Prosjekter</h4>
-    </div>
+<!-- ProjectsView -->
+<div ng-show="projectsView" class="card">
+  <div class="card-header border-0 py-3 d-flex justify-content-between align-items-center">
+    <h4>Prosjekter</h4>
+    <button type="button" class="btn btn-primary float-right"
+            data-toggle="modal" data-target="#newProjectModal">
+      Nytt prosjekt
+    </button>
+  </div>
+  <div class="card-body">
     <div class="container">
       <table class="table table-hover">
         <thead>
@@ -108,7 +55,6 @@
           <th>Prosjektnavn</th>
           <th>Organisasjon</th>
           <th>Dato opprettet</th>
-          <th>Dato endret</th>
         </tr>
         </thead>
         <tbody ng-repeat="project in projects">
@@ -122,103 +68,142 @@
           <td>
             {{project.createdDate | date:'yyyy-MM-dd'}}
           </td>
-          <td>
-            {{project.changedDate | date:'yyyy-MM-dd'}}
-          </td>
         </tr>
         </tbody>
       </table>
     </div>
-    <div class="panel-footer">
+  </div>
+  <!-- modal to create a new project -->
+  <div class="modal fade" id="newProjectModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>Opprett nytt prosjekt</h4>
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <label class="control-label" for="projectName">Prosjektnavn:</label>
+              <input type="text" name="projectName" id="projectName"
+                     ng-model="projectName" class="form-control"
+                     placeholder="Prosjektnavn"/>
+            </div>
+            <div class="row">
+              <label class="control-label" for="organisationName">Organisasjonsnavn:</label>
+              <input type="text" name="organisationName" id="organisationName"
+                     ng-model="organisationName" class="form-control"
+                     placeholder="Organisasjonsnavn"/>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary"
+                  ng-click="createProject()" data-dismiss="modal">Opprett prosjekt
+          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Lukk</button>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div ng-show="requirementsView" class="panel panel-default">
-    <div class="panel-heading">
-      <h4>{{selectedProject.projectName}}</h4>
+  <!-- End modal to create a new project -->
+</div>
+<!-- RequirementsView -->
+<div ng-show="requirementsView">
+  <div class="card card-header">
+    <h4>{{selectedProject.projectName}}</h4>
+  </div>
+  <div class="card-body">
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped bg-success"
+           role="progressbar" aria-valuenow="{{progressBarValue}}" aria-valuemin="0"
+           aria-valuemax="100" ng-style="{width : ( progressBarValue + '%' ) }">
+      </div>
     </div>
-    <div class="panel-body">
-      <div class="col-lg-12">
-        <div class="progress">
-          <div class="progress-bar progress-bar-success"
-               role="progressbar" aria-valuenow="{{progressBarValue}}" aria-valuemin="0"
-               aria-valuemax="100" ng-style="{width : ( progressBarValue + '%' ) }">
-            <a target="_blank" ng-href="{{documentHref}}">{{progressBarText}}</a>
+    <button ng-if="funk1" ng-click="doDownloadDocument()" style="font-size:18px">
+      Last ned <span class="fa fa-cloud-download"></span></button>
+  </div>
+  <div class="container-fluid" data-spy="scroll" data-target="#scrollspy">
+    <div class="row">
+      <!-- Menu on left hand side aria-labelledby="headingOne" -->
+      <div class="col-lg-3" style="height: 500px;overflow-y: scroll;">
+        <div id="accordion">
+          <div class="card" ng-class="{'bg-success': funk1}"
+               ng-repeat="functionality in functionalities track by $index">
+            <div class="card-header" id="heading{{$index}}">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{$index}}"
+                        aria-expanded="true"
+                        aria-controls="collapseOne{{$index}}"
+                        style="white-space:normal !important; word-wrap: break-word; word-break: normal;">
+                  {{$index+1}}. {{functionality.title}}
+                </button>
+              </h5>
+            </div>
+            <div id="collapseOne{{$index}}" class="collapse show" data-parent="#accordion">
+              <!-- Otherwise show a sub-menu -->
+              <div class="list-group"
+                   ng-repeat="childFunctionality in functionality.referenceChildProjectFunctionality track by childFunctionality.title">
+                <!-- If the current childFunctionality.referenceChildProjectFunctionality has a sub-child  -->
+                <span ng-if="childFunctionality.referenceChildProjectFunctionality[0]">
+                <div class="card" ng-class="{'bg-success': funk1}">
+                 <div class="card-header" id="heading{{childFunctionality.projectFunctionalityId}}">
+                      <h5 class="mb-0">
+                      <button class="btn btn-link"
+                              data-toggle="collapse"
+                              data-target="#{{childFunctionality.projectFunctionalityId}}"
+                              aria-expanded="true"
+                              aria-controls="{{childFunctionality.projectFunctionalityId}}"
+                              style="white-space:normal !important; word-wrap: break-word; word-break: normal;">
+                            {{childFunctionality.title}}
+                      </button>
+                      </h5>
+                 </div>
+                  <div class="collapse show" data-parent="#heading{{childFunctionality.projectFunctionalityId}}"
+                       id="{{childFunctionality.projectFunctionalityId}}">
+                    <div class="list-group"
+                         ng-repeat="childFunctionality2 in childFunctionality.referenceChildProjectFunctionality track by childFunctionality2.projectFunctionalityId">
+                      <span
+                        id="{{childFunctionality2.title}}"
+                        data-target="#{{childFunctionality2.projectFunctionalityId}}"
+                        ng-click="selectFunctionality(childFunctionality2, 1); " class="list-group-item"
+                        ng-class="{'list-group-item-success': childFunctionality2.processed, active:childFunctionality2.active}">
+                          {{childFunctionality2.title}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </span>
+                <span ng-if="!childFunctionality.referenceChildProjectFunctionality[0]">
+                <span
+                  data-target="#{{childFunctionality.projectFunctionalityId}}"
+                  ng-click="selectFunctionality(childFunctionality, 1); " class="list-group-item"
+                  ng-class="{'list-group-item-success': childFunctionality.processed, active:childFunctionality.active}">
+                    {{childFunctionality.title }}
+                </span>
+              </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                Funksjonelle krav </a>
-            </h4>
-          </div>
-          <div id="collapseOne" class="panel-collapse">
-            <div class="list-group">
-              <div class="list-group" ng-repeat="menuItem in menuItems">
-                <div ng-click="menuItem_selected(menuItem)">
-                  <a href="#"
-                     ng-class="menuItem.showMe ? 'list-group-item' : 'list-group-item-success'">
-                    {{menuItem.title}}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>  <!--  <div class="panel panel-default"> -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                Tekniske krav </a>
-            </h4>
-          </div>
-          <div id="collapseTwo" class="panel-collapse collapse">
-            <div class="list-group">
-              <div class="list-group" ng-repeat="menuItem in menuItems">
-                <a href="#" class="list-group-item">
-                  {{menuItem.title}}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>  <!--  <div class="panel panel-default"> -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                Krav til integrasjoner</a>
-            </h4>
-          </div>
-          <div id="collapseThree" class="panel-collapse collapse">
-            <div class="list-group">
-              <div class="list-group" ng-repeat="menuItem in menuItems">
-                <a href="#" class="list-group-item" id="{{menuItem.functionalityNumber}}"
-                   ng-click="menuItem_selected(menuItem)">{{menuItem.title}}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div> <!--  <div class="panel panel-default"> -->
-      </div> <!-- <div class="col-sm-3"> -->
-      <div class="col-sm-9">
+      <!-- Contents on right hand side -->
+      <div class="col-lg-9 offset-lg-3 position-fixed" style="min-height:100%;" id="scrollspy">
         <div class="form-check">
           <div class="bs-callout bs-callout-default">
             <h4> Beskrivelse </h4>
-            <textarea class="form-control" rows="5"
-                      id="functionality_description_12">{{selectedMenuItem.title}}</textarea>
+            <textarea class="form-control" rows="4"
+                      id="functionality_description_12">{{selectedFunctionality.title}}</textarea>
           </div>
           <div class="bs-callout bs-callout-primary">
             <h4>Forklaring</h4>
-            <textarea class="form-control" rows="5"
-                      id="functionality_explanation_12">{{selectedMenuItem.description}}</textarea>
+            <textarea class="form-control" rows="4"
+                      id="functionality_explanation_12">{{selectedFunctionality.description}}</textarea>
           </div>
           <div class="bs-callout bs-callout-success">
             <h4>Konsekvens</h4>
-            <textarea class="form-control" rows="5"
-                      id="functionality_consequence_12">{{selectedMenuItem.explanation}}</textarea>
+            <textarea class="form-control" rows="4"
+                      id="functionality_consequence_12">{{selectedFunctionality.explanation}}</textarea>
           </div>
           <div class="container">
 
@@ -226,87 +211,85 @@
               <button data-toggle="modal" data-target="#requirementsModal"
                       class="btn btn-primary center-block">Vis krav
               </button>
-              <button data-toggle="modal" ng-click="continueSelected()"
+              <button data-toggle="modal" ng-click="continueSelected(); checkFinished()"
                       class="btn btn-primary center-block">Aksepter krav
               </button>
-            </div>
-
-            <!--modal-->
-            <div id="requirementsModal" class="modal fade" tabindex="-1"
-                 role="dialog" aria-hidden="true">
-              <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4>{{selectedMenuItem.title}}</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-                      <div class="well well-lg clearfix">
-                        <div class="col-md-8">
-                        <textarea class="form-control" rows="2"
-                                  ng-model="newRequirementText" placeholder="Krav tekst">
-                        </textarea>
-                        </div>
-                        <div class="col-md-2">
-                          <select ng-model="newRequirementPriority"
-                                  ng-options="priorityValue for priorityValue in priorityValues">
-                          </select>
-                        </div>
-                        <div class="col-md-2">
-                          <button type="button" class="btn btn-default btn-sm pull-right"
-                                  ng-click="addRequirement()">
-                            <span class="glyphicon glyphicon-plus"></span> Legg til krav
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    s
-
-                    <div class="row">
-                      <div class="col-md-8">Krav</div>
-                      <div class="col-md-2">Prioritet</div>
-                      <div class="col-md-2">Slett</div>
-                    </div>
-                    <div class="row"
-                         ng-repeat="requirement in selectedMenuItem.referenceProjectRequirement track by $index">
-                      <div class="col-md-8">
-                        <textarea class="form-control" rows="2"
-                                  ng-model="requirement.requirementText"
-                                  ng-blur="updateRequirementText(requirement)"
-                                  id="requirement.id"></textarea>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="dropdown">
-                          <select ng-model="requirement.priority"
-                                  ng-options="priorityValue for priorityValue in priorityValues"
-                                  ng-change="updateRequirementPriority(requirement)">
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div>
-                          <button type="button" class="btn btn-default btn-sm pull-right"
-                                  ng-click="deleteRequirementAndRow($index)">
-                            <span class="glyphicon glyphicon-trash"></span> Slett krav
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn btn-default" data-dismiss="modal">Lukk</button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div><!-- <div class="panel-body"> -->
+  </div>
 </div>
+<!--modal to show requirements -->
+<div id="requirementsModal" class="modal fade" tabindex="-1"
+     role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>{{selectedFunctionality.title}}</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-8">
+              <textarea class="form-control" rows="2" ng-model="newRequirementText" placeholder="Krav tekst">
+              </textarea>
+            </div>
+            <div class="col-2">
+              <select ng-model="newRequirementPriority"
+                      ng-options="priorityValue for priorityValue in priorityValues">
+              </select>
+            </div>
+            <div class="col-2">
+              <button type="button" class="btn btn-default btn-sm pull-right"
+                      ng-click="addRequirement()">
+                <span class="fas fa-plus"></span> Legg til krav
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-8">Krav</div>
+            <div class="col-2">Prioritet</div>
+            <div class="col-2">Slett</div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="row"
+               ng-repeat="requirement in selectedFunctionality.referenceProjectRequirement track by $index">
+            <div class="col-8">
+                        <textarea class="form-control" rows="2"
+                                  ng-model="requirement.requirementText"
+                                  ng-blur="updateRequirementText(requirement)"
+                                  id="requirement.id"></textarea>
+            </div>
+            <div class="col-2">
+              <div class="dropdown">
+                <select ng-model="requirement.priority"
+                        ng-options="priorityValue for priorityValue in priorityValues"
+                        ng-change="updateRequirementPriority(requirement)">
+                </select>
+              </div>
+            </div>
+            <div class="col-2">
+              <div>
+                <button type="button" class="btn btn-default btn-sm pull-right"
+                        ng-click="deleteRequirementAndRow(selectedFunctionality.referenceProjectRequirement[$index], $index)">
+                  <span class="fas fa-trash"></span> Slett krav
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal">Lukk</button>
+      </div>
+    </div>
+  </div>
 </div>
-
 </body>
 </html>

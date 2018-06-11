@@ -4,6 +4,7 @@ package no.kdrs.grouse.controller;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IProjectFunctionalityService;
+import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ProjectFunctionalityController {
 
     @RequestMapping(value = "/{krav}/" + REQUIREMENT,
             method = RequestMethod.GET)
-    public ResponseEntity<ProjectFunctionality> getRequirements(
+    public ResponseEntity<ProjectFunctionality> getProjectFunctionality (
             @PathVariable("krav") Long projectFunctionalityId) {
 
         ProjectFunctionality projectFunctionality = projectFunctionalityService.
@@ -46,11 +47,11 @@ public class ProjectFunctionalityController {
         }
         projectFunctionality.add(linkTo(methodOn
                 (ProjectFunctionalityController.class).
-                getRequirements(projectFunctionalityId)).withSelfRel());
+                getProjectFunctionality(projectFunctionalityId)).withSelfRel());
 
         projectFunctionality.add(linkTo(methodOn
                 (ProjectFunctionalityController.class).
-                getRequirements(projectFunctionalityId)).
+                getProjectFunctionality(projectFunctionalityId)).
                 withRel(PROJECT_REQUIREMENT));
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -74,5 +75,25 @@ public class ProjectFunctionalityController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(projectRequirement);
+    }
+
+
+    @RequestMapping(value = "/{krav}/krav", method = RequestMethod.PATCH)
+    public ResponseEntity<ProjectFunctionality> patchFunctionality(
+            @PathVariable("krav") Long functionalityNumber,
+            @RequestBody PatchObjects patchObjects)
+            throws Exception {
+
+        ProjectFunctionality projectFunctionality = projectFunctionalityService.
+                updateProjectFunctionality(patchObjects, functionalityNumber);
+
+        projectFunctionality.add(linkTo(methodOn
+                (ProjectFunctionalityController.class).
+                getProjectFunctionality(projectFunctionality
+                        .getProjectFunctionalityId())).
+                withSelfRel());
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(projectFunctionality);
     }
 }

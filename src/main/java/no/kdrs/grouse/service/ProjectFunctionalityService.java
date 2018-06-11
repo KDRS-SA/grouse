@@ -5,10 +5,14 @@ import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.persistence.IProjectFunctionalityRepository;
 import no.kdrs.grouse.persistence.IProjectRequirementRepository;
 import no.kdrs.grouse.service.interfaces.IProjectFunctionalityService;
+import no.kdrs.grouse.utils.PatchObject;
+import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
@@ -20,14 +24,18 @@ import java.util.Optional;
 public class ProjectFunctionalityService
         implements IProjectFunctionalityService {
 
-    private IProjectFunctionalityRepository projectFunctionalityRepository;
+    private EntityManager em;
     private IProjectRequirementRepository projectRequirementRepository;
+    private IProjectFunctionalityRepository projectFunctionalityRepository;
 
-    public ProjectFunctionalityService(
-            IProjectFunctionalityRepository projectFunctionalityRepository,
-            IProjectRequirementRepository projectRequirementRepository) {
-        this.projectFunctionalityRepository = projectFunctionalityRepository;
+    public ProjectFunctionalityService(EntityManager em,
+                                       IProjectRequirementRepository
+                                               projectRequirementRepository,
+                                       IProjectFunctionalityRepository
+                                               projectFunctionalityRepository) {
+        this.em = em;
         this.projectRequirementRepository = projectRequirementRepository;
+        this.projectFunctionalityRepository = projectFunctionalityRepository;
     }
 
     @Override
@@ -56,6 +64,49 @@ public class ProjectFunctionalityService
 
         return projectRequirementRepository.save(projectRequirement);
     }
+
+
+    @Override
+    public ProjectFunctionality updateProjectFunctionality(
+            PatchObjects patchObjects, Long requirementNumber)
+    throws Exception {
+
+        // If the entity does not exist, throw an Exception
+        getProjectFunctionalityOrThrow(requirementNumber);
+
+        for (PatchObject patchObject: patchObjects.getPatchObjects()) {
+            if("replace".equalsIgnoreCase(patchObject.getOp())
+                    && null != patchObject.getPath()
+                    && null != patchObject.getValue()) {
+                String path = patchObject.getPath();
+                if ("/".equals(path.substring(0,1))) {
+                    path = path.substring(1);
+                }
+
+                String updateQuery = "update ProjectFunctionality set "
+                        + path + " = :value where id = :id";
+                Query query = em.createQuery(updateQuery);
+                query.setParameter("value", Boolean.valueOf(patchObject
+                        .getValue()));
+                query.setParameter("id", requirementNumber);
+                query.executeUpdate();
+            }
+            else {
+                throw new Exception("Cannot handle this PatchObject " +
+                        patchObject.toString());
+            }
+        }
+        // persist changes to database as there may have been multiple
+        // updates
+        em.flush();
+        // clear the context so we can retrieve the newly persisted object
+        em.clear();
+
+        // reread the projectRequirement as there may have been multiple
+        // changes. Not sure if this is needed or not.
+        return em.find(ProjectFunctionality.class, requirementNumber);
+    }
+
 
     @Override
     public void delete(Long functionalityID) {

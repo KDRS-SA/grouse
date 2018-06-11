@@ -40,6 +40,7 @@ var loginController = app.controller('LoginController',
         // Blanking out password straight away!
         $scope.password = '';
       }, function errorCallback(response) {
+        alert("Kunne ikke logge på. Feilmelding er " + JSON.stringify(response));
         console.log(" ERROR POST ON [" + serverLoginAddress + "]" + JSON.stringify(response));
       });
     };

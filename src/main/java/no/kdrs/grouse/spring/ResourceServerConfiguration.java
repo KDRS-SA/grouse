@@ -1,13 +1,16 @@
 package no.kdrs.grouse.spring;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 /**
@@ -17,9 +20,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  * The security of the API-endpoints are defined in the
  * configure(HttpSecurity http) method.
  */
-//@EnableResourceServer
-//@EnableWebSecurity
-//@Configuration
+@EnableResourceServer
+@EnableWebSecurity
+@Configuration
 public class ResourceServerConfiguration
         extends ResourceServerConfigurerAdapter {
 

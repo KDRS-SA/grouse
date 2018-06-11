@@ -2,9 +2,11 @@ package no.kdrs.grouse.spring;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
@@ -38,8 +40,8 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
  * becomes an issue later.
  *
  */
-//@EnableAuthorizationServer
-//@Configuration
+@EnableAuthorizationServer
+@Configuration
 public class AuthorizationServerConfiguration
         extends AuthorizationServerConfigurerAdapter {
 
