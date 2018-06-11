@@ -48,6 +48,11 @@ public class GrouseApplication {
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 
 	    try {
+
+	        // Only import if there is no data
+            if(functionalityRepository.count() > 0)
+                return;
+
             JAXBContext jaxbContext = JAXBContext.newInstance(Chapters.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
@@ -55,6 +60,7 @@ public class GrouseApplication {
                     .getResourceAsStream("db" + File.separator + "data.xml");
 
             Chapters chapters = (Chapters) jaxbUnmarshaller.unmarshal(data);
+
 
 
             // Create a "root" parent in the database, that everyone is a child
