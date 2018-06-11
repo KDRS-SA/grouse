@@ -66,20 +66,20 @@ public class ProjectFunctionality
     /**
      * Description of functionality
      */
-    @Column(name = "description", length = 2000)
+    @Column(name = "description", length = 4000)
     private String description;
 
 
     /**
      * Description of consequence of excluding this functionality
      */
-    @Column(name = "consequence", length = 2000)
+    @Column(name = "consequence", length = 4000)
     private String consequence;
 
     /**
      * Description of consequence of excluding this functionality
      */
-    @Column(name = "explanation", length = 2000)
+    @Column(name = "explanation", length = 4000)
     private String explanation;
 
     /**
