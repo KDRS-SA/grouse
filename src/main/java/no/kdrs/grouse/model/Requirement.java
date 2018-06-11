@@ -38,7 +38,7 @@ public class Requirement implements Serializable {
      * requirementText (no:tekst)*
      */
     @XmlElement
-    @Column(name = "requirement_text", length = 10000)
+    @Column(name = "requirement_text", length = 2000)
     private String requirementText;
 
      /**

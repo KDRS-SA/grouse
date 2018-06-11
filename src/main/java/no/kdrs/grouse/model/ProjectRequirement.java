@@ -49,7 +49,7 @@ public class ProjectRequirement
     /**
      * requirementText (no:tekst)*
      */
-    @Column(name = "requirement_text", length = 10000)
+    @Column(name = "requirement_text", length = 2000)
     private String requirementText;
 
      /**
