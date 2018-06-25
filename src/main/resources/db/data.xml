@@ -126,6 +126,10 @@
     <section>
       <sectionTitle>Generelt krav</sectionTitle>
       <sectionOrder>1</sectionOrder>
+      <sectionTitle>Generelle krav</sectionTitle>
+      <description>Generelle krav rundt funskjonalitet og frister.</description>
+      <explanation>Det er viktig å få på plass en god overordnet beskrivelse av systemet og forventet funksjonalitet og frister.</explanation>
+      <consequence>Hvis dette mangler kan det oppstår uklarheter rundt funksjonalitet som systemet støtter og frister for levering</consequence>
       <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
@@ -353,7 +357,6 @@
           </requirement>
         </requirements>
       </section>
-
       <section>
         <sectionOrder>3</sectionOrder>
         <sectionTitle>Krav til mappe</sectionTitle>
@@ -494,7 +497,7 @@
         <sectionTitle>Krav til merknader</sectionTitle>
         <description>Kravet gir anledning til at organisasjonen fritt kan definere hvilke typer merknader som skal kunne opprettes i tillegg til de merknadstypene som ligger inne som standard i løsningen.</description>
         <explanation>Merknadstyper benyttes for å definere hva slags merknad som legges inn (arkivmerknad, saksbehandlingsmerknad e.l) Merknadstyper kan også gi anledning til å sette opp automatiske søk i løsningen.</explanation>
-        <consequence>Kravet gir anledning til at organisasjonen fritt kan definere hvilke typer merknader som skal kunne opprettes i tillegg til de merknadstypene som ligger inne som standard i løsningen.</consequence>
+        <consequence>Dersom løsningen ikke gir anledning til å definere merknadstyper på egen hånd, mister man muligheten til å sette opp søk som organisasjonen selv har behov for.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -511,7 +514,7 @@
         <sectionTitle>Krav til dokumentfangst</sectionTitle>
         <description>Kravene er knyttet til helautomatisk fangst av dokumenter fra digitale søknader og lignende</description>
         <explanation>Det er viktig for løsningen at det er enkelt å integrere arkivsystemet med andre digitale løsninger slik at dokumenter kan fanges på en effektiv og sikker måte inn til arkivsystemet. Dersom organisasjonen rutinemessig behandler søknader/saker knyttet til enkelte systemer, bør man stille et egendefinert krav knyttet til dette eller disse systemene.</explanation>
-        <consequence>Dersom løsningen ikke åpner for helautomatisk dokumentfangst, må alle dokumenter registreres og arkiveres manuelt i systemet, noe vil øke bemanningsbehovet i arkivtjenesten.</consequence>
+        <consequence>Dersom løsningen ikke åpner for helautomatisk dokumentfangst, må alle dokumenter registreres og arkiveres manuelt i systemet, noe som vil øke bemanningsbehovet i arkivtjenesten.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -535,7 +538,6 @@
           </requirement>
         </requirements>
       </section>
-
     </section>
     <section>
       <sectionOrder>5</sectionOrder>
@@ -764,12 +766,13 @@
           </requirement>
         </requirements>
       </section>
+      <!-- Start ... check these  -->
       <section>
         <sectionOrder>7</sectionOrder>
         <sectionTitle>Krav til frysing av metadata for mappe</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene gjør at metadata på relevante arkivenheter og dokumenter har riktige statusverdier og ikke kan endres uten autorisasjon.</description>
+        <explanation>For å sikre kvaliteten og autentisiteten til arkivmaterialet er det viktig å bevise at dokumenter og metadata ikke er endret.</explanation>
+        <consequence>Dersom ikke kravene oppfylles kan det stilles spørsmål hvorvidt arkivmateriale er autentisk.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -856,12 +859,14 @@
           </requirement>
         </requirements>
       </section>
+      <!-- End ... check these  -->
+
       <section>
         <sectionOrder>10</sectionOrder>
         <sectionTitle>Krav til oppsplitting og sammenslåing av mapper, flytting av registreringer</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer bedre effektivitet og arbeidsflyt når behov for rydding i arkivbasen oppstår</description>
+        <explanation>Det kan være nødvendig å rydde i saksmapper og journalposter feks når en journalpost er feilregistrert. Noark sikrer muligheten til å flytte journalposter fra en saksmappe til en annen, men oppfyllelse av disse kravene vil bedre tjenesten.</explanation>
+        <consequence>Dersom kravene ikke oppfylles kan dette ha en konsekvens på effektivitet og arbeidsflyt.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -900,9 +905,9 @@
       <section>
         <sectionOrder>11</sectionOrder>
         <sectionTitle>Krav til presedens</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer at tilbudte løsninger har funksjonalitet for presedens</description>
+        <explanation>Dersom en saksmappe eller journalpost utgjør en presedens feks det fattes et vedtak som oppfattes som prinsipielt viktig for fremtidig saksbehandling. Senere kan organisasjonen gå tilbake og gjenbruke dette som presedens.</explanation>
+        <consequence>Dersom kravene ikke oppfylles kan det blir vanskeligere å gjenbruke eksisterende saker og journalposter som presedenser. </consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -923,9 +928,9 @@
       <section>
         <sectionOrder>12</sectionOrder>
         <sectionTitle>Krav til masseimport utløst fra NOARK5-kjerne</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer muligheten til å importere flere dokumenter i en og samme sekvens til løsningen</description>
+        <explanation>Moderne saksbehandling forventer at arkivsystemene er fleksible og effektive på dokumentfangst. Et eksempel på dette er muligheten til å importere dokumenter fra en historisk base fra et annet Noark system eller et fagsystem.</explanation>
+        <consequence>Dersom kravene ikke oppfylles kan løsningen bli et hinder for effektiv dokumentfangst.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -976,9 +981,9 @@
       <section>
         <sectionOrder>13</sectionOrder>
         <sectionTitle>Krav til elektroniske skjema for utfylling over internett</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer effektiv og korrekt registrering av dokumenter som kommer inn til organisasjonen som skjemaer fylt ut på internett.</description>
+        <explanation>Flere og flere dokumenter blir generert fra skjemaer på internett og det er viktig å sikre en automatisert dokumentfangst fra slike skjemaer</explanation>
+        <consequence>Dersom kravene ikke oppfylles vil organisasjonen måtte behandle dokumenter fra skjemaer manuelt.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -999,9 +1004,9 @@
       <section>
         <sectionOrder>14</sectionOrder>
         <sectionTitle>Krav til elektronisk dokumentutveksling Pri</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer en automatisert måte å utveksle dokumenter mellom elektroniske løsninger (Noark) internt i organisasjonen og mellom ulike forvaltningsorganer.</description>
+        <explanation>Målene med eForvaltning krever en smidig dokumentutveksling og det er viktig at det finnes automatiserte metoder for å sikre slik utveksling. Dette må skje på en måte som ivaretar arkivfaglige hensyn.</explanation>
+        <consequence>Dersom kravene ikke oppfylles vil dette føre til manuelt håndtering av slik korrespondanse.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1022,9 +1027,9 @@
       <section>
         <sectionOrder>15</sectionOrder>
         <sectionTitle>Krav til migrering mellom NOARK-løsninger</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer muligheten til å importere dokumenter skapt med et Noark struktur kan importeres inn i løsningen.</description>
+        <explanation>Ved innkjøp av et nytt system kan det kostnadsreduserende hvis den nye løsningen kan importere et fullstendig uttrekk fra det gamle systemet. Samtidig kan muligheten til å importere et komplett uttrekk også brukes som et testverktøy for å sjekke at løsningen er i henhold til Noark 5 standarden. </explanation>
+        <consequence>Dersom kravene ikke oppfylles vil det være vanskeligere å importere data produsert i en Noark struktur. Det kan medføre en økonomisk konsekvens for eksempel ved bytte av systemleverandør</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1051,9 +1056,9 @@
       <section>
         <sectionOrder>16</sectionOrder>
         <sectionTitle>Krav til tilgjengeliggjøring av offentlig journal på internett</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer muligheten til å legge organisasjonens postjournal tilgjengelig på internett.</description>
+        <explanation>Publisering av offentlig journal er et viktig ledd i åpenhet om demokratiet. En del forvaltningsorganer er pålagt å publisere sin postjournal på internett, mens for andre organer er det en sterk forventning fra samfunnet at slik publisering skjer.</explanation>
+        <consequence>Dersom kravene ikke oppfylles vil det ikke være mulig å publisere offentlig journal.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1091,10 +1096,10 @@
       </section>
       <section>
         <sectionOrder>17</sectionOrder>
-        <sectionTitle>Krav til sikkerhet i kjernen</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <sectionTitle>Krav til sikkerhetskonfigurasjon</sectionTitle>
+        <description>Kravet sikrer kunden en beskrivelse av systemets sikkerhetskonfigurasjon. </description>
+        <explanation>Det vil ofte være ønskelig med integrasjon med eksterne systemer feks en skanner og det er viktig at den faktiske brukeren som skanner et dokument er identifisert ikke bare skanneren.</explanation>
+        <consequence>Hvis sikkerhetskonfigurasjonen ikke er tilstrekkelig god vil det kunne gjøres endringer i arkivdatabasen uten at det er logget eller sporbart hvem som har foretatt endringene.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1104,14 +1109,20 @@
             <requirementText>NOARK 6.6.8 (V) Det bør kunne brukes andre og sterkere autentiseringsmåter som alternativ til passord</requirementText>
             <priority>2</priority>
           </requirement>
+          <requirement>
+            <noarkRequirement>false</noarkRequirement>
+            <showOrder>1</showOrder>
+            <requirementText>Leverandøren bes beskrive hvordan brukerinteraksjon via en ekstern modul  skjer og hvorvidt hendelser kan knyttes til den faktiske brukeren og ikke bare knyttes til modulens identifikasjon.</requirementText>
+            <priority>O (i)</priority>
+          </requirement>
         </requirements>
       </section>
       <section>
         <sectionOrder>18</sectionOrder>
         <sectionTitle>Krav til rettighetsangivelser</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravet sikrer et nivå av autorisasjon på forskjellige objekter i arkivbasen</description>
+        <explanation>Det kan være ønskelig å begrense tilgang til objekter  i arkivbasen der autorisasjon er definert på brukernivå. Et eksempel på dette kan være en personalmappe der det er behov for å gi spesielle rettigheter.</explanation>
+        <consequence>Dersom kravene ikke finnes kan det bli vanskelig å gi riktig tilgangskontroll. Dette vil føre til en vanskeligere og mindre fleksibel arkivering.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1131,10 +1142,10 @@
       </section>
       <section>
         <sectionOrder>19</sectionOrder>
-        <sectionTitle>Krav til skjerming</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <sectionTitle>Krav til skjerming og gradering</sectionTitle>
+        <description>Dette kapittelet omhandler skjerming av arkivdel, klasse, sak, registrering (journalpost) og dokument med vedlegg.</description>
+        <explanation>Man skal kunne skjerme en arkivdel - eks. Barnemappe -, en klasse, tittel på sak og registrering samt dokumenter og/eller vedlegg.</explanation>
+        <consequence>Kun autoriserte brukere får innsyn i informasjonen som er registrert.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1185,9 +1196,9 @@
       <section>
         <sectionOrder>20</sectionOrder>
         <sectionTitle>Krav knyttet til arkivformat og dokumentformat</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Her beskrives hvordan systemet skal forholde seg til ulike filformater samt automatisk eller manuell konvertering til arkivformat.</description>
+        <explanation>Det skal være mulig å definere filformater som en organisasjon benytter selv, samt mottar.  Egenproduserte filformat skal automatisk konverteres til arkivformat ved angivelse av status.</explanation>
+        <consequence>Ved å ikke definere dette kravet, vil ikke definerte filformat ikke kunne importeres eller produseres, og konvertering til godkjent filformat ikke skje automatisk.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1240,9 +1251,9 @@
       <section>
         <sectionOrder>21</sectionOrder>
         <sectionTitle>Krav knyttet til masseoppdatering</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Denne funksjonaliteten er ønsket der man har behov for å gjøre større endringer i mange saker eller journalposter samtidig.</description>
+        <explanation>Ved endring av saksbehandler, status, koder, skjerming, klassering er det ønskelig å kunne gjøre dette i en og samme operasjon.</explanation>
+        <consequence>Praktisk og tidsbesparende løsning.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1282,9 +1293,9 @@
     <section>
       <sectionOrder>6</sectionOrder>
       <sectionTitle>Krav til adresseregister</sectionTitle>
-      <description></description>
-      <explanation></explanation>
-      <consequence></consequence>
+      <description>Det skal være funksjonalitet for opprettelse av et adresseregister for hele organisasjonen, for oppslag av både eksterne og interne adressater.</description>
+      <explanation>Ved å etablere denne funksjonaliteten vil alle saksbehandlere kunne benytte samme register.  Alle adressater bør være registrert med epostadresse. Det skal samtidig være mulig å registrere en adressat i en journalpost uten at denne er forhåndsdefinert i adresseregisteret. Administrasjon av organisasjonens adresseregister bør tillegges autoriserte brukere.</explanation>
+      <consequence>Hvis man ikke benytter adresseregister vil man få ulike skrivemåter på adressater, ikke-offisielle epostadressater i stedet for organisasjoners postmottak osv. Et adresseregister “uniformerer” adressater</consequence>
       <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
@@ -1328,9 +1339,9 @@
       <section>
         <sectionOrder>1</sectionOrder>
         <sectionTitle>Krav til saksoppfølging</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Hvis man ikke benytter adresseregister vil man få ulike skrivemåter på adressater, ikke-offisielle epostadressater i stedet for organisasjoners postmottak osv. Et adresseregister “uniformerer” adressater.</description>
+        <explanation>Det er viktig at systemet kan gi oversikt over behandlingsfrister på en brukerdefinert måte.</explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig, vil dette kunne gå ut over organisasjonens evne til å kvalitetssikre arkivdanningen og saksbehandlingen. Det kan også i gitte tilfeller få økonomiske konsekvenser.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1345,9 +1356,9 @@
       <section>
         <sectionOrder>2</sectionOrder>
         <sectionTitle>Krav til dokumentproduksjon</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Disse kravene letter dokumentproduksjonen for organisasjonen.</description>
+        <explanation>Kapittelet omhandler i første rekke krav som styrer hvordan dokumentproduksjonen styres. Det er derfor viktig at organisasjonen vurderer hvert enkelt krav nøye med hensyn til hvilken prioritering man ønsker.</explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig i løsningen, kan det ha konsekvenser for fleksibiliteten i saksbehandlingen. </consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1476,9 +1487,9 @@
       <section>
         <sectionOrder>3</sectionOrder>
         <sectionTitle>Krav til maler</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer at produksjon og forvaltning av maler foregår på en enkel og effektiv måte.</description>
+        <explanation>Bruk av maler er vanlig i forvaltningen, og det er behov for at løsningen støtter en enkel og effektiv forvaltning av malene.</explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig i løsningen, kan det bli det bli mer manuelt arbeid når dokumenter produseres som en del av saksbehandlingen.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1589,9 +1600,9 @@
       <section>
         <sectionOrder>4</sectionOrder>
         <sectionTitle>Krav til saks- og dokumenthistorikk</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer muligheten for å holde god oversikt over saksgangen.</description>
+        <explanation>For det daglige kvalitetssikringsarbeidet i arkivtjenesten, er denne funksjonaliteten viktig.</explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig i løsningen, kan det bli vanskeligere for arkivtjenesten å utføre kontroll over arkivering og saksbehandlingen.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1648,9 +1659,9 @@
       <section>
         <sectionOrder>5</sectionOrder>
         <sectionTitle>Krav til dokumentflyt</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer at dokumentflyten mellom de ulike leddene kan foregå på en effektiv måte  internt i  systemet.</description>
+        <explanation>I saksbehandlingen vil det ofte være behov for at ulike aktører foretar ulike operasjoner knyttet til et dokument. Det er viktig for både kvalitet og effektivitet at løsningen legger til rette for god dokumentflyt.</explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig, eller ikke er god nok, vil det kunne oppstå hindringer og forsinkelser i dokumentflyten, noe som vil føre til lengre saksbehandlingstid og lavere effektivitet.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1737,9 +1748,9 @@
       <section>
         <sectionOrder>6</sectionOrder>
         <sectionTitle>Krav til arbeidsflyt</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrere at det er mulig å fordele arbeidsoppgaver og følge opp og holde oversikt over oppgavene.</description>
+        <explanation>Arbeidsflyt vil ofte basere seg på styring av kommunikasjonen mellom ulike personer og roller og informasjonssystemer er en del av en arbeidsprosess. Det er en viktig del av saksbehandlingsprosessen. </explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig, eller ikke er god nok, vil det kunne oppstå hindringer og forsinkelser, noe som vil føre til lengre saksbehandlingstid og lavere effektivitet.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -1850,8 +1861,8 @@
       <section>
         <sectionOrder>7</sectionOrder>
         <sectionTitle>Øvrige krav til saksbehandlerfunksjonalitet</sectionTitle>
-        <description></description>
-        <explanation></explanation>
+        <description>I dette kapittelet er listet opp noen forslag til krav til saksbehandlingsunksjonalitet som ansees å være relevante og som ikke er en del av Noark standarden.</description>
+        <explanation>Kravene i kapittelet bør gjennomgås med tanke på relevans for organisasjonen. Det vil også være naturlig å benytte dette kapittelet for å stille andre egendefinerte krav til saksbehandlingsfunksjonalitet.</explanation>
         <consequence></consequence>
         <type>submenu</type>
         <showMe>true</showMe>
@@ -1940,17 +1951,14 @@
     <section>
       <sectionOrder>6</sectionOrder>
       <sectionTitle>Krav til E-post</sectionTitle>
-      <description></description>
-      <explanation></explanation>
-      <consequence></consequence>
       <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
         <sectionTitle>Overordnede krav til e-postfunksjonalitet</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer at all kommunikasjon mottatt og sendt via e-post blir journalført, samt effektivisere hverdagen ved å tilrettelegge for utstrakt bruk av e-post i saksbehandlingen.</description>
+        <explanation>E-post brukes etterhvert svært mye i saksbehandling. Det betyr at mange dokumenter ekspederes og mottas via denne kanalen. En enkel behandling av e.-post vil derfor sikre at kommunikasjonen bevares.</explanation>
+        <consequence>Dersom ikke krav til e-post oppfylles vil håndtering av denne kommunikasjonen i ulik grad kunne bli langt mer arbeidskrevende for organisasjonen. Dette vil også medføre en økt risiko for redusert dokumentfangst.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2000,9 +2008,9 @@
       <section>
         <sectionOrder>2</sectionOrder>
         <sectionTitle>Krav til dokumentfangst, e-posthode og e-postmelding</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer en effektiv metadata- og dokumentfangst av eposter.</description>
+        <explanation>En stadig økende mengde kommunikasjon i - og med forvaltningen foregår på e-post. Store deler av denne kommunikasjonen vil være arkivverdig, og det er viktig at løsningen har gode og automatiserte løsninger for å fange arkivverdige opplysninger i form av dokumenter og metadata.</explanation>
+        <consequence>Dersom ikke krav til metadata- og dokumentfagst av epost oppfylles vil håndtering av denne kommunikasjonen i ulik grad kunne bli langt mer arbeidskrevende for organisasjonen. </consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2029,9 +2037,9 @@
       <section>
         <sectionOrder>3</sectionOrder>
         <sectionTitle>Ekspedering av dokumenter med epost / som e-post</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer forventet funksjonalitet når saksdokumentet skal ekspederes som epost med eventuelle vedlegg.</description>
+        <explanation>For å kunne realisere enkelte gevinster knyttet til elektronisk arkiv og bruk av noark-system, vil det være ønskelig/nødvendig å kunne ekspedere utgående dokumenter pr e-post.</explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig, eller ikke er god nok, vil det kunne skade brukernes lojalitet til systemet, som kan også føre til etablering av skyggearkiv i epostløsninger.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2190,9 +2198,9 @@
       <section>
         <sectionOrder>4</sectionOrder>
         <sectionTitle>Krav til import / registrering av innkommet e-post</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene sikrer forventet funksjonalitet når innkommende epost skal importeres / registreres.</description>
+        <explanation>For å kunne realisere enkelte gevinster knyttet til elektronisk arkiv og bruk av noark-system, vil det være ønskelig/nødvendig å journalføre eposter.</explanation>
+        <consequence>Dersom funksjonaliteten ikke er tilgjengelig, eller ikke er god nok, vil det kunne hindre effektiv dokumentfangst. </consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2540,21 +2548,17 @@
         </requirements>
       </section>
     </section>
-
     <section>
       <sectionOrder>7</sectionOrder>
       <sectionTitle>Krav til funksjonalitet for utvalgsbehandling</sectionTitle>
-      <description></description>
-      <explanation></explanation>
-      <consequence></consequence>
       <type>submenu</type>
       <showMe>true</showMe>
       <section>
         <sectionOrder>1</sectionOrder>
         <sectionTitle>Krav til utvalgsbehandling – administrativ sak</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Dette kapittelet beskriver generelle krav til funksjonalitet mellom sak/arkivsystem og utvalgsbehandling.</description>
+        <explanation>Det som registreres i sak/arkivsystem skal overføres til utvalgsbehandling slik at man skal slippe å registrere informasjon på nytt.</explanation>
+        <consequence>Dette forenkler utvalgsbehandlingen, og gjør saksarkivet  oppdatert med hensyn til informasjon rundt saker som er politisk behandlet.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2640,9 +2644,9 @@
       <section>
         <sectionOrder>3</sectionOrder>
         <sectionTitle>Krav til utvalgsbehandling – administrere beslutningsorgan</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kapittelet omhandler administrasjon av beslutningsorganer: Man skal kunne opprette, legge ned organer og medlemmer/varamedlemmer, opplysninger rundt organer og medlemmer. Alle registreringer skal logges, og det skal være mulig å lagre historikk.</description>
+        <explanation>Man skal ha mulighet for å opprette og vedlikeholde alle styrer, råd og utvalg samt disses medlemmer.  All historikk skal finnes og endringer skal loggføres.</explanation>
+        <consequence>Ved ikke å ha denne funksjonaliteten kan man ikke opprette og vedlikeholde styrer, råd og utvalg og deres medlemmer, samt avslutte beslutningsorganer i organisasjonen.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2767,9 +2771,9 @@
       <section>
         <sectionOrder>4</sectionOrder>
         <sectionTitle>Krav til utvalgsbehandling – forberede møte</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kravene i dette kapitlet er ment å sikre funksjonalitet rundt forberedelser av møter i de ulike besluttningsorgan. Det bør også være muligheter for oppretting av tilleggssaker.</description>
+        <explanation>Ved å kunne registrere møtedatoer, medlemmer, varamedlemmer, møteinnkalling, innkalling av varamedlemmer m.v. administreres beslutningsorgan enklere.</explanation>
+        <consequence>Hvis man ikke gjør registreringer rundt beslutningsorganene i fortid, vil man måtte gjøre disse før hvert møte.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2832,9 +2836,9 @@
       <section>
         <sectionOrder>5</sectionOrder>
         <sectionTitle>Krav til utvalgsbehandling – selve møtet</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kapittelet beskriver registreringer under møtet.</description>
+        <explanation>Det skal være mulig for eks. utvalgssekretær å registrere forslag, avstemminger og vedtaksprotokoll under møtet. Protokoller skal journalføres i sakene i sakssystemet.</explanation>
+        <consequence>Ved å ikke ha denne funksjonaliteten i møtet, vil etterarbeidet bli større og ta lengre tid.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2885,9 +2889,9 @@
       <section>
         <sectionOrder>6</sectionOrder>
         <sectionTitle>Krav til utvalgsbehandling – etter møtet</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Dette kapittelet beskriver etterarbeidet etter møtet, registreringer av fremmøte og utbetaling av møtegodtgjørelse.</description>
+        <explanation>Autoriserte brukere skal kunne gjøre endringer i tekst, hente fram rapporter over frammøte for utbetaling av møtegodtgjørelse, knytte til interpellasjoner m.v. etter at møtet er avsluttet.</explanation>
+        <consequence>Protokoller må være i henhold til hva som faktisk skjedde i møtet, og må kunne redigeres.  Har man frammøte knyttet opp mot møtegodtgjøring, forenkles også denne delen av arbeidet.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -2944,9 +2948,9 @@
       <section>
         <sectionOrder>7</sectionOrder>
         <sectionTitle>Krav til utvalgsbehandling – administrasjon av møtebehandlingen</sectionTitle>
-        <description></description>
-        <explanation></explanation>
-        <consequence></consequence>
+        <description>Kapittelet beskriver funksjonaliteter knyttet opp mot møtebehandling i sak/arkivsystemet. </description>
+        <explanation>Her beskrives de ulike funksjonaliteter som må være tilstede for å opprette, innkalle medlemmer, gjennomføre møtet og protokollere, registrere i hvilke utvalg saker har blitt behandlet i og i hvilken rekkefølge, offentlige og unntatt offentlige varianter; hvilken sendes til publisering, logging av hendelser osv.</explanation>
+        <consequence>Dette er helt nødvendige funksjonaliteter for å kunne administrere utvalgsbehandlingen.</consequence>
         <type>submenu</type>
         <showMe>true</showMe>
         <requirements>
@@ -3280,7 +3284,6 @@
         </requirements>
       </section>
     </section>
-
     <section>
       <sectionOrder>10</sectionOrder>
       <sectionTitle>Krav til rapporter og statistikker</sectionTitle>
@@ -3679,7 +3682,6 @@
           </requirement>
         </requirements>
       </section>
-
     </section>
     <section>
       <sectionOrder>12</sectionOrder>
@@ -4691,18 +4693,15 @@
         </requirement>
       </requirements>
     </section>
-
-
   </chapter>
-
   <chapter>
     <chapterTitle>Krav til skanning</chapterTitle>
     <section>
       <sectionOrder>1</sectionOrder>
       <sectionTitle>Krav til skanning</sectionTitle>
-      <description></description>
-      <explanation></explanation>
-      <consequence></consequence>
+      <description>Det vil fortsatt være behov å skanne materiale for journalføring.</description>
+      <explanation>En del materiale vil fortsatt være på papir framover og det vil være behov for å kunne skanne inn slik materiale.</explanation>
+      <consequence>Hvis disse kravene oppfylles ikke, vil arkivløsningen være en hinder for å oppnå god dokumentfangst fra ikke-elektroniske kilder.</consequence>
       <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
@@ -4794,15 +4793,14 @@
     </section>
 
   </chapter>
-
   <chapter>
     <chapterTitle>Krav til konvertering</chapterTitle>
     <section>
       <sectionOrder>1</sectionOrder>
       <sectionTitle>Krav til konvertering</sectionTitle>
-      <description></description>
-      <explanation></explanation>
-      <consequence></consequence>
+      <description>Dette er krav som ikke er en del av standarden men som ansees å være nødvendig for å sikre god effektivitet for konvertering.</description>
+      <explanation>Det er viktig å kunne håndtere eldre materiale i den nye løsningen.</explanation>
+      <consequence>Dersom disse kravene ikke etterfølges kan det bli vanskelig å finne fram i historisk materialet og det kan påløpe store kostnader knyttet til uttrekk.</consequence>
       <type>submenu</type>
       <showMe>true</showMe>
       <requirements>
@@ -4844,6 +4842,5 @@
         </requirement>
       </requirements>
     </section>
-
   </chapter>
 </chapters>
