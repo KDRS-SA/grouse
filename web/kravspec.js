@@ -46,7 +46,7 @@ var requirementsController = app.controller('RequirementsController',
         $scope.requirementsView = false;
         $scope.loadingData = false;
 
-        $scope.priorityValues = ['O', '1', '2'];
+        $scope.priorityValues = ['O', '1', '2', 'O (i)', '1 (i)', '2 (i)'];
 
         $scope.newRequirementText = "";
         $scope.newRequirementPriority = "O";
