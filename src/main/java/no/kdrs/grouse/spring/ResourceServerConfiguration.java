@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
+import static no.kdrs.grouse.utils.Constants.SLASH;
+import static no.kdrs.grouse.utils.Constants.USER;
+
 /**
  * This is the ResourceServerConfiguration for the application. It sets up the
  * AuthenticationProvider and configures the security the the API-endpoints.
@@ -80,8 +83,11 @@ public class ResourceServerConfiguration
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().
+        http.cors().and().authorizeRequests().
                 antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll().
+                antMatchers(HttpMethod.OPTIONS, "/").permitAll().
+                antMatchers(HttpMethod.GET, "/").permitAll().
+                antMatchers(HttpMethod.POST,  SLASH + USER).permitAll().
                 anyRequest().authenticated().
                 and().
                 sessionManagement().sessionCreationPolicy

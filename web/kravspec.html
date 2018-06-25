@@ -9,7 +9,7 @@
   <link href="dependencies/vendor/META-INF/resources/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css"
         rel="stylesheet" type="text/css">
   <link
-    href="dependencies/vendor/META-INF/resources/webjars/font-awesome/5.0.9/web-fonts-with-css/css/fontawesome-all.css"
+    href="dependencies/vendor/META-INF/resources/webjars/font-awesome/5.0.9/web-fonts-with-css/css/fontawesome-all.min.css"
     rel="stylesheet" type="text/css">
 
   <!-- js resources -->
@@ -24,11 +24,11 @@
 
 <body ng-controller="RequirementsController">
 <nav class="navbar navbar-expand-sm bg-light">
-  <a class="navbar-brand" href="#">KDRS Kravspec verktøy (BETA)</a>
+  <a class="navbar-brand" href="https://www.kdrs.no/grouse">KDRS Kravspec verktøy (BETA)</a>
 
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item dropdown">
-      <a class="nav-link " href="#" id="navbardrop" data-toggle="dropdown">
+      <a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
         <span class="fa fa-bars"></span>
       </a>
       <div class="dropdown-menu dropdown-menu-right">
@@ -40,13 +40,24 @@
 </nav>
 <!-- ProjectsView -->
 <div ng-show="projectsView" class="card">
-  <div class="card-header border-0 py-3 d-flex justify-content-between align-items-center">
-    <h4>Prosjekter</h4>
-    <button type="button" class="btn btn-primary float-right"
-            data-toggle="modal" data-target="#newProjectModal">
-      Nytt prosjekt
-    </button>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Prosjekter</a></li>
+    </ol>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-12">
+        <button type="button" class="btn btn-primary float-right" ng-disabled="loadingData"
+                data-toggle="modal" data-target="#newProjectModal">
+          Nytt prosjekt <i ng-show="loadingData" class="fa fa-circle-notch fa-spin" style="font-size: 18px;"></i>
+        </button>
+      </div>
+
+    </div>
   </div>
+
   <div class="card-body">
     <div class="container">
       <table class="table table-hover">
@@ -110,9 +121,12 @@
 </div>
 <!-- RequirementsView -->
 <div ng-show="requirementsView">
-  <div class="card card-header">
-    <h4>{{selectedProject.projectName}}</h4>
-  </div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">Prosjekter</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{selectedProject.projectName}}</li>
+    </ol>
+  </nav>
   <div class="card-body">
     <div class="progress">
       <div class="progress-bar progress-bar-striped bg-success"

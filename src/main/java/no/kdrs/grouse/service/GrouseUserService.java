@@ -4,6 +4,7 @@ import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.persistence.IGrouseUserRepository;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.utils.exception.UserAlreadyExistsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,18 +23,12 @@ public class GrouseUserService
         implements IGrouseUserService {
 
     private IGrouseUserRepository userRepository;
-//    private PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
-    /*
     public GrouseUserService(IGrouseUserRepository userRepository,
                              PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.encoder = encoder;
-    }
-*/
-
-    public GrouseUserService(IGrouseUserRepository userRepository) {
-        this.userRepository = userRepository;
     }
 
     @SuppressWarnings("unchecked")
@@ -50,8 +45,9 @@ public class GrouseUserService
     public GrouseUser save(GrouseUser incomingUser) {
         checkGrouseUserExistThenThrow(incomingUser.getUsername());
         GrouseUser user = new GrouseUser();
-        //user.setPassword(encoder.encode(incomingUser.getPassword()));
+        user.setPassword(encoder.encode(incomingUser.getPassword()));
         user.setUsername(incomingUser.getUsername());
+
         return userRepository.save(user);
     }
 

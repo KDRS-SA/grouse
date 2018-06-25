@@ -9,10 +9,15 @@ var REL_SELF = "self";
 var REL_REQUIREMENT = "krav";
 var REL_DOCUMENT = "dokument";
 var REL_FUNCTIONALITY = "funksjon";
+var REL_LOGIN_OAUTH = "login OAuth2";
+var REL_LOGOUT_OAUTH = "logout OAuth2";
 
-var serverLoginAddress = "http://localhost:9294/grouse/oauth/token";
-var startingAddress = "http://localhost:9294/grouse/bruker/";
-var urlForLogout = "http://localhost:9294/grouse/oauth/revoke-token";
+var REL_USER = "konto";
+
+var startingAddress = "http://localhost:9294/grouse/";
+var loginAddress = "";
+var logoutAddress = "";
+var userAddress = "";
 var oauthClientId = "grouse-client";
 var oauthClientSecret = "secret";
 
@@ -32,14 +37,47 @@ var getAccessToken = function () {
 };
 
 var setUsername = function (t) {
-  localStorage.setItem("username", JSON.stringify(t));
-  console.log("Adding username " + JSON.stringify(t) + " to local storage");
+  localStorage.setItem("username", t);
+  console.log("Adding username " + t + " to local storage");
+};
+
+var setUserAddress = function (t) {
+  localStorage.setItem("userAddress", t);
+  console.log("Adding userAddress " + t + " to local storage");
+};
+
+var getUserAddress = function () {
+  var token = localStorage.getItem("userAddress");
+  console.log("userAddress is " + token);
+  if (typeof token !== 'undefined') {
+    return token;
+  }
+  else {
+    return null;
+  }
+};
+
+var setLogoutAddress = function (t) {
+  localStorage.setItem("logoutAddress", t);
+  console.log("Adding logoutAddress " + t + " to local storage");
+};
+
+var getLogoutAddress = function () {
+  var token = localStorage.getItem("logoutAddress");
+  console.log("logoutAddress is " + token);
+  if (typeof token !== 'undefined') {
+    return token;
+  }
+  else {
+    return null;
+  }
 };
 
 var getUsername = function () {
   var token = localStorage.getItem("username");
+  console.log("Username is " + token);
   if (typeof token !== 'undefined') {
-    return JSON.parse(token);
+    return token;
   }
   else {
     return null;
@@ -48,6 +86,8 @@ var getUsername = function () {
 
 
 var invalidateObjectsOnLogout = function () {
+  setAccessToken('');
+  setUsername('');
   localStorage.clear();
 };
 

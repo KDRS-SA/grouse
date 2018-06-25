@@ -15,12 +15,11 @@ var app = angular.module('grouse-app', []);
 var requirementsController = app.controller('RequirementsController',
   ['$scope', '$http', '$window', '$location', '$anchorScroll',
     function ($scope, $http, $window, $location, $anchorScroll) {
-      //['$scope', '$http', '$window',
-      // function ($scope, $http, $window) {
 
       $scope.userIsAdmin = false;
       $scope.token = getAccessToken();
       $scope.username = getUsername();
+      $scope.userAddress = getUserAddress() + "/";
 
       if (typeof $scope.token === 'undefined' || $scope.token == null) {
         console.log("No valid token defined! Need to log in." + $scope.token);
@@ -31,31 +30,21 @@ var requirementsController = app.controller('RequirementsController',
       console.log("Valid token exists! " + JSON.stringify($scope.token));
 
       // Retrieve the current user and what they can do $scope.username
-      var urlForUserDetails = startingAddress + $scope.username;
-
-      console.log("urlForUserDetails " + urlForUserDetails);
 
       $http({
         method: 'GET',
-        url: urlForUserDetails,
+        url: $scope.userAddress + $scope.username,
         headers: {'Authorization': 'Bearer ' + $scope.token.access_token}
       }).then(function successCallback(response) {
         $scope.currentUser = response.data;
-        console.log(" GET urlForUserDetails [" + urlForUserDetails +
+        console.log(" GET urlForUserDetails [" + $scope.userAddress + $scope.username +
           "] returned " + JSON.stringify(response));
-        console.log(" GET $scope.currentUser  [" + urlForUserDetails +
+        console.log(" GET $scope.currentUser  [" + $scope.userAddress + $scope.username +
           "] returned " + JSON.stringify($scope.currentUser));
-
-        // TODO: THIS IS TO BE DELTED .....
-        $scope.organisationName = "Nye Asker kommune";
-        $scope.projectName = "Nytt Noark 5 løsning";
-
-        //$scope.currentUser =
-        //  JSON.parse("{\"username\":\"admin@kdrs.no\",\"password\":\"{bcrypt}$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC\",\"firstname\":\"John\",\"lastname\":\"Smith\",\"authorities\":[{\"name\":\"ROLE_ADMIN\"},{\"name\":\"ROLE_USER\"}],\"links\":[{\"rel\":\"self\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null},{\"rel\":\"prosjekt\",\"href\":\"http://localhost:9294/grouse/bruker/admin@kdrs.no/prosjekt\",\"hreflang\":null,\"media\":null,\"title\":null,\"type\":null,\"deprecation\":null}]}");
-        // END TODO: DELETE
 
         $scope.projectsView = true;
         $scope.requirementsView = false;
+        $scope.loadingData = false;
 
         $scope.priorityValues = ['O', '1', '2'];
 
@@ -500,11 +489,13 @@ var requirementsController = app.controller('RequirementsController',
       $scope.createProject = function () {
         console.log("createProject. Current user is [" + JSON.stringify($scope.currentUser) + "] .\n");
 
+        $scope.loadingData = true;
         for (var rel in $scope.currentUser.links) {
           var relation = $scope.currentUser.links[rel].rel;
           if (relation === REL_PROJECT) {
             var urlForProjectCreation = $scope.currentUser.links[rel].href;
             console.log("Checking urlForProjectCreation[" + urlForProjectCreation);
+
             $http({
               method: 'POST',
               url: urlForProjectCreation,
@@ -516,9 +507,10 @@ var requirementsController = app.controller('RequirementsController',
             }).then(function successCallback(response) {
               console.log("POST urlForProjectCreation[" + urlForProjectCreation +
                 "] returned " + JSON.stringify(response));
-
+              $scope.loadingData = false;
               $scope.projects.push(response.data);
             }, function errorCallback(response) {
+              $scope.loadingData = false;
               alert("Kunne ikke opprette nytt prosjekt. " +
                 JSON.stringify(response));
               console.log("POST urlForProjectCreation[" + urlForProjectCreation +
@@ -634,6 +626,7 @@ var requirementsController = app.controller('RequirementsController',
       };
 
       $scope.doLogout = function () {
+        var urlForLogout = getLogoutAddress();
         $http({
           method: 'GET',
           url: urlForLogout,

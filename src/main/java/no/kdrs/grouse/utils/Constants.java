@@ -50,4 +50,8 @@ public final class Constants {
     public static final String TEXT_CONSEQUENCE = "Konsekvens";
     public static final String TEXT_REQUIREMENT_GENERAL_REQUIREMENT = "Generelt krav";
 
+    // Add RELS
+    public static final String REL_LOGIN_OAUTH = "login OAuth2";
+    public static final String REL_LOGOUT_OAUTH = "logout OAuth2";
+    public static final String REL_USER = "konto";
 }
