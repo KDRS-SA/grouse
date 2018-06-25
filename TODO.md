@@ -24,3 +24,5 @@ expired but user hasn't logged out.
 
 ## Descriptions
   * Copy all descriptions
+  * Some requirements should not be possible to remove. Search for "Dette er satt til et obligatorisk 
+  krav og kan ikke velges bort" and prevent deletion / editing of such requirements
