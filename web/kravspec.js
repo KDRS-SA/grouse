@@ -646,6 +646,11 @@ var requirementsController = app.controller('RequirementsController',
       };
 
 
+      $scope.doLoadProjectView = function () {
+        $scope.projectsView = true;
+        $scope.requirementsView = false;
+      };
+
       /**
        * download the document. The code here is adapted from:
        *  https://stackoverflow.com/questions/14215049/how-to-download-file-using-angularjs-and-calling-mvc-api
