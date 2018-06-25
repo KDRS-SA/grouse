@@ -7,6 +7,7 @@ import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +61,12 @@ public class UserController {
             method = RequestMethod.GET)
     public ResponseEntity<List<Project>> getGrouseUserProjects(
             @PathVariable(USER) String username) throws Exception {
+
+        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        if (!loggedInUser.equals(username)) {
+            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang til dette prosjektet!");
+        }
         GrouseUser user = new GrouseUser();
         user.setUsername(username);
         List<Project> projects = projectService.findByReferenceUser(user);
@@ -116,8 +123,6 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<GrouseUser> saveGrouseUser(
             @RequestBody GrouseUser user) {
-
-        String loggedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(grouseUserService.save(user));
     }
