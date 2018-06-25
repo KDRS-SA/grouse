@@ -7,6 +7,7 @@ import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -115,6 +116,8 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<GrouseUser> saveGrouseUser(
             @RequestBody GrouseUser user) {
+
+        String loggedInUser = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(grouseUserService.save(user));
     }
