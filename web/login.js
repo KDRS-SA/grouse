@@ -11,33 +11,44 @@ var app = angular.module('grouse-app', []);
  *
  */
 
+app.directive('myModal', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element) {
+      scope.dismiss = function() {
+        element.modal('hide');
+      };
+    }
+  };
+});
+
 var loginController = app.controller('LoginController',
   ['$scope', '$http', '$httpParamSerializer', function ($scope, $http, $httpParamSerializer) {
 
-    //console.clear();
+    $scope.passwordNotMatching = true;
     console.log("loginController on page load.");
 
     $http({
       url: startingAddress,
       method: 'GET'
     }).then(function successCallback(response) {
+      $scope.passwordNotMatching = false;
       console.log("GET ON [" + startingAddress + "]" + JSON.stringify(response.data));
-
       for (var rel in response.data.apiDetails) {
         var relation = response.data.apiDetails[rel].rel;
         if (relation === REL_LOGIN_OAUTH) {
           loginAddress = response.data.apiDetails[rel].href.split(/(\?)/)[0];
-          console.log("loginAddress  is set to [" + loginAddress  + "]");
+          console.log("loginAddress  is set to [" + loginAddress + "]");
         }
         if (relation === REL_USER) {
           userAddress = response.data.apiDetails[rel].href;
           setUserAddress(userAddress);
-          console.log("userAddress  is set to [" + userAddress  + "]");
+          console.log("userAddress  is set to [" + userAddress + "]");
         }
         if (relation === REL_LOGOUT_OAUTH) {
           logoutAddress = response.data.apiDetails[rel].href;
           setLogoutAddress(logoutAddress);
-          console.log("logoutAddress   is set to [" + logoutAddress   + "]");
+          console.log("logoutAddress   is set to [" + logoutAddress + "]");
         }
       }
     }, function errorCallback(response) {
@@ -71,30 +82,44 @@ var loginController = app.controller('LoginController',
         // Blanking out password straight away!
         $scope.password = '';
       }, function errorCallback(response) {
-        alert("Kunne ikke logge på. Feilmelding er " + JSON.stringify(response));
+        if (response.status == 400) {
+          alert("Kunne ikke logge på. Feil med brukernavn/passord!");
+        }
+        else {
+          alert("Ukjent feil gjør at vi ikke kan logge deg på!");
+        }
         console.log(" ERROR POST ON [" + loginAddress + "]" + JSON.stringify(response));
       });
     };
 
     $scope.createAccount = function () {
-
-      $http({
-        url: userAddress,
-        method: 'POST',
-        data: {
-          username: $scope.emailAddressRegister,
-          password: $scope.passwordRegister
-        }
-      }).then(function successCallback(response) {
-        console.log(" POST  ON [" + userAddress + "]" + JSON.stringify(response.data));
-        setAccessToken(response.data);
-        setUsername($scope.emailAddress);
-        $scope.emailAddress = $scope.emailAddressRegister;
-        $scope.password = '';
-      }, function errorCallback(response) {
-        alert("Kunne ikke logge på. Feilmelding er " + JSON.stringify(response));
-        console.log(" ERROR POST ON [" + userAddress + "]" + JSON.stringify(response));
-      });
+      console.log("Values repeatPasswordRegister [" + $scope.repeatPasswordRegister + "], passwordRegister [ " +
+        $scope.passwordRegister + "]");
+      if ($scope.repeatPasswordRegister === $scope.passwordRegister) {
+        $http({
+          url: userAddress,
+          method: 'POST',
+          data: {
+            username: $scope.emailAddressRegister,
+            password: $scope.passwordRegister
+          }
+        }).then(function successCallback(response) {
+          console.log(" POST  ON [" + userAddress + "]" + JSON.stringify(response.data));
+          setAccessToken(response.data);
+          setUsername($scope.emailAddress);
+          $scope.emailAddress = $scope.emailAddressRegister;
+          $scope.password = '';
+          $scope.dismiss();
+        }, function errorCallback(response) {
+          //alert("Kunne ikke logge på. Feilmelding er " + JSON.stringify(response));
+          $scope.dismiss();
+          console.log(" ERROR POST ON [" + userAddress + "]" + JSON.stringify(response));
+        });
+      }
+      else {
+        $scope.passwordNotMatching = true;
+        console.log("NO MATCH");
+      }
     };
   }]
 );
