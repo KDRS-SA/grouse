@@ -16,6 +16,17 @@ expired but user hasn't logged out.
   * Look at functionality to allow a user to edit project name / organisation name
   * Develop ADMIN page allowing admin to create/delete accounts 
   
+We are seeing that the server responds with the following if the token times out:
+
+```
+{"data":{
+"error":"invalid_token",
+"error_description":"Invalid access token: 198ad3b7-d1cd-44eb-83bc-7b5953db09fa"},
+"status":401,
+....
+}  
+```
+  
 ## Test framework  
   * Continue developing tests
   
