@@ -1,6 +1,5 @@
 package no.kdrs.grouse.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import no.kdrs.grouse.model.user.Authority;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -58,10 +57,6 @@ public class GrouseUser
             inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "authority_name")})
     private List<Authority> authorities;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "referenceUser", fetch = FetchType.LAZY)
-    private List<Project> referenceProject;
-
     public String getUsername() {
         return username;
     }
@@ -100,14 +95,6 @@ public class GrouseUser
 
     public void setAuthorities(List<Authority> authorities) {
         this.authorities = authorities;
-    }
-
-    public List<Project> getReferenceProject() {
-        return referenceProject;
-    }
-
-    public void setReferenceProject(List<Project> referenceProject) {
-        this.referenceProject = referenceProject;
     }
 
     public Boolean isAccountNonExpired() {

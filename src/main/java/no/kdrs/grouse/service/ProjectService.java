@@ -3,7 +3,6 @@ package no.kdrs.grouse.service;
 import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.persistence.*;
 import no.kdrs.grouse.service.interfaces.IProjectService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,30 +118,15 @@ public class ProjectService
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void createProject_A(Project project) {
+    public Project createProject(Project project, String ownedBy) {
         project.setCreatedDate(new Date());
         project.setChangedDate(new Date());
         project.setDocumentCreated(false);
-
         // TODO: Fixed value but can be overriden
         project.setFileName("kravspec.docx");
-        GrouseUser user = new GrouseUser();
-        String ownedBy = SecurityContextHolder.getContext().getAuthentication()
-                .getName();
-        user.setUsername(ownedBy);
-        project.setReferenceUser(user);
+
+        project.setOwnedBy(ownedBy);
         projectRepository.save(project);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    /**
-     *
-     * It is expecting an ordering of rows in the table to ensure that it's
-     * easy to pick out the child/parent relationship
-     */
-    public void createProject_B(Project project) {
-
 
         ArrayList<Functionality> functionalities = (ArrayList)
                 functionalityRepository.
@@ -176,6 +160,7 @@ public class ProjectService
                     functionality.getType());
             projectFunctionality.setShowMe(
                     functionality.getShowMe());
+            projectFunctionality.setOwnedBy(ownedBy);
             projectFunctionality.setProcessed(false);
             projectFunctionality.setActive(false);
             projectFunctionality.setReferenceProject(project);
@@ -242,9 +227,9 @@ public class ProjectService
                             childFunctionality.getExplanation());
                     childProjectFunctionality.setType(
                             childFunctionality.getType());
+                    childProjectFunctionality.setOwnedBy(ownedBy);
                     childProjectFunctionality.setShowMe(
                             childFunctionality.getShowMe());
-
                     childProjectFunctionality.setProcessed(false);
                     childProjectFunctionality.setActive(false);
                     projectFunctionality
@@ -259,11 +244,7 @@ public class ProjectService
                 }
             }
         }
-    }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void createProject_C(Project project) {
         ArrayList<Requirement> requirements =
                 (ArrayList) requirementRepository.findAll();
         for (Requirement requirement : requirements) {
@@ -271,6 +252,7 @@ public class ProjectService
             projectRequirement.setReferenceProject(project);
             projectRequirement.setOrder(requirement.getShowOrder());
             projectRequirement.setPriority(requirement.getPriority());
+            projectRequirement.setOwnedBy(ownedBy);
             projectRequirement.setRequirementText(
                     requirement.getRequirementText());
 
@@ -295,6 +277,7 @@ public class ProjectService
 
             projectRequirementRepository.save(projectRequirement);
         }
+        return project;
     }
 
     @Override
@@ -312,8 +295,8 @@ public class ProjectService
     }
 
     @Override
-    public List<Project> findByReferenceUser(GrouseUser user) {
-        return projectRepository.findByReferenceUser(user);
+    public List<Project> findByOwnedBy(String ownedBy) {
+        return projectRepository.findByOwnedBy(ownedBy);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +79,10 @@ public class Project
     @Temporal(TemporalType.TIMESTAMP)
     private Date changedDate;
 
+    @NotNull
+    @Column(name = "ownedBy", nullable = false)
+    private String ownedBy;
+
     @JsonIgnore
     @OneToMany(mappedBy = "referenceProject", fetch = FetchType.LAZY)
     private List<ProjectRequirement> referenceProjectRequirement;
@@ -86,12 +91,6 @@ public class Project
     @OneToMany(mappedBy = "referenceProject", fetch = FetchType.LAZY)
     @OrderBy("projectFunctionalityId ASC")
     private List<ProjectFunctionality> referenceProjectFunctionality;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username",
-            referencedColumnName = "username")
-    private GrouseUser referenceUser;
 
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
@@ -165,20 +164,20 @@ public class Project
         this.fileNameInternal = fileNameInternal;
     }
 
+    public String getOwnedBy() {
+        return ownedBy;
+    }
+
+    public void setOwnedBy(String ownedBy) {
+        this.ownedBy = ownedBy;
+    }
+
     public List<ProjectRequirement> getReferenceProjectRequirement() {
         return referenceProjectRequirement;
     }
 
     public void setReferenceProjectRequirement(List<ProjectRequirement> referenceProjectRequirement) {
         this.referenceProjectRequirement = referenceProjectRequirement;
-    }
-
-    public GrouseUser getReferenceUser() {
-        return referenceUser;
-    }
-
-    public void setReferenceUser(GrouseUser referenceUser) {
-        this.referenceUser = referenceUser;
     }
 
     public List<ProjectFunctionality> getReferenceProjectFunctionality() {
@@ -199,6 +198,7 @@ public class Project
                 ", fileName='" + fileName + '\'' +
                 ", createdDate=" + createdDate +
                 ", changedDate=" + changedDate +
+                ", ownedBy='" + ownedBy + '\'' +
                 '}';
     }
 }

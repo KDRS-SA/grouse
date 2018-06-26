@@ -5,6 +5,8 @@ import no.kdrs.grouse.persistence.IProjectRequirementRepository;
 import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,9 @@ public class ProjectRequirementService
 
     @Override
     public void deleteProjectRequirement(Long requirementNumber) {
+        // Just make sure the projectRequirement exists AND we
+        // are its owner!
+        getProjectRequirementOrThrow(requirementNumber);
         projectRequirementRepository.deleteById(requirementNumber);
     }
 
@@ -72,7 +77,7 @@ public class ProjectRequirementService
             PatchObjects patchObjects, Long requirementNumber)
             throws Exception {
 
-        // If the entity does not exist, throw an Exception
+        // If the entity does not exist, or we don't own the object throw an Exception
         getProjectRequirementOrThrow(requirementNumber);
 
         for (PatchObject patchObject: patchObjects.getPatchObjects()) {
@@ -111,6 +116,7 @@ public class ProjectRequirementService
     public ProjectRequirement createProjectRequirement(
             Long projectId, String functionality,
             ProjectRequirement projectRequirement) {
+
         return projectRequirementRepository.save(projectRequirement);
     }
 
@@ -126,9 +132,18 @@ public class ProjectRequirementService
      */
     private ProjectRequirement getProjectRequirementOrThrow(@NotNull Long id)
             throws EntityNotFoundException {
-        return projectRequirementRepository.findById(id)
+        ProjectRequirement projectRequirement = projectRequirementRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
                                 "No Project exists with Id " + id));
+
+        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        if (!projectRequirement.getOwnedBy().equals(loggedInUser)) {
+            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang" +
+                    " til dette prosjekt kravet!");
+        }
+
+        return projectRequirement;
     }
 }

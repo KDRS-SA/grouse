@@ -7,6 +7,8 @@ import no.kdrs.grouse.persistence.IProjectRequirementRepository;
 import no.kdrs.grouse.service.interfaces.IProjectFunctionalityService;
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,14 +51,16 @@ public class ProjectFunctionalityService
             Long projectFunctionalityId, ProjectRequirement projectRequirement) {
 
         Optional<ProjectFunctionality> projectFunctionality =
-        projectFunctionalityRepository.findById(projectFunctionalityId);
+                projectFunctionalityRepository.findById(projectFunctionalityId);
         if (projectFunctionality.isPresent()) {
+            String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
+                    .getName();
+            projectRequirement.setOwnedBy(loggedInUser);
             projectRequirement.setReferenceFunctionality(
                     projectFunctionality.get());
             projectRequirement.setReferenceProject(projectFunctionality.
                     get().getReferenceProject());
-        }
-        else {
+        } else {
             throw new EntityNotFoundException(
                     "Cannot find ProjectFunctionality [" +
                             projectFunctionalityId + "]");
@@ -69,17 +73,17 @@ public class ProjectFunctionalityService
     @Override
     public ProjectFunctionality updateProjectFunctionality(
             PatchObjects patchObjects, Long requirementNumber)
-    throws Exception {
+            throws Exception {
 
         // If the entity does not exist, throw an Exception
         getProjectFunctionalityOrThrow(requirementNumber);
 
-        for (PatchObject patchObject: patchObjects.getPatchObjects()) {
-            if("replace".equalsIgnoreCase(patchObject.getOp())
+        for (PatchObject patchObject : patchObjects.getPatchObjects()) {
+            if ("replace".equalsIgnoreCase(patchObject.getOp())
                     && null != patchObject.getPath()
                     && null != patchObject.getValue()) {
                 String path = patchObject.getPath();
-                if ("/".equals(path.substring(0,1))) {
+                if ("/".equals(path.substring(0, 1))) {
                     path = path.substring(1);
                 }
 
@@ -90,8 +94,7 @@ public class ProjectFunctionalityService
                         .getValue()));
                 query.setParameter("id", requirementNumber);
                 query.executeUpdate();
-            }
-            else {
+            } else {
                 throw new Exception("Cannot handle this PatchObject " +
                         patchObject.toString());
             }
@@ -112,20 +115,31 @@ public class ProjectFunctionalityService
     public void delete(Long functionalityID) {
         projectFunctionalityRepository.deleteById(functionalityID);
     }
+
     /**
      * Internal helper method. Rather than having a find and try catch in
      * multiple methods, we have it here once. If you call this, be aware
      * that you will only ever get a valid Project back. If there is no valid
      * ProjectRequirement, a EntityNotFoundException exception is thrown
      *
+     * We also check that you only can access things you own. If you try
+     * to access an object you don't own, then a AccessDeniedException is thrown.
      * @param id The id  of the ProjectRequirement object to retrieve
      * @return the ProjectRequirement object
      */
     private ProjectFunctionality getProjectFunctionalityOrThrow(@NotNull Long id)
-            throws EntityNotFoundException {
-        return projectFunctionalityRepository.findById(id)
+            throws EntityNotFoundException, AccessDeniedException {
+        ProjectFunctionality projectFunctionality = projectFunctionalityRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
                                 "No ProjectRequirement exists with Id " + id));
+
+        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        if (!projectFunctionality.getOwnedBy().equals(loggedInUser)) {
+            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang" +
+                    " til dette prosjekt funksjonalitet!");
+        }
+        return projectFunctionality;
     }
 }

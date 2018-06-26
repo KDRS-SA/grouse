@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,15 +27,7 @@ import java.util.List;
         @UniqueConstraint(
                 columnNames={"functionality_number", "project_number"})
         }
-/*        indexes = {
-
-                @Index(columnList = "functionality_number",
-                        name = "functionality_number_idx"),
-                @Index(columnList =
-                        "project_number",
-                        name = "project_number_idx")
-        }
-        */)
+)
 @XmlRootElement
 public class ProjectFunctionality
         extends ResourceSupport
@@ -109,12 +102,15 @@ public class ProjectFunctionality
     @Column(name = "type")
     private String type;
 
+    @NotNull
+    @Column(name = "ownedBy", nullable = false)
+    private String ownedBy;
+
     // Link to parent Functionality
     @JsonIgnore
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
     private ProjectFunctionality referenceParentFunctionality;
-
 
     @OneToMany(mappedBy = "referenceParentFunctionality")
     @OrderBy("projectFunctionalityId ASC")
@@ -212,6 +208,14 @@ public class ProjectFunctionality
         this.type = type;
     }
 
+    public String getOwnedBy() {
+        return ownedBy;
+    }
+
+    public void setOwnedBy(String ownedBy) {
+        this.ownedBy = ownedBy;
+    }
+
     public ProjectFunctionality getReferenceParentFunctionality() {
         return referenceParentFunctionality;
     }
@@ -262,13 +266,17 @@ public class ProjectFunctionality
     @Override
     public String toString() {
         return "ProjectFunctionality{" +
-                "functionalityNumber='" + functionalityNumber + '\'' +
+                "projectFunctionalityId=" + projectFunctionalityId +
+                ", functionalityNumber='" + functionalityNumber + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", consequence='" + consequence + '\'' +
                 ", explanation='" + explanation + '\'' +
                 ", showMe=" + showMe +
                 ", processed=" + processed +
+                ", active=" + active +
+                ", type='" + type + '\'' +
+                ", ownedBy='" + ownedBy + '\'' +
                 '}';
     }
 }

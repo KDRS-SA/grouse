@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -73,6 +74,10 @@ public class ProjectRequirement
     @Column(name = "noark_requirement_number")
     private String requirementNumber;
 
+    @NotNull
+    @Column(name = "ownedBy", nullable = false)
+    private String ownedBy;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "functionality",
@@ -125,6 +130,14 @@ public class ProjectRequirement
         this.requirementNumber = requirementNumber;
     }
 
+    public String getOwnedBy() {
+        return ownedBy;
+    }
+
+    public void setOwnedBy(String ownedBy) {
+        this.ownedBy = ownedBy;
+    }
+
     public ProjectFunctionality getReferenceFunctionality() {
         return referenceFunctionality;
     }
@@ -149,6 +162,7 @@ public class ProjectRequirement
                 ", requirementText='" + requirementText + '\'' +
                 ", priority='" + priority + '\'' +
                 ", requirementNumber='" + requirementNumber + '\'' +
+                ", ownedBy='" + ownedBy + '\'' +
                 '}';
     }
 }

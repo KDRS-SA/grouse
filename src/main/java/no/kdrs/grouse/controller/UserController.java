@@ -67,9 +67,7 @@ public class UserController {
         if (!loggedInUser.equals(username)) {
             throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang til dette prosjektet!");
         }
-        GrouseUser user = new GrouseUser();
-        user.setUsername(username);
-        List<Project> projects = projectService.findByReferenceUser(user);
+        List<Project> projects = projectService.findByOwnedBy(username);
         for (Project project : projects) {
             project.add(linkTo(methodOn(ProjectController.class).
                     getProject(project.getProjectId())).withSelfRel());
@@ -88,7 +86,6 @@ public class UserController {
 //            .withRel(REQUIREMENT)            );
         }
 
-        // entityLinks.linkToCollectionResource(UserController.class);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(projects);
     }
@@ -96,13 +93,16 @@ public class UserController {
     @RequestMapping(value = "/{" + USER + "}/" + PROJECT,
             method = RequestMethod.POST)
     public ResponseEntity<Project> createProject(
-            @PathVariable(USER) String username,
+            @PathVariable(USER) String ownedBy,
             @RequestBody Project project) throws Exception {
-        GrouseUser user = new GrouseUser();
-        user.setUsername(username);
-        projectService.createProject_A(project);
-        projectService.createProject_B(project);
-        projectService.createProject_C(project);
+
+        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        if (!loggedInUser.equals(ownedBy)) {
+            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang til dette prosjektet!");
+        }
+
+        projectService.createProject(project, ownedBy);
 
         project.add(linkTo(methodOn(ProjectController.class).
                 getProject(project.getProjectId())).withSelfRel());
