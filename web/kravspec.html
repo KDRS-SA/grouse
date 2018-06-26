@@ -13,9 +13,9 @@
     rel="stylesheet" type="text/css">
 
   <!-- js resources -->
-  <script src="dependencies/vendor/META-INF/resources/webjars/angularjs/1.6.6/angular.min.js"></script>
   <script src="dependencies/vendor/META-INF/resources/webjars/jquery/3.2.1/jquery.min.js"></script>
   <script src="dependencies/vendor/META-INF/resources/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js"></script>
+  <script src="dependencies/vendor/META-INF/resources/webjars/angularjs/1.6.6/angular.min.js"></script>
 
   <!-- internal js resources-->
   <script src="common.js"></script>
@@ -83,40 +83,6 @@
       </table>
     </div>
   </div>
-  <!-- modal to create a new project -->
-  <div class="modal fade" id="newProjectModal">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4>Opprett nytt prosjekt</h4>
-          <button type="button" class="close" data-dismiss="modal">×</button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <div class="row">
-              <label class="control-label" for="projectName">Prosjektnavn:</label>
-              <input type="text" name="projectName" id="projectName"
-                     ng-model="projectName" class="form-control"
-                     placeholder="Prosjektnavn"/>
-            </div>
-            <div class="row">
-              <label class="control-label" for="organisationName">Organisasjonsnavn:</label>
-              <input type="text" name="organisationName" id="organisationName"
-                     ng-model="organisationName" class="form-control"
-                     placeholder="Organisasjonsnavn"/>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary"
-                  ng-click="createProject()" data-dismiss="modal">Opprett prosjekt
-          </button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Lukk</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End modal to create a new project -->
 </div>
 <!-- RequirementsView -->
 <div ng-show="requirementsView">
@@ -133,8 +99,12 @@
            aria-valuemax="100" ng-style="{width : ( progressBarValue + '%' ) }">
       </div>
     </div>
-    <button ng-if="funk1" ng-click="doDownloadDocument()" style="font-size:18px">
-      Last ned <span class="fa fa-cloud-download"></span></button>
+
+
+    <button type="button" class="btn btn-primary float-right" ng-if="funk1" ng-disabled="creatingDocument"
+            ng-click="doDownloadDocument()">
+      Last ned <i ng-show="creatingDocument" class="fa fa-circle-notch fa-spin" style="font-size: 18px;"></i>
+    </button>
   </div>
   <div class="container-fluid" data-spy="scroll" data-target="#scrollspy">
     <div class="row">
@@ -304,5 +274,55 @@
     </div>
   </div>
 </div>
+
+<!-- modal to create a new project -->
+<div class="modal fade" id="newProjectModal" project-modal>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Opprett nytt prosjekt</h4>
+        <button type="button" class="close" data-dismiss="modal">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div class="row">
+            <label class="control-label" for="projectName">Prosjektnavn:</label>
+            <input type="text" name="projectName" id="projectName"
+                   ng-model="projectName" class="form-control"
+                   placeholder="Prosjektnavn"/>
+          </div>
+          <div class="row">
+            <label class="control-label" for="organisationName">Organisasjonsnavn:</label>
+            <input type="text" name="organisationName" id="organisationName"
+                   ng-model="organisationName" class="form-control"
+                   placeholder="Organisasjonsnavn"/>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="container col-md-12">
+          <div class="row" ng-show="missingValues">
+            <div class="justify-content-center">
+              <div class="alert alert-danger">
+                Både organisasjonsnavn og prosjektnavn må ha en verdi!
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="float-right">
+                <button type="button" class="btn btn-primary"
+                        ng-click="createProject()">Opprett prosjekt
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Lukk</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End modal to create a new project -->
 </body>
 </html>

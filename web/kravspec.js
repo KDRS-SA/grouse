@@ -12,6 +12,19 @@ var app = angular.module('grouse-app', []);
  *
  * TBD: Find out how to redirect to login page to to avoid
  */
+
+app.directive('projectModal', function() {
+  return {
+    restrict: 'A',
+    link: function(scope, element) {
+      scope.dismiss = function() {
+        element.modal('hide');
+      };
+    }
+  };
+});
+
+
 var requirementsController = app.controller('RequirementsController',
   ['$scope', '$http', '$window', '$location', '$anchorScroll',
     function ($scope, $http, $window, $location, $anchorScroll) {
@@ -45,6 +58,7 @@ var requirementsController = app.controller('RequirementsController',
         $scope.projectsView = true;
         $scope.requirementsView = false;
         $scope.loadingData = false;
+        $scope.creatingDocument = false;
 
         $scope.priorityValues = ['O', '1', '2', 'O (i)', '1 (i)', '2 (i)'];
 
@@ -489,6 +503,12 @@ var requirementsController = app.controller('RequirementsController',
       $scope.createProject = function () {
         console.log("createProject. Current user is [" + JSON.stringify($scope.currentUser) + "] .\n");
 
+        if (!$scope.projectName || !$scope.organisationName) {
+          $scope.missingValues = true;
+          return;
+        }
+        // 'hide' the modal
+        $scope.dismiss();
         $scope.loadingData = true;
         for (var rel in $scope.currentUser.links) {
           var relation = $scope.currentUser.links[rel].rel;
@@ -589,6 +609,7 @@ var requirementsController = app.controller('RequirementsController',
         $scope.progressBarValue = percentage;
         if (countTrue === totalCount) {
           $scope.funk1 = true;
+          $scope.creatingDocument = true;
           for (var rel in $scope.selectedProject.links) {
             console.log("checking $scope.selectedProject.links[rel].rel [" + $scope.selectedProject.links[rel].rel + "]");
 
@@ -607,9 +628,11 @@ var requirementsController = app.controller('RequirementsController',
                   "] returned " + JSON.stringify(response));
 
                 // If 201 CREATED, set a download link in progress bar
+                $scope.creatingDocument = false;
                 $scope.progressBarText = "Last ned dokument";
                 $scope.documentHref = urlForDocumentCreation;
               }, function errorCallback(response) {
+                $scope.creatingDocument = false;
                 alert("Kunne ikke opprette Dokument. " +
                   JSON.stringify(response));
                 console.log("POST urlForDocumentCreation [" + urlForDocumentCreation +
