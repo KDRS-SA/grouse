@@ -53,21 +53,40 @@ public class DocumentService
     @SuppressWarnings("unchecked")
     public void processRequirements(Document document, Project project) {
 
-
         List<ProjectFunctionality> projectFunctionalities =
                 project.getReferenceProjectFunctionality();
 
         for (ProjectFunctionality functionality : projectFunctionalities) {
 
-            List<ProjectRequirement> projectRequirements =
-                    functionality.getReferenceProjectRequirement();
+            // Ignore the root of the document.
+            // It's a string for some reason....
+            if (!functionality.getFunctionalityNumber().equals("0")) {
+                List<ProjectRequirement> projectRequirements =
+                        functionality.getReferenceProjectRequirement();
 
-            document.addSection(functionality.getTitle());
-            document.createTable(projectRequirements.size(), functionality);
+                String title = functionality.getTitle();
 
-            for (ProjectRequirement projectRequirement :
-                    projectRequirements) {
-                   document.addRow(projectRequirement);
+                if (null != title && title.length() == 1) {
+                    document.addHeading1(title);
+                } else if (null != title && title.length() > 1) {
+                    document.addHeading2(title);
+                }
+
+                String description = functionality.getDescription();
+                if (!functionality.getShowMe() && description != null) {
+                    if (project.getOrganisationName() != null) {
+                        description = description.replace("ORG_NAVN", project.getOrganisationName());
+                        document.addText(description);
+                    }
+                }
+
+                if (projectRequirements.size() > 0) {
+                    document.createTable(projectRequirements.size(), functionality);
+                    for (ProjectRequirement projectRequirement :
+                            projectRequirements) {
+                        document.addRow(projectRequirement);
+                    }
+                }
             }
         }
     }
