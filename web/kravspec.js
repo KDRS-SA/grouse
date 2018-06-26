@@ -245,7 +245,7 @@ var requirementsController = app.controller('RequirementsController',
         // Make sure you push the one returned from the database
         for (var rel in $scope.selectedFunctionality.links) {
           var relation = $scope.selectedFunctionality.links[rel].rel;
-          if (relation == REL_REQUIREMENT) {
+          if (relation == REL_SELF) {
             var urlForProjectRequirementCreation = $scope.selectedFunctionality.links[rel].href;
             console.log("Checking urlForProjectRequirementCreation[" + urlForProjectRequirementCreation);
             $http({
@@ -261,7 +261,7 @@ var requirementsController = app.controller('RequirementsController',
                 "] returned " + JSON.stringify(response));
               $scope.selectedFunctionality.referenceProjectRequirement.push(response.data);
             }, function errorCallback(response) {
-              alert("Kunne ikke slette prosjekt krav. " +
+              alert("Kunne ikke legge til et prosjekt krav. " +
                 JSON.stringify(response));
               console.log("POST urlForProjectRequirementCreation [" + urlForProjectRequirementCreation +
                 "] returned " + response);
