@@ -16,7 +16,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.0.RELEASE</version>
+    <version>2.0.3.RELEASE</version>
     <relativePath/>
   </parent>
 
@@ -24,6 +24,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <failOnMissingWebXml>false</failOnMissingWebXml>
     <java.version>1.8</java.version>
+    <spring-security-oauth2.version>2.3.3.RELEASE</spring-security-oauth2.version>
+    <spring-boot.version>2.0.3.RELEASE</spring-boot.version>
     <!-- commons and utils -->
     <commons-lang3.version>3.4</commons-lang3.version>
     <jquery.version>3.2.1</jquery.version>
@@ -59,10 +61,10 @@
       <version>4.5.5</version>
     </dependency>
 
-
     <dependency>
       <groupId>org.springframework.security.oauth</groupId>
       <artifactId>spring-security-oauth2</artifactId>
+      <version>${spring-security-oauth2.version}</version>
     </dependency>
 
     <!-- Hateoas links etc ..-->
@@ -115,7 +117,6 @@
     </dependency>
 
     <!-- WebJar dependencies to download js stuff for GUI -->
-
     <dependency>
       <groupId>org.webjars</groupId>
       <artifactId>angularjs</artifactId>
@@ -147,21 +148,14 @@
       <version>20180130</version>
     </dependency>
 
-
     <!-- Testing stuff -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.springframework.security.oauth</groupId>
-      <artifactId>spring-security-oauth2</artifactId>
-      <version>2.3.0.RELEASE</version>
-    </dependency>
 
   </dependencies>
-
 
   <build>
     <plugins>
@@ -169,7 +163,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.0.0.RELEASE</version>
+        <version>${spring-boot.version}</version>
       </plugin>
 
       <plugin>
@@ -228,28 +222,6 @@
                   <groupId>org.webjars</groupId>
                   <artifactId>font-awesome</artifactId>
                   <version>${font-awesome.version}</version>
-                  <type>jar</type>
-                  <includes>**/*.css</includes>
-                  <outputDirectory>
-                    ${project.basedir}/web/dependencies/vendor/
-                  </outputDirectory>
-                </artifactItem>
-                <!-- 3.3.7-1 version left in temp until
-                GUI is updated to 4.0 -->
-                <artifactItem>
-                  <groupId>org.webjars</groupId>
-                  <artifactId>bootstrap</artifactId>
-                  <version>3.3.7-1</version>
-                  <type>jar</type>
-                  <includes>**/*.js</includes>
-                  <outputDirectory>
-                    ${project.basedir}/web/dependencies/vendor/
-                  </outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.webjars</groupId>
-                  <artifactId>bootstrap</artifactId>
-                  <version>3.3.7-1</version>
                   <type>jar</type>
                   <includes>**/*.css</includes>
                   <outputDirectory>
