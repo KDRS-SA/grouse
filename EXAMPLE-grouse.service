@@ -1,0 +1,17 @@
+# Example Systemd service definition for KDRS grouse (a.k.a Kravspec)
+
+# Adjest the executable path and other attributes as required
+# Install in /etc/systemd/system (On Ubunu, anyway) as grouse.service
+# User and group should be root, mode 0600.
+
+[Unit]
+Description=grouse
+After=syslog.target
+
+[Service]
+User=grouse
+ExecStart=/srv/grouse/latest/target/kravspec-1.0-SNAPSHOT.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
