@@ -57,7 +57,7 @@ var loginController = app.controller('LoginController',
     });
 
     $scope.doLogin = function () {
-      console.log("doLogin called with username [" + $scope.emailAddress + "]" + ", password[" + $scope.password + "], address [" +
+      console.log("doLogin called with username [" + $scope.emailAddress + "]" + ", address [" +
         loginAddress + "]");
 
       $http({
