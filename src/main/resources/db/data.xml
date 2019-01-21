@@ -564,7 +564,7 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>4</showOrder>
             <requirementText>Det skal være mulig å søke i flere databaser samtidig, dvs. i produksjonsbaser og historiske baser. Leverandøren skal beskrive hvordan dette behovet kan løses.</requirementText>
-            <priority>1(i)</priority>
+            <priority>1 (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
@@ -588,7 +588,7 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>8</showOrder>
             <requirementText>Leverandøren skal beskrive eventuelle begrensninger i søkemuligheter knyttet til kravene ovenfor (1 til 7).</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
@@ -1009,7 +1009,7 @@
             <noarkRequirement>true</noarkRequirement>
             <showOrder>2</showOrder>
             <requirementText>Det skal være mulig å sende og motta krypterte dokumenter. Leverandøren skal beskrive hvordan løsningen ivaretar dette.</requirementText>
-            <priority>1(i)</priority>
+            <priority>1 (i)</priority>
           </requirement>
         </requirements>
       </section>
@@ -1866,7 +1866,7 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>2</showOrder>
             <requirementText>Løsningen skal kunne håndtere all saksbehandling elektronisk slik at man ikke blir tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen. Eventuelle begrensninger og forutsetninger knyttet til dette skal beskrives.</requirementText>
-            <priority>1(i)</priority>
+            <priority>1 (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
@@ -1878,7 +1878,7 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>4</showOrder>
             <requirementText>Leverandøren skal beskrive hvordan tilbudt løsning tilrettelegger for forenklet registrering jf. NOARK5, og hvilke utfordringer bruk av forenklet registrering kan medføre for den enkelte bruker, og for kommunen.</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
@@ -2626,7 +2626,7 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>9</showOrder>
             <requirementText>Uregistrerte saker skal i størst mulig grad kunne knyttes til den virksomhet/avdeling som det er naturlig å knytte den til. Leverandøren skal beskrive hvordan problematikk knyttet til uregistrerte / etteranmeldte saker til utvalg håndteres i løsningen.</requirementText>
-            <priority>2(i)</priority>
+            <priority>2 (i)</priority>
           </requirement>
         </requirements>
       </section>
@@ -3262,13 +3262,13 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>1</showOrder>
             <requirementText>Løsningen for publisering og presentasjon av offentlig journal på internett må være sikret på en slik måte at data i offentlig journal (spesielt personopplysninger) ikke blir registrert i eksterne søkemotorer. Leverandøren skal redegjøre for hvordan dette er ivaretatt.</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
             <showOrder>2</showOrder>
             <requirementText>Leverandøren skal beskrive hvordan løsningen for publisering av offentlig journal ivaretar kravene til universell utforming.</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
         </requirements>
       </section>
@@ -3303,7 +3303,7 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>2</showOrder>
             <requirementText>Leverandøren skal redegjøre for hvordan bruker på alternative og brukervennlige måter kan fremskaffe den informasjonen som rapportene i nevnte krav har som formål å presentere.</requirementText>
-            <priority>1(i)</priority>
+            <priority>1 (i)</priority>
           </requirement>
         </requirements>
       </section>
@@ -3691,13 +3691,13 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>1</showOrder>
             <requirementText>Leverandøren skal gi en overordnet beskrivelse av hvordan sikkerheten (slik den defineres i innledningen til kap 7.1) i løsningen ivaretas.</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
             <showOrder>2</showOrder>
             <requirementText>Løsningen skal ivareta de krav til sikkerhet som er satt i henhold til lover og forskrifter, herunder Datatilsynets krav til personsikkerhet. Leverandøren må opplyse om hvilke krav som stilles til Kunden, for at dette skal ivaretas.</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
@@ -3726,7 +3726,7 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>2</showOrder>
             <requirementText>Løsningen skal tilfredsstille alle valgfrie krav til brukers relasjon til rolle, administrativ enhet og arkivdel jf. NOARK5-standardens kapittel 11.2.3 (Krav 11.2.33 – 11.2.46). Leverandøren skal oppgi krav som eventuelt ikke er innfridd og redegjøre for konsekvensene av dette.</requirementText>
-            <priority>1(i)</priority>
+            <priority>1 (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
@@ -3762,13 +3762,13 @@
             <noarkRequirement>false</noarkRequirement>
             <showOrder>8</showOrder>
             <requirementText>Leverandøren skal beskrive hvordan sikkerheten ivaretas i tilgangskontrollsystemet</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
           <requirement>
             <noarkRequirement>false</noarkRequirement>
             <showOrder>9</showOrder>
             <requirementText>Leverandøren skal beskrive hvordan sikkerheten ivaretas ved ekstern pålogging</requirementText>
-            <priority>O(i)</priority>
+            <priority>O (i)</priority>
           </requirement>
         </requirements>
       </section>
@@ -4100,7 +4100,7 @@
           <noarkRequirement>true</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>NOARK 13.2.8 (V): Sporingsinformasjon skal være enkel å bla i, søke i og analysere, enten ved hjelp av funksjonalitet i sak- og arkivløsningen, eller ved hjelp av et tredjepartsprogram. Leverandøren skal angi hvilket av alternativene som er tilgjengelige.</requirementText>
-          <priority>2(i)</priority>
+          <priority>2 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>true</noarkRequirement>
@@ -4172,7 +4172,7 @@
           <noarkRequirement>true</noarkRequirement>
           <showOrder>16</showOrder>
           <requirementText>Løsningen skal tilfredsstille alle valgfrie Noark 5-krav som gjelder logging av hendelser fra og med krav nr 13.4.17 til og med krav nr 13.4.36. Leverandøren skal angi hvilke krav som eventuelt ikke oppfylles, samt angi årsak og konsekvenser av dette.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4272,7 +4272,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>3</showOrder>
           <requirementText>Det bes opplyst hvilke andre nettlesere enn Microsoft Internet Explorer systemet støtter.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4302,7 +4302,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>8</showOrder>
           <requirementText>Når det kommer nye versjoner av Internet Explorer, Citrix, MS sql eller virtuelle servere, må leverandør si noe om hvor lang tid det vil ta før sak/arkiv-systemet støtter nyeste versjon</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4319,7 +4319,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>1</showOrder>
           <requirementText>Skal kjøres på virtuell plattform</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4337,13 +4337,13 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>4</showOrder>
           <requirementText>Leverandøren skal foreta dette etter at kontrakt er signert.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>Beskriv anbefalt maskinvarekrav til de servertypene som den anbefalte løsningen består av; databaseserver (e), applikasjonsserver (e), evt. webserver(e) etc.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4355,19 +4355,19 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>7</showOrder>
           <requirementText>Når nye versjoner/oppgraderinger lanseres, skal leverandøren utarbeide dokumentasjon på gjennomføringen. Kundens it-personell får derved mulighet til å gjennomføre oppgraderingen selv. 6 Leverandøren skal dokumentere at saksbehandlerklienten kan kjøres i et Citrix-miljø på Citrix-servere, hvilke versjoner de har erfaringer fra, og minimumskravet til Citrix-versjon på server.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>8</showOrder>
           <requirementText>Systemet må fungere problemfritt i et Windows 2008 R2 eller nyere servermiljø. Windows Server 2008 R2 / 2012 R2 er preferert. Leverandør skal oppgi minimum og anbefalt server OS versjon. Dersom det kreves en bestemt versjon som minimum, og dette medfører at Kunden må foreta en oppgradering/nedgradering, vil eventuelle omkostninger i forbindelse med dette bli lagt til ved vurderingen av tilbudet.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>9</showOrder>
           <requirementText>Beskriv anbefalt løsning for komplett backup av systemet (tekniske spesifikasjoner).</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4384,13 +4384,13 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>1</showOrder>
           <requirementText>Gjeldende standard konfigurasjon for pc som benyttes som tykk saksbehandlerklinet er prosessor av type Intel I5 (4. generasjon og høyere) og 8 Gb ram hukommelse. Beskriv maskinvarekrav til PCer som kjører tykk saksbehandlerklienten. Både minimumskrav og anbefalte krav beskrives.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>2</showOrder>
           <requirementText>Tykk saksbehandlerklient skal kjøres på PC’er med Windows 7 og nyere OS.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4402,25 +4402,25 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>4</showOrder>
           <requirementText>Hvis systemet forutsetter bruk av et bestemt program (f.eks. ved innskanning eller visning av innskannede dokumenter) skal leverandøren oppgi dette i tilbudet.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>Leverandøren skal beskrive hvilke tekstbehandlingsprogram som støttes. Systemet skal fungere med Microsoft Office 2010 og nyere. Leverandøren skal også beskrive hvilken politikk Leverandøren har for å sikre kompatibilitet med fremtidige versjoner av de tekstbehandlingsprogram som støttes.</requirementText>
-          <priority>2(i)</priority>
+          <priority>2 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>6</showOrder>
           <requirementText>Systemet skal oppleves raskt, forutsigbart og konsistent av brukerne når det gjelder ytelse og responstider for både web-basert løsning og tykk saksbehandlerklient. Leverandøren skal beskrive hvordan dette skal oppfylles og hvilke forutsetninger som må være oppfylt (herunder linjekapasitet) for at de etterfølgende eksplisitte krav som stilles skal være mulig.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>7</showOrder>
           <requirementText>Leverandøren skal beskrive løsningens skalerbarhet mht ytelse ved økt antall brukere og økt innholdsvolum/saker.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4437,19 +4437,19 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>1</showOrder>
           <requirementText>Leverandøren skal opplyse om eventuelle ytterligere krav som stilles til komplett løsning, og som ikke er etterspurt her i andre krav. Både minimumskrav og anbefalte krav beskrives.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>2</showOrder>
           <requirementText>Systemet skal fungere med Microsoft Exchange 2013 som epostserver løsning.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>3</showOrder>
           <requirementText>Systemet skal fungere tilfredsstillende med Microsoft Outlook som epost-klient.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4461,7 +4461,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>Redegjør for hvordan løsningen ivaretar de sju overordnede prinsipper for IKT-arkitektur beskrevet i Difis dokument ”Overordnede IKT-arkitekturprinsipper for offentlig sektor”.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4483,7 +4483,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>1</showOrder>
           <requirementText>Det er svært viktig for oppdragsgiver at valgt system er tilrettelagt for komplett Noark5 tjenestegrensesnitt som skal kunne benyttes mot alle tjenester i Noark5-systemet, uavhengig av konformitetsnivåene i standarden. Leverandøren skal redegjøre for hvilke planer som foreligger i forhold til implementering av Noark5 tjenestegrensesnitt. Tidsplan skal inngå i redegjørelsen.</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4495,13 +4495,13 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>3</showOrder>
           <requirementText>Systemet skal ha mulighet for datafangst ved bruk av IOS, Android Microsoft og eventuelt andre håndholdte enheter. Leverandør bes beskrive løsningen.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>4</showOrder>
           <requirementText>Systemet skal ha mulighet for dokumentfangst fra ulike typer kommunikasjonskanaler som f.eks SMS, Chat og sosiale media. Løsningen skal angi hvilken kommunikasjonskanal som er benyttet ved lagring av metadata. Leverandøren bes beskrive løsningen.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4513,13 +4513,13 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>6</showOrder>
           <requirementText>Løsningen skal være tilrettelagt for sømløs integrering med andre systemer, herunder pålogging, e-post og fagsystemer. Leverandøren skal beskrive tilgjengelige API’er (evt. som referanse til relevant systemdokumentasjon), samt hvilke eventuelle kostnadsposter som normalt må påregnes ved integrasjon av andre systemer med løsningen.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>7</showOrder>
           <requirementText>Standardiseringsrådets referansekatalog for IKT-standarder i offentlig sektor gir føringer for hvilke åpne offentlige virksomheter må hastøtte for. Beskriv hvordan løsningen forholder seg til disse utvekslingsformatene.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4543,7 +4543,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>11</showOrder>
           <requirementText>Leverandøren skal redegjøre for hvordan NOARK5-kjernen er bygd opp for å oppnå integrasjon og samhandling mellom sak – og arkiv og fagsystemene. Leverandøren skal herunder beskrive muligheter og begrensninger knyttet til løsningen når det gjelder å benytte kjernen som lagringsplass for data fra fagsystemer.</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4578,7 +4578,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>2</showOrder>
           <requirementText>I en tid med stadig økende digitalisering av offentlige tjenester er det behov for en egen «skjemamodul» integrert med sak/arkiv-systemet. Leverandøren bes opplyse om en slik modul er på plass, og evt. hvilke eksterne skjemamoduler det er utviklet integrasjon mot. Leverandør bes også beskrive i hvilken grad Kunden selv kan designe egne skjemaer dersom en skjemamodul er på plass, samt liste opp de «ferdige» skjemaene Kunden i så fall vil få tilgang til.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4590,13 +4590,13 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>4</showOrder>
           <requirementText>Tilrettelegging for mottak av elektroniske skjema skal gjøres slik at organisasjonen selv kan implementere elektroniske skjema i sak- og arkivløsningen ettersom man får ytterligere skjema tilgjengeliggjort elektronisk på internettsidene. Leverandøren skal gi en kort beskrivelse av hvordan løsningen tilrettelegger for dette.</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>Leverandøren skal gi en beskrivelse av hvilke krav som stilles til de elektroniske skjemaene, og eventuelle andre forhold på kundens side, for at leverandøren skal kunne oppfylle NOARK5-krav 6.3.20 til 6.3.25 (krav til elektroniske skjema for utfylling over internett).</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4613,7 +4613,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>1</showOrder>
           <requirementText>Det er særlig viktig for den nye organisasjonen at det legges til rette for å kunne hente oppdatert kartinformasjon og registerinformasjon (Matrikkelen) inn i sakssystemet. I valg av nytt sakssystem vil det derfor legges stor vekt på tilrettelegging for geointegrasjon. I skrivende stund er det ennå ikke bestemt hvilket kartsystem den nye organisasjonen satser på å ta i bruk.</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4637,7 +4637,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>Det skal redegjøres for mulig geointegrasjon mot byggesaker (Byggesaksdialog)</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4654,7 +4654,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>1</showOrder>
           <requirementText>Det er særlig viktig for den nye organisasjonen at det legges til rette for å kunne hente oppdatert kartinformasjon og registerinformasjon (Matrikkelen) inn i sakssystemet. I valg av nytt sakssystem vil det derfor legges stor vekt på tilrettelegging for geointegrasjon. I skrivende stund er det ennå ikke bestemt hvilket kartsystem den nye organisasjonen satser på å ta i bruk.</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4678,7 +4678,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>5</showOrder>
           <requirementText>Det skal redegjøres for mulig geointegrasjon mot byggesaker (Byggesaksdialog)</requirementText>
-          <priority>1(i)</priority>
+          <priority>1 (i)</priority>
         </requirement>
       </requirements>
     </section>
@@ -4711,7 +4711,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>3</showOrder>
           <requirementText>Det skal være mulighet for bunkeskanning og direkte knytting av dokumenter til riktig journalpost f.eks. v.h.a. strekkoder. Leverandøren må beskrive hvilke krav til utstyr (printere, etiketter ol.) som finnes for at strekkoder skal kunne leses av løsningen.</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4771,13 +4771,13 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>13</showOrder>
           <requirementText>Løsningen skal støtte bruk av et utvalg av de mest brukte skannerprogramvarer. Leverandøren skal beskrive lisensbetingelser og eventuell andre økonomiske betingelser.</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
           <showOrder>14</showOrder>
           <requirementText>Organisasjonen legger opp til sentralt postmottak. Leverandøren skal beskrive hvilket utstyr og oppsett som anbefales for å sørge for at tilbudt skannerløsning fungerer optimalt. Eventuelle absolutte minstekrav skal også beskrives. Leverandøren skal komme med anbefaling til bla; 1) Skannere, 2) Oppsett av skannere og skannerprogramvare i nettverk / infrastrukturen</requirementText>
-          <priority>O(i)</priority>
+          <priority>O (i)</priority>
         </requirement>
       </requirements>
     </section>
