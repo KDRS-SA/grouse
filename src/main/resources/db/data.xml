@@ -442,7 +442,7 @@
             <requirementText>NOARK 5.7.2 (V): En Basismappe skal kunne ha registrert ingen, ett eller flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere
               Basismapper
             </requirementText>
-            <priority></priority>
+            <priority>1</priority>
           </requirement>
           <requirement>
             <noarkRequirement>true</noarkRequirement>
@@ -2233,7 +2233,7 @@
             <noarkRequirement>true</noarkRequirement>
             <showOrder>7</showOrder>
             <requirementText>NOARK 8.4.7 (V): Det skal være mulig at det settes opp en systemparameter som gjør at saksbehandler enten automatisk blir satt som ansvarlig saksbehandler ved oppretting av ny registrering, eller ikke blir satt som ansvarlig saksbehandler ved oppretting av ny registrering. Det skal være mulig å overstyre dette.</requirementText>
-            <priority></priority>
+            <priority>1</priority>
           </requirement>
           <requirement>
             <noarkRequirement>true</noarkRequirement>
@@ -4114,7 +4114,7 @@
             varianter eller versjoner av dokumenter
           </showOrder>
           <requirementText>1</requirementText>
-          <priority></priority>
+          <priority>1</priority>
         </requirement>
         <requirement>
           <noarkRequirement>true</noarkRequirement>
@@ -4349,7 +4349,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>6</showOrder>
           <requirementText>Organisasjonen har 4 stk Dell R730 servere med 2 cpu’er, 12 kjerner som plattform for VMWare. Systemet er planlagt implementert der.</requirementText>
-          <priority></priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
@@ -4455,7 +4455,7 @@
           <noarkRequirement>false</noarkRequirement>
           <showOrder>4</showOrder>
           <requirementText>Organisasjonen har en eksisterende lisensavtale med Microsoft. Ved behov for Microsoft lisenser skal Leverandøren opplyse om hvilke lisenser som er påkrevet.</requirementText>
-          <priority></priority>
+          <priority>1 (i)</priority>
         </requirement>
         <requirement>
           <noarkRequirement>false</noarkRequirement>
