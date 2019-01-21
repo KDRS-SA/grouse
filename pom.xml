@@ -234,6 +234,16 @@
                     ${project.basedir}/web/dependencies/vendor/
                   </outputDirectory>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>org.webjars</groupId>
+                  <artifactId>font-awesome</artifactId>
+                  <version>${font-awesome.version}</version>
+                  <type>jar</type>
+                  <includes>**/**fonts/**/*</includes>
+                  <outputDirectory>
+                    ${project.basedir}/web/dependencies/vendor/
+                  </outputDirectory>
+                </artifactItem>
                 <!-- 3.3.7-1 version left in temp until
                 GUI is updated to 4.0 -->
                 <artifactItem>
