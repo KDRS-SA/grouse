@@ -98,6 +98,27 @@ var requirementsController = app.controller('RequirementsController',
         }
       });
 
+
+      /**
+       * escape JSON payload as return statements in payload is causing problems.
+       *
+       * Code taken from:
+       * https://stackoverflow.com/questions/4253367/how-to-escape-a-json-string-containing-newline-characters-using-javascript/35413452
+       *
+       * @returns {string}
+       */
+      String.prototype.escapeSpecialChars = function() {
+        return this.replace(/\\n/g, "\\n")
+          .replace(/\\'/g, "\\'")
+          .replace(/\\"/g, '\\"')
+          .replace(/\\&/g, "\\&")
+          .replace(/\\r/g, "\\r")
+          .replace(/\\t/g, "\\t")
+          .replace(/\\b/g, "\\b")
+          .replace(/\\f/g, "\\f");
+      };
+
+
       /**
        * functionality_selected
        *
@@ -195,6 +216,11 @@ var requirementsController = app.controller('RequirementsController',
           if (relation === REL_SELF) {
             var urlForRequirementChange = $scope.selectedRequirement.links[rel].href;
             console.log("Checking urlForRequirementTextChange [" + urlForRequirementChange);
+
+            var patchBody = JSON.stringify(requirement.requirementText);
+            var escapedBody = patchBody.escapeSpecialChars();
+            var patchString = '[{ "op": "replace", "path": "/requirementText", "value": ' + escapedBody + '}]';
+
             $http({
               method: 'PATCH',
               url: urlForRequirementChange,
