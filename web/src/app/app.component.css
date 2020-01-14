@@ -2,3 +2,27 @@
   background-image: url(src/assets/Grouse.png);
   background-size: cover;
 }
+
+.Login-page{
+  padding-top: 100px;
+}
+
+.flex-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;}
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+.login-div{
+  height: auto;
+  width: 500px;
+}
+
+.button-container{
+  display: flex;
+  justify-content: space-around;
+}

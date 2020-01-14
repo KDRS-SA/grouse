@@ -1,13 +1,32 @@
-<mat-card style="max-width: 90%; margin: 2.5%">
-  <mat-card-header>
-    <div mat-card-avatar class="Login-Avatar"></div>
-    <mat-card-title>Grouse</mat-card-title>
-    <mat-card-subtitle>Logg Inn</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
-  </mat-card-content>
-  <mat-card-content>
-    <button mat-raised-button color="primary">RIPPLER!</button>
-  </mat-card-content>
-</mat-card>
+<div class="Login-page flex-center">
+  <mat-card class="login-div">
+    <mat-card-header class="flex-center">
+      <div mat-card-avatar class="Login-Avatar"></div>
+      <mat-card-title>Grouse</mat-card-title>
+      <mat-card-subtitle>Logg Inn</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content class="flex-center flex-column">
+      <div>
+        <mat-form-field appearance="legacy">
+          <mat-label>E-post</mat-label>
+          <input matInput placeholder="Odd-Bjarne@epost.no">
+          <mat-icon matSuffix>mail</mat-icon>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="legacy">
+          <mat-label>Passord</mat-label>
+          <input matInput placeholder="hunter2">
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <br>
+    <mat-card-content>
+      <div class="button-container">
+        <button mat-raised-button color="primary">Logg inn</button>
+        <button mat-raised-button color="secondary">Registrer</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
