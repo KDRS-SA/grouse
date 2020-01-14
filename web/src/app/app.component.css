@@ -15,14 +15,13 @@
 
 .flex-column{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: column;
-  flex-wrap: nowrap;
   height: 100%;
 }
 
 .login-div{
-  height: 400px;
+  height: 450px;
   max-width: 500px;
   width: 90%;
 }
@@ -42,7 +41,7 @@
 }
 
 .divider{
-  height: 100%;
+  height: 300px;
   width: 5px;
   background-color: gray;
   opacity: 80%;
@@ -60,4 +59,5 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: nowrap;
 }

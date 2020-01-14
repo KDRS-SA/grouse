@@ -1,43 +1,31 @@
 import {Component, Inject} from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import {Animations} from './app.animations';
+import {FormControl, Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations: [
-    trigger('modeChange', [
-      state('login', style({
-        width: '100%',
-        opacity: '1'
-      })),
-      state('register', style({
-        width: '0%',
-        opacity: '0'
-      })),
-      transition('login => register', [
-        animate('0.3s ease-out')
-      ]),
-      transition('register => login', [
-        animate('0.3s ease-out')
-      ])
-    ])
+    Animations.toggleSlide
   ]
 })
 export class AppComponent {
-  title = 'Grouse - Logg inn';
+  public title = 'Grouse';
   public login: boolean;
+
+  email = new FormControl('',
+    [Validators.required, Validators.email]);
+
+  getErrorMessage() {
+    return this.email.hasError('required') ? 'Du må skrive inn en E-post adresse' :
+    this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
+  }
 
   constructor() {
     this.login = true;
   }
-
 
   public changeMode() {
     this.login = !this.login;
