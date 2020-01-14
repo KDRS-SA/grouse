@@ -4,7 +4,8 @@
 }
 
 .Login-page{
-  padding-top: 100px;
+  height: 100%;
+  width: 100%;
 }
 
 .flex-center{
@@ -14,15 +15,49 @@
 
 .flex-column{
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
 }
 
 .login-div{
-  height: auto;
-  width: 500px;
+  height: 400px;
+  max-width: 500px;
+  width: 90%;
 }
 
 .button-container{
   display: flex;
   justify-content: space-around;
+}
+
+.Login-Background{
+  background-image: url("src/assets/Login_Backround.jpg");
+  background-size: cover;
+  position: absolute;
+  opacity: 60%;
+  width: 100%;
+  height: 100%;
+}
+
+.divider{
+  height: 100%;
+  width: 5px;
+  background-color: gray;
+  opacity: 80%;
+}
+
+.login{
+  width: 100%;
+}
+
+.register{
+  width: 0%;
+}
+
+.flex-row-right{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }

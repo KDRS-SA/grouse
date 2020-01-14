@@ -1,32 +1,47 @@
+<div class="Login-Background"></div>
 <div class="Login-page flex-center">
   <mat-card class="login-div">
-    <mat-card-header class="flex-center">
-      <div mat-card-avatar class="Login-Avatar"></div>
-      <mat-card-title>Grouse</mat-card-title>
-      <mat-card-subtitle>Logg Inn</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="flex-center flex-column">
+    <div class="flex-column">
       <div>
-        <mat-form-field appearance="legacy">
-          <mat-label>E-post</mat-label>
-          <input matInput placeholder="Odd-Bjarne@epost.no">
-          <mat-icon matSuffix>mail</mat-icon>
-        </mat-form-field>
+        <mat-card-header class="flex-center">
+          <div mat-card-avatar class="Login-Avatar"></div>
+          <mat-card-title>Grouse</mat-card-title>
+          <mat-card-subtitle>Logg Inn</mat-card-subtitle>
+        </mat-card-header>
       </div>
-      <div>
-        <mat-form-field appearance="legacy">
-          <mat-label>Passord</mat-label>
-          <input matInput placeholder="hunter2">
-          <mat-icon matSuffix>lock</mat-icon>
-        </mat-form-field>
+
+      <div class="flex-row-right">
+        <div class="login" [@modeChange]="login ? 'login' : 'register'">
+          <mat-card-content class="flex-center flex-column">
+            <div style="width: 80%">
+              <mat-form-field style="width: 100%" appearance="legacy">
+                <mat-label>E-post</mat-label>
+                <input matInput placeholder="Odd-Bjarne@epost.no">
+                <mat-icon matSuffix>mail</mat-icon>
+              </mat-form-field>
+            </div>
+            <div style="width: 80%">
+              <mat-form-field style="width: 100%" appearance="legacy">
+                <mat-label>Passord</mat-label>
+                <input matInput placeholder="hunter2">
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+            </div>
+          </mat-card-content>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="register" [@modeChange]="login ? 'register' : 'login'">
+
+        </div>
       </div>
-    </mat-card-content>
-    <br>
-    <mat-card-content>
-      <div class="button-container">
-        <button mat-raised-button color="primary">Logg inn</button>
-        <button mat-raised-button color="secondary">Registrer</button>
-      </div>
-    </mat-card-content>
+      <mat-card-actions>
+        <div class="button-container">
+          <button mat-raised-button color="primary">Logg inn</button>
+          <button mat-raised-button color="secondary" (click)="changeMode()">Registrer</button>
+        </div>
+      </mat-card-actions>
+    </div>
   </mat-card>
 </div>
