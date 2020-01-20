@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Animations} from './app.animations';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
-import {HttpClient, HttpHandler} from '@angular/common/http';
+import {HttpClient, HttpHandler, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {RegisterModel} from './models/register.model';
 import {LoginModel} from './models/login.model';
@@ -67,12 +67,12 @@ export class AppComponent implements  OnInit {
       ]],
       password: [this.regUser.password, [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(4),
         Validators.maxLength(30)
       ]],
       passwordRepeat: [this.regUser.passwordRepeat, [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(4),
         Validators.maxLength(30)
       ]]
     });
@@ -83,9 +83,7 @@ export class AppComponent implements  OnInit {
         Validators.email
       ]],
       password: [this.loginUser.password, [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(30)
+        Validators.required
       ]]
     });
   }
@@ -96,10 +94,31 @@ export class AppComponent implements  OnInit {
   }
 
   loginSubmit() {
-    alert('E-post: ' + this.loginUser.email + '\n' + 'Passord: ' + this.loginUser.password);
+    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.loginAdress);
 
+    // Sends login info to the server
+
+    // Constructs the parameters that will be sendt to the server
+    let body = new HttpParams();
+    body = body.set('grant_type', 'password');
+    body = body.append('username', this.loginUser.email.toString());
+    body = body.append('password', this.loginUser.password.toString());
+    body = body.append('client_id', this.oauthClientId);
+
+    this.http.post(this.loginAdress, body, {
+      // Constructs the headers
+      headers: new HttpHeaders({
+        Authorization: 'Basic ' + btoa(this.oauthClientId + ':' + this.oauthClientSecret),
+        'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+      })
+    }).subscribe(
+      result => {
+        console.log(result);
+      }, error => {
+        console.error(error);
+      }
+    );
   }
-
 
   public changeMode() {
     this.login = !this.login;
