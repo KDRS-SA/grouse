@@ -1,0 +1,100 @@
+<div class="Login-Background"></div>
+<div class="Login-page flex-center" style="overflow: hidden">
+  <mat-card class="login-div">
+    <div>
+      <div>
+        <mat-card-header class="flex-center">
+          <div mat-card-avatar class="Login-Avatar"></div>
+          <mat-card-title>Grouse</mat-card-title>
+          <mat-card-subtitle>Logg Inn</mat-card-subtitle>
+        </mat-card-header>
+      </div>
+      <div class="flex-row-right">
+      <!--Div to keep all the contents of everything underneath the header of the card,
+      the animation happens in this div-->
+        <div class="login" [@toggleSlide]="login ? 'login' : 'register'">
+          <!--Login Div, contains the text-fields and buttons that are used to sign in-->
+          <form  class="flex-column"[formGroup]="loginForm" (ngSubmit)="loginSubmit()" novalidate>
+            <mat-card-content class="flex-center flex-column">
+              <div style="width: 80%">
+                <mat-form-field style="width: 100%" appearance="legacy">
+                  <mat-label>E-post</mat-label>
+                  <input id="loginEmail" matInput formControlName="email" [(ngModel)]="loginUser.email" required placeholder="Odd-Bjarne@epost.no">
+                  <mat-icon matSuffix>mail</mat-icon>
+                  <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div style="width: 80%">
+                <mat-form-field style="width: 100%" appearance="legacy">
+                  <mat-label>Passord</mat-label>
+                  <input id="loginPassword" matInput formControlName="password" [(ngModel)]="loginUser.password" [type]="'password'" placeholder="Skriv inn passordet ditt">
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+
+            <mat-card-actions> <!--Button area for Loggin side-->
+              <div class="button-container">
+                <div class="flex-row-right">
+                  <button mat-raised-button type="submit" color="primary"  [disabled]="!loginForm.valid">Logg inn</button>
+                </div>
+                <div class="flex-row-right">
+                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">Registrer</button>
+                </div>
+              </div>
+            </mat-card-actions>
+          </form>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="register" [@toggleSlide]="login ? 'register' : 'login'">
+          <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && registerSubmit()" novalidate>
+          <!--Register Div; contains the text-fields and buttons that are used to sign up-->
+            <mat-card-content class="flex-center flex-column">
+              <div style="width: 80%">
+                <mat-form-field style="width: 100%" appearance="legacy">
+                  <mat-label>E-post</mat-label>
+                  <input id="regEmail" matInput formControlName="email" [(ngModel)]="regUser.email" required placeholder="Odd-Bjarne@epost.no">
+                  <mat-icon matSuffix>mail</mat-icon>
+                  <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+              </div>
+              <div style="width: 80%">
+                <mat-form-field style="width: 100%" appearance="legacy">
+                  <mat-label>Brukernavn</mat-label>
+                  <input id="regName" matInput  formControlName="name" [(ngModel)]="regUser.name" placeholder="Benni">
+                  <mat-icon matSuffix>perm_identity</mat-icon>
+                </mat-form-field>
+              </div>
+              <div style="width: 80%">
+                <mat-form-field style="width: 100%" appearance="legacy">
+                  <mat-label>Passord</mat-label>
+                  <input id="regPassword" matInput formControlName="password" [(ngModel)]="regUser.password" [type]="'password'" placeholder="Skriv inn et passord">
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+              <div style="width: 80%">
+                <mat-form-field style="width: 100%" appearance="legacy">
+                  <mat-label>Repeter passord</mat-label>
+                  <input id="regPasswordRepeat" matInput formControlName="passwordRepeat" [(ngModel)]="regUser.passwordRepeat" [type]="'password'" placeholder="Repeter passordet">
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+            <mat-card-actions> <!--Button area for the Registration side-->
+              <div class="button-container">
+                <div class="flex-row-right">
+                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">Avbryt</button>
+                </div>
+                <div class="flex-row-right">
+                  <button mat-raised-button type="submit" color="primary"  [disabled]="!registerForm.valid">Bekreft</button>
+                </div>
+              </div>
+            </mat-card-actions>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

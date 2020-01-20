@@ -3,16 +3,19 @@ import { NgModule } from '@angular/core';
 import {MatCardModule, MatSliderModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule} from '@angular/common/http';
-import { AppComponent } from './app.component';
+import { LoginComponent } from './Login/Login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    LoginComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -24,9 +27,10 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [LoginComponent]
 })
 export class AppModule { }
