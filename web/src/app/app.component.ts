@@ -5,6 +5,10 @@ import {HttpClient, HttpHandler} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {RegisterModel} from "./models/register.model";
 import {LoginModel} from "./models/login.model";
+import {FormControl, Validators} from '@angular/forms';
+import {HttpClient, HttpHandler, HttpResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 
 // Lar klienten konfigurere HttpClienten, som brukes for å komunisere med serveren
 @Injectable()
@@ -27,11 +31,17 @@ export class ConfigService {
 export class AppComponent implements  OnInit{
   public title = 'Grouse';
   public login: boolean;
+  
   regUser: RegisterModel = new RegisterModel();
   loginUser: LoginModel = new LoginModel();
   registerForm: FormGroup;
   loginForm: FormGroup;
 
+  public loginAdress = '';
+  public logoutAdress = '';
+  public userAdress = '';
+  public oauthClientId = 'grouse-client';
+  public oauthClientSecret = 'secret';
 
   private http: HttpClient;
 
@@ -46,6 +56,7 @@ export class AppComponent implements  OnInit{
   constructor(http: HttpClient, private formBuilder: FormBuilder) {
     this.login = true;
     this.http = http;
+    this.getApiDetails();
   }
 
   ngOnInit() {
@@ -96,10 +107,37 @@ export class AppComponent implements  OnInit{
     this.login = !this.login;
   }
 
-  public httpGetTest() {
-    this.http.get<string>('http://localhost:9294/grouse/').subscribe(result => {
-      console.log(result);
+  // Fetches ApiDetails from the server, that is utialized for further communication
+  public getApiDetails() {
+    this.http.get<IApiFetchResponse>(startUrl).subscribe(result => {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < result.apiDetails.length; i++) {
+        const rel = result.apiDetails[i].rel;
+        if (rel === REL_LOGIN_OAUTH) {
+          this.loginAdress = result.apiDetails[i].href.split(/(\?)/)[0];
+          console.log('loginAddress  is set to [' + this.loginAdress + ']');
+        }
+        if (rel === REL_USER) {
+          this.userAdress = result.apiDetails[i].href;
+          console.log('userAddress  is set to [' + this.userAdress + ']');
+        }
+        if (rel === REL_LOGOUT_OAUTH) {
+          this.logoutAdress = result.apiDetails[i].href;
+          console.log('logoutAddress   is set to [' + this.logoutAdress + ']');
+        }
+      }
     }, error => console.error(error));
   }
 }
 
+// Interfaces for Response messages that deals with login
+interface IApiFetchResponse {
+  apiDetails: IapiDetails[];
+  Links: string[];
+}
+
+interface IapiDetails {
+  href: string;
+  rel: string;
+  templated: boolean;
+}
