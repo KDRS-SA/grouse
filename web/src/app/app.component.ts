@@ -1,15 +1,20 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Animations} from './app.animations';
+import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
+import {HttpClient, HttpHandler} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {RegisterModel} from "./models/register.model";
+import {LoginModel} from "./models/login.model";
 import {FormControl, Validators} from '@angular/forms';
 import {HttpClient, HttpHandler, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 
-
 // Lar klienten konfigurere HttpClienten, som brukes for å komunisere med serveren
 @Injectable()
 export class ConfigService {
-  constructor(private http: HttpClient) {}
+
+    constructor(private http: HttpClient) {}
 }
 
 @Component({
@@ -20,9 +25,18 @@ export class ConfigService {
     Animations.toggleSlide
   ]
 })
-export class AppComponent {
+
+
+
+export class AppComponent implements  OnInit{
   public title = 'Grouse';
   public login: boolean;
+  
+  regUser: RegisterModel = new RegisterModel();
+  loginUser: LoginModel = new LoginModel();
+  registerForm: FormGroup;
+  loginForm: FormGroup;
+
   public loginAdress = '';
   public logoutAdress = '';
   public userAdress = '';
@@ -39,11 +53,55 @@ export class AppComponent {
     this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
   }
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private formBuilder: FormBuilder) {
     this.login = true;
     this.http = http;
     this.getApiDetails();
   }
+
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      'email': [this.regUser.email, [
+        Validators.required,
+        Validators.email
+      ]],
+      'name': [this.regUser.name, [
+        Validators.required
+      ]],
+      'password': [this.regUser.password, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30)
+      ]],
+      'passwordRepeat': [this.regUser.passwordRepeat, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30)
+      ]]
+    });
+
+    this.loginForm = this.formBuilder.group({
+      'email': [this.loginUser.email, [
+        Validators.required,
+        Validators.email
+      ]],
+      'password': [this.loginUser.password, [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(30)
+      ]]
+    });
+  }
+
+  registerSubmit(){
+    alert("E-post: " + this.regUser.email + "+n" + "Navn: " + this.regUser.name + "\n" + "Passord: " + this.regUser.password + " og " + this.regUser.passwordRepeat);
+  }
+
+  loginSubmit(){
+    alert("E-post: " + this.loginUser.email + "\n" + "Passord: " + this.loginUser.password);
+
+  }
+
 
   public changeMode() {
     this.login = !this.login;
