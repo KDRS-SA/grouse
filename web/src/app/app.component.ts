@@ -3,11 +3,8 @@ import {Animations} from './app.animations';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {HttpClient, HttpHandler} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {RegisterModel} from "./models/register.model";
-import {LoginModel} from "./models/login.model";
-import {FormControl, Validators} from '@angular/forms';
-import {HttpClient, HttpHandler, HttpResponse} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {RegisterModel} from './models/register.model';
+import {LoginModel} from './models/login.model';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 
 // Lar klienten konfigurere HttpClienten, som brukes for å komunisere med serveren
@@ -28,10 +25,10 @@ export class ConfigService {
 
 
 
-export class AppComponent implements  OnInit{
+export class AppComponent implements  OnInit {
   public title = 'Grouse';
   public login: boolean;
-  
+
   regUser: RegisterModel = new RegisterModel();
   loginUser: LoginModel = new LoginModel();
   registerForm: FormGroup;
@@ -61,19 +58,19 @@ export class AppComponent implements  OnInit{
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      'email': [this.regUser.email, [
+      email: [this.regUser.email, [
         Validators.required,
         Validators.email
       ]],
-      'name': [this.regUser.name, [
+      name: [this.regUser.name, [
         Validators.required
       ]],
-      'password': [this.regUser.password, [
+      password: [this.regUser.password, [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(30)
       ]],
-      'passwordRepeat': [this.regUser.passwordRepeat, [
+      passwordRepeat: [this.regUser.passwordRepeat, [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(30)
@@ -81,11 +78,11 @@ export class AppComponent implements  OnInit{
     });
 
     this.loginForm = this.formBuilder.group({
-      'email': [this.loginUser.email, [
+      email: [this.loginUser.email, [
         Validators.required,
         Validators.email
       ]],
-      'password': [this.loginUser.password, [
+      password: [this.loginUser.password, [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(30)
@@ -93,12 +90,13 @@ export class AppComponent implements  OnInit{
     });
   }
 
-  registerSubmit(){
-    alert("E-post: " + this.regUser.email + "+n" + "Navn: " + this.regUser.name + "\n" + "Passord: " + this.regUser.password + " og " + this.regUser.passwordRepeat);
+  registerSubmit() {
+    // tslint:disable-next-line:max-line-length
+    alert('E-post: ' + this.regUser.email + '+n' + 'Navn: ' + this.regUser.name + '\n' + 'Passord: ' + this.regUser.password + ' og ' + this.regUser.passwordRepeat);
   }
 
-  loginSubmit(){
-    alert("E-post: " + this.loginUser.email + "\n" + "Passord: " + this.loginUser.password);
+  loginSubmit() {
+    alert('E-post: ' + this.loginUser.email + '\n' + 'Passord: ' + this.loginUser.password);
 
   }
 
