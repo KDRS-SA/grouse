@@ -11,9 +11,11 @@ import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './menu/menu.component';
+import {AppComponent} from './app.component';
 
 @NgModule({
   declarations: [
+    AppComponent,
     LoginComponent,
     MenuComponent
   ],
@@ -31,6 +33,6 @@ import { MenuComponent } from './menu/menu.component';
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

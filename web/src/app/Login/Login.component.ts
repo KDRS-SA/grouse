@@ -8,14 +8,6 @@ import {LoginModel} from '../models/login.model';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from '../common';
 import {Router} from '@angular/router';
 
-/*
-// Lar klienten konfigurere HttpClienten, som brukes for å komunisere med serveren
-@Injectable()
-export class ConfigService {
-    constructor(http: HttpClient) {}
-}
-*/
-
 @Component({
   selector: 'app-root',
   templateUrl: './Login.component.html',
