@@ -8,18 +8,6 @@
   width: 100%;
 }
 
-.flex-center{
-  display: flex;
-  justify-content: center;
-  align-items: center;}
-
-.flex-column{
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-  height: 100%;
-}
-
 .login-div{
   height: 450px;
   max-width: 500px;
@@ -53,11 +41,4 @@
 
 .register{
   width: 0%;
-}
-
-.flex-row-right{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
 }

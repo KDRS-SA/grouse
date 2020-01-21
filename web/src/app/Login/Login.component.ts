@@ -6,24 +6,27 @@ import {Injectable} from '@angular/core';
 import {RegisterModel} from '../models/register.model';
 import {LoginModel} from '../models/login.model';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from '../common';
+import {Router} from '@angular/router';
 
+/*
 // Lar klienten konfigurere HttpClienten, som brukes for å komunisere med serveren
 @Injectable()
 export class ConfigService {
-
-    constructor(private http: HttpClient) {}
+    constructor(http: HttpClient) {}
 }
+*/
 
 @Component({
   selector: 'app-root',
   templateUrl: './Login.component.html',
-  styleUrls: ['./Login.component.css'],
+  styleUrls: [
+    './Login.component.css',
+    '../common.css'
+  ],
   animations: [
     Animations.toggleSlide
   ]
 })
-
-
 
 export class LoginComponent implements  OnInit {
   public title = 'Grouse';
@@ -41,6 +44,7 @@ export class LoginComponent implements  OnInit {
   public oauthClientSecret = 'secret';
 
   private http: HttpClient;
+  private router: Router;
 
   email = new FormControl('',
     [Validators.required, Validators.email]);
@@ -50,10 +54,11 @@ export class LoginComponent implements  OnInit {
     this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
   }
 
-  constructor(http: HttpClient, private formBuilder: FormBuilder) {
+  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router) {
     this.login = true;
     this.http = http;
     this.getApiDetails();
+    this.router = router;
   }
 
   ngOnInit() {
@@ -113,7 +118,7 @@ export class LoginComponent implements  OnInit {
       })
     }).subscribe(
       result => {
-        console.log(result);
+        this.router.navigate(['/Menu']);
       }, error => {
         console.error(error);
       }
