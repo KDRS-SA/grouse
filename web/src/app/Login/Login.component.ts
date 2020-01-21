@@ -1,12 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Animations} from '../app.animations';
 import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
-import {HttpClient, HttpHandler, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {RegisterModel} from '../models/register.model';
 import {LoginModel} from '../models/login.model';
-import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from '../common';
 import {Router} from '@angular/router';
+import {UserData} from '../models/UserData.model';
+import {Data} from '../data.service';
 
 @Component({
   selector: 'app-root',
@@ -29,14 +29,10 @@ export class LoginComponent implements  OnInit {
   registerForm: FormGroup;
   loginForm: FormGroup;
 
-  public loginAdress = '';
-  public logoutAdress = '';
-  public userAdress = '';
-  public oauthClientId = 'grouse-client';
-  public oauthClientSecret = 'secret';
-
   private http: HttpClient;
   private router: Router;
+  private userData: UserData;
+  private data: Data;
 
   email = new FormControl('',
     [Validators.required, Validators.email]);
@@ -46,11 +42,12 @@ export class LoginComponent implements  OnInit {
     this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
   }
 
-  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router) {
+  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, data: Data) {
     this.login = true;
     this.http = http;
-    this.getApiDetails();
     this.router = router;
+    this.data = data;
+    this.userData = new UserData();
   }
 
   ngOnInit() {
@@ -83,6 +80,8 @@ export class LoginComponent implements  OnInit {
         Validators.required
       ]]
     });
+
+    this.data.currentMessage.subscribe(msg => this.userData = msg);
   }
 
   registerSubmit() {
@@ -91,7 +90,7 @@ export class LoginComponent implements  OnInit {
   }
 
   loginSubmit() {
-    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.loginAdress);
+    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData.loginAdress);
 
     // Sends login info to the server
 
@@ -100,19 +99,25 @@ export class LoginComponent implements  OnInit {
     body = body.set('grant_type', 'password');
     body = body.append('username', this.loginUser.email.toString());
     body = body.append('password', this.loginUser.password.toString());
-    body = body.append('client_id', this.oauthClientId);
+    body = body.append('client_id', this.userData.oauthClientId);
 
-    this.http.post(this.loginAdress, body, {
+    this.http.post(this.userData.loginAdress, body, {
       // Constructs the headers
       headers: new HttpHeaders({
-        Authorization: 'Basic ' + btoa(this.oauthClientId + ':' + this.oauthClientSecret),
+        Authorization: 'Basic ' + btoa(this.userData.oauthClientId + ':' + this.userData.oauthClientSecret),
         'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
       })
     }).subscribe(
       result => {
+        console.log(result);
         this.router.navigate(['/Menu']);
       }, error => {
-        console.error(error);
+        if (error.error.error_description === 'Bad credentials') {
+          alert('Passord eller epost er galt');
+        } else {
+          alert('En uventet feil har oppstått, prøv igjen. Eller se konsol, for flere detaljer');
+          console.log(error);
+        }
       }
     );
   }
@@ -120,38 +125,4 @@ export class LoginComponent implements  OnInit {
   public changeMode() {
     this.login = !this.login;
   }
-
-  // Fetches ApiDetails from the server, that is utialized for further communication
-  public getApiDetails() {
-    this.http.get<IApiFetchResponse>(startUrl).subscribe(result => {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < result.apiDetails.length; i++) {
-        const rel = result.apiDetails[i].rel;
-        if (rel === REL_LOGIN_OAUTH) {
-          this.loginAdress = result.apiDetails[i].href.split(/(\?)/)[0];
-          console.log('loginAddress  is set to [' + this.loginAdress + ']');
-        }
-        if (rel === REL_USER) {
-          this.userAdress = result.apiDetails[i].href;
-          console.log('userAddress  is set to [' + this.userAdress + ']');
-        }
-        if (rel === REL_LOGOUT_OAUTH) {
-          this.logoutAdress = result.apiDetails[i].href;
-          console.log('logoutAddress   is set to [' + this.logoutAdress + ']');
-        }
-      }
-    }, error => console.error(error));
-  }
-}
-
-// Interfaces for Response messages that deals with login
-interface IApiFetchResponse {
-  apiDetails: IapiDetails[];
-  Links: string[];
-}
-
-interface IapiDetails {
-  href: string;
-  rel: string;
-  templated: boolean;
 }

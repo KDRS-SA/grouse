@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatCardModule, MatSliderModule} from '@angular/material';
+import {MatCardModule, MatProgressSpinnerModule, MatSliderModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './Login/Login.component';
@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './menu/menu.component';
 import {AppComponent} from './app.component';
+import {Data} from './data.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import {AppComponent} from './app.component';
     MatInputModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatProgressSpinnerModule,
+    Data
   ],
   providers: [],
   bootstrap: [AppComponent]

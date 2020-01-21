@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from '../common';
 
 @Component({
   selector: 'app-root',
@@ -14,5 +15,4 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
