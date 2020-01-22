@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './menu/menu.component';
 import {AppComponent} from './app.component';
 import {Data} from './data.service';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {Data} from './data.service';
     AppRoutingModule,
     MatProgressSpinnerModule,
     Data,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
