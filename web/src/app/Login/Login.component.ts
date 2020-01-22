@@ -57,7 +57,6 @@ export class LoginComponent implements  OnInit {
         Validators.email
       ]],
       name: [this.regUser.name, [
-        Validators.required
       ]],
       password: [this.regUser.password, [
         Validators.required,
@@ -84,9 +83,36 @@ export class LoginComponent implements  OnInit {
     this.data.currentMessage.subscribe(msg => this.userData = msg);
   }
 
+  // Creates a new user
   registerSubmit() {
-    // tslint:disable-next-line:max-line-length
-    alert('E-post: ' + this.regUser.email + '+n' + 'Navn: ' + this.regUser.name + '\n' + 'Passord: ' + this.regUser.password + ' og ' + this.regUser.passwordRepeat);
+    console.log('New user request called with e-mail: ' + this.regUser.email);
+    // Sets the username to the users e-mail if the user did not enter a displayname
+    if (this.regUser.name === null || this.regUser.name === '') {
+      this.regUser.name = this.regUser.email;
+    }
+    if (this.regUser.password === this.regUser.passwordRepeat) { // Checks that passwords match
+
+      // If everything is in order, sends the data to server
+      const body: INewUser = {
+        username: this.regUser.email,
+        password: this.regUser.password
+      };
+      this.http.post(this.userData.userAdress, body).subscribe(
+        result => {
+          // The transmission was a succsess and the server accepted the new user
+          console.log('Account creation was a success! Signing in with the new user');
+          this.loginUser.password = this.regUser.password;
+          this.loginUser.email = this.regUser.email;
+          this.loginSubmit();
+      }, error => {
+          // There was an error
+
+          // A user with the email entered allready exists
+          if (error.error.message.startsWith('No GrouseUser exists')) {
+            alert('A user with that e-mail allready exists. Have you forgotten your password?');
+          }
+        });
+    }
   }
 
   loginSubmit() {
@@ -109,7 +135,8 @@ export class LoginComponent implements  OnInit {
       })
     }).subscribe(
       result => {
-        console.log(result);
+        // @ts-ignore
+        this.userData.oauthClientSecret = result.access_token;
         this.router.navigate(['/Menu']);
       }, error => {
         if (error.error.error_description === 'Bad credentials') {
@@ -125,4 +152,9 @@ export class LoginComponent implements  OnInit {
   public changeMode() {
     this.login = !this.login;
   }
+}
+
+interface INewUser {
+  username: string;
+  password: string;
 }
