@@ -1,3 +1,8 @@
+.Grouse-Avatar{
+  background-image: url('src/assets/Grouse.png');
+  background-size: cover;
+}
+
 .flex-center{
   display: flex;
   justify-content: center;

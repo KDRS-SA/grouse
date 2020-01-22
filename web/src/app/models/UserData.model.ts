@@ -5,6 +5,7 @@ export class UserData {
   userName: string;
   oauthClientId: string;
   oauthClientSecret: string;
+  nav: string;
 
   constructor() {
     this.loginAdress = '';
@@ -13,5 +14,6 @@ export class UserData {
     this.userName = '';
     this.oauthClientId = 'grouse-client';
     this.oauthClientSecret = 'secret';
+    this.nav = '';
   }
 }

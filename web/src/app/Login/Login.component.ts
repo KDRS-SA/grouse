@@ -6,7 +6,6 @@ import {RegisterModel} from '../models/register.model';
 import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {UserData} from '../models/UserData.model';
-import {Data} from '../data.service';
 import {MatSnackBar} from '@angular/material';
 
 @Component({
@@ -35,7 +34,6 @@ export class LoginComponent implements  OnInit {
   private http: HttpClient;
   private router: Router;
   private userData: UserData;
-  private data: Data;
   private snackBar: MatSnackBar;
 
   email = new FormControl('',
@@ -46,11 +44,10 @@ export class LoginComponent implements  OnInit {
       this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
   }
 
-  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, data: Data, snackBar: MatSnackBar) {
+  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar) {
     this.login = true;
     this.http = http;
     this.router = router;
-    this.data = data;
     this.userData = new UserData();
     this.shake = false;
     this.snackBar = snackBar;
@@ -84,8 +81,7 @@ export class LoginComponent implements  OnInit {
         Validators.required
       ]]
     });
-
-    this.data.currentMessage.subscribe(msg => this.userData = msg);
+    this.userData = JSON.parse(localStorage.getItem('UserData'))
   }
 
   // Creates a new user
@@ -123,6 +119,11 @@ export class LoginComponent implements  OnInit {
   }
 
   loginSubmit() {
+    // Resolves an error where refreshed user might have gotten an error due to unwanted data retention
+    if(this.userData.oauthClientSecret != 'secret'){
+      this.userData.oauthClientSecret = 'secret';
+      localStorage.setItem('UserData', JSON.stringify(this.userData));
+    }
     console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData.loginAdress);
     this.shake = false; // Resets the shake animation
     // Sends login info to the server
@@ -134,6 +135,7 @@ export class LoginComponent implements  OnInit {
     body = body.append('password', this.loginUser.password.toString());
     body = body.append('client_id', this.userData.oauthClientId);
 
+    console.log(body);
     this.http.post(this.userData.loginAdress, body, {
       // Constructs the headers
       headers: new HttpHeaders({
@@ -145,7 +147,8 @@ export class LoginComponent implements  OnInit {
         // @ts-ignore
         this.userData.oauthClientSecret = result.access_token;
         this.userData.userName = this.loginUser.email;
-        this.data.changeMessage(this.userData);
+        this.userData.nav = 'Menu';
+        localStorage.setItem('UserData', JSON.stringify(this.userData));
         this.router.navigate(['/Menu']);
       }, error => {
         if (error.error.error_description === 'Bad credentials') {
