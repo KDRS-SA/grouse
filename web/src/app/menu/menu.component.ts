@@ -26,4 +26,10 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
   }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigate(['/']);
+    location.reload();
+  }
 }

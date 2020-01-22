@@ -1,12 +1,31 @@
-<mat-toolbar class="flex-row-evenly" color="primary">
+<mat-toolbar class="flex-row-evenly" color="primary" style="padding: 0">
   <div class="flex-row-left">
-    <div mat-card-avatar class="Grouse-Avatar"></div>
-    <p>Grouse</p>
+    <div class="flex-row-evenlyer">
+      <div class="flex-column flex-center">
+        <div class="Grouse-Avatar"></div>
+      </div>
+      <p>Grouse</p>
+    </div>
   </div>
   <div class="flex-row-right">
-    <i class="material-icons flex-center">portrait</i>
-    <p>{{this.userData.userName}}</p>
-    <i class="material-icons flex-center">exit_to_app</i>
+    <div class="flex-row-evenly">
+      <button mat-button>
+        <div class="flex-row-evenly">
+          <div class="flex-center">
+            <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+          </div>
+          <div>
+            <p>{{this.userData.userName}}</p>
+          </div>
+        </div>
+      </button>
+      <button mat-button (click)="logout()">
+        <div class="flex-column">
+          <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+          <p class="no-m">Logg ut</p>
+        </div>
+      </button>
+    </div>
   </div>
 </mat-toolbar>
 <div class="flex-row-left mal-container">

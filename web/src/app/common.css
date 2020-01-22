@@ -1,6 +1,10 @@
 .Grouse-Avatar{
   background-image: url('src/assets/Grouse.png');
   background-size: cover;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  margin: 10px;
 }
 
 .flex-center{
@@ -43,6 +47,12 @@
   flex-wrap: nowrap;
 }
 
+.flex-row-evenlyer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .mal-container{
   display: flex;
   flex-direction: row;
@@ -64,4 +74,14 @@
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+}
+
+.no-m{
+  margin: 0px;
+}
+
+.icon-large{
+  height: 50px;
+  width: 50px;
+  font-size: 40px;
 }
