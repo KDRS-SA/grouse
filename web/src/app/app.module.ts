@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatCardModule, MatProgressSpinnerModule, MatSliderModule} from '@angular/material';
+import {MatCardModule, MatProgressSpinnerModule, MatSliderModule, MatSnackBarModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './Login/Login.component';
@@ -33,7 +33,8 @@ import {Data} from './data.service';
     HttpClientModule,
     AppRoutingModule,
     MatProgressSpinnerModule,
-    Data
+    Data,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
