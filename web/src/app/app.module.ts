@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MenuComponent } from './menu/menu.component';
 import {AppComponent} from './app.component';
 import {Data} from './data.service';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -20,21 +21,22 @@ import {Data} from './data.service';
     LoginComponent,
     MenuComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatSliderModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatProgressSpinnerModule,
-    Data
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatProgressSpinnerModule,
+        Data,
+        MatToolbarModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

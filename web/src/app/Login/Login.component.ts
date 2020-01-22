@@ -137,6 +137,8 @@ export class LoginComponent implements  OnInit {
       result => {
         // @ts-ignore
         this.userData.oauthClientSecret = result.access_token;
+        this.userData.userName = this.loginUser.email;
+        this.data.changeMessage(this.userData);
         this.router.navigate(['/Menu']);
       }, error => {
         if (error.error.error_description === 'Bad credentials') {
