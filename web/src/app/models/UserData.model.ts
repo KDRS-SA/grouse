@@ -1,3 +1,5 @@
+import {Link} from './link.model';
+
 export class UserData {
   loginAdress: string;
   logoutAdress: string;
@@ -6,6 +8,7 @@ export class UserData {
   oauthClientId: string;
   oauthClientSecret: string;
   nav: string;
+  links: Link[];
 
   constructor() {
     this.loginAdress = '';
@@ -15,5 +18,6 @@ export class UserData {
     this.oauthClientId = 'grouse-client';
     this.oauthClientSecret = 'secret';
     this.nav = '';
+    this.links = null;
   }
 }
