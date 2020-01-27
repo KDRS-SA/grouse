@@ -135,7 +135,6 @@ export class LoginComponent implements  OnInit {
     body = body.append('password', this.loginUser.password.toString());
     body = body.append('client_id', this.userData.oauthClientId);
 
-    console.log(body);
     this.http.post(this.userData.loginAdress, body, {
       // Constructs the headers
       headers: new HttpHeaders({

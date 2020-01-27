@@ -9,7 +9,7 @@ export class Project{
   documentCreated: boolean;
   projectComplete: string;
   createdDate: string;
-  changedData: string;
+  changedDate: string;
   ownedBy: string;
   links: Link[];
 
@@ -20,7 +20,7 @@ export class Project{
     this.fileName = projectName + '.docx';
     this.documentCreated = false;
     this.createdDate = createdDate;
-    this.changedData = createdDate;
+    this.changedDate = createdDate;
     this.ownedBy = ownedBy;
   }
 }
