@@ -16,8 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 /**
  * Created by tsodring on 28/03/18.

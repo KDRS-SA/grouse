@@ -1,7 +1,8 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -30,7 +31,7 @@ import java.util.List;
 )
 @XmlRootElement
 public class ProjectFunctionality
-        extends ResourceSupport
+        extends RepresentationModel
         implements Serializable {
 
     private static final long serialVersionUID = 1L;

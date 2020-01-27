@@ -21,13 +21,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-@SpringBootApplication()
-
-@EnableAutoConfiguration(exclude = {
-        org.springframework.boot.autoconfigure.security.servlet
-                .SecurityAutoConfiguration.class,
-
-})
+@SpringBootApplication
 public class GrouseApplication {
 
     private IFunctionalityRepository functionalityRepository;

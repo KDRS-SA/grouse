@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 /**
  * Created by tsodring on 29/03/18.
@@ -40,10 +40,11 @@ public class ProjectFunctionalityController {
                 projectFunctionality.getReferenceProjectRequirement();
 
         for (ProjectRequirement projectRequirement : projectRequirements) {
-            projectRequirement.add(linkTo(methodOn
-                    (ProjectRequirementController.class).
-                    getRequirement(projectRequirement.
-                            getProjectRequirementId())).withSelfRel());
+            projectRequirement.add(
+                    linkTo(
+                    methodOn(ProjectRequirementController.class)
+                    .getRequirement(projectRequirement
+                            .getProjectRequirementId())).withSelfRel());
         }
         projectFunctionality.add(linkTo(methodOn
                 (ProjectFunctionalityController.class).

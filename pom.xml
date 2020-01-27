@@ -16,14 +16,14 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.1.2.RELEASE</version>
+    <version>2.2.4.RELEASE</version>
     <relativePath/>
   </parent>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <failOnMissingWebXml>false</failOnMissingWebXml>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
     <!-- commons and utils -->
     <commons-lang3.version>3.4</commons-lang3.version>
     <jquery.version>3.2.1</jquery.version>
@@ -81,6 +81,27 @@
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
+    </dependency>
+
+
+    <!-- For JDK 11, JAXB has been removed from Java SE and needs to added in the pom to the
+    code continues to work. -->
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-core</artifactId>
+      <version>2.3.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+      <version>2.3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
+      <version>2.3.1</version>
     </dependency>
 
     <!-- In memory database, used for demo mode only -->

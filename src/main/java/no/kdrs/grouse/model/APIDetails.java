@@ -1,6 +1,8 @@
 package no.kdrs.grouse.model;
 
-import org.springframework.hateoas.ResourceSupport;
+
+
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.List;
 /**
  * Created by tsodring on 2/2/17.
  */
-public class APIDetails extends ResourceSupport
+public class APIDetails extends RepresentationModel
         implements Serializable {
     protected List<APIDetail> aPIDetails = new ArrayList<>();
 

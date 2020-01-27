@@ -1,7 +1,8 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ import java.util.List;
 @Table(name = "projects")
 @XmlRootElement
 public class Project
-        extends ResourceSupport {
+        extends RepresentationModel {
 
     private static final long serialVersionUID = 1L;
 
