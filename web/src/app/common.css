@@ -19,6 +19,15 @@
   height: 100%;
 }
 
+.flex-column-squish{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 20%;
+  padding-top: 80px;
+  padding-bottom: 60px;
+}
+
 .flex-row-right{
   display: flex;
   flex-direction: row;
