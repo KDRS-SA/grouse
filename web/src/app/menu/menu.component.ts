@@ -19,6 +19,7 @@ export class MenuComponent implements OnInit {
   private router: Router;
   private userData: UserData;
   private projects: Project[];
+  private projectsLink: string;
   public title = 'Grouse';
 
   constructor(http: HttpClient, router: Router) {
@@ -41,6 +42,11 @@ export class MenuComponent implements OnInit {
     }).subscribe(result => {
       // @ts-ignore
       this.userData.links = result.links;
+      for (const link of this.userData.links) {
+        if (link.rel === REL_PROJECT) {
+          this.projectsLink = link.href;
+        }
+      }
       this.getActiveProjects();
     }, error => {
       console.error(error);
@@ -63,19 +69,19 @@ export class MenuComponent implements OnInit {
   }
 
   getActiveProjects() {
-    for (const link of this.userData.links) {
-      if (link.rel === REL_PROJECT) {
-        this.http.get(link.href, {
-          headers: new HttpHeaders({
-            Authorization: 'Bearer ' + this.userData.oauthClientSecret
-          })
-        }).subscribe(result => {
-          // @ts-ignore
-          this.projects = result;
-        }, error => {
-          console.error(error);
-        });
-      }
-    }
+    this.http.get(this.projectsLink, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      // @ts-ignore
+      this.projects = result;
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  newProject(){
+
   }
 }
