@@ -110,6 +110,12 @@ export class MenuComponent implements OnInit {
       });
     })
   }
+  openProject(projectID: number){
+    this.userData.currentProjectID = projectID;
+    this.userData.nav = 'kravEdit';
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
+    this.router.navigate(['/kravEdit']);
+  }
 }
 
 export interface INewProject {
