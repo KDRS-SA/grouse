@@ -62,13 +62,6 @@
               </div>
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>Brukernavn</mat-label>
-                  <input id="regName" matInput  formControlName="name" [(ngModel)]="regUser.name" placeholder="Benni">
-                  <mat-icon matSuffix>perm_identity</mat-icon>
-                </mat-form-field>
-              </div>
-              <div style="width: 80%">
-                <mat-form-field style="width: 100%" appearance="legacy">
                   <mat-label>Passord</mat-label>
                   <input id="regPassword" matInput formControlName="password" [(ngModel)]="regUser.password" [type]="'password'" placeholder="Skriv inn et passord">
                   <mat-icon matSuffix>lock</mat-icon>
@@ -81,7 +74,12 @@
                   <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
               </div>
+              <div style="width: 80%">
+                  <mat-checkbox id="CheckBox" matInput formControlName="checkBox" [(ngModel)]="regUser.checkBox"></mat-checkbox>
+                  <a (click)="ReadGDPR()" mat-button> Jeg Har lest "Test"</a>
+              </div>
             </mat-card-content>
+
             <mat-card-actions> <!--Button area for the Registration side-->
               <div class="button-container">
                 <div class="flex-row-right">
