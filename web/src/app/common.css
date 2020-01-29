@@ -42,7 +42,7 @@
   flex-wrap: nowrap;
 }
 
-.flex-row-evenly{
+.flex-row-between{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -67,14 +67,13 @@
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding-left: 2%;
+  padding-left: 4%;
 }
 
 .mal-card{
   height: 150px;
-  width: 21%;
-  max-width: 400px;
-  margin-right: auto;
+  width: 300px;
+  margin-right: 4%;
 
   margin-top: 20px;
 }

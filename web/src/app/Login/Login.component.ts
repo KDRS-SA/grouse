@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Animations} from '../app.animations';
-import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
+import {FormGroup, FormBuilder, FormControl, Validators, CheckboxRequiredValidator} from '@angular/forms';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {RegisterModel} from '../models/register.model';
 import {LoginModel} from '../models/login.model';
@@ -59,7 +59,6 @@ export class LoginComponent implements  OnInit {
         Validators.required,
         Validators.email
       ]],
-      name: [this.regUser.name, []],
       password: [this.regUser.password, [
         Validators.required,
         Validators.minLength(4),
@@ -69,6 +68,9 @@ export class LoginComponent implements  OnInit {
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(30)
+      ]],
+      checkBox: [this.regUser.checkBox, [
+        Validators.required,
       ]]
     });
 
@@ -84,14 +86,19 @@ export class LoginComponent implements  OnInit {
     this.userData = JSON.parse(localStorage.getItem('UserData'))
   }
 
+  ReadGDPR(){
+    console.log('test melding')
+  }
+
+  @Input()
+  Checked: boolean;
+
+
   // Creates a new user
   registerSubmit() {
     console.log('New user request called with e-mail: ' + this.regUser.email);
     this.shake = false;
-    // Sets the username to the users e-mail if the user did not enter a displayname
-    if (this.regUser.name === null || this.regUser.name === '') {
-      this.regUser.name = this.regUser.email;
-    }
+
     if (this.regUser.password === this.regUser.passwordRepeat) { // Checks that passwords match
 
       // If everything is in order, sends the data to server

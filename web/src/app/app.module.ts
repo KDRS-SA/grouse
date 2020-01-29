@@ -16,6 +16,7 @@ import {Data} from './data.service';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListModule} from "@angular/material/list";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -24,26 +25,27 @@ import {MatDialogModule} from "@angular/material/dialog";
     MenuComponent,
     NewProjectDialog
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatSliderModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatProgressSpinnerModule,
-    Data,
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatListModule,
-    MatDialogModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatProgressSpinnerModule,
+        Data,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatListModule,
+        MatDialogModule,
+        FormsModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [NewProjectDialog],
