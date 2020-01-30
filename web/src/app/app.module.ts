@@ -16,12 +16,16 @@ import {Data} from './data.service';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListModule} from "@angular/material/list";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatMenuModule} from "@angular/material/menu";
+import {kravEditComponent} from "./kravEdit/kravEdit.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MenuComponent,
+    kravEditComponent,
     NewProjectDialog
   ],
   imports: [
@@ -42,7 +46,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatToolbarModule,
     MatListModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    MatMenuModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],

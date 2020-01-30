@@ -1,0 +1,20 @@
+.test-card{
+  margin: 10px;
+}
+
+.main{
+  padding-top: 2480px;
+}
+
+.back-button{
+  height: 100px;
+  width: auto;
+}
+
+.back-button-container{
+  display: flex;
+  width: 100%;
+  top: 0;
+  position: fixed;
+  flex-direction: row-reverse;
+}

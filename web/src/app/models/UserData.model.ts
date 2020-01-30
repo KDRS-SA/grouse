@@ -9,6 +9,7 @@ export class UserData {
   oauthClientSecret: string;
   nav: string;
   links: Link[];
+  currentProject;
 
   constructor() {
     this.loginAdress = '';
@@ -19,5 +20,6 @@ export class UserData {
     this.oauthClientSecret = 'secret';
     this.nav = '';
     this.links = null;
+    this.currentProject = null;
   }
 }

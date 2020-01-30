@@ -1,0 +1,31 @@
+<div class="flex-column main">
+  <mat-card *ngFor="let obj of mainData" class="test-card">
+    <mat-card-header>
+      <h2>{{obj.title}}</h2>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card *ngFor="let ele of obj.referenceChildProjectFunctionality">
+        <mat-card-header>
+          <h3>{{ele.functionalityNumber}} - {{ele.title}}</h3>
+        </mat-card-header>
+        <mat-card-content>
+          <h4>Beskrivelse: </h4>
+          <p>{{ele.description}}</p>
+        </mat-card-content>
+        <mat-card-content>
+          <h4>Forklaring: </h4>
+          <p>{{ele.explanation}}</p>
+        </mat-card-content>
+        <mat-card-content>
+          <h4>Konsekvens: </h4>
+          <p>{{ele.consequence}}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="back-button-container">
+  <button mat-raised-button class="back-button" (click)="toMainMenu()">
+    <p>Tilbake til hovedmeny</p>
+  </button>
+</div>
