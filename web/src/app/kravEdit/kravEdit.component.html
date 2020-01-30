@@ -1,34 +1,31 @@
-<mat-toolbar class="flex-row-evenly" color="primary" style="padding: 0">
-  <div class="flex-row-left">
-    <div class="flex-row-evenlyer">
-      <div class="flex-column flex-center">
-        <div class="Grouse-Avatar"></div>
-      </div>
-      <p>Grouse</p>
-    </div>
-  </div>
-  <div class="flex-row-right">
-    <div class="flex-row-evenly">
-      <button mat-button [mat-menu-trigger-for]="profileMenu">
-        <div class="flex-row-evenly">
-          <div class="flex-center">
-            <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
-          </div>
-          <p>{{this.userData.userName}}</p>
-        </div>
-      </button>
-      <mat-menu #profileMenu="matMenu">
-        <button mat-menu-item>Profil</button>
-        <button mat-menu-item>Instillinger</button>
-        <button mat-menu-item>Logg ut</button>
-      </mat-menu>
-      <button mat-button (click)="logout()">
-        <div class="flex-column">
-          <i class="material-icons flex-center navbar-icon">exit_to_app</i>
-          <p class="no-m">Logg ut</p>
-        </div>
-      </button>
-    </div>
-  </div>
-</mat-toolbar>
-<p>{{this.userData.currentProjectID}}</p>
+<div class="flex-column main">
+  <mat-card *ngFor="let obj of mainData" class="test-card">
+    <mat-card-header>
+      <h2>{{obj.title}}</h2>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card *ngFor="let ele of obj.referenceChildProjectFunctionality">
+        <mat-card-header>
+          <h3>{{ele.functionalityNumber}} - {{ele.title}}</h3>
+        </mat-card-header>
+        <mat-card-content>
+          <h4>Beskrivelse: </h4>
+          <p>{{ele.description}}</p>
+        </mat-card-content>
+        <mat-card-content>
+          <h4>Forklaring: </h4>
+          <p>{{ele.explanation}}</p>
+        </mat-card-content>
+        <mat-card-content>
+          <h4>Konsekvens: </h4>
+          <p>{{ele.consequence}}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="back-button-container">
+  <button mat-raised-button class="back-button" (click)="toMainMenu()">
+    <p>Tilbake til hovedmeny</p>
+  </button>
+</div>

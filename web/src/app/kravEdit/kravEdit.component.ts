@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserData} from '../models/UserData.model';
 import {REL_FUNCTIONALITY, REL_PROJECT} from "../common";
+import {projectFunctionality} from "../models/projectFunctionality.model";
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class kravEditComponent implements OnInit{
   private router: Router;
   private userData: UserData;
   private projectLink: string;
+  private mainData: projectFunctionality[];
 
   constructor(http: HttpClient, router: Router) {
     this.http = http;
@@ -42,10 +44,18 @@ export class kravEditComponent implements OnInit{
         }
       )
     }).subscribe(result => {
-      console.log(result);
+      // @ts-ignore
+      this.mainData = result;
+      console.log(this.mainData);
     }, error => {
       console.error(error);
     });
+  }
+
+  toMainMenu(){
+    this.userData.nav = 'Menu';
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
+    this.router.navigate(['/Menu']);
   }
 
   logout(){
