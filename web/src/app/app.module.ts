@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import {MatCardModule, MatProgressSpinnerModule, MatSliderModule, MatSnackBarModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule} from '@angular/common/http';
-import { LoginComponent } from './Login/Login.component';
+import {GDPRContent, LoginComponent} from './Login/Login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
@@ -26,7 +26,8 @@ import {kravEditComponent} from "./kravEdit/kravEdit.component";
     LoginComponent,
     MenuComponent,
     kravEditComponent,
-    NewProjectDialog
+    NewProjectDialog,
+    GDPRContent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,10 @@ import {kravEditComponent} from "./kravEdit/kravEdit.component";
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [NewProjectDialog],
+  exports: [
+    NewProjectDialog,
+    GDPRContent
+  ],
   entryComponents: [NewProjectDialog]
 })
 export class AppModule { }
