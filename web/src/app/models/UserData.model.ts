@@ -1,4 +1,5 @@
 import {Link} from './link.model';
+import {Links} from './links.model';
 
 export class UserData {
   loginAdress: string;
@@ -8,7 +9,8 @@ export class UserData {
   oauthClientId: string;
   oauthClientSecret: string;
   nav: string;
-  links: Link[];
+  // tslint:disable-next-line:variable-name
+  _links: Links;
   currentProject;
 
   constructor() {
@@ -19,7 +21,7 @@ export class UserData {
     this.oauthClientId = 'grouse-client';
     this.oauthClientSecret = 'secret';
     this.nav = '';
-    this.links = null;
+    this._links = null;
     this.currentProject = null;
   }
 }

@@ -45,12 +45,8 @@ export class MenuComponent implements OnInit {
       )
     }).subscribe(result => {
       // @ts-ignore
-      this.userData.links = result.links;
-      for (const link of this.userData.links) {
-        if (link.rel === REL_PROJECT) {
-          this.projectsLink = link.href;
-        }
-      }
+      this.userData._links = result._links;
+      this.projectsLink = this.userData._links.prosjekt.href;
       this.getActiveProjects();
     }, error => {
       console.error(error);
@@ -80,6 +76,7 @@ export class MenuComponent implements OnInit {
     }).subscribe(result => {
       // @ts-ignore
       this.projects = result;
+      console.log(result);
     }, error => {
       console.error(error);
     });

@@ -1,4 +1,4 @@
-export const startUrl = 'http://localhost:9294/grouse/';
+export const startUrl = 'https://nikita.oslomet.no/grouse/';
 
 // Rels
 export let REL_PROJECT = 'prosjekt';
