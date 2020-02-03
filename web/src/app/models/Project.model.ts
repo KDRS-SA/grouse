@@ -1,4 +1,4 @@
-import {Link} from './link.model';
+import {Links} from './links.model';
 
 export class Project{
   projectId: number;
@@ -11,7 +11,7 @@ export class Project{
   createdDate: string;
   changedDate: string;
   ownedBy: string;
-  links: Link[];
+  _links: Links;
 
   constructor(projectId: number, projectName: string, organisationName: string, createdDate: string, ownedBy: string) {
     this.projectId = projectId;

@@ -3,9 +3,9 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {UserData} from '../models/UserData.model';
 import {Link} from '../models/link.model';
-import {REL_PROJECT} from '../common';
+import {convertFromLegacy, REL_PROJECT} from '../common';
 import {Project} from '../models/Project.model';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -74,15 +74,20 @@ export class MenuComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
+      const temp = result;
       // @ts-ignore
-      this.projects = result;
-      console.log(result);
+      for (const proj of temp) {
+        proj._links = convertFromLegacy(proj.links);
+        proj.links = null;
+      }
+      // @ts-ignore
+      this.projects = temp;
     }, error => {
       console.error(error);
     });
   }
 
-  newProject(){
+  newProject() {
     let ProjectName: string;
     let OrgName: string;
 
@@ -94,20 +99,21 @@ export class MenuComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // Result is now what the user entered in the dialog
       ProjectName = result.Name;
-      OrgName = result.Org
+      OrgName = result.Org;
 
       this.http.post(this.projectsLink, {projectName: ProjectName, organisationName: OrgName}, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + this.userData.oauthClientSecret
         })
+        // tslint:disable-next-line:no-shadowed-variable
       }).subscribe(result => {
         this.getActiveProjects();
       }, error => {
         console.error(error);
       });
-    })
+    });
   }
-  openProject(project){
+  openProject(project) {
     this.userData.currentProject = project;
     this.userData.nav = 'kravEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
@@ -121,13 +127,15 @@ export interface INewProject {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'NewProject.Dialog',
   templateUrl: '../Modals/NewProject.Dialog.html'
 })
+// tslint:disable-next-line:component-class-suffix
 export class NewProjectDialog {
-  constructor(public dialogRef: MatDialogRef<NewProjectDialog>, @Inject(MAT_DIALOG_DATA) public data: INewProject){}
+  constructor(public dialogRef: MatDialogRef<NewProjectDialog>, @Inject(MAT_DIALOG_DATA) public data: INewProject) {}
 
-  onNoClick(){
+  onNoClick() {
     this.dialogRef.close();
   }
 }

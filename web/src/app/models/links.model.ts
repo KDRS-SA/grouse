@@ -6,4 +6,12 @@ export class Links {
   funksjon: Link;
   krav: Link;
   dokument: Link;
+
+  constructor() {
+    this.self = new Link();
+    this.prosjekt = new Link();
+    this.funksjon = new Link();
+    this. krav = new Link();
+    this.dokument = new Link();
+  }
 }
