@@ -13,12 +13,12 @@ import { AppRoutingModule } from './app-routing.module';
 import {MenuComponent, NewProjectDialog} from './menu/menu.component';
 import {AppComponent} from './app.component';
 import {Data} from './data.service';
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatListModule} from "@angular/material/list";
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatMenuModule} from "@angular/material/menu";
-import {kravEditComponent} from "./kravEdit/kravEdit.component";
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatListModule} from '@angular/material/list';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatMenuModule} from '@angular/material/menu';
+import {kravEditComponent} from './kravEdit/kravEdit.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +57,9 @@ import {kravEditComponent} from "./kravEdit/kravEdit.component";
     NewProjectDialog,
     GDPRContent
   ],
-  entryComponents: [NewProjectDialog]
+  entryComponents: [
+    NewProjectDialog,
+    GDPRContent
+  ]
 })
 export class AppModule { }
