@@ -84,7 +84,7 @@ export class LoginComponent implements  OnInit {
         Validators.required
       ]]
     });
-    this.userData = JSON.parse(localStorage.getItem('UserData'))
+    this.userData = JSON.parse(localStorage.getItem('UserData'));
   }
 
   ReadGDPR() {

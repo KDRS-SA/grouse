@@ -1,6 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MatCardModule, MatProgressSpinnerModule, MatSliderModule, MatSnackBarModule} from '@angular/material';
+import {
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatSliderModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatTabsModule
+} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule} from '@angular/common/http';
 import {GDPRContent, LoginComponent} from './Login/Login.component';
@@ -19,6 +26,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
 import {kravEditComponent} from './kravEdit/kravEdit.component';
+import {userEditComponent} from './UserEdit/userEdit.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +35,8 @@ import {kravEditComponent} from './kravEdit/kravEdit.component';
     MenuComponent,
     kravEditComponent,
     NewProjectDialog,
-    GDPRContent
+    GDPRContent,
+    userEditComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +58,9 @@ import {kravEditComponent} from './kravEdit/kravEdit.component';
     MatDialogModule,
     FormsModule,
     MatMenuModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTabsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent],

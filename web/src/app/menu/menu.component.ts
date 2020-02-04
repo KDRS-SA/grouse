@@ -76,7 +76,6 @@ export class MenuComponent implements OnInit {
     }).subscribe(result => {
       // @ts-ignore
       this.projects = result;
-      console.log(result);
     }, error => {
       console.error(error);
     });
@@ -108,11 +107,18 @@ export class MenuComponent implements OnInit {
       });
     });
   }
+
   openProject(project) {
     this.userData.currentProject = project;
     this.userData.nav = 'kravEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/kravEdit']);
+  }
+
+  enterUserEdit() {
+    this.userData.nav = 'userEdit';
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
+    this.router.navigate(['/userEdit']);
   }
 }
 

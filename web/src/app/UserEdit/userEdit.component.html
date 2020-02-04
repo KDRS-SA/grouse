@@ -1,0 +1,91 @@
+<mat-toolbar color="primary" class="flex-row-between">
+  <button class="no-p" mat-button (click)="goToMainMenu()">
+    <div class="flex-row-left no-m">
+      <div class="flex-row-evenlyer no-m">
+        <div class="flex-column flex-center">
+          <div class="Grouse-Avatar"></div>
+        </div>
+        <p>Grouse</p>
+      </div>
+    </div>
+  </button>
+  <button mat-button (click)="logout()">
+    <div class="flex-column">
+      <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+      <p class="no-m">Logg ut</p>
+    </div>
+  </button>
+</mat-toolbar>
+<div class="flex-column-start p-20">
+  <div class="flex-row-between">
+    <h3>Brukerinstillinger: </h3>
+    <p>{{this.userData.userName}}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="main-container">
+
+    <!--User info-->
+    <mat-card class="cards no-p">
+      <mat-card-header class="no-p flex-center">
+        <h4>Info: </h4>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="flex-row-between m-lr-10">
+          <p class="bold">E-post: </p>
+          <p>{{this.userData.userName}}</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="flex-row-between m-lr-10">
+          <p class="bold">Konto opprettet: </p>
+          <p>Utilgjengelig</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Password and e-mail options-->
+    <!--Email-->
+    <mat-card class="cards no-p">
+      <mat-card-header class="no-p flex-center">
+        <h4>E-Post of passord administrasjon: </h4>
+      </mat-card-header>
+      <mat-card-content class="p-10">
+        <mat-card>
+          <mat-card-content class="no-m">
+            <mat-form-field style="width: 100%" appearance="legacy">
+              <mat-label>E-post</mat-label>
+              <input matInput formControlName="email" placeholder="{{this.userData.userName}}">
+              <mat-icon matSuffix>mail</mat-icon>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions class="flex-row-right no-p">
+            <button mat-raised-button color="primary" class="no-m">Endre E-Post</button>
+          </mat-card-actions>
+        </mat-card>
+
+        <!--Password-->
+        <mat-card class="m-t-10">
+          <mat-card-content>
+            <mat-form-field style="width: 100%" appearance="legacy">
+              <mat-label>Gammelt passord</mat-label>
+              <input matInput formControlName="password" [type]="'password'" placeholder="Skriv inn det gamle passordet">
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="legacy">
+              <mat-label>Nytt passord</mat-label>
+              <input matInput formControlName="passwordRepeat" [type]="'password'" placeholder="Skriv inn nytt passord">
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <mat-form-field style="width: 100%" appearance="legacy">
+              <mat-label>Repeter passord</mat-label>
+              <input matInput formControlName="passwordRepeat" [type]="'password'" placeholder="Repeter det nye passordet">
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+          </mat-card-content>
+          <mat-card-actions class="flex-row-right no-p">
+            <button mat-raised-button color="primary" class="no-m">Endre Passord</button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
