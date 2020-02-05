@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {UserData} from '../models/UserData.model';
 import {Link} from '../models/link.model';
-import {REL_PROJECT} from '../common';
+import {convertFromLegacy, REL_PROJECT} from '../common';
 import {Project} from '../models/Project.model';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
@@ -74,8 +74,13 @@ export class MenuComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
+      const temp = result;
+      for (const proj of temp) {
+        proj._links = convertFromLegacy(proj.links);
+        proj.links = null;
+      }
       // @ts-ignore
-      this.projects = result;
+      this.projects = temp;
     }, error => {
       console.error(error);
     });

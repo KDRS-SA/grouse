@@ -1,9 +1,9 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserData} from '../models/UserData.model';
-import {REL_FUNCTIONALITY, REL_PROJECT} from "../common";
-import {projectFunctionality} from "../models/projectFunctionality.model";
+import {convertFromLegacy, REL_FUNCTIONALITY, REL_PROJECT} from '../common';
+import {projectFunctionality} from '../models/projectFunctionality.model';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,8 @@ import {projectFunctionality} from "../models/projectFunctionality.model";
   ]
 })
 
-export class kravEditComponent implements OnInit{
+// tslint:disable-next-line:class-name
+export class kravEditComponent implements OnInit {
 
   public title = 'Grouse';
 
@@ -30,13 +31,9 @@ export class kravEditComponent implements OnInit{
     this.projectLink = '';
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
-    for (const link of this.userData.currentProject.links){
-      if (link.rel === REL_FUNCTIONALITY){
-        this.projectLink = link.href;
-      }
-    }
+    this.projectLink = this.userData.currentProject._links.funksjon.href;
     console.log(this.projectLink);
     this.http.get(this.projectLink, {
       headers: new HttpHeaders({
@@ -46,19 +43,64 @@ export class kravEditComponent implements OnInit{
     }).subscribe(result => {
       // @ts-ignore
       this.mainData = result;
-      console.log(this.mainData);
+      this.convertLegacyLinks();
     }, error => {
       console.error(error);
     });
   }
 
-  toMainMenu(){
+  toMainMenu() {
     this.userData.nav = 'Menu';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/Menu']);
   }
 
-  logout(){
+  convertLegacyLinks() {
+    for (const prime of this.mainData) {
+      for (const secondary of prime.referenceChildProjectFunctionality) {
+        for (const tertiary of secondary.referenceChildProjectFunctionality) {
+          // @ts-ignore
+          tertiary._links = convertFromLegacy(tertiary.links);
+          // @ts-ignore
+          tertiary.links = null;
+        }
+        for (const tertiary of secondary.referenceProjectRequirement) {
+          // @ts-ignore
+          tertiary._links = convertFromLegacy(tertiary.links);
+          // @ts-ignore
+          tertiary.links = null;
+        }
+        // @ts-ignore
+        secondary._links = convertFromLegacy(secondary.links);
+        // @ts-ignore
+        secondary.links = null;
+      }
+      for (const secondary of prime.referenceProjectRequirement) {
+        for (const tertiary of secondary.referenceChildProjectFunctionality) {
+          // @ts-ignore
+          tertiary._links = convertFromLegacy(tertiary.links);
+          // @ts-ignore
+          tertiary.links = null;
+        }
+        for (const tertiary of secondary.referenceProjectRequirement) {
+          // @ts-ignore
+          tertiary._links = convertFromLegacy(tertiary.links);
+          // @ts-ignore
+          tertiary.links = null;
+        }
+        // @ts-ignore
+        secondary._links = convertFromLegacy(secondary.links);
+        // @ts-ignore
+        secondary.links = null;
+      }
+      // @ts-ignore
+      prime._links = convertFromLegacy(prime.links);
+      // @ts-ignore
+      prime.links = null;
+    }
+  }
+
+  logout() {
     localStorage.clear();
     this.http.get(this.userData.logoutAdress, {
       headers: new HttpHeaders({

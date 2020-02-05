@@ -1,4 +1,5 @@
 import {Link} from "./link.model";
+import {Links} from './links.model';
 
 export class projectFunctionality{
   projectFunctionalityId: string;
@@ -14,7 +15,7 @@ export class projectFunctionality{
   ownedBy: string;
   referenceChildProjectFunctionality: projectFunctionality[];
   referenceProjectRequirement: projectFunctionality[];
-  links: Link[];
+  _links: Links;
 
   constructor() {}
 }

@@ -1,5 +1,6 @@
 import {Link} from './link.model';
 import {Links} from './links.model';
+import {Project} from './Project.model';
 
 export class UserData {
   loginAdress: string;
@@ -11,7 +12,7 @@ export class UserData {
   nav: string;
   // tslint:disable-next-line:variable-name
   _links: Links;
-  currentProject;
+  currentProject: Project;
 
   constructor() {
     this.loginAdress = '';
