@@ -2,11 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserData} from '../models/UserData.model';
-import {REL_FUNCTIONALITY, REL_PROJECT} from "../common";
-import {projectFunctionality} from "../models/projectFunctionality.model";
-import {isRequireCall} from "@angular/compiler-cli/ngcc/src/host/commonjs_host";
-import {FlatTreeControl} from "@angular/cdk/tree";
-import {MatTreeFlattener} from "@angular/material/tree";
+// @ts-ignore
 import {convertFromLegacy, REL_FUNCTIONALITY, REL_PROJECT} from '../common';
 import {projectFunctionality} from '../models/projectFunctionality.model';
 
@@ -53,11 +49,10 @@ export class kravEditComponent implements OnInit {
       // @ts-ignore
       this.mainData = result;
       this.convertLegacyLinks();
+      this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
     }, error => {
       console.error(error);
     });
-
-    this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
   }
 
   toMainMenu() {
@@ -125,7 +120,7 @@ export class kravEditComponent implements OnInit {
     location.reload();
   }
 
-  changeView(req){
+  changeView(req) {
     this.currentReq = req;
     this.sideBarOpen = false;
   }

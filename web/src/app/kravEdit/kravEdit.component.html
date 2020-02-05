@@ -61,27 +61,7 @@
 </mat-toolbar>
 <mat-sidenav-container class="sidebar">
   <mat-sidenav mode="over" [(opened)]="sideBarOpen">
-    <div class="flex-row-left">
-      <div class="flex-column">
-        <mat-tree [treeControl]="treeControl">
-          <mat-tree-node *ngFor="let obj of mainData">
-            <h2>{{obj.title}}</h2>
-            <mat-tree-node *ngFor="let ele of obj.referenceChildProjectFunctionality">
-              <p *ngIf="ele.referenceChildProjectFunctionality === null">{{ele.title}}</p>
-              <mat-tree-node *ngIf="ele.referenceChildProjectFunctionality != null">
-                <p>ye boi</p>
-              </mat-tree-node>
-            </mat-tree-node>
-          </mat-tree-node>
-        </mat-tree>
-        <!--<div *ngFor="let obj of mainData">
-          <h2>{{obj.title}}</h2>
-          <mat-action-list>
-            <mat-list-item *ngFor="let ele of obj.referenceChildProjectFunctionality" (click)="changeView(ele)">{{ele.title}}</mat-list-item>
-          </mat-action-list>
-        </div>-->
-      </div>
-    </div>
+    <p>Jau</p>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-card>
