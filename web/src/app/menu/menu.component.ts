@@ -75,7 +75,6 @@ export class MenuComponent implements OnInit {
       })
     }).subscribe(result => {
       const temp = result;
-      // @ts-ignore
       for (const proj of temp) {
         proj._links = convertFromLegacy(proj.links);
         proj.links = null;
@@ -113,11 +112,18 @@ export class MenuComponent implements OnInit {
       });
     });
   }
+
   openProject(project) {
     this.userData.currentProject = project;
     this.userData.nav = 'kravEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/kravEdit']);
+  }
+
+  enterUserEdit() {
+    this.userData.nav = 'userEdit';
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
+    this.router.navigate(['/userEdit']);
   }
 }
 

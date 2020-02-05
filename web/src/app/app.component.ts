@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Uses allready existing variables if the user refreshed the page
-    if(localStorage.getItem('UserData') != null){
+    if (localStorage.getItem('UserData') != null) {
       this.userData = JSON.parse(localStorage.getItem('UserData'));
     }
     // Runs the function beneath that fetches API info from the server
@@ -59,12 +59,11 @@ export class AppComponent implements OnInit {
   }
 
   // Navigates the user to the componenet they were inn if the page is refreshed
-  navigate(){
-    if(this.userData.nav === '' || this.userData.nav === null){
+  navigate() {
+    if (this.userData.nav === '' || this.userData.nav === null) {
       this.router.navigate(['/Login']);
-    }
-    else{
-      this.router.navigate(['/' + this.userData.nav])
+    } else {
+      this.router.navigate(['/' + this.userData.nav]);
     }
   }
 }

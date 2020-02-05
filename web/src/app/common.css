@@ -19,6 +19,13 @@
   height: 100%;
 }
 
+.flex-column-start{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100%;
+}
+
 .flex-column-squish{
   display: flex;
   justify-content: space-around;
@@ -88,8 +95,33 @@
   margin: 0px;
 }
 
+.no-p{
+  padding: 0px;
+}
+
+.p-10{
+  padding: 10px;
+}
+
+.p-20{
+  padding: 20px;
+}
+
+.m-lr-10{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.m-t-10{
+  margin-top: 10px;
+}
+
 .icon-large{
   height: 50px;
   width: 50px;
   font-size: 40px;
+}
+
+.bold{
+  font-weight: bold;
 }

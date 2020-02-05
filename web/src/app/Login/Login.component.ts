@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, inject, Input, OnInit} from '@angular/core';
 import {Animations} from '../app.animations';
 import {FormGroup, FormBuilder, FormControl, Validators, CheckboxRequiredValidator} from '@angular/forms';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
@@ -7,6 +7,7 @@ import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {UserData} from '../models/UserData.model';
 import {MatSnackBar} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,7 @@ export class LoginComponent implements  OnInit {
       this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
   }
 
-  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar) {
+  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog) {
     this.login = true;
     this.http = http;
     this.router = router;
@@ -70,7 +71,7 @@ export class LoginComponent implements  OnInit {
         Validators.maxLength(30)
       ]],
       checkBox: [this.regUser.checkBox, [
-        Validators.required,
+        Validators.requiredTrue
       ]]
     });
 
@@ -83,11 +84,16 @@ export class LoginComponent implements  OnInit {
         Validators.required
       ]]
     });
-    this.userData = JSON.parse(localStorage.getItem('UserData'))
+    this.userData = JSON.parse(localStorage.getItem('UserData'));
   }
 
-  ReadGDPR(){
-    console.log('test melding')
+  ReadGDPR() {
+    console.log('Read GDPR TEST')
+    const dialogRef = this.dialog.open(GDPRContent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   @Input()
@@ -171,6 +177,20 @@ export class LoginComponent implements  OnInit {
   public changeMode() {
     this.login = !this.login;
   }
+}
+
+@Component({
+  selector: 'GDPR.Content',
+  templateUrl: './GDPRContent.html',
+})
+export class GDPRContent {
+  constructor(public dialogRef: MatDialogRef<GDPRContent>) {
+  }
+
+  OnNoClick(){
+    this.dialogRef.close();
+  }
+
 }
 
 interface INewUser {
