@@ -17,6 +17,7 @@ export let REL_USER = 'konto';
 export function convertFromLegacy(links: legacyLink) {
   // tslint:disable-next-line:new-parens
   const ret = new Links;
+  // @ts-ignore
   for (const link of links) {
     if (link.rel === REL_PROJECT) {
       ret.prosjekt.href = link.href;

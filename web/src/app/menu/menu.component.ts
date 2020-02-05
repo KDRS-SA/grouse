@@ -75,6 +75,7 @@ export class MenuComponent implements OnInit {
       })
     }).subscribe(result => {
       const temp = result;
+      // @ts-ignore
       for (const proj of temp) {
         proj._links = convertFromLegacy(proj.links);
         proj.links = null;
