@@ -1,3 +1,5 @@
+import {AbstractControl, FormGroup, ValidatorFn} from '@angular/forms';
+
 export const startUrl = 'https://nikita.oslomet.no/grouse/';
 
 // Rels
