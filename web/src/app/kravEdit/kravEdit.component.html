@@ -1,4 +1,4 @@
-<div class="flex-column main">
+<!--<div class="flex-column main">
   <mat-card *ngFor="let obj of mainData" class="test-card">
     <mat-card-header>
       <h2>{{obj.title}}</h2>
@@ -24,8 +24,78 @@
     </mat-card-content>
   </mat-card>
 </div>
-<div class="back-button-container">
-  <button mat-raised-button class="back-button" (click)="toMainMenu()">
-    <p>Tilbake til hovedmeny</p>
-  </button>
-</div>
+-->
+<mat-toolbar class="flex-row-between" color="primary" style="padding: 0">
+  <div class="flex-row-left">
+    <div class="flex-row-evenlyer">
+      <div class="flex-column flex-center">
+        <div class="Grouse-Avatar"></div>
+      </div>
+      <p>Grouse</p>
+      <button mat-button (click)="sideBarOpen = !sideBarOpen">Se krav</button>
+    </div>
+  </div>
+  <div class="flex-row-right">
+    <div class="flex-row-between">
+      <button mat-button>
+        <div class="flex-row-between">
+          <div class="flex-center">
+            <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+          </div>
+          <p>{{this.userData.userName}}</p>
+        </div>
+      </button>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item>Profil</button>
+        <button mat-menu-item>Instillinger</button>
+        <button mat-menu-item>Logg ut</button>
+      </mat-menu>
+      <button mat-button (click)="logout()">
+        <div class="flex-column">
+          <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+          <p class="no-m">Logg ut</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container class="sidebar">
+  <mat-sidenav mode="over" [(opened)]="sideBarOpen">
+    <div class="flex-row-left">
+      <div class="flex-column">
+        <mat-tree [treeControl]="treeControl">
+          <mat-tree-node *ngFor="let obj of mainData">
+            <h2>{{obj.title}}</h2>
+            <mat-tree-node *ngFor="let ele of obj.referenceChildProjectFunctionality">
+              <p *ngIf="ele.referenceChildProjectFunctionality === null">{{ele.title}}</p>
+              <mat-tree-node *ngIf="ele.referenceChildProjectFunctionality != null">
+                <p>ye boi</p>
+              </mat-tree-node>
+            </mat-tree-node>
+          </mat-tree-node>
+        </mat-tree>
+        <!--<div *ngFor="let obj of mainData">
+          <h2>{{obj.title}}</h2>
+          <mat-action-list>
+            <mat-list-item *ngFor="let ele of obj.referenceChildProjectFunctionality" (click)="changeView(ele)">{{ele.title}}</mat-list-item>
+          </mat-action-list>
+        </div>-->
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-card>
+      <mat-card-header>
+        <h2>{{currentReq.title}}</h2>
+      </mat-card-header>
+      <mat-card-content>
+        <h4>Beskrivelse</h4>
+        <div>{{currentReq.description}}</div>
+        <h4>Forklaring</h4>
+        <div>{{currentReq.explanation}}</div>
+        <h4>Konsekvens</h4>
+        <div>{{currentReq.consequence}}</div>
+      </mat-card-content>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

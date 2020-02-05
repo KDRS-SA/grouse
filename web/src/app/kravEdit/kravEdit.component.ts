@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserData} from '../models/UserData.model';
+import {REL_FUNCTIONALITY, REL_PROJECT} from "../common";
+import {projectFunctionality} from "../models/projectFunctionality.model";
+import {isRequireCall} from "@angular/compiler-cli/ngcc/src/host/commonjs_host";
+import {FlatTreeControl} from "@angular/cdk/tree";
+import {MatTreeFlattener} from "@angular/material/tree";
 import {convertFromLegacy, REL_FUNCTIONALITY, REL_PROJECT} from '../common';
 import {projectFunctionality} from '../models/projectFunctionality.model';
 
@@ -18,6 +23,8 @@ import {projectFunctionality} from '../models/projectFunctionality.model';
 export class kravEditComponent implements OnInit {
 
   public title = 'Grouse';
+  private sideBarOpen: boolean;
+  private currentReq;
 
   private http: HttpClient;
   private router: Router;
@@ -29,6 +36,8 @@ export class kravEditComponent implements OnInit {
     this.http = http;
     this.router = router;
     this.projectLink = '';
+    this.sideBarOpen = false;
+
   }
 
   ngOnInit() {
@@ -47,6 +56,8 @@ export class kravEditComponent implements OnInit {
     }, error => {
       console.error(error);
     });
+
+    this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
   }
 
   toMainMenu() {
@@ -112,6 +123,11 @@ export class kravEditComponent implements OnInit {
     });
     this.router.navigate(['/']);
     location.reload();
+  }
+
+  changeView(req){
+    this.currentReq = req;
+    this.sideBarOpen = false;
   }
 }
 

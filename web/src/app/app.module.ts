@@ -20,6 +20,14 @@ import { AppRoutingModule } from './app-routing.module';
 import {MenuComponent, NewProjectDialog} from './menu/menu.component';
 import {AppComponent} from './app.component';
 import {Data} from './data.service';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatListModule} from "@angular/material/list";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatMenuModule} from "@angular/material/menu";
+import {kravEditComponent} from "./kravEdit/kravEdit.component";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatTreeModule} from "@angular/material/tree";
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -38,6 +46,30 @@ import {userEditComponent} from './UserEdit/userEdit.component';
     GDPRContent,
     userEditComponent
   ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatProgressSpinnerModule,
+        Data,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatListModule,
+        MatDialogModule,
+        FormsModule,
+        MatMenuModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatTreeModule
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
