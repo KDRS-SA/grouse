@@ -3,7 +3,7 @@
 }
 
 .main{
-  padding-top: 2480px;
+  padding-top: 200px;
 }
 
 .back-button{
@@ -17,4 +17,9 @@
   top: 0;
   position: fixed;
   flex-direction: row-reverse;
+}
+
+.sidebar{
+  display: flex;
+  height: 90%;
 }

@@ -19,6 +19,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatMenuModule} from "@angular/material/menu";
 import {kravEditComponent} from "./kravEdit/kravEdit.component";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatTreeModule} from "@angular/material/tree";
 
 @NgModule({
   declarations: [
@@ -28,28 +30,30 @@ import {kravEditComponent} from "./kravEdit/kravEdit.component";
     kravEditComponent,
     NewProjectDialog
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatSliderModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatProgressSpinnerModule,
-    Data,
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatListModule,
-    MatDialogModule,
-    FormsModule,
-    MatMenuModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatSliderModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatProgressSpinnerModule,
+        Data,
+        MatSnackBarModule,
+        MatToolbarModule,
+        MatListModule,
+        MatDialogModule,
+        FormsModule,
+        MatMenuModule,
+        MatCheckboxModule,
+        MatSidenavModule,
+        MatTreeModule
+    ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [NewProjectDialog],
