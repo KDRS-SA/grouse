@@ -71,7 +71,7 @@ export class LoginComponent implements  OnInit {
         Validators.maxLength(30)
       ]],
       checkBox: [this.regUser.checkBox, [
-        Validators.required,
+        Validators.requiredTrue
       ]]
     });
 
