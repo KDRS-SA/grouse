@@ -153,7 +153,28 @@ export class kravEditComponent implements OnInit {
 
   changeReq(id: number) {
     console.log(id);
-    this.sideBarOpen = false;
+
+    // Primary level
+    for (const primary of this.mainData) {
+      if (primary.referenceChildProjectFunctionality.length > 0) {
+        // Secondary level
+        for (const secondary of primary.referenceChildProjectFunctionality) {
+          if (secondary.referenceChildProjectFunctionality.length > 0) {
+            // Tertiary level
+            for (const tertiary of secondary.referenceChildProjectFunctionality) {
+              if (tertiary.projectFunctionalityId === id) {
+                this.currentReq = tertiary;
+              }
+            }
+          } else if ( secondary.projectFunctionalityId === id) {
+            this.currentReq = secondary;
+          }
+        }
+      } else if (primary.projectFunctionalityId === id) {
+        this.currentReq = primary;
+      }
+    }
+    // this.sideBarOpen = false;
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
