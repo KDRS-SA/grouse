@@ -73,10 +73,9 @@
         <mat-divider></mat-divider>
       </mat-nested-tree-node>
     </mat-tree>
-
   </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-card>
+  <mat-sidenav-content class="sidenav-content">
+    <mat-card class="Krav-card">
       <mat-card-header>
         <h2>{{currentReq.title}}</h2>
       </mat-card-header>
@@ -89,5 +88,16 @@
         <div>{{currentReq.consequence}}</div>
       </mat-card-content>
     </mat-card>
+    <mat-card class="Krav-card-edit">
+
+    </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-card-footer class="Krav-status">
+  <mat-card>
+    <a mat-button >jau</a>
+    <a mat-button >jau</a>
+    <a mat-button >jau</a>
+ </mat-card>
+</mat-card-footer>
