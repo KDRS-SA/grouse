@@ -2,8 +2,8 @@ import {Link} from "./link.model";
 import {Links} from './links.model';
 
 export class projectFunctionality{
-  projectFunctionalityId: string;
-  functionalityNumber: number;
+  projectFunctionalityId: number;
+  functionalityNumber: string;
   title: string;
   description: string;
   consequence: string;
