@@ -1,30 +1,3 @@
-<!--<div class="flex-column main">
-  <mat-card *ngFor="let obj of mainData" class="test-card">
-    <mat-card-header>
-      <h2>{{obj.title}}</h2>
-    </mat-card-header>
-    <mat-card-content>
-      <mat-card *ngFor="let ele of obj.referenceChildProjectFunctionality">
-        <mat-card-header>
-          <h3>{{ele.functionalityNumber}} - {{ele.title}}</h3>
-        </mat-card-header>
-        <mat-card-content>
-          <h4>Beskrivelse: </h4>
-          <p>{{ele.description}}</p>
-        </mat-card-content>
-        <mat-card-content>
-          <h4>Forklaring: </h4>
-          <p>{{ele.explanation}}</p>
-        </mat-card-content>
-        <mat-card-content>
-          <h4>Konsekvens: </h4>
-          <p>{{ele.consequence}}</p>
-        </mat-card-content>
-      </mat-card>
-    </mat-card-content>
-  </mat-card>
-</div>
--->
 <mat-toolbar class="flex-row-between" color="primary" style="padding: 0">
   <div class="flex-row-left">
     <div class="flex-row-evenlyer">
@@ -59,12 +32,12 @@
     </div>
   </div>
 </mat-toolbar>
-<mat-sidenav-container class="sidebar">
-  <mat-sidenav mode="over" [(opened)]="sideBarOpen">
+<mat-sidenav-container class="sidebar" hasBackdrop="false">
+  <mat-sidenav class="sidenav" mode="over" [(opened)]="sideBarOpen">
     <p>Jau</p>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-card>
+  <mat-sidenav-content class="sidenav-content">
+    <mat-card class="Krav-card">
       <mat-card-header>
         <h2>{{currentReq.title}}</h2>
       </mat-card-header>
@@ -77,5 +50,16 @@
         <div>{{currentReq.consequence}}</div>
       </mat-card-content>
     </mat-card>
+    <mat-card class="Krav-card-edit">
+
+    </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<mat-card-footer class="Krav-status">
+  <mat-card>
+    <a mat-button >jau</a>
+    <a mat-button >jau</a>
+    <a mat-button >jau</a>
+ </mat-card>
+</mat-card-footer>
