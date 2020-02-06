@@ -125,3 +125,11 @@
 .bold{
   font-weight: bold;
 }
+
+.fill{
+  width: 100%;
+}
+
+body{
+  overflow-y: hidden;
+}
