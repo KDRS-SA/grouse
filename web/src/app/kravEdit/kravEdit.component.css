@@ -22,7 +22,7 @@
 .sidebar{
   display: flex;
   height: 90%;
-  width: 400px;
+  width: 100%;
 }
 
 .example-tree-invisible {
