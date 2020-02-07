@@ -8,23 +8,26 @@ public final class Constants {
     // Used as part of webaddress
     public static final String SLASH = "/";
     public static final String REQUIREMENT = "krav";
-    public static final String FUNCTIONALITY = "funksjon";
+    public static final String FUNCTIONALITY = "function";
     public static final String USER = "bruker";
     public static final String DOCUMENT = "dokument";
     public static final String PROJECT = "prosjekt";
     public static final String GROUSE = "grouse";
-    public static final String PROJECT_REQUIREMENT = "prosjektkrav";
-    public static final String PROJECT_FUNCTIONALITY = "prosjektfunksjon";
+    public static final String PROJECT_REQUIREMENT = "projectRequirement";
+    public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
     public static final String REQUIREMENT_TYPE = "krav_type";
 
+    public static final String PROJECT_NUMBER = "projectNumber";
+    public static final String PROJECT_NUMBER_PARAMETER = "{" +
+            PROJECT_NUMBER + "}";
+    public static final String FUNCTIONALITY_PARAMETER = "{" +
+            FUNCTIONALITY + "}";
+
     // Table cell ordering
-
-
     /**
      * Identify the column number for requirements. The title e.g. 'Kravnr' is
      * in COLUMN_TITLE or the first(0) column while the actual text e.g '5.2.1' is in
      * column COLUMN_DESCRIPTION or the second (1) column.
-     *
      */
     public static final Integer COLUMN_NUMBER = 0;
     public static final Integer COLUMN_FUNCTIONALITY_TITLE = 1;
