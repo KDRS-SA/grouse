@@ -3,7 +3,6 @@ package no.kdrs.grouse.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -85,11 +84,11 @@ public class Project
     private String ownedBy;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "referenceProject", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "referenceProject")
     private List<ProjectRequirement> referenceProjectRequirement;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "referenceProject", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "referenceProject")
     @OrderBy("projectFunctionalityId ASC")
     private List<ProjectFunctionality> referenceProjectFunctionality;
 
