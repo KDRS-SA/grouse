@@ -299,9 +299,25 @@ public class ProjectService
         return projectRepository.findByOwnedBy(ownedBy);
     }
 
+    /**
+     * delete the project identified by the id. Find all children related to
+     * the project. These are projectRequirements and projectFunctionality.
+     * These are deleted first before the project is deleted
+     *
+     * @param id the id of the project ot delete
+     */
     @Override
     public void delete(Long id) {
-        projectRepository.deleteById(id);
+        Project project = getProjectOrThrow(id);
+        for (ProjectRequirement projectRequirement :
+                project.getReferenceProjectRequirement()) {
+            projectRequirementRepository.delete(projectRequirement);
+        }
+        for (ProjectFunctionality projectFunctionality :
+                project.getReferenceProjectFunctionality()) {
+            projectFunctionalityRepository.delete(projectFunctionality);
+        }
+        projectRepository.delete(project);
     }
 
     /**
