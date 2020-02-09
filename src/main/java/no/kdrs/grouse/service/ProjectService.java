@@ -70,25 +70,16 @@ public class ProjectService
      * @return list of ProjectFunctionality
      */
     @Override
-    @SuppressWarnings("unchecked")
     public List<ProjectFunctionality> findFunctionalityForProjectByType(
             Long projectId, String type) {
-
-        Project project = new Project();
-        project.setProjectId(projectId);
-
-        List<ProjectFunctionality> projectRequirements =
-                projectFunctionalityRepository.
-                        findByReferenceProjectAndTypeAndShowMe(project,
-                                type, true);
-
-        return projectRequirements;
+        return projectFunctionalityRepository.
+                findByReferenceProjectAndTypeAndShowMe(
+                        getProjectOrThrow(projectId), type, true);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<Project> findAll() {
-        return (ArrayList) projectRepository.findAll();
+        return (List<Project>) projectRepository.findAll();
     }
 
     @Override
@@ -117,7 +108,6 @@ public class ProjectService
      * @return The persisted object after it was persisted with associated data
      */
     @Override
-    @SuppressWarnings("unchecked")
     public Project createProject(Project project, String ownedBy) {
         project.setCreatedDate(new Date());
         project.setChangedDate(new Date());
@@ -128,7 +118,7 @@ public class ProjectService
         project.setOwnedBy(ownedBy);
         projectRepository.save(project);
 
-        ArrayList<Functionality> functionalities = (ArrayList)
+        ArrayList<Functionality> functionalities = (ArrayList<Functionality>)
                 functionalityRepository.
                         findAllByOrderById();
 
@@ -246,7 +236,7 @@ public class ProjectService
         }
 
         ArrayList<Requirement> requirements =
-                (ArrayList) requirementRepository.findAll();
+                (ArrayList<Requirement>) requirementRepository.findAll();
         for (Requirement requirement : requirements) {
             ProjectRequirement projectRequirement = new ProjectRequirement();
             projectRequirement.setReferenceProject(project);
