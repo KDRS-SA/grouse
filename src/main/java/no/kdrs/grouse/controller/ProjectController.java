@@ -4,7 +4,6 @@ package no.kdrs.grouse.controller;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
-import no.kdrs.grouse.service.interfaces.IDocumentService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-
 /**
  * Created by tsodring on 9/25/17.
  */
@@ -24,12 +22,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping(value = PROJECT + SLASH)
 public class ProjectController {
 
-    private IDocumentService documentService;
     private IProjectService projectService;
 
-    public ProjectController(IDocumentService documentService,
-                             IProjectService projectService) {
-        this.documentService = documentService;
+    public ProjectController(IProjectService projectService) {
         this.projectService = projectService;
     }
 
@@ -138,7 +133,7 @@ public class ProjectController {
 
     @DeleteMapping(PROJECT_NUMBER_PARAMETER)
     public ResponseEntity<String> deleteProject(
-            @PathVariable(SLASH + PROJECT_NUMBER) Long projectId) {
+            @PathVariable(PROJECT_NUMBER) Long projectId) {
         projectService.delete(projectId);
         return ResponseEntity.status(OK)
                 .body("{\"projectId\" : " + projectId + "}" +

@@ -4,8 +4,8 @@ package no.kdrs.grouse.controller;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import no.kdrs.grouse.utils.exception.InternalException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpEntity;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
@@ -40,9 +39,6 @@ public class DocumentController {
     private IDocumentService documentService;
     private IProjectService projectService;
 
-    @Value("${storage.location}")
-    private String directoryPath;
-
     public DocumentController(IDocumentService documentService,
                               IProjectService projectService) {
         this.documentService = documentService;
@@ -51,7 +47,7 @@ public class DocumentController {
 
     @PostMapping(value = PROJECT_NUMBER_PARAMETER)
     public ResponseEntity<Project> getRequirement(
-            @PathVariable("prosjektnummer") Long projectId)
+            @PathVariable(PROJECT_NUMBER) Long projectId)
             throws Exception {
 
         Project project = projectService.findById(projectId);
@@ -79,29 +75,29 @@ public class DocumentController {
 
     @GetMapping(PROJECT_NUMBER_PARAMETER)
     public HttpEntity<byte[]> downloadDocument(
-            @PathVariable("prosjektnummer") Long projectId,
-                HttpServletResponse response)
+            @PathVariable(PROJECT_NUMBER) Long projectId)
             throws IOException {
 
         Project project = projectService.findById(projectId);
 
         if (null != project.getFileNameInternal()) {
-            // throw an exception
+            throw new InternalException("Can't download document, no filename" +
+                    "for project " + projectId);
         }
 
-        Path file = Paths.get(project.getFileNameInternal());
+        var file = Paths.get(project.getFileNameInternal());
         Resource resource = new UrlResource(file.toUri());
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("Content-Type","application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        responseHeaders.add("Content-Type",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         String header = "Content-Disposition";
-        String value = "\"attachment; filename=\"" + project.getFileName()+"\"";
+        String value = "\"attachment; filename=\"" + project.getFileName() + "\"";
         responseHeaders.add(header, value);
 
-
-        byte[] documentBody = new byte[(int)Files.size(file)];
+        byte[] documentBody = new byte[(int) Files.size(file)];
         IOUtils.readFully(resource.getInputStream(),
                 documentBody);
 
-        return  new HttpEntity<byte[]>(documentBody, responseHeaders);
+        return new HttpEntity<>(documentBody, responseHeaders);
     }
 }
