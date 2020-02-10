@@ -73,7 +73,7 @@ public class Requirement implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "functionality",
             referencedColumnName = "functionality_number")
-    private Functionality referenceFunctionality;
+    private TemplateFunctionality referenceTemplateFunctionality;
 
     public Long getId() {
         return id;
@@ -107,12 +107,12 @@ public class Requirement implements Serializable {
         this.priority = priority;
     }
 
-    public Functionality getFunctionality() {
-        return referenceFunctionality;
+    public TemplateFunctionality getFunctionality() {
+        return referenceTemplateFunctionality;
     }
 
-    public void setFunctionality(Functionality referenceFunctionality) {
-        this.referenceFunctionality = referenceFunctionality;
+    public void setFunctionality(TemplateFunctionality referenceTemplateFunctionality) {
+        this.referenceTemplateFunctionality = referenceTemplateFunctionality;
     }
 
     public String getNoarkRequirementNumber() {

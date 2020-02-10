@@ -1,7 +1,7 @@
 package no.kdrs.grouse;
 
-import no.kdrs.grouse.model.Functionality;
 import no.kdrs.grouse.model.Requirement;
+import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.imp.Chapter;
 import no.kdrs.grouse.model.imp.Chapters;
 import no.kdrs.grouse.model.imp.Requirements;
@@ -9,7 +9,6 @@ import no.kdrs.grouse.model.imp.Section;
 import no.kdrs.grouse.persistence.IFunctionalityRepository;
 import no.kdrs.grouse.persistence.IRequirementRepository;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -56,39 +55,38 @@ public class GrouseApplication {
             Chapters chapters = (Chapters) jaxbUnmarshaller.unmarshal(data);
 
 
-
             // Create a "root" parent in the database, that everyone is a child
             // to
-            Functionality parentFunctionality = new
-                    Functionality.FunctionalityBuilder()
+            TemplateFunctionality parentTemplateFunctionality = new
+                    TemplateFunctionality.FunctionalityBuilder()
                     .id("0")
                     .sectionTitle("Kravspec")
                     .build();
-            functionalityRepository.save(parentFunctionality);
+            functionalityRepository.save(parentTemplateFunctionality);
 
             Integer chapterCount = 0;
             for (Chapter chapter : chapters.getChapters()) {
                 chapterCount++;
                 Integer sectionCount = 0;
-                Functionality localParentFunctionality = parentFunctionality;
+                TemplateFunctionality localParentTemplateFunctionality = parentTemplateFunctionality;
 
                 // Handle the chapter description of functionality
-                Functionality chapterFunctionality = new
-                        Functionality.FunctionalityBuilder()
+                TemplateFunctionality chapterTemplateFunctionality = new
+                        TemplateFunctionality.FunctionalityBuilder()
                         .id(chapterCount.toString())
                         .sectionTitle(chapter.getChapterTitle())
                         .type("mainmenu")
                         .showMe(chapter.getShowMe())
                         .build();
 
-                chapterFunctionality.setReferenceParentFunctionality(
-                        parentFunctionality);
-                functionalityRepository.save(chapterFunctionality);
+                chapterTemplateFunctionality.setReferenceParentTemplateFunctionality(
+                        parentTemplateFunctionality);
+                functionalityRepository.save(chapterTemplateFunctionality);
 
-                for (Section section: chapter.getSections()) {
+                for (Section section : chapter.getSections()) {
                     sectionCount++;
-                    Functionality functionality = new
-                            Functionality.FunctionalityBuilder()
+                    TemplateFunctionality templateFunctionality = new
+                            TemplateFunctionality.FunctionalityBuilder()
                             .id(chapterCount.toString() + "." +
                                     sectionCount.toString())
                             .sectionTitle(section.getSectionTitle())
@@ -100,9 +98,9 @@ public class GrouseApplication {
                             .showMe(section.getShowMe())
                             .build();
 
-                    functionality.setReferenceParentFunctionality(
-                            chapterFunctionality);
-                    functionalityRepository.save(functionality);
+                    templateFunctionality.setReferenceParentTemplateFunctionality(
+                            chapterTemplateFunctionality);
+                    functionalityRepository.save(templateFunctionality);
 
                     Requirements requirements = section.getRequirements();
 
@@ -113,7 +111,7 @@ public class GrouseApplication {
                         for (Requirement requirement : allRequirements) {
                             System.out.println(requirement.toString());
 
-                            requirement.setFunctionality(functionality);
+                            requirement.setFunctionality(templateFunctionality);
                             requirementRepository.save(requirement);
                         }
                     }
@@ -124,8 +122,8 @@ public class GrouseApplication {
                     Integer subSectionCount = -1;
                     for (Section childSection: childSections) {
                         subSectionCount++;
-                        Functionality childFunctionality = new
-                                Functionality.FunctionalityBuilder()
+                        TemplateFunctionality childTemplateFunctionality = new
+                                TemplateFunctionality.FunctionalityBuilder()
                                 .id(chapterCount.toString() + "." +
                                         sectionCount.toString() + "." +
                                         subSectionCount.toString())
@@ -137,9 +135,9 @@ public class GrouseApplication {
                                 .showMe(childSection.getShowMe())
                                 .build();
 
-                        childFunctionality.setReferenceParentFunctionality(
-                                functionality);
-                        functionalityRepository.save(childFunctionality);
+                        childTemplateFunctionality.setReferenceParentTemplateFunctionality(
+                                templateFunctionality);
+                        functionalityRepository.save(childTemplateFunctionality);
 
                         Requirements childRequirements = childSection
                                 .getRequirements();
@@ -151,7 +149,7 @@ public class GrouseApplication {
                             for (Requirement requirement : allRequirements) {
                                 System.out.println(requirement.toString());
 
-                                requirement.setFunctionality(childFunctionality);
+                                requirement.setFunctionality(childTemplateFunctionality);
                                 requirementRepository.save(requirement);
                             }
                         }

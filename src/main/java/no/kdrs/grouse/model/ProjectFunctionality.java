@@ -3,7 +3,6 @@ package no.kdrs.grouse.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,8 +14,8 @@ import java.util.List;
 /**
  * Created by tsodring on 31/03/18.
  * <p>
- * A copy of the fields in Functionality, with a project number. When creating a
- * project, we need to be able to copy all the fields from Functionality to
+ * A copy of the fields in TemplateFunctionality, with a project number. When creating a
+ * project, we need to be able to copy all the fields from TemplateFunctionality to
  * project_functionalitys and associate the copy of the functionalitys with a
  * project number. This is because the user needs to have status associated
  * with progress of going through the functionality.
@@ -107,7 +106,7 @@ public class ProjectFunctionality
     @Column(name = "ownedBy", nullable = false)
     private String ownedBy;
 
-    // Link to parent Functionality
+    // Link to parent TemplateFunctionality
     @JsonIgnore
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")

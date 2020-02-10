@@ -13,7 +13,7 @@ interacting with Grouse via command-line. This is not an issue from the GUI.
 ## GUI
   * Look at how to handle refreshing of tokens and situation when token has
 expired but user hasn't logged out.
-  * Look at functionality to allow a user to edit project name / organisation name
+  * Look at templateFunctionality to allow a user to edit project name / organisation name
   * Develop ADMIN page allowing admin to create/delete accounts 
   
 We are seeing that the server responds with the following if the token times out:

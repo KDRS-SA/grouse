@@ -16,14 +16,13 @@ import java.util.List;
 @Entity
 @Table(name = "functionality_areas")
 @XmlRootElement
-public class Functionality implements Serializable {
+public class TemplateFunctionality implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * Number of the functional area. e.g 1.2.3
-     *  This is an internal number that the project themselves decides
-     *
+     * This is an internal number that the project themselves decides
      */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -83,19 +82,19 @@ public class Functionality implements Serializable {
     @Column(name = "type")
     private String type;
 
-    // Link to parent Functionality
+    // Link to parent TemplateFunctionality
     @ManyToOne
-    @JoinColumn(name="parent")
-    private Functionality referenceParentFunctionality;
+    @JoinColumn(name = "parent")
+    private TemplateFunctionality referenceParentTemplateFunctionality;
 
-    @OneToMany(mappedBy = "referenceParentFunctionality")
-    private List<Functionality> referenceChildFunctionality =
+    @OneToMany(mappedBy = "referenceParentTemplateFunctionality")
+    private List<TemplateFunctionality> referenceChildTemplateFunctionality =
             new ArrayList<>();
 
-    public Functionality() {
+    public TemplateFunctionality() {
     }
 
-    private Functionality (FunctionalityBuilder functionalityBuilder) {
+    private TemplateFunctionality(FunctionalityBuilder functionalityBuilder) {
         this.functionalityNumber = functionalityBuilder.id;
         this.title = functionalityBuilder.sectionTitle;
         this.description = functionalityBuilder.description;
@@ -178,22 +177,22 @@ public class Functionality implements Serializable {
         this.type = type;
     }
 
-    public List<Functionality> getReferenceChildFunctionality() {
-        return referenceChildFunctionality;
+    public List<TemplateFunctionality> getReferenceChildTemplateFunctionality() {
+        return referenceChildTemplateFunctionality;
     }
 
-    public void setReferenceChildFunctionality(List<Functionality> referenceChildFunctionality) {
-        this.referenceChildFunctionality = referenceChildFunctionality;
+    public void setReferenceChildTemplateFunctionality(List<TemplateFunctionality> referenceChildTemplateFunctionality) {
+        this.referenceChildTemplateFunctionality = referenceChildTemplateFunctionality;
     }
 
     @JsonIgnore
-    public Functionality getReferenceParentFunctionality() {
-        return referenceParentFunctionality;
+    public TemplateFunctionality getReferenceParentTemplateFunctionality() {
+        return referenceParentTemplateFunctionality;
     }
-    
+
     @XmlTransient
-    public void setReferenceParentFunctionality(Functionality referenceParentFunctionality) {
-        this.referenceParentFunctionality = referenceParentFunctionality;
+    public void setReferenceParentTemplateFunctionality(TemplateFunctionality referenceParentTemplateFunctionality) {
+        this.referenceParentTemplateFunctionality = referenceParentTemplateFunctionality;
     }
 
     public static class FunctionalityBuilder {
@@ -253,8 +252,8 @@ public class Functionality implements Serializable {
             return this;
         }
 
-        public Functionality build() {
-            return new Functionality(this);
+        public TemplateFunctionality build() {
+            return new TemplateFunctionality(this);
         }
 
     }

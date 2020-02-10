@@ -1,6 +1,6 @@
 package no.kdrs.grouse.service;
 
-import no.kdrs.grouse.model.Functionality;
+import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.persistence.IFunctionalityRepository;
 import no.kdrs.grouse.service.interfaces.IFunctionalityService;
 import org.springframework.stereotype.Service;
@@ -25,54 +25,54 @@ public class FunctionalityService
         this.functionalityRepository = functionalityRepository;
     }
 
-    public List<Functionality> findAll() {
-        List<Functionality> functionality = functionalityRepository.findAll();
-        return functionality;
+    public List<TemplateFunctionality> findAll() {
+        List<TemplateFunctionality> templateFunctionality = functionalityRepository.findAll();
+        return templateFunctionality;
     }
 
     @Override
-    public List<Functionality> findByShowMeAndReferenceParentFunctionality(
+    public List<TemplateFunctionality> findByShowMeAndReferenceParentFunctionality(
             Boolean menuItem, String parent) {
-        Functionality functionality = new Functionality.
+        TemplateFunctionality templateFunctionality = new TemplateFunctionality.
                 FunctionalityBuilder().functionalityNumber(parent).build();
         return functionalityRepository.
-                findByShowMeAndReferenceParentFunctionality(
-                        menuItem, functionality);
+                findByShowMeAndReferenceParentTemplateFunctionality(
+                        menuItem, templateFunctionality);
     }
 
     @Override
-    public Functionality findById(Long id) {
+    public TemplateFunctionality findById(Long id) {
         return getFunctionalityOrThrow(id);
     }
 
     @Override
-    public Functionality findByFunctionalityNumber(String functionalityNumber) {
-        Functionality functionality =
+    public TemplateFunctionality findByFunctionalityNumber(String functionalityNumber) {
+        TemplateFunctionality templateFunctionality =
                 functionalityRepository.findByFunctionalityNumber
                         (functionalityNumber);
-        if (functionality == null) {
-            throw new EntityNotFoundException("No Functionality " +
+        if (templateFunctionality == null) {
+            throw new EntityNotFoundException("No TemplateFunctionality " +
                     " exists with Id " + functionalityNumber);
         }
-        return functionality;
+        return templateFunctionality;
 
     }
 
     @Override
-    public Functionality save(Functionality Functionality) {
-        return functionalityRepository.save(Functionality);
+    public TemplateFunctionality save(TemplateFunctionality TemplateFunctionality) {
+        return functionalityRepository.save(TemplateFunctionality);
     }
 
     @Override
-    public Functionality update(Long id, Functionality functionality)
+    public TemplateFunctionality update(Long id, TemplateFunctionality templateFunctionality)
             throws EntityNotFoundException {
-        Functionality originalFunctionality = getFunctionalityOrThrow(id);
+        TemplateFunctionality originalTemplateFunctionality = getFunctionalityOrThrow(id);
 
-        originalFunctionality.setDescription(functionality.getDescription());
-        originalFunctionality.setConsequence(functionality.getConsequence());
-        originalFunctionality.setExplanation(functionality.getExplanation());
+        originalTemplateFunctionality.setDescription(templateFunctionality.getDescription());
+        originalTemplateFunctionality.setConsequence(templateFunctionality.getConsequence());
+        originalTemplateFunctionality.setExplanation(templateFunctionality.getExplanation());
 
-        return originalFunctionality;
+        return originalTemplateFunctionality;
     }
     
     @Override
@@ -83,20 +83,20 @@ public class FunctionalityService
     /**
      * Internal helper method. Rather than having a find and try catch in
      * multiple methods, we have it here once. If you call this, be aware
-     * that you will only ever get a valid Functionality back. If there is no valid
-     * Functionality, a EntityNotFoundException exception is thrown
+     * that you will only ever get a valid TemplateFunctionality back. If there is no valid
+     * TemplateFunctionality, a EntityNotFoundException exception is thrown
      *
      * @param id The systemId of the functionality object to retrieve
      * @return the functionality object
      */
-    private Functionality getFunctionalityOrThrow(@NotNull Long id)
+    private TemplateFunctionality getFunctionalityOrThrow(@NotNull Long id)
             throws EntityNotFoundException {
-        Functionality functionality =
+        TemplateFunctionality templateFunctionality =
                 functionalityRepository.findById(id)
                         .orElseThrow(() ->
                                 new EntityNotFoundException(
-                                        "No Functionality exists with Id " + id));
-        return functionality;
+                                        "No TemplateFunctionality exists with Id " + id));
+        return templateFunctionality;
     }
 
 }

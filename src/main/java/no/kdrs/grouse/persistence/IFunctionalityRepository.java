@@ -1,6 +1,6 @@
 package no.kdrs.grouse.persistence;
 
-import no.kdrs.grouse.model.Functionality;
+import no.kdrs.grouse.model.TemplateFunctionality;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,14 +8,16 @@ import java.util.List;
 
 @Repository
 public interface IFunctionalityRepository
-        extends CrudRepository<Functionality, Long> {
+        extends CrudRepository<TemplateFunctionality, Long> {
 
     @Override
-    List<Functionality> findAll();
+    List<TemplateFunctionality> findAll();
 
-    List<Functionality> findAllByOrderById();
+    List<TemplateFunctionality> findAllByOrderById();
 
-    List<Functionality> findByShowMeAndReferenceParentFunctionality(
-            Boolean menuItem, Functionality parent);
-    Functionality findByFunctionalityNumber(String functionalityNumber);
+    List<TemplateFunctionality>
+    findByShowMeAndReferenceParentTemplateFunctionality(
+            Boolean menuItem, TemplateFunctionality parent);
+
+    TemplateFunctionality findByFunctionalityNumber(String functionalityNumber);
 }

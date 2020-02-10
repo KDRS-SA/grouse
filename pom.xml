@@ -198,7 +198,7 @@
       <version>${jquery.version}</version>
     </dependency>
 
-    <!-- Used for PATCH functionality -->
+    <!-- Used for PATCH templateFunctionality -->
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>

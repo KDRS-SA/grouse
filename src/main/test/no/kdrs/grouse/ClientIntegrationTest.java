@@ -1,7 +1,7 @@
 package no.kdrs.grouse;
 
-import no.kdrs.grouse.model.Functionality;
 import no.kdrs.grouse.model.GrouseUser;
+import no.kdrs.grouse.model.TemplateFunctionality;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -117,17 +117,17 @@ public class ClientIntegrationTest {
     @Test
     public void createClient() {
 
-        Functionality functionality = new
-                Functionality.FunctionalityBuilder()
+        TemplateFunctionality templateFunctionality = new
+                TemplateFunctionality.FunctionalityBuilder()
                 .functionalityNumber("99")
                 .description("description")
                 .sectionTitle("title")
                 .build();
 
-        ResponseEntity<Functionality> responseEntity =
+        ResponseEntity<TemplateFunctionality> responseEntity =
                 restTemplate.postForEntity(SLASH + FUNCTIONALITY,
-                        functionality, Functionality.class);
-        Functionality client = responseEntity.getBody();
+                        templateFunctionality, TemplateFunctionality.class);
+        TemplateFunctionality client = responseEntity.getBody();
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertEquals("description", client.getDescription());
     }
