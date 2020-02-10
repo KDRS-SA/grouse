@@ -3,7 +3,6 @@ package no.kdrs.grouse.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -64,7 +63,7 @@ public class Project
      * carried out in the project
      */
     @Column(name = "project_complete")
-    private Boolean projectComplete;
+    private Boolean projectComplete = false;
 
     /**
      * The date the project was created
@@ -85,11 +84,11 @@ public class Project
     private String ownedBy;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "referenceProject", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "referenceProject")
     private List<ProjectRequirement> referenceProjectRequirement;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "referenceProject", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "referenceProject")
     @OrderBy("projectFunctionalityId ASC")
     private List<ProjectFunctionality> referenceProjectFunctionality;
 

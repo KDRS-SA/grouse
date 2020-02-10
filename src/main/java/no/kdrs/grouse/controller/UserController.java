@@ -103,7 +103,7 @@ public class UserController {
             throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang til dette prosjektet!");
         }
 
-        projectService.createProject(project, ownedBy);
+        projectService.createProject(project);
 
         project.add(linkTo(methodOn(ProjectController.class).
                 getProject(project.getProjectId())).withSelfRel());

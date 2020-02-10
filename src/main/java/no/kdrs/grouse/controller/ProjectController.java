@@ -4,41 +4,34 @@ package no.kdrs.grouse.controller;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
-import no.kdrs.grouse.service.interfaces.IDocumentService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static javax.security.auth.callback.ConfirmationCallback.OK;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import static org.springframework.http.HttpStatus.CREATED;
 
 /**
  * Created by tsodring on 9/25/17.
  */
 @RestController
-@RequestMapping(value = SLASH + PROJECT)
+@RequestMapping(value = PROJECT + SLASH)
 public class ProjectController {
 
-    private IDocumentService documentService;
     private IProjectService projectService;
 
-    public ProjectController(IDocumentService documentService,
-                             IProjectService projectService) {
-        this.documentService = documentService;
+    public ProjectController(IProjectService projectService) {
         this.projectService = projectService;
     }
 
-    @RequestMapping(value = "/{prosjektnummer}", method = RequestMethod.GET)
+    @GetMapping(value = PROJECT_NUMBER_PARAMETER)
     public ResponseEntity<Project> getProject(
-            @PathVariable("prosjektnummer") Long projectId) {
+            @PathVariable(PROJECT_NUMBER) Long projectId) {
 
         Project project = projectService.findById(projectId);
         project.add(linkTo(methodOn(ProjectController.class).
@@ -46,42 +39,29 @@ public class ProjectController {
         project.add(linkTo(methodOn(ProjectController.class).
                 getFunctionalityForProject(projectId))
                 .withRel(FUNCTIONALITY));
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(project);
     }
 
-    @RequestMapping(value = "/{prosjektnummer}/" + FUNCTIONALITY
-            + "/{funksjonalitet}", method = RequestMethod.GET)
+    @GetMapping(value = PROJECT_NUMBER_PARAMETER + SLASH +
+            FUNCTIONALITY + FUNCTIONALITY_PARAMETER)
     public ResponseEntity<List<ProjectRequirement>>
     getRequirementsForFunctionality(
-            @PathVariable("prosjektnummer") Long projectId,
-            @PathVariable("funksjonalitet") String functionalityNumber) {
+            @PathVariable(PROJECT_NUMBER) Long projectId,
+            @PathVariable(FUNCTIONALITY) String functionalityNumber) {
 
         List<ProjectRequirement> projectRequirements =
                 projectService.findByProjectIdOrderByProjectName(
                         projectId, functionalityNumber);
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(projectRequirements);
     }
 
-/*
-    @RequestMapping(value = "/{prosjektnummer}/" + FUNCTIONALITY,
-            method = RequestMethod.GET)
-    public ResponseEntity<List<ProjectFunctionality>>
-    getFunctionalityHeadersForProject(
-            @PathVariable("prosjektnummer") Long projectId) {
-        List<ProjectFunctionality> projectFunctionalities =
-                projectService.findFunctionalityForProject(projectId);
-
-
-    }
-*/
-        @RequestMapping(value = "/{prosjektnummer}/" + FUNCTIONALITY,
-            method = RequestMethod.GET)
+    @GetMapping(value = PROJECT_NUMBER_PARAMETER + FUNCTIONALITY)
     public ResponseEntity<List<ProjectFunctionality>>
     getFunctionalityForProject(
-            @PathVariable("prosjektnummer") Long projectId) {
+            @PathVariable(PROJECT_NUMBER) Long projectId) {
 
         List<ProjectFunctionality> projectFunctionalities =
                 projectService.findFunctionalityForProjectByType(projectId,
@@ -90,10 +70,9 @@ public class ProjectController {
         for (ProjectFunctionality projectFunctionality :
                 projectFunctionalities) {
 
-            for (ProjectFunctionality childProjectFunctionality:
+            for (ProjectFunctionality childProjectFunctionality :
                     projectFunctionality
                             .getReferenceChildProjectFunctionality()) {
-
 
                 // Add REL to retrieve all requirements
                 childProjectFunctionality.add(linkTo(methodOn(
@@ -118,7 +97,7 @@ public class ProjectController {
                                     getProjectRequirementId())).withSelfRel());
                 }
 
-                for (ProjectFunctionality childChildProjectFunctionality2:
+                for (ProjectFunctionality childChildProjectFunctionality2 :
                         childProjectFunctionality
                                 .getReferenceChildProjectFunctionality()) {
 
@@ -149,15 +128,37 @@ public class ProjectController {
                     getProjectFunctionality(projectFunctionality.
                             getProjectFunctionalityId())).withSelfRel());
         }
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(projectFunctionalities);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @PostMapping
+    public ResponseEntity<Project> createProject(
+            @RequestBody Project project) throws Exception {
+
+        projectService.createProject(project);
+
+        project.add(linkTo(methodOn(ProjectController.class).
+                getProject(project.getProjectId())).withSelfRel());
+
+        project.add(linkTo(methodOn(ProjectController.class).
+                getFunctionalityForProject(project.getProjectId()))
+                .withRel(FUNCTIONALITY));
+
+        project.add(linkTo(DocumentController.class, DocumentController.class.
+                        getMethod("downloadDocument", Long.class),
+                project.getProjectId()).
+                withRel(DOCUMENT));
+
+        return ResponseEntity.status(CREATED).body(project);
+    }
+
+    @DeleteMapping(PROJECT_NUMBER_PARAMETER)
     public ResponseEntity<String> deleteProject(
-            @PathVariable("prosjektnummer") Long projectId) {
+            @PathVariable(PROJECT_NUMBER) Long projectId) {
         projectService.delete(projectId);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Prosjekt med id " + projectId + "ble slettet");
+        return ResponseEntity.status(OK)
+                .body("{\"projectId\" : " + projectId + "}" +
+                        "{\"status\" : \"deleted\"}");
     }
 }
