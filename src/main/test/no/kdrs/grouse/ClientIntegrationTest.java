@@ -29,6 +29,7 @@ import static org.junit.Assert.assertTrue;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientIntegrationTest {
 
+
     @Autowired
     private TestRestTemplate restTemplate;
 

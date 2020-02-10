@@ -21,6 +21,7 @@ import java.util.List;
 @Service
 @Transactional
 public class ProjectService
+        extends GrouseService
         implements IProjectService {
 
     private EntityManager entityManager;
@@ -108,13 +109,13 @@ public class ProjectService
      * @return The persisted object after it was persisted with associated data
      */
     @Override
-    public Project createProject(Project project, String ownedBy) {
+    public Project createProject(Project project) {
+        String ownedBy = getUser();
         project.setCreatedDate(new Date());
         project.setChangedDate(new Date());
         project.setDocumentCreated(false);
-        // TODO: Fixed value but can be overriden
-        project.setFileName("kravspec.docx");
 
+        project.setFileName(project.getProjectName());
         project.setOwnedBy(ownedBy);
         projectRepository.save(project);
 

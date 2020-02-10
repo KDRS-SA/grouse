@@ -63,7 +63,7 @@ public class Project
      * carried out in the project
      */
     @Column(name = "project_complete")
-    private Boolean projectComplete;
+    private Boolean projectComplete = false;
 
     /**
      * The date the project was created

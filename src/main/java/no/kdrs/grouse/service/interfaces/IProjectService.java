@@ -13,7 +13,9 @@ import java.util.List;
 public interface IProjectService {
     List<Project> findAll();
     Project findById(Long id);
-    Project createProject(Project project, String ownedBy);
+
+    Project createProject(Project project);
+
     Project update(Long id, Project project) throws Exception;
     void delete(Long id);
     List<Project> findByOwnedBy(String ownedBy);

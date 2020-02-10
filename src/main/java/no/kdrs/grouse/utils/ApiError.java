@@ -6,14 +6,18 @@ public class ApiError {
     private String message;
     private String developerMessage;
     private String stackTrace;
+    private String request;
 
-    public ApiError(final int status, final String message, final String developerMessage, final String stackTrace) {
+    public ApiError(final int status, final String message,
+                    final String developerMessage, final String stackTrace,
+                    final String request) {
         super();
 
         this.status = status;
         this.message = message;
         this.developerMessage = developerMessage;
         this.stackTrace = stackTrace;
+        this.request = request;
     }
 
     public int getStatus() {
@@ -48,7 +52,13 @@ public class ApiError {
         this.stackTrace = stackTrace;
     }
 
-    //
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
 
     @Override
     public final int hashCode() {
