@@ -67,12 +67,19 @@ export class kravEditComponent implements OnInit {
     this.dataSource.data = TREE_DATA;
   }
 
+  /*
+  * This method sends the user to the main menu when called
+  */
   goToMainMenu() {
     this.userData.nav = 'Menu';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/Menu']);
   }
 
+  /*
+  * This method converts the links subsection of elements sent from the server from the old Spring Boot Standard to the new format
+  * This might not be required in newer version so this method might disapear later
+  */
   convertLegacyLinks() {
     const NavData: Requirment[] = [];     // For the sidenav Tree every NavReq is fo this purpose aswell
     for (const prime of this.mainData) {
@@ -137,6 +144,10 @@ export class kravEditComponent implements OnInit {
     this.dataSource.data = NavData;
   }
 
+  /*
+  *This method both sends a call to the server to invalidate the current auth-token and sends the user to the login page
+  * As this method is duplicated it will proabobly be moved later
+  */
   logout() {
     localStorage.clear();
     this.http.get(this.userData.logoutAdress, {
@@ -151,6 +162,9 @@ export class kravEditComponent implements OnInit {
     location.reload();
   }
 
+  /*
+  * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
+   */
   changeReq(id: number) {
     console.log(id);
 
