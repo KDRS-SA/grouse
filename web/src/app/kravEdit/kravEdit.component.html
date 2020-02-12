@@ -89,7 +89,18 @@
       </mat-card-content>
     </mat-card>
     <mat-card class="Krav-card-edit">
-
+      <mat-tab-group>
+        <mat-tab *ngFor="let req of this.currentReq.referenceProjectRequirement; let i = index" label="{{i+1}}">
+          <mat-form-field class="Krav-form">
+            <mat-label>Krav</mat-label>
+            <textarea class="Krav-input" matInput value="{{req.requirementText}}"></textarea>
+          </mat-form-field>
+        </mat-tab>
+        <mat-tab label="Ny">
+          <p>test</p>
+          <button mat-raised-button>test</button>
+        </mat-tab>
+      </mat-tab-group>
     </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -55,6 +55,7 @@ export class kravEditComponent implements OnInit {
       this.mainData = result;
       this.convertLegacyLinks();
       this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
+      console.log(this.mainData);
     }, error => {
       console.error(error);
     });

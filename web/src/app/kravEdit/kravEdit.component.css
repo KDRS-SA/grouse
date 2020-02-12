@@ -49,11 +49,25 @@
   margin-top: 5px;
   height: 60%;
   overflow: scroll;
+  overflow-x: hidden;
 }
 
 .Krav-card-edit{
   margin-top: 5px;
-  height: 25%;
+  height: 30%;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.Krav-form{
+  height: 100%;
+  width: 75%;
+}
+
+.Krav-input{
+  min-height: 100px;
+  height: 100%;
+  width: 100%;
 }
 
 .Krav-status{
