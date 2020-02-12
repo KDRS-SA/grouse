@@ -188,17 +188,16 @@ export class kravEditComponent implements OnInit {
       }
     }
     // this.sideBarOpen = false;
-    console.log(this.currentReq);
-    this.updateRequirement(1);
   }
 
   updateRequirement(index: number) {
     const req = this.currentReq.referenceProjectRequirement[index];
 
-    const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
-      req.requirementText + '"}]';
-    console.log(req._links.self.href);
-    console.log(patchString);
+    // @ts-ignore
+    req.requirementText = document.getElementById('field-' + index).value;
+
+    const patchString = JSON.parse('[{ "op": "replace", "path": "/requirementText", "value": "' +
+      req.requirementText + '"}]');
 
     this.http.patch(req._links.self.href, patchString, {
       headers: new HttpHeaders({

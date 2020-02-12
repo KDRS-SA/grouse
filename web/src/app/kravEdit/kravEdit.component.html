@@ -93,7 +93,7 @@
         <mat-tab *ngFor="let req of this.currentReq.referenceProjectRequirement; let i = index" label="{{i+1}}">
           <mat-form-field class="Krav-form">
             <mat-label>Krav</mat-label>
-            <textarea class="Krav-input" matInput value="{{req.requirementText}}"></textarea>
+            <textarea id="field-{{i}}" class="Krav-input" matInput value="{{req.requirementText}}" (change)="updateRequirement(i)"></textarea>
           </mat-form-field>
         </mat-tab>
         <mat-tab label="Ny">
