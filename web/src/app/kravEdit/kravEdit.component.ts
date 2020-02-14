@@ -190,7 +190,12 @@ export class kravEditComponent implements OnInit {
     // this.sideBarOpen = false;
   }
 
-  updateRequirement(index: number) {
+  /**
+   * updateRequirementText
+   *
+   * handles a change in requirement text.
+   */
+  updateRequirementText(index: number) {
     const req = this.currentReq.referenceProjectRequirement[index];
 
     // @ts-ignore
@@ -199,7 +204,43 @@ export class kravEditComponent implements OnInit {
     const patchString = JSON.parse('[{ "op": "replace", "path": "/requirementText", "value": "' +
       req.requirementText + '"}]');
 
-    this.http.patch(req._links.self.href, patchString, {
+    this.sendPatch(patchString);
+  }
+
+  /**
+   * updateFunctionalityProcessed
+   *
+   * handles a change in requirement text.
+   */
+  updateFunctionalityProcessed() {
+    const patchString = JSON.parse('[{ "op": "replace", "path": "/processed", "value": "' +
+      this.currentReq.processed + '"}]');
+
+    this.sendPatch(patchString);
+  }
+
+  /**
+   * updateRequirementPriority
+   *
+   * handles a change in requirement priority.
+   */
+  updateRequirementPriority(index: number) {
+    const patchString = JSON.parse('[{ "op": "replace", "path": "/priority", "value": "' +
+      this.currentReq.referenceProjectRequirement[index].priority + '"}]');
+
+    this.sendPatch(patchString);
+  }
+
+  /**
+   * sendPatch
+   *
+   * Sends patches to the server, used by all update functions
+   *
+   * @param patchString
+   * Inputted patchstring to send
+   */
+  sendPatch(patchString: string) {
+    this.http.patch(this.currentReq._links.self.href, patchString, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
@@ -209,8 +250,6 @@ export class kravEditComponent implements OnInit {
       console.error(error);
     });
   }
-
-
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
 }
@@ -256,4 +295,4 @@ const TREE_DATA: Requirment[] = [
       }
     ]
   }
-]
+];
