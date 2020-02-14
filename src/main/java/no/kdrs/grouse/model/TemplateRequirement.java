@@ -92,7 +92,7 @@ public class TemplateRequirement
     @ManyToOne
     @JoinColumn(name = "template_number",
             referencedColumnName = "template_id")
-    private Project referenceTemplate;
+    private Template referenceTemplate;
 
     public Long getRequirementId() {
         return requirementId;
@@ -166,11 +166,11 @@ public class TemplateRequirement
         this.referenceTemplateFunctionality = referenceTemplateFunctionality;
     }
 
-    public Project getReferenceTemplate() {
+    public Template getReferenceTemplate() {
         return referenceTemplate;
     }
 
-    public void setReferenceTemplate(Project referenceTemplate) {
+    public void setReferenceTemplate(Template referenceTemplate) {
         this.referenceTemplate = referenceTemplate;
     }
 
