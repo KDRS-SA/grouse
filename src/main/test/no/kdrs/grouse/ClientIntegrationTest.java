@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Set of integration tests.
@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClientIntegrationTest {
-
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -61,7 +60,7 @@ public class ClientIntegrationTest {
                         GrouseUser.class);
 
         GrouseUser returnedUser = responseEntity.getBody();
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals(CREATED, responseEntity.getStatusCode());
         assertEquals(username, returnedUser.getUsername());
         assertTrue(encoder.matches(password, returnedUser.getPassword()));
 
@@ -69,7 +68,7 @@ public class ClientIntegrationTest {
         responseEntity = restTemplate.getForEntity(SLASH + USER + SLASH +
                 returnedUser.getUsername(), GrouseUser.class);
         returnedUser = responseEntity.getBody();
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(OK, responseEntity.getStatusCode());
         assertEquals(username, returnedUser.getUsername());
         assertTrue(encoder.matches(password, returnedUser.getPassword()));
 
@@ -83,7 +82,7 @@ public class ClientIntegrationTest {
                         requestEntity, GrouseUser.class);
 
         returnedUser = response.getBody();
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(OK, response.getStatusCode());
         assertTrue(encoder.matches(password + "_",
                 returnedUser.getPassword()));
 
@@ -92,7 +91,7 @@ public class ClientIntegrationTest {
                 (SLASH + USER + SLASH + user.getUsername(),
                         HttpMethod.DELETE, null, String.class);
 
-        assertEquals(HttpStatus.OK, deleteResponseEntity.getStatusCode());
+        assertEquals(OK, deleteResponseEntity.getStatusCode());
     }
 
     @Test
@@ -102,13 +101,13 @@ public class ClientIntegrationTest {
         ResponseEntity<String> responseEntity =
                 restTemplate.getForEntity(SLASH + USER + SLASH + "no@no.no",
                         String.class);
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals(NOT_FOUND, responseEntity.getStatusCode());
 
         // 2. Test DELETE on non-existing user
         ResponseEntity<String> deleteResponseEntity =
                 restTemplate.exchange(SLASH + USER + SLASH + "no@no.no",
                         HttpMethod.DELETE, null, String.class);
-        assertEquals(HttpStatus.NOT_FOUND, deleteResponseEntity.getStatusCode());
+        assertEquals(NOT_FOUND, deleteResponseEntity.getStatusCode());
     }
 
     /**
@@ -128,7 +127,7 @@ public class ClientIntegrationTest {
                 restTemplate.postForEntity(SLASH + FUNCTIONALITY,
                         templateFunctionality, TemplateFunctionality.class);
         TemplateFunctionality client = responseEntity.getBody();
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals(CREATED, responseEntity.getStatusCode());
         assertEquals("description", client.getDescription());
     }
 }

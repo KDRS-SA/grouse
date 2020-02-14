@@ -12,16 +12,37 @@ public final class Constants {
     public static final String USER = "bruker";
     public static final String DOCUMENT = "dokument";
     public static final String PROJECT = "prosjekt";
+    public static final String TEMPLATE = "template";
     public static final String GROUSE = "grouse";
     public static final String PROJECT_REQUIREMENT = "projectRequirement";
     public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
+    public static final String TEMPLATE_REQUIREMENT = "templateRequirement";
+    public static final String TEMPLATE_FUNCTIONALITY = "templateFunctionality";
     public static final String REQUIREMENT_TYPE = "krav_type";
 
     public static final String PROJECT_NUMBER = "projectNumber";
+    public static final String TEMPLATE_ID = "templateId";
     public static final String PROJECT_NUMBER_PARAMETER = "{" +
             PROJECT_NUMBER + "}";
     public static final String FUNCTIONALITY_PARAMETER = "{" +
             FUNCTIONALITY + "}";
+    public static final String TEMPLATE_ID_PARAMETER = "{" +
+            TEMPLATE_ID + "}";
+
+    // Column names
+    public static final String REQUIREMENT_NAME = "requirement_name";
+    public static final String REQUIREMENT_PK_ID = "requirement_id";
+    public static final String FUNCTIONALITY_NAME = "functionality_name";
+    public static final String FUNCTIONALITY_PK_ID = "functionality_id";
+    public static final String TEMPLATE_NAME = "template_name";
+    public static final String TEMPLATE_PK_ID = "template_id";
+    public static final String CREATED_DATE = "created_date";
+    public static final String CHANGED_DATE = "changed_date";
+    public static final String OWNED_BY = "owned_by";
+    public static final String VERSION = "version";
+
+    public static final String TEMPLATE_FUNCTIONALITY_AREAS =
+            "template_functionality_areas";
 
     // Table cell ordering
     /**

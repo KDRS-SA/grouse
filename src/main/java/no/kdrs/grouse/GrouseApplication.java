@@ -1,13 +1,13 @@
 package no.kdrs.grouse;
 
-import no.kdrs.grouse.model.Requirement;
 import no.kdrs.grouse.model.TemplateFunctionality;
+import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.model.imp.Chapter;
 import no.kdrs.grouse.model.imp.Chapters;
 import no.kdrs.grouse.model.imp.Requirements;
 import no.kdrs.grouse.model.imp.Section;
-import no.kdrs.grouse.persistence.IFunctionalityRepository;
-import no.kdrs.grouse.persistence.IRequirementRepository;
+import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
+import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -23,18 +23,18 @@ import java.util.ArrayList;
 @SpringBootApplication
 public class GrouseApplication {
 
-    private IFunctionalityRepository functionalityRepository;
-    private IRequirementRepository requirementRepository;
+    private ITemplateFunctionalityRepository functionalityRepository;
+    private ITemplateRequirementRepository requirementRepository;
 
     public GrouseApplication(
-            IFunctionalityRepository functionalityRepository,
-            IRequirementRepository requirementRepository) {
+            ITemplateFunctionalityRepository functionalityRepository,
+            ITemplateRequirementRepository requirementRepository) {
         this.functionalityRepository = functionalityRepository;
         this.requirementRepository = requirementRepository;
     }
 
     public static void main(String[] args) {
-		SpringApplication.run(GrouseApplication.class, args);
+        SpringApplication.run(GrouseApplication.class, args);
 	}
 
 	@EventListener
@@ -105,14 +105,14 @@ public class GrouseApplication {
                     Requirements requirements = section.getRequirements();
 
                     if (requirements != null) {
-                        ArrayList<Requirement> allRequirements = (ArrayList)
-                                requirements.getRequirement();
+                        ArrayList<TemplateRequirement> allTemplateRequirements = (ArrayList)
+                                requirements.getTemplateRequirement();
 
-                        for (Requirement requirement : allRequirements) {
-                            System.out.println(requirement.toString());
+                        for (TemplateRequirement templateRequirement : allTemplateRequirements) {
+                            System.out.println(templateRequirement.toString());
 
-                            requirement.setFunctionality(templateFunctionality);
-                            requirementRepository.save(requirement);
+                            templateRequirement.setFunctionality(templateFunctionality);
+                            requirementRepository.save(templateRequirement);
                         }
                     }
 
@@ -143,14 +143,14 @@ public class GrouseApplication {
                                 .getRequirements();
 
                         if (childRequirements != null) {
-                            ArrayList<Requirement> allRequirements = (ArrayList)
-                                    childRequirements.getRequirement();
+                            ArrayList<TemplateRequirement> allTemplateRequirements = (ArrayList)
+                                    childRequirements.getTemplateRequirement();
 
-                            for (Requirement requirement : allRequirements) {
-                                System.out.println(requirement.toString());
+                            for (TemplateRequirement templateRequirement : allTemplateRequirements) {
+                                System.out.println(templateRequirement.toString());
 
-                                requirement.setFunctionality(childTemplateFunctionality);
-                                requirementRepository.save(requirement);
+                                templateRequirement.setFunctionality(childTemplateFunctionality);
+                                requirementRepository.save(templateRequirement);
                             }
                         }
 

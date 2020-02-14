@@ -5,17 +5,16 @@ import no.kdrs.grouse.model.APIDetail;
 import no.kdrs.grouse.model.APIDetails;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import org.springframework.hateoas.Link;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Created by tsodring on 24/06/18.
@@ -30,7 +29,7 @@ public class ApplicationController {
         this.grouseUserService = grouseUserService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<APIDetails> getApplicationDetails() throws Exception {
 
         APIDetails apiDetails = new APIDetails();
@@ -52,7 +51,7 @@ public class ApplicationController {
                 (ApplicationController.class).
                 getApplicationDetails()).withSelfRel());
 
-        return ResponseEntity.status(HttpStatus.OK).
+        return ResponseEntity.status(OK).
                 body(apiDetails);
     }
 

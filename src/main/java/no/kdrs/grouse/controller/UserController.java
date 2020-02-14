@@ -5,7 +5,6 @@ import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +17,8 @@ import java.util.List;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Created by tsodring on 28/03/18.
@@ -29,7 +29,6 @@ public class UserController {
 
     private IGrouseUserService grouseUserService;
     private IProjectService projectService;
-    //private EntityLinks entityLinks;
 
     public UserController(IGrouseUserService grouseUserService,
                           IProjectService projectService) {
@@ -37,14 +36,13 @@ public class UserController {
         this.projectService = projectService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<GrouseUser>> getGrouseUsers() {
-        return ResponseEntity.status(HttpStatus.OK).
+        return ResponseEntity.status(OK).
                 body(grouseUserService.findAll());
     }
 
-    @RequestMapping(value = "/{" + USER + "}",
-            method = RequestMethod.GET)
+    @GetMapping(value = "/{" + USER + "}")
     public ResponseEntity<GrouseUser> getGrouseUser(
             @PathVariable(USER) String username)
     throws Exception {
@@ -54,12 +52,11 @@ public class UserController {
         user.add(linkTo(methodOn(UserController.class).
                 createProject(username, null)).withRel(PROJECT));
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(user);
     }
 
-    @RequestMapping(value = "/{" + USER + "}/" + PROJECT,
-            method = RequestMethod.GET)
+    @GetMapping(value = "/{" + USER + "}/" + PROJECT)
     public ResponseEntity<List<Project>> getGrouseUserProjects(
             @PathVariable(USER) String username) throws Exception {
 
@@ -87,12 +84,11 @@ public class UserController {
 //            .withRel(REQUIREMENT)            );
         }
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(projects);
     }
 
-    @RequestMapping(value = "/{" + USER + "}/" + PROJECT,
-            method = RequestMethod.POST)
+    @PostMapping(value = "/{" + USER + "}/" + PROJECT)
     public ResponseEntity<Project> createProject(
             @PathVariable(USER) String ownedBy,
             @RequestBody Project project) throws Exception {
@@ -117,32 +113,30 @@ public class UserController {
                         HttpServletResponse.class), project.getProjectId()).
                 withRel(DOCUMENT));
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(project);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<GrouseUser> saveGrouseUser(
             @RequestBody GrouseUser user) {
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.status(CREATED)
                 .body(grouseUserService.save(user));
     }
 
-    @RequestMapping(value = "/{" + USER + "}",
-            method = RequestMethod.PUT)
+    @PutMapping(value = "/{" + USER + "}")
     public ResponseEntity<GrouseUser> updateGrouseUser(
             @PathVariable(USER) String username,
             @RequestBody GrouseUser user) throws EntityNotFoundException {
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(grouseUserService.update(username, user));
     }
 
-    @RequestMapping(value = "/{" + USER + "}",
-            method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{" + USER + "}")
     public ResponseEntity<String> deleteGrouseUser(
             @PathVariable String username) {
         grouseUserService.delete(username);
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body("GrouseUser with username " + username + " was deleted");
     }
 }

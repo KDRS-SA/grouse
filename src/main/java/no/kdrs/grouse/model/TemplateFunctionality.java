@@ -1,22 +1,22 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by tsodring on 9/11/17.
- */
+import static javax.persistence.GenerationType.SEQUENCE;
+import static no.kdrs.grouse.utils.Constants.*;
 
 @Entity
-@Table(name = "functionality_areas")
-@XmlRootElement
-public class TemplateFunctionality implements Serializable {
+@Table(name = TEMPLATE_FUNCTIONALITY_AREAS)
+public class TemplateFunctionality
+        extends RepresentationModel
+        implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,9 +25,9 @@ public class TemplateFunctionality implements Serializable {
      * This is an internal number that the project themselves decides
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Long id;
+    @GeneratedValue(strategy = SEQUENCE)
+    @Column(name = FUNCTIONALITY_PK_ID, nullable = false, updatable = false)
+    private Long functionalityId;
 
 
     @Column(name = "functionality_number", nullable = false, updatable = false)
@@ -35,17 +35,15 @@ public class TemplateFunctionality implements Serializable {
 
     /**
      * Text of the functionality
-     *
+     * <p>
      * e.g functionality_number '1.7.2.19' has title
-     *    'Krav knyttet til masseoppdatering'
-     *
+     * 'Krav knyttet til masseoppdatering'
      */
     @Column(name = "title")
     private String title;
 
     /**
      * Description of functionality
-     *
      */
     @Column(name = "description", length = 4000)
     private String description;
@@ -53,34 +51,38 @@ public class TemplateFunctionality implements Serializable {
 
     /**
      * Description of consequence of excluding this functionality
-     *
      */
     @Column(name = "consequence", length = 4000)
     private String consequence;
 
     /**
      * Description of consequence of excluding this functionality
-     *
      */
     @Column(name = "explanation", length = 4000)
     private String explanation;
 
     @Column(name = "section_order")
     private Integer sectionOrder;
-    
+
     /**
      * Whether or not to be displayed in menu
-     *
      */
     @Column(name = "show_me")
     private Boolean showMe;
 
     /**
      * Type of requirement e.g. 'funksjonell', 'teknisk', 'integrasjon'
-     *
      */
     @Column(name = "type")
     private String type;
+
+    @Version
+    @Column(name = VERSION)
+    private Long version;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Template referenceTemplate;
 
     // Link to parent TemplateFunctionality
     @ManyToOne
@@ -89,6 +91,11 @@ public class TemplateFunctionality implements Serializable {
 
     @OneToMany(mappedBy = "referenceParentTemplateFunctionality")
     private List<TemplateFunctionality> referenceChildTemplateFunctionality =
+            new ArrayList<>();
+
+    @OneToMany(mappedBy = "referenceFunctionality")
+    @OrderBy("order ASC")
+    private List<TemplateRequirement> referenceFunctionalityRequirement =
             new ArrayList<>();
 
     public TemplateFunctionality() {
@@ -106,11 +113,11 @@ public class TemplateFunctionality implements Serializable {
     }
 
     public Long getFunctionalityId() {
-        return id;
+        return functionalityId;
     }
 
-    public void setFunctionalityId(Long id) {
-        this.id = id;
+    public void setFunctionalityId(Long functionalityId) {
+        this.functionalityId = functionalityId;
     }
 
     public String getTitle() {
@@ -177,12 +184,36 @@ public class TemplateFunctionality implements Serializable {
         this.type = type;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public Template getReferenceTemplate() {
+        return referenceTemplate;
+    }
+
+    public void setReferenceTemplate(Template referenceTemplate) {
+        this.referenceTemplate = referenceTemplate;
+    }
+
     public List<TemplateFunctionality> getReferenceChildTemplateFunctionality() {
         return referenceChildTemplateFunctionality;
     }
 
-    public void setReferenceChildTemplateFunctionality(List<TemplateFunctionality> referenceChildTemplateFunctionality) {
-        this.referenceChildTemplateFunctionality = referenceChildTemplateFunctionality;
+    public void setReferenceChildTemplateFunctionality(
+            List<TemplateFunctionality> referenceChildTemplateFunctionality) {
+        this.referenceChildTemplateFunctionality =
+                referenceChildTemplateFunctionality;
+    }
+
+    public void addReferenceChildTemplateFunctionality(
+            TemplateFunctionality childTemplateFunctionality) {
+        this.referenceChildTemplateFunctionality.add(
+                childTemplateFunctionality);
     }
 
     @JsonIgnore
@@ -191,9 +222,27 @@ public class TemplateFunctionality implements Serializable {
     }
 
     @XmlTransient
-    public void setReferenceParentTemplateFunctionality(TemplateFunctionality referenceParentTemplateFunctionality) {
-        this.referenceParentTemplateFunctionality = referenceParentTemplateFunctionality;
+    public void setReferenceParentTemplateFunctionality(
+            TemplateFunctionality referenceParentTemplateFunctionality) {
+        this.referenceParentTemplateFunctionality =
+                referenceParentTemplateFunctionality;
     }
+
+    public List<TemplateRequirement> getReferenceFunctionalityRequirement() {
+        return referenceFunctionalityRequirement;
+    }
+
+    public void setReferenceFunctionalityRequirement(
+            List<TemplateRequirement> referenceFunctionalityRequirement) {
+        this.referenceFunctionalityRequirement =
+                referenceFunctionalityRequirement;
+    }
+
+    public void setFunctionalityRequirement(
+            TemplateRequirement functionalityRequirement) {
+        this.referenceFunctionalityRequirement.add(functionalityRequirement);
+    }
+
 
     public static class FunctionalityBuilder {
 
@@ -257,5 +306,4 @@ public class TemplateFunctionality implements Serializable {
         }
 
     }
-
 }

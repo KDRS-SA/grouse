@@ -1,12 +1,19 @@
 package no.kdrs.grouse.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+
+import static javax.persistence.GenerationType.SEQUENCE;
+import static no.kdrs.grouse.utils.Constants.REQUIREMENT_PK_ID;
+import static no.kdrs.grouse.utils.Constants.VERSION;
 
 /**
  * Created by tsodring on 9/8/17.
@@ -16,14 +23,16 @@ import java.io.Serializable;
 @Table(name = "requirements")
 @XmlRootElement(name = "requirement")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Requirement implements Serializable {
+public class TemplateRequirement
+        extends RepresentationModel
+        implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Long id;
+    @GeneratedValue(strategy = SEQUENCE)
+    @Column(name = REQUIREMENT_PK_ID, nullable = false, updatable = false)
+    private Long requirementId;
 
     /**
      * order (no:kravtype)
@@ -41,17 +50,17 @@ public class Requirement implements Serializable {
     @Column(name = "requirement_text", length = 4000)
     private String requirementText;
 
-     /**
+    /**
      * priority (no:prioritet)
-     *
-      * An assigned values as to how important this is in the requirements
-      * specifcation
+     * <p>
+     * An assigned values as to how important this is in the requirements
+     * specifcation
      * e.g.
-     *   O - Obligatorisk
-     *   1 - Svært viktig for oppdragsgiver
-     *   2 - Viktig for oppdragsgiver
+     * O - Obligatorisk
+     * 1 - Svært viktig for oppdragsgiver
+     * 2 - Viktig for oppdragsgiver
      */
-     @XmlElement
+    @XmlElement
     @Column(name = "priority")
     private String priority;
 
@@ -70,17 +79,27 @@ public class Requirement implements Serializable {
     @XmlElement
     private String noarkRequirementType;
 
+    @Version
+    @Column(name = VERSION)
+    private Long version;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "functionality",
             referencedColumnName = "functionality_number")
     private TemplateFunctionality referenceTemplateFunctionality;
 
-    public Long getId() {
-        return id;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "template_number",
+            referencedColumnName = "template_id")
+    private Project referenceTemplate;
+
+    public Long getRequirementId() {
+        return requirementId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRequirementId(Long requirementId) {
+        this.requirementId = requirementId;
     }
 
     public Integer getShowOrder() {
@@ -139,13 +158,40 @@ public class Requirement implements Serializable {
         this.noarkRequirementType = noarkRequirementType;
     }
 
+    public TemplateFunctionality getReferenceTemplateFunctionality() {
+        return referenceTemplateFunctionality;
+    }
+
+    public void setReferenceTemplateFunctionality(TemplateFunctionality referenceTemplateFunctionality) {
+        this.referenceTemplateFunctionality = referenceTemplateFunctionality;
+    }
+
+    public Project getReferenceTemplate() {
+        return referenceTemplate;
+    }
+
+    public void setReferenceTemplate(Project referenceTemplate) {
+        this.referenceTemplate = referenceTemplate;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     @Override
     public String toString() {
-        return "SRequirement{" +
-                "id=" + id +
+        return "TemplateRequirement{" +
+                "requirementId=" + requirementId +
                 ", showOrder=" + showOrder +
                 ", requirementText='" + requirementText + '\'' +
                 ", priority='" + priority + '\'' +
+                ", noarkRequirementNumber='" + noarkRequirementNumber + '\'' +
+                ", noarkRequirement=" + noarkRequirement +
+                ", noarkRequirementType='" + noarkRequirementType + '\'' +
                 '}';
     }
 }

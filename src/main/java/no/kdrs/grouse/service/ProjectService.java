@@ -26,16 +26,16 @@ public class ProjectService
 
     private EntityManager entityManager;
     private IProjectRepository projectRepository;
-    private IRequirementRepository requirementRepository;
-    private IFunctionalityRepository functionalityRepository;
+    private ITemplateRequirementRepository requirementRepository;
+    private ITemplateFunctionalityRepository functionalityRepository;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
 
     public ProjectService(
             EntityManager entityManager,
             IProjectRepository projectRepository,
-            IRequirementRepository requirementRepository,
-            IFunctionalityRepository functionalityRepository,
+            ITemplateRequirementRepository requirementRepository,
+            ITemplateFunctionalityRepository functionalityRepository,
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository) {
         this.entityManager = entityManager;
@@ -236,18 +236,18 @@ public class ProjectService
             }
         }
 
-        ArrayList<Requirement> requirements =
-                (ArrayList<Requirement>) requirementRepository.findAll();
-        for (Requirement requirement : requirements) {
+        ArrayList<TemplateRequirement> templateRequirements =
+                (ArrayList<TemplateRequirement>) requirementRepository.findAll();
+        for (TemplateRequirement templateRequirement : templateRequirements) {
             ProjectRequirement projectRequirement = new ProjectRequirement();
             projectRequirement.setReferenceProject(project);
-            projectRequirement.setOrder(requirement.getShowOrder());
-            projectRequirement.setPriority(requirement.getPriority());
+            projectRequirement.setOrder(templateRequirement.getShowOrder());
+            projectRequirement.setPriority(templateRequirement.getPriority());
             projectRequirement.setOwnedBy(ownedBy);
             projectRequirement.setRequirementText(
-                    requirement.getRequirementText());
+                    templateRequirement.getRequirementText());
 
-            TemplateFunctionality templateFunctionality = requirement.getFunctionality();
+            TemplateFunctionality templateFunctionality = templateRequirement.getFunctionality();
             String functionalityNumber = templateFunctionality
                     .getFunctionalityNumber();
 

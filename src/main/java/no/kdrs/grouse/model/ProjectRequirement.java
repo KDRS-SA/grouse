@@ -36,7 +36,7 @@ public class ProjectRequirement
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
+    @Column(name = "requirement_id", nullable = false)
     private Long projectRequirementId;
 
     /**

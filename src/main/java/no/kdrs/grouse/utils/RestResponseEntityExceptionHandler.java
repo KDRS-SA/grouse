@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.persistence.EntityNotFoundException;
 
 import static org.springframework.http.HttpStatus.*;
-
 /**
  * This is an implementation of a global exception handler extending the
  * ResponseEntityExceptionHandler in order to gain control status codes and
