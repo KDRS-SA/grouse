@@ -13,7 +13,7 @@ public interface ITemplateFunctionalityRepository
     @Override
     List<TemplateFunctionality> findAll();
 
-    List<TemplateFunctionality> findAllByOrderById();
+    //List<TemplateFunctionality> findAllByOrderById();
 
     List<TemplateFunctionality>
     findByShowMeAndReferenceParentTemplateFunctionality(

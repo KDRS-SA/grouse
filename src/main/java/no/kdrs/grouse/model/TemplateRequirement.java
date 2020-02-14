@@ -86,7 +86,7 @@ public class TemplateRequirement
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "functionality",
             referencedColumnName = "functionality_number")
-    private TemplateFunctionality referenceTemplateFunctionality;
+    private TemplateFunctionality referenceFunctionality;
 
     @JsonIgnore
     @ManyToOne
@@ -127,11 +127,11 @@ public class TemplateRequirement
     }
 
     public TemplateFunctionality getFunctionality() {
-        return referenceTemplateFunctionality;
+        return referenceFunctionality;
     }
 
-    public void setFunctionality(TemplateFunctionality referenceTemplateFunctionality) {
-        this.referenceTemplateFunctionality = referenceTemplateFunctionality;
+    public void setFunctionality(TemplateFunctionality functionality) {
+        this.referenceFunctionality = functionality;
     }
 
     public String getNoarkRequirementNumber() {
@@ -159,15 +159,7 @@ public class TemplateRequirement
     }
 
     public TemplateFunctionality getReferenceTemplateFunctionality() {
-        return referenceTemplateFunctionality;
-    }
-
-    public void setReferenceTemplateFunctionality(TemplateFunctionality referenceTemplateFunctionality) {
-        this.referenceTemplateFunctionality = referenceTemplateFunctionality;
-    }
-
-    public Template getReferenceTemplate() {
-        return referenceTemplate;
+        return referenceFunctionality;
     }
 
     public void setReferenceTemplate(Template referenceTemplate) {

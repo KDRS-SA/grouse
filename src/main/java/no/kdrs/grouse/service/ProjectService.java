@@ -120,8 +120,8 @@ public class ProjectService
         projectRepository.save(project);
 
         ArrayList<TemplateFunctionality> functionalities = (ArrayList<TemplateFunctionality>)
-                functionalityRepository.
-                        findAllByOrderById();
+                functionalityRepository.findAll();
+        //findAllByOrderById();
 
         HashMap<String, ProjectFunctionality> parents = new HashMap<>();
 
