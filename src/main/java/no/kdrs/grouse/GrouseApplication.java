@@ -105,8 +105,9 @@ public class GrouseApplication {
                     Requirements requirements = section.getRequirements();
 
                     if (requirements != null) {
-                        ArrayList<TemplateRequirement> allTemplateRequirements = (ArrayList)
-                                requirements.getTemplateRequirement();
+                        ArrayList<TemplateRequirement> allTemplateRequirements =
+                                (ArrayList<TemplateRequirement>)
+                                        requirements.getTemplateRequirement();
 
                         for (TemplateRequirement templateRequirement : allTemplateRequirements) {
                             System.out.println(templateRequirement.toString());
@@ -116,11 +117,11 @@ public class GrouseApplication {
                         }
                     }
 
-                    ArrayList<Section> childSections = (ArrayList)
-                            section.getSections();
+                    ArrayList<Section> childSections =
+                            (ArrayList<Section>) section.getSections();
 
                     Integer subSectionCount = -1;
-                    for (Section childSection: childSections) {
+                    for (Section childSection : childSections) {
                         subSectionCount++;
                         TemplateFunctionality childTemplateFunctionality = new
                                 TemplateFunctionality.FunctionalityBuilder()
@@ -143,8 +144,10 @@ public class GrouseApplication {
                                 .getRequirements();
 
                         if (childRequirements != null) {
-                            ArrayList<TemplateRequirement> allTemplateRequirements = (ArrayList)
-                                    childRequirements.getTemplateRequirement();
+                            ArrayList<TemplateRequirement>
+                                    allTemplateRequirements =
+                                    (ArrayList<TemplateRequirement>)
+                                            childRequirements.getTemplateRequirement();
 
                             for (TemplateRequirement templateRequirement : allTemplateRequirements) {
                                 System.out.println(templateRequirement.toString());
