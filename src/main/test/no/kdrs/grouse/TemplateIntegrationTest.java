@@ -3,6 +3,7 @@ package no.kdrs.grouse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import no.kdrs.grouse.model.Template;
+import no.kdrs.grouse.spring.AuditConfiguration;
 import no.kdrs.grouse.spring.GrouseUserDetailsService;
 import no.kdrs.grouse.spring.TestSecurityConfiguration;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,6 +53,9 @@ public class TemplateIntegrationTest {
 
     @Autowired
     private GrouseUserDetailsService grouseUserDetailsService;
+
+    @Autowired
+    private AuditConfiguration auditConfiguration;
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext,

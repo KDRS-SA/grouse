@@ -5,6 +5,7 @@ import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -19,6 +20,7 @@ import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Template
         extends RepresentationModel {
 
@@ -55,6 +57,7 @@ public class Template
     @Column(name = VERSION)
     private Long version;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "referenceTemplate")
     private List<TemplateFunctionality> referenceTemplateFunctionality =
             new ArrayList<>();
