@@ -2,6 +2,7 @@ package no.kdrs.grouse.spring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,6 +27,7 @@ import static no.kdrs.grouse.utils.Constants.USER;
 @EnableResourceServer
 @EnableWebSecurity
 @Configuration
+@Profile("!test")
 public class ResourceServerConfiguration
         extends ResourceServerConfigurerAdapter {
 
