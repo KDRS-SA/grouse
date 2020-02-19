@@ -10,11 +10,13 @@ public final class Constants {
     public static final String REQUIREMENT = "krav";
     public static final String FUNCTIONALITY = "function";
     public static final String SELF = "self";
-    public static final String USER = "bruker";
+    public static final String USER = "user";
     public static final String DOCUMENT = "dokument";
     public static final String PROJECT = "prosjekt";
     public static final String TEMPLATE = "template";
     public static final String GROUSE = "grouse";
+    public static final String CONTEXT_PATH = GROUSE;
+
     public static final String PROJECT_REQUIREMENT = "projectRequirement";
     public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
     public static final String TEMPLATE_REQUIREMENT = "templateRequirement";
