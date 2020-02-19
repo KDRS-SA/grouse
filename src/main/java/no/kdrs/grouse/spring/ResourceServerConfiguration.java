@@ -80,16 +80,20 @@ public class ResourceServerConfiguration
      * - Stateless session
      * - Disable csrf as the token is deemed safe
      *
-     * @param http
-     * @throws Exception
+     * @param http HttpSecurity object
+     * @throws Exception if problem configuring cors (No Exception subclass
+     *                   defined, only Exception)
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.cors().and().authorizeRequests()
+        http.cors()
+                .and().authorizeRequests()
                 .antMatchers(OPTIONS, "/oauth/token").permitAll()
                 .antMatchers(OPTIONS, "/").permitAll()
                 .antMatchers(GET, "/").permitAll()
                 .antMatchers(POST, SLASH + USER).permitAll()
+                .antMatchers(GET, USER)
+                .access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
