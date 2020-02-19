@@ -3,12 +3,10 @@ package no.kdrs.grouse.spring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -16,6 +14,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 
 import static no.kdrs.grouse.utils.Constants.SLASH;
 import static no.kdrs.grouse.utils.Constants.USER;
+import static org.springframework.http.HttpMethod.*;
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 /**
  * This is the ResourceServerConfiguration for the application. It sets up the
@@ -85,15 +85,15 @@ public class ResourceServerConfiguration
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.cors().and().authorizeRequests().
-                antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll().
-                antMatchers(HttpMethod.OPTIONS, "/").permitAll().
-                antMatchers(HttpMethod.GET, "/").permitAll().
-                antMatchers(HttpMethod.POST,  SLASH + USER).permitAll().
-                anyRequest().authenticated().
-                and().
-                sessionManagement().sessionCreationPolicy
-                (SessionCreationPolicy.STATELESS).and().
-                csrf().disable();
+        http.cors().and().authorizeRequests()
+                .antMatchers(OPTIONS, "/oauth/token").permitAll()
+                .antMatchers(OPTIONS, "/").permitAll()
+                .antMatchers(GET, "/").permitAll()
+                .antMatchers(POST, SLASH + USER).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(STATELESS)
+                .and()
+                .csrf().disable();
     }
 }
