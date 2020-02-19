@@ -135,8 +135,11 @@ public class UserController {
     @DeleteMapping(value = "/{" + USER + "}")
     public ResponseEntity<String> deleteGrouseUser(
             @PathVariable String username) {
+        projectService.findByOwnedBy(username)
+                .forEach(p -> projectService.delete(p.getProjectId()));
         grouseUserService.delete(username);
         return ResponseEntity.status(OK)
-                .body("GrouseUser with username " + username + " was deleted");
+                .body("GrouseUser with username " + username +
+                        " was deleted");
     }
 }
