@@ -14,7 +14,6 @@ import static javax.security.auth.callback.ConfirmationCallback.OK;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.CREATED;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -130,27 +129,6 @@ public class ProjectController {
         }
         return ResponseEntity.status(OK)
                 .body(projectFunctionalities);
-    }
-
-    @PostMapping
-    public ResponseEntity<Project> createProject(
-            @RequestBody Project project) throws Exception {
-
-        projectService.createProject(project);
-
-        project.add(linkTo(methodOn(ProjectController.class).
-                getProject(project.getProjectId())).withSelfRel());
-
-        project.add(linkTo(methodOn(ProjectController.class).
-                getFunctionalityForProject(project.getProjectId()))
-                .withRel(FUNCTIONALITY));
-
-        project.add(linkTo(DocumentController.class, DocumentController.class.
-                        getMethod("downloadDocument", Long.class),
-                project.getProjectId()).
-                withRel(DOCUMENT));
-
-        return ResponseEntity.status(CREATED).body(project);
     }
 
     @DeleteMapping(PROJECT_NUMBER_PARAMETER)
