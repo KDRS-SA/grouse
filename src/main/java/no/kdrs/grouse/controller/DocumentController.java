@@ -2,8 +2,10 @@
 package no.kdrs.grouse.controller;
 
 import no.kdrs.grouse.model.Project;
+import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.exception.InternalException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.Resource;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 
@@ -32,19 +35,22 @@ import static org.springframework.http.HttpStatus.CREATED;
  * 2. Download the requirements document
  */
 @RestController
-@RequestMapping(value = SLASH + DOCUMENT)
+@RequestMapping
 public class DocumentController {
 
     private IDocumentService documentService;
     private IProjectService projectService;
+    private ITemplateService templateService;
 
     public DocumentController(IDocumentService documentService,
-                              IProjectService projectService) {
+                              IProjectService projectService,
+                              ITemplateService templateService) {
         this.documentService = documentService;
         this.projectService = projectService;
+        this.templateService = templateService;
     }
 
-    @PostMapping(value = PROJECT_NUMBER_PARAMETER)
+    @PostMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + DOCUMENT)
     public ResponseEntity<Project> getRequirement(
             @PathVariable(PROJECT_NUMBER) Long projectId)
             throws Exception {
@@ -72,25 +78,44 @@ public class DocumentController {
                 .body(project);
     }
 
-    @GetMapping(PROJECT_NUMBER_PARAMETER)
-    public HttpEntity<byte[]> downloadDocument(
+    @GetMapping(SLASH + PROJECT + SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
+            DOCUMENT)
+    public HttpEntity<byte[]> downloadProjectDocument(
             @PathVariable(PROJECT_NUMBER) Long projectId)
             throws IOException {
-
         Project project = projectService.findById(projectId);
-
         if (null != project.getFileNameInternal()) {
             throw new InternalException("Can't download document, no filename" +
                     "for project " + projectId);
         }
-
         var file = Paths.get(project.getFileNameInternal());
+        return getDocument(file, project.getFileName());
+    }
+
+    @GetMapping(SLASH + TEMPLATE + SLASH + TEMPLATE_ID_PARAMETER + SLASH +
+            DOCUMENT)
+    public HttpEntity<byte[]> downloadDocument(
+            @PathVariable(TEMPLATE_ID) Long templateId)
+            throws IOException {
+        Template template = templateService.findById(templateId);
+        if (null != template.getFileNameInternal()) {
+            throw new InternalException("Can't download document, no filename" +
+                    "for template " + templateId);
+        }
+        var file = Paths.get(template.getFileNameInternal());
+        return getDocument(file, template.getTemplateName());
+    }
+
+    private HttpEntity<byte[]> getDocument(Path file, String filename)
+            throws IOException {
+
         Resource resource = new UrlResource(file.toUri());
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Content-Type",
                 "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
         String header = "Content-Disposition";
-        String value = "\"attachment; filename=\"" + project.getFileName() + "\"";
+        String value = "\"attachment; filename=\"" + filename + "\"";
+
         responseHeaders.add(header, value);
 
         byte[] documentBody = new byte[(int) Files.size(file)];

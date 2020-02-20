@@ -87,6 +87,16 @@ public class TemplateService
     }
 
     @Override
+    public void createFunctionality(
+            @NotNull final Long templateId,
+            TemplateFunctionality templateFunctionality) {
+        Template template = getTemplateOrThrow(templateId);
+        template.addTemplateFunctionality(templateFunctionality);
+        templateFunctionality.setReferenceTemplate(template);
+        templateFunctionalityRepository.save(templateFunctionality);
+    }
+
+    @Override
     public List<Template> findAll() {
         return (List<Template>) templateRepository.findAll();
     }

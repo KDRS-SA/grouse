@@ -20,7 +20,7 @@ import static org.springframework.http.HttpStatus.OK;
  * Created by tsodring on 29/03/18.
  */
 @RestController
-@RequestMapping(value = SLASH + TEMPLATE_FUNCTIONALITY)
+@RequestMapping(value = SLASH + TEMPLATE + SLASH + FUNCTIONALITY)
 public class TemplateFunctionalityController {
 
     private ITemplateFunctionalityService templateFunctionalityService;
@@ -30,9 +30,9 @@ public class TemplateFunctionalityController {
         this.templateFunctionalityService = templateFunctionalityService;
     }
 
-    @GetMapping(value = "/{krav}/" + REQUIREMENT)
+    @GetMapping(value = FUNCTIONALITY_PARAMETER)
     public ResponseEntity<TemplateFunctionality> getTemplateFunctionality(
-            @PathVariable("krav") Long templateFunctionalityId) {
+            @PathVariable(FUNCTIONALITY) Long templateFunctionalityId) {
 
         TemplateFunctionality templateFunctionality =
                 templateFunctionalityService.findById(templateFunctionalityId);

@@ -5,6 +5,7 @@ import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface ITemplateService {
@@ -26,4 +27,7 @@ public interface ITemplateService {
     List<TemplateFunctionality> findFunctionalityForTemplateByType(
             Long templateId, String type);
 
+    void createFunctionality(@NotNull final Long templateId,
+                             @NotNull TemplateFunctionality
+                                     templateFunctionality);
 }

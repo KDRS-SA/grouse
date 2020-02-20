@@ -70,8 +70,8 @@ public class TemplateFunctionalityService
 
     @Override
     public TemplateFunctionality save(
-            TemplateFunctionality TemplateFunctionality) {
-        return functionalityRepository.save(TemplateFunctionality);
+            TemplateFunctionality templateFunctionality) {
+        return functionalityRepository.save(templateFunctionality);
     }
 
     @Override

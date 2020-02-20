@@ -41,6 +41,12 @@ public class Template
     private OffsetDateTime createdDate;
 
     /**
+     * Name of the requirements document stored on disk
+     */
+    @Column(name = "file_name_internal")
+    private String fileNameInternal;
+
+    /**
      * The date the project was accessed
      */
     @LastModifiedDate
@@ -80,6 +86,14 @@ public class Template
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
+    }
+
+    public String getFileNameInternal() {
+        return fileNameInternal;
+    }
+
+    public void setFileNameInternal(String fileNameInternal) {
+        this.fileNameInternal = fileNameInternal;
     }
 
     public OffsetDateTime getCreatedDate() {
@@ -122,7 +136,13 @@ public class Template
         return referenceTemplateFunctionality;
     }
 
-    public void setReferenceTemplateFunctionality(List<TemplateFunctionality> referenceTemplateFunctionality) {
+    public void setReferenceTemplateFunctionality(
+            List<TemplateFunctionality> referenceTemplateFunctionality) {
         this.referenceTemplateFunctionality = referenceTemplateFunctionality;
+    }
+
+    public void addTemplateFunctionality(
+            TemplateFunctionality templateFunctionality) {
+        this.referenceTemplateFunctionality.add(templateFunctionality);
     }
 }

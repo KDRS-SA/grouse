@@ -17,7 +17,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping(value = TEMPLATE + SLASH)
+@RequestMapping(value = SLASH + TEMPLATE + SLASH)
 public class TemplateController {
 
     private ITemplateService templateService;
@@ -54,7 +54,7 @@ public class TemplateController {
                 .body(templateRequirements);
     }
 
-    @GetMapping(value = TEMPLATE_ID_PARAMETER + FUNCTIONALITY)
+    @GetMapping(value = TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
     public ResponseEntity<List<TemplateFunctionality>>
     getFunctionalityForTemplate(
             @PathVariable(TEMPLATE_ID) Long templateId) {
@@ -134,19 +134,33 @@ public class TemplateController {
 
         templateService.createTemplate(template);
 
-        template.add(linkTo(methodOn(TemplateController.class).
-                getTemplate(template.getTemplateId())).withSelfRel());
+        template.add(linkTo(methodOn(TemplateController.class)
+                .getTemplate(template.getTemplateId())).withSelfRel());
 
-        template.add(linkTo(methodOn(TemplateController.class).
-                getFunctionalityForTemplate(template.getTemplateId()))
+        template.add(linkTo(methodOn(TemplateController.class)
+                .getFunctionalityForTemplate(template.getTemplateId()))
                 .withRel(FUNCTIONALITY));
 
-        template.add(linkTo(DocumentController.class, DocumentController.class.
-                        getMethod("downloadDocument", Long.class),
-                template.getTemplateId()).
-                withRel(DOCUMENT));
+        template.add(linkTo(methodOn(DocumentController.class)
+                .downloadDocument(template.getTemplateId()))
+                .withRel(DOCUMENT));
 
         return ResponseEntity.status(CREATED).body(template);
+    }
+
+    @PostMapping(value = TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
+    public ResponseEntity<TemplateFunctionality> createFunctionality(
+            @PathVariable(TEMPLATE_ID) Long templateId,
+            @RequestBody TemplateFunctionality templateFunctionality) {
+
+        templateService.createFunctionality(templateId, templateFunctionality);
+
+        templateFunctionality.add(linkTo(methodOn
+                (TemplateFunctionalityController.class)
+                .getTemplateFunctionality(templateFunctionality
+                        .getFunctionalityId()))
+                .withSelfRel());
+        return ResponseEntity.status(CREATED).body(templateFunctionality);
     }
 
     @DeleteMapping(TEMPLATE_ID_PARAMETER)

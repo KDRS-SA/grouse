@@ -1,19 +1,28 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 import static no.kdrs.grouse.utils.Constants.*;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @Entity
 @Table(name = TEMPLATE_FUNCTIONALITY_AREAS)
+@EntityListeners(AuditingEntityListener.class)
 public class TemplateFunctionality
         extends RepresentationModel
         implements Serializable {
@@ -76,6 +85,27 @@ public class TemplateFunctionality
     @Column(name = "type")
     private String type;
 
+    @CreatedBy
+    @NotNull
+    @Column(name = OWNED_BY, nullable = false)
+    private String ownedBy;
+
+    /**
+     * The date the template functionality was created
+     */
+    @CreatedDate
+    @Column(name = CREATED_DATE)
+    @DateTimeFormat(iso = DATE_TIME)
+    private OffsetDateTime createdDate;
+
+    /**
+     * The date the project was changed
+     */
+    @LastModifiedDate
+    @Column(name = CHANGED_DATE)
+    @DateTimeFormat(iso = DATE_TIME)
+    private OffsetDateTime lastModifiedDate;
+
     @Version
     @Column(name = VERSION)
     private Long version;
@@ -102,7 +132,7 @@ public class TemplateFunctionality
     }
 
     private TemplateFunctionality(FunctionalityBuilder functionalityBuilder) {
-        this.functionalityNumber = functionalityBuilder.id;
+        this.functionalityNumber = functionalityBuilder.functionalityNumber;
         this.title = functionalityBuilder.sectionTitle;
         this.description = functionalityBuilder.description;
         this.explanation = functionalityBuilder.explanation;
@@ -194,6 +224,30 @@ public class TemplateFunctionality
 
     public Template getReferenceTemplate() {
         return referenceTemplate;
+    }
+
+    public String getOwnedBy() {
+        return ownedBy;
+    }
+
+    public void setOwnedBy(String ownedBy) {
+        this.ownedBy = ownedBy;
+    }
+
+    public OffsetDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(OffsetDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public OffsetDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(OffsetDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public void setReferenceTemplate(Template referenceTemplate) {

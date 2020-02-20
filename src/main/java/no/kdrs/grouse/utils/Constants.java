@@ -11,7 +11,7 @@ public final class Constants {
     public static final String FUNCTIONALITY = "function";
     public static final String SELF = "self";
     public static final String USER = "user";
-    public static final String DOCUMENT = "dokument";
+    public static final String DOCUMENT = "document";
     public static final String PROJECT = "prosjekt";
     public static final String TEMPLATE = "template";
     public static final String GROUSE = "grouse";
