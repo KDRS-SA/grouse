@@ -48,7 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         webEnvironment = RANDOM_PORT)
 //@AutoConfigureRestDocs(outputDir = "target/snippets")
 @ContextConfiguration(classes = {TestSecurityConfiguration.class})
-@ActiveProfiles("test")
+@ActiveProfiles({"test", "do-not-import-datasets"})
 public class TemplateIntegrationTest {
 
     private MockMvc mockMvc;
