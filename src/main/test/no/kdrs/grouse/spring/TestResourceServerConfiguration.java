@@ -2,7 +2,6 @@ package no.kdrs.grouse.spring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,11 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-
-import static no.kdrs.grouse.utils.Constants.SLASH;
-import static no.kdrs.grouse.utils.Constants.USER;
-import static org.springframework.http.HttpMethod.*;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 /**
  * This is the ResourceServerConfiguration for the application. It sets up the
@@ -27,13 +21,12 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableResourceServer
 @EnableWebSecurity
 @Configuration
-@Profile("!test")
-public class ResourceServerConfiguration
+public class TestResourceServerConfiguration
         extends ResourceServerConfigurerAdapter {
 
     private GrouseUserDetailsService userDetailsService;
 
-    public ResourceServerConfiguration(
+    public TestResourceServerConfiguration(
             GrouseUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -80,24 +73,11 @@ public class ResourceServerConfiguration
      * - Stateless session
      * - Disable csrf as the token is deemed safe
      *
-     * @param http HttpSecurity object
-     * @throws Exception if problem configuring cors (No Exception subclass
-     *                   defined, only Exception)
+     * @param http
+     * @throws Exception
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.cors()
-                .and().authorizeRequests()
-                .antMatchers(OPTIONS, "/oauth/token").permitAll()
-                .antMatchers(OPTIONS, "/").permitAll()
-                .antMatchers(GET, "/").permitAll()
-                .antMatchers(POST, SLASH + USER).permitAll()
-                .antMatchers(GET, USER)
-                .access("hasRole('ROLE_ADMIN')")
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement().sessionCreationPolicy(STATELESS)
-                .and()
-                .csrf().disable();
+        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
     }
 }

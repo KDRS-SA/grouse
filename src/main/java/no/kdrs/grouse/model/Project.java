@@ -51,7 +51,6 @@ public class Project
     @Column(name = "file_name_internal")
     private String fileNameInternal;
 
-
     /**
      * Name of the requirements document
      */

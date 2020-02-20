@@ -5,7 +5,6 @@ import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IProjectFunctionalityService;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,8 @@ import java.util.List;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 /**
  * Created by tsodring on 29/03/18.
  */
@@ -28,8 +28,7 @@ public class ProjectFunctionalityController {
         this.projectFunctionalityService = projectFunctionalityService;
     }
 
-    @RequestMapping(value = "/{krav}/" + REQUIREMENT,
-            method = RequestMethod.GET)
+    @GetMapping(value = "/{krav}/" + REQUIREMENT)
     public ResponseEntity<ProjectFunctionality> getProjectFunctionality (
             @PathVariable("krav") Long projectFunctionalityId) {
 
@@ -55,12 +54,11 @@ public class ProjectFunctionalityController {
                 getProjectFunctionality(projectFunctionalityId)).
                 withRel(PROJECT_REQUIREMENT));
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(projectFunctionality);
     }
 
-    @RequestMapping(value = "/{krav}/" + REQUIREMENT,
-            method = RequestMethod.POST)
+    @PostMapping(value = "/{krav}/" + REQUIREMENT)
     public ResponseEntity<ProjectRequirement> createProjectRequirement(
             @PathVariable("krav") Long projectFunctionalityId,
             @RequestBody ProjectRequirement projectRequirement) {
@@ -74,12 +72,12 @@ public class ProjectFunctionalityController {
                 getRequirement(projectRequirement.
                         getProjectRequirementId())).withSelfRel());
 
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.status(CREATED)
                 .body(projectRequirement);
     }
 
 
-    @RequestMapping(value = "/{krav}/krav", method = RequestMethod.PATCH)
+    @PatchMapping(value = "/{krav}/krav")
     public ResponseEntity<ProjectFunctionality> patchFunctionality(
             @PathVariable("krav") Long functionalityNumber,
             @RequestBody PatchObjects patchObjects)
@@ -94,7 +92,7 @@ public class ProjectFunctionalityController {
                         .getProjectFunctionalityId())).
                 withSelfRel());
 
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(projectFunctionality);
     }
 }

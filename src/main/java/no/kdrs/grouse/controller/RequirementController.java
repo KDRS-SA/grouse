@@ -1,15 +1,17 @@
 package no.kdrs.grouse.controller;
 
-import no.kdrs.grouse.model.Requirement;
-import no.kdrs.grouse.service.interfaces.IRequirementService;
-import org.springframework.http.HttpStatus;
+import no.kdrs.grouse.model.TemplateRequirement;
+import no.kdrs.grouse.service.interfaces.ITemplateRequirementService;
+import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static no.kdrs.grouse.utils.Constants.*;
-
+import static no.kdrs.grouse.utils.Constants.REQUIREMENT;
+import static no.kdrs.grouse.utils.Constants.SLASH;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 /**
  * Created by tsodring on 9/25/17.
  */
@@ -17,47 +19,49 @@ import static no.kdrs.grouse.utils.Constants.*;
 @RequestMapping(value = SLASH + REQUIREMENT)
 public class RequirementController {
 
-    private IRequirementService requirementService;
+    private ITemplateRequirementService requirementService;
 
-    RequirementController(IRequirementService requirementService) {
+    RequirementController(ITemplateRequirementService requirementService) {
         this.requirementService = requirementService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Requirement>> getRequirements(
-            @RequestParam(value = REQUIREMENT_TYPE, required = false)
-                    String requirementType) {
-        return ResponseEntity.status(HttpStatus.OK).
+    @GetMapping
+    public ResponseEntity<List<TemplateRequirement>> getRequirements() {
+        return ResponseEntity.status(OK).
                 body(requirementService.findAll());
     }
 
-    @RequestMapping(value = "/{krav:.+}", method = RequestMethod.GET)
-    public ResponseEntity<Requirement> getRequirement(
-            @PathVariable("krav") String requirementNumber) {
-        return ResponseEntity.status(HttpStatus.OK)
+    @GetMapping(value = "/{krav:.+}")
+    public ResponseEntity<TemplateRequirement> getRequirement(
+            @PathVariable("krav") Long requirementNumber) {
+        return ResponseEntity.status(OK)
                 .body(requirementService.
                         findById(requirementNumber));
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Requirement> saveRequirement(
-            @RequestBody Requirement Requirement) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(requirementService.save(Requirement));
+    @PostMapping
+    public ResponseEntity<TemplateRequirement> saveRequirement(
+            @RequestBody TemplateRequirement templateRequirement) {
+        return ResponseEntity.status(CREATED)
+                .eTag(templateRequirement.getVersion().toString())
+                .body(requirementService.save(templateRequirement));
     }
 
-    @RequestMapping(value = "/{krav:.+}", method = RequestMethod.PUT)
-    public ResponseEntity<Requirement> updateRequirement(
-            @PathVariable("krav") String requirementId,
-            @RequestBody Requirement requirement) throws Exception{
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(requirementService.update(requirementId, requirement));
+    @PatchMapping(value = "/{krav}")
+    public ResponseEntity<TemplateRequirement> patchRequirement(
+            @PathVariable("krav") Long requirementNumber,
+            @RequestBody PatchObjects patchObjects) {
+        TemplateRequirement templateRequirement = requirementService
+                .updateTemplateRequirement(patchObjects, requirementNumber);
+        return ResponseEntity.status(OK)
+                .eTag(templateRequirement.getVersion().toString())
+                .body(templateRequirement);
     }
-    
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteRequirement(@PathVariable String id) {
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> deleteRequirement(@PathVariable Long id) {
         requirementService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Requirement with id " + id + " was deleted");
+        return ResponseEntity.status(OK)
+                .body("TemplateRequirement with id " + id + " was deleted");
     }
 }

@@ -112,57 +112,58 @@
       <div class="col-lg-3" style="height: 500px;overflow-y: scroll;">
         <div id="accordion">
           <div class="card" ng-class="{'bg-success': funk1}"
-               ng-repeat="functionality in functionalities track by $index">
+               ng-repeat="templateFunctionality in functionalities track by $index">
             <div class="card-header" id="heading{{$index}}">
               <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{$index}}"
                         aria-expanded="true"
                         aria-controls="collapseOne{{$index}}"
                         style="white-space:normal !important; word-wrap: break-word; word-break: normal;">
-                  {{$index+1}}. {{functionality.title}}
+                  {{$index+1}}. {{templateFunctionality.title}}
                 </button>
               </h5>
             </div>
             <div id="collapseOne{{$index}}" class="collapse show" data-parent="#accordion">
               <!-- Otherwise show a sub-menu -->
               <div class="list-group"
-                   ng-repeat="childFunctionality in functionality.referenceChildProjectFunctionality track by childFunctionality.title">
-                <!-- If the current childFunctionality.referenceChildProjectFunctionality has a sub-child  -->
-                <span ng-if="childFunctionality.referenceChildProjectFunctionality[0]">
+                   ng-repeat="childTemplateFunctionality in templateFunctionality.referenceChildProjectFunctionality track by childTemplateFunctionality.title">
+                <!-- If the current childTemplateFunctionality.referenceChildProjectFunctionality has a sub-child  -->
+                <span ng-if="childTemplateFunctionality.referenceChildProjectFunctionality[0]">
                 <div class="card" ng-class="{'bg-success': funk1}">
-                 <div class="card-header" id="heading{{childFunctionality.projectFunctionalityId}}">
+                 <div class="card-header" id="heading{{childTemplateFunctionality.projectFunctionalityId}}">
                       <h5 class="mb-0">
                       <button class="btn btn-link"
                               data-toggle="collapse"
-                              data-target="#{{childFunctionality.projectFunctionalityId}}"
+                              aria-controls="{{childTemplateFunctionality.projectFunctionalityId}}"
                               aria-expanded="true"
-                              aria-controls="{{childFunctionality.projectFunctionalityId}}"
+                              data-target="#{{childTemplateFunctionality.projectFunctionalityId}}"
                               style="white-space:normal !important; word-wrap: break-word; word-break: normal;">
-                            {{childFunctionality.title}}
+                            {{childTemplateFunctionality.title}}
                       </button>
                       </h5>
                  </div>
-                  <div class="collapse show" data-parent="#heading{{childFunctionality.projectFunctionalityId}}"
-                       id="{{childFunctionality.projectFunctionalityId}}">
+                  <div class="collapse show" data-parent="#heading{{childTemplateFunctionality.projectFunctionalityId}}"
+                       id="{{childTemplateFunctionality.projectFunctionalityId}}">
                     <div class="list-group"
-                         ng-repeat="childFunctionality2 in childFunctionality.referenceChildProjectFunctionality track by childFunctionality2.projectFunctionalityId">
+                         ng-repeat="childFunctionality2 in childTemplateFunctionality.referenceChildProjectFunctionality track by childFunctionality2.projectFunctionalityId">
                       <span
-                        id="{{childFunctionality2.title}}"
-                        data-target="#{{childFunctionality2.projectFunctionalityId}}"
-                        ng-click="selectFunctionality(childFunctionality2, 1); " class="list-group-item"
-                        ng-class="{'list-group-item-success': childFunctionality2.processed, active:childFunctionality2.active}">
+                              id="{{childFunctionality2.title}}"
+                              data-target="#{{childFunctionality2.projectFunctionalityId}}"
+                              ng-click="selectFunctionality(childFunctionality2, 1); " class="list-group-item"
+                              ng-class="{'list-group-item-success': childFunctionality2.processed, active:childFunctionality2.active}">
                           {{childFunctionality2.title}}
                       </span>
                     </div>
                   </div>
                 </div>
               </span>
-                <span ng-if="!childFunctionality.referenceChildProjectFunctionality[0]">
+                <span ng-if="!childTemplateFunctionality.referenceChildProjectFunctionality[0]">
                 <span
-                  data-target="#{{childFunctionality.projectFunctionalityId}}"
-                  ng-click="selectFunctionality(childFunctionality, 1); " class="list-group-item"
-                  ng-class="{'list-group-item-success': childFunctionality.processed, active:childFunctionality.active}">
-                    {{childFunctionality.title }}
+                        class="list-group-item"
+                        data-target="#{{childTemplateFunctionality.projectFunctionalityId}}"
+                        ng-class="{'list-group-item-success': childTemplateFunctionality.processed, active:childTemplateFunctionality.active}"
+                        ng-click="selectFunctionality(childTemplateFunctionality, 1); ">
+                    {{childTemplateFunctionality.title }}
                 </span>
               </span>
               </div>

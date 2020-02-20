@@ -26,16 +26,16 @@ public class ProjectService
 
     private EntityManager entityManager;
     private IProjectRepository projectRepository;
-    private IRequirementRepository requirementRepository;
-    private IFunctionalityRepository functionalityRepository;
+    private ITemplateRequirementRepository requirementRepository;
+    private ITemplateFunctionalityRepository functionalityRepository;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
 
     public ProjectService(
             EntityManager entityManager,
             IProjectRepository projectRepository,
-            IRequirementRepository requirementRepository,
-            IFunctionalityRepository functionalityRepository,
+            ITemplateRequirementRepository requirementRepository,
+            ITemplateFunctionalityRepository functionalityRepository,
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository) {
         this.entityManager = entityManager;
@@ -94,7 +94,7 @@ public class ProjectService
      * The following steps are performed:
      * 1. Retrieve GrouseUser object from loggedin user and associate with project
      * 2. Copy all SRequirement objects and create ProjectRequirement objects
-     * 3. Copy all Functionality objects and create ProjectFunctionality objects
+     * 3. Copy all TemplateFunctionality objects and create ProjectFunctionality objects
      * <p>
      * This is done as each project needs their own copy to work on.
      * Requirements are needed as within the project the used can change the
@@ -119,16 +119,16 @@ public class ProjectService
         project.setOwnedBy(ownedBy);
         projectRepository.save(project);
 
-        ArrayList<Functionality> functionalities = (ArrayList<Functionality>)
-                functionalityRepository.
-                        findAllByOrderById();
+        ArrayList<TemplateFunctionality> functionalities = (ArrayList<TemplateFunctionality>)
+                functionalityRepository.findAll();
+        //findAllByOrderById();
 
         HashMap<String, ProjectFunctionality> parents = new HashMap<>();
 
-        for (Functionality functionality : functionalities) {
+        for (TemplateFunctionality templateFunctionality : functionalities) {
 
             ProjectFunctionality existingProjectFunctionality
-                    = parents.get(functionality.getFunctionalityNumber());
+                    = parents.get(templateFunctionality.getFunctionalityNumber());
 
             if (existingProjectFunctionality != null) {
                 continue;
@@ -138,37 +138,37 @@ public class ProjectService
                     new ProjectFunctionality();
 
             projectFunctionality.setFunctionalityNumber(
-                    functionality.getFunctionalityNumber());
+                    templateFunctionality.getFunctionalityNumber());
             projectFunctionality.setTitle(
-                    functionality.getTitle());
+                    templateFunctionality.getTitle());
             projectFunctionality.setConsequence(
-                    functionality.getConsequence());
+                    templateFunctionality.getConsequence());
             projectFunctionality.setDescription(
-                    functionality.getDescription());
+                    templateFunctionality.getDescription());
             projectFunctionality.setExplanation(
-                    functionality.getExplanation());
+                    templateFunctionality.getExplanation());
             projectFunctionality.setType(
-                    functionality.getType());
+                    templateFunctionality.getType());
             projectFunctionality.setShowMe(
-                    functionality.getShowMe());
+                    templateFunctionality.getShowMe());
             projectFunctionality.setOwnedBy(ownedBy);
             projectFunctionality.setProcessed(false);
             projectFunctionality.setActive(false);
             projectFunctionality.setReferenceProject(project);
 
-            Functionality parentFunctionality =
-                    functionality.getReferenceParentFunctionality();
+            TemplateFunctionality parentTemplateFunctionality =
+                    templateFunctionality.getReferenceParentTemplateFunctionality();
 
-            parents.put(functionality.getFunctionalityNumber(),
+            parents.put(templateFunctionality.getFunctionalityNumber(),
                     projectFunctionality);
 
             // The root contains a null parent, avoids null pointer
-            if (parentFunctionality != null) {
+            if (parentTemplateFunctionality != null) {
 
                 // Everything else has a parent,
                 ProjectFunctionality parentProjectFunctionality =
-                        parents.get(functionality
-                                .getReferenceParentFunctionality().
+                        parents.get(templateFunctionality
+                                .getReferenceParentTemplateFunctionality().
                                         getFunctionalityNumber());
 
                 // This projectFunctionality sets its parent to the
@@ -187,17 +187,17 @@ public class ProjectService
 
             // Check if there are any children that need to be copied
 
-            if (functionality.getReferenceChildFunctionality().size() > 0
+            if (templateFunctionality.getReferenceChildTemplateFunctionality().size() > 0
                     &&
                     // Avoid picking the parent, we only want anything at
                     // level 2
-                    functionality.getReferenceParentFunctionality() != null) {
+                    templateFunctionality.getReferenceParentTemplateFunctionality() != null) {
 
-                for (Functionality childFunctionality : functionality
-                        .getReferenceChildFunctionality()) {
+                for (TemplateFunctionality childTemplateFunctionality : templateFunctionality
+                        .getReferenceChildTemplateFunctionality()) {
 
                     existingProjectFunctionality
-                            = parents.get(functionality.getFunctionalityNumber());
+                            = parents.get(templateFunctionality.getFunctionalityNumber());
 
                     if (existingProjectFunctionality != null) {
                         continue;
@@ -207,27 +207,27 @@ public class ProjectService
                             new ProjectFunctionality();
 
                     childProjectFunctionality.setFunctionalityNumber(
-                            childFunctionality.getFunctionalityNumber());
+                            childTemplateFunctionality.getFunctionalityNumber());
                     childProjectFunctionality.setTitle(
-                            childFunctionality.getTitle());
+                            childTemplateFunctionality.getTitle());
                     childProjectFunctionality.setConsequence(
-                            childFunctionality.getConsequence());
+                            childTemplateFunctionality.getConsequence());
                     childProjectFunctionality.setDescription(
-                            childFunctionality.getDescription());
+                            childTemplateFunctionality.getDescription());
                     childProjectFunctionality.setExplanation(
-                            childFunctionality.getExplanation());
+                            childTemplateFunctionality.getExplanation());
                     childProjectFunctionality.setType(
-                            childFunctionality.getType());
+                            childTemplateFunctionality.getType());
                     childProjectFunctionality.setOwnedBy(ownedBy);
                     childProjectFunctionality.setShowMe(
-                            childFunctionality.getShowMe());
+                            childTemplateFunctionality.getShowMe());
                     childProjectFunctionality.setProcessed(false);
                     childProjectFunctionality.setActive(false);
                     projectFunctionality
                             .addReferenceChildProjectFunctionality(childProjectFunctionality);
                     childProjectFunctionality.setReferenceParentFunctionality(projectFunctionality);
 
-                    parents.put(functionality.getFunctionalityNumber(),
+                    parents.put(templateFunctionality.getFunctionalityNumber(),
                             childProjectFunctionality);
 
                     projectFunctionalityRepository.save
@@ -236,19 +236,19 @@ public class ProjectService
             }
         }
 
-        ArrayList<Requirement> requirements =
-                (ArrayList<Requirement>) requirementRepository.findAll();
-        for (Requirement requirement : requirements) {
+        ArrayList<TemplateRequirement> templateRequirements =
+                (ArrayList<TemplateRequirement>) requirementRepository.findAll();
+        for (TemplateRequirement templateRequirement : templateRequirements) {
             ProjectRequirement projectRequirement = new ProjectRequirement();
             projectRequirement.setReferenceProject(project);
-            projectRequirement.setOrder(requirement.getShowOrder());
-            projectRequirement.setPriority(requirement.getPriority());
+            projectRequirement.setOrder(templateRequirement.getShowOrder());
+            projectRequirement.setPriority(templateRequirement.getPriority());
             projectRequirement.setOwnedBy(ownedBy);
             projectRequirement.setRequirementText(
-                    requirement.getRequirementText());
+                    templateRequirement.getRequirementText());
 
-            Functionality functionality = requirement.getFunctionality();
-            String functionalityNumber = functionality
+            TemplateFunctionality templateFunctionality = templateRequirement.getFunctionality();
+            String functionalityNumber = templateFunctionality
                     .getFunctionalityNumber();
 
 

@@ -1,16 +1,17 @@
 package no.kdrs.grouse.controller;
 
-import no.kdrs.grouse.model.Functionality;
-import no.kdrs.grouse.service.interfaces.IFunctionalityService;
-import org.springframework.http.HttpStatus;
+import no.kdrs.grouse.model.TemplateFunctionality;
+import no.kdrs.grouse.service.interfaces.ITemplateFunctionalityService;
+import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
 import static no.kdrs.grouse.utils.Constants.SLASH;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -19,56 +20,58 @@ import static no.kdrs.grouse.utils.Constants.SLASH;
 @RequestMapping(value = SLASH + FUNCTIONALITY)
 public class FunctionalityController {
 
-    private IFunctionalityService functionalityService;
+    private ITemplateFunctionalityService functionalityService;
 
-    FunctionalityController(IFunctionalityService functionalityService) {
+    FunctionalityController(ITemplateFunctionalityService functionalityService) {
         this.functionalityService = functionalityService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Functionality>> getFunctionalities() {
+    @GetMapping
+    public ResponseEntity<List<TemplateFunctionality>> getFunctionalities() {
         return new ResponseEntity<>
-                (functionalityService.findAll(), HttpStatus.OK);
+                (functionalityService.findAll(), OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/meny/{parent:.+}"
-    )
-    public ResponseEntity<List<Functionality>> getFunctionalityForMenu(
+    @GetMapping(value = "/meny/{parent:.+}")
+    public ResponseEntity<List<TemplateFunctionality>> getFunctionalityForMenu(
             @PathVariable("parent") String parent) {
         return new ResponseEntity<>(functionalityService
                 .findByShowMeAndReferenceParentFunctionality(
-                        true, parent), HttpStatus.OK);
+                        true, parent), OK);
     }
 
-    @RequestMapping(value = "/{funksjon:.+}", method = RequestMethod.GET)
-    public ResponseEntity<Functionality>
+    @GetMapping(value = "/{funksjon:.+}")
+    public ResponseEntity<TemplateFunctionality>
     getFunctionality(@PathVariable("funksjon") String functionalityNumber) {
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(OK)
                 .body(functionalityService.findByFunctionalityNumber
                         (functionalityNumber));
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Functionality> saveFunctionality(
-            @RequestBody Functionality Functionality) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(functionalityService.save(Functionality));
+    @PostMapping
+    public ResponseEntity<TemplateFunctionality> saveFunctionality(
+            @RequestBody TemplateFunctionality TemplateFunctionality) {
+        return ResponseEntity.status(CREATED)
+                .body(functionalityService.save(TemplateFunctionality));
     }
 
-    @RequestMapping(value = "/{funksjon:.+}", method = RequestMethod.PUT)
-    public ResponseEntity<Functionality> updateFunctionality(
+
+    @PatchMapping(value = "/{funksjon:.+}")
+    public ResponseEntity<TemplateFunctionality> updateFunctionality(
             @PathVariable("funksjon") Long id,
-            @RequestBody Functionality functionality)
-            throws EntityNotFoundException {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(functionalityService.update(
-                        id, functionality));
+            @RequestBody PatchObjects patchObjects)
+            throws Exception {
+        TemplateFunctionality templateFunctionality = functionalityService
+                .updateProjectFunctionality(patchObjects, id);
+        return ResponseEntity.status(OK)
+                .eTag(templateFunctionality.getVersion().toString())
+                .body(templateFunctionality);
     }
-    
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deleteFunctionality(@PathVariable Long id) {
         functionalityService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Functionality with id " + id + " was deleted");
+        return ResponseEntity.status(OK)
+                .body("TemplateFunctionality with id " + id + " was deleted");
     }
 }
