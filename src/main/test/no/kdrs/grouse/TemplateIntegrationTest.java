@@ -91,7 +91,7 @@ public class TemplateIntegrationTest {
                 .contentType(APPLICATION_JSON)
                 .content(new Gson().toJson(template))
                 .with(user(grouseUserDetailsService
-                        .loadUserByUsername("admin@kdrs.no"))));
+                        .loadUserByUsername("admin@example.com"))));
 
         MockHttpServletResponse response = resultActions.andReturn().getResponse();
         System.out.println(response.getContentAsString());
@@ -166,7 +166,7 @@ public class TemplateIntegrationTest {
                 .contentType(APPLICATION_JSON)
                 .content(new Gson().toJson(templateFunctionality))
                 .with(user(grouseUserDetailsService
-                        .loadUserByUsername("admin@kdrs.no"))));
+                        .loadUserByUsername("admin@example.com"))));
 
         Pattern pattern = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
                 SLASH + FUNCTIONALITY + SLASH + "\\d$");

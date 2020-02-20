@@ -64,7 +64,7 @@ and get a token. If you are testing Grouse fresh from a clone, be aware of the f
 It runs on port 9294. An Authorization token is also set for your convenience. You 
 should be able to get an Authorization token using the following command:  
 
-    `curl -v -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=admin@kdrs.no -d password=password`
+    `curl -v -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=admin@example.com -d password=password`
 
 ## GUI
 

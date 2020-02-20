@@ -27,7 +27,7 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
  *
  * curl -v  grouse-client:secret@localhost:9294/grouse/oauth/token
  * -d grant_type=password
- * -d username=admin@kdrs.no
+ * -d username=admin@example.com
  * -d password=password
  *
  * Obviously everything should be on one line.
