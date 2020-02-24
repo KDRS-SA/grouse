@@ -29,6 +29,7 @@ export class kravEditComponent implements OnInit {
   private userData: UserData;
   private projectLink: string;
   private mainData: projectFunctionality[];
+  private newReqPriority: string;
 
   private treeControl: NestedTreeControl<Requirment>;
   private dataSource: MatTreeNestedDataSource<Requirment>;
@@ -188,6 +189,7 @@ export class kravEditComponent implements OnInit {
       }
     }
     // this.sideBarOpen = false;
+    this.newReqPriority = 'O';
   }
 
   /**
@@ -224,13 +226,12 @@ export class kravEditComponent implements OnInit {
    *
    * handles a change in requirement priority.
    */
-  updateRequirementPriority(index: number) {
+  updateRequirementPriority(index: number, priority: string) {
     const patchString = '[{ "op": "replace", "path": "/priority", "value": "' +
-      this.currentReq.referenceProjectRequirement[index].priority + '"}]';
+      priority + '"}]';
 
     this.sendPatch(patchString, this.currentReq.referenceProjectRequirement[index]._links.self.href);
   }
-
   /**
    * sendPatch
    *
@@ -249,6 +250,32 @@ export class kravEditComponent implements OnInit {
     }, error => {
       console.error(error);
     });
+  }
+
+  addRequirment() {
+    let body = new HttpParams();
+    // @ts-ignore
+    body = body.set('requirmentText', document.getElementById('NyttKrav').value);
+    body = body.append('priority', this.newReqPriority);
+
+    this.http.post(
+      this.currentReq._links.self.href,
+      {
+        requirmentText: document.getElementById('NyttKrav').value,
+        priority: this.newReqPriority
+      }, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      console.log(result);
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  newReqPriorityChange(priority: string) {
+    this.newReqPriority = priority;
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;

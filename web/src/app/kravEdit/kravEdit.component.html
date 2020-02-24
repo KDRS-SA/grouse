@@ -85,12 +85,12 @@
             </mat-form-field>
             <div class="Krav-options">
               <mat-button-toggle-group>
-                <mat-button-toggle>O</mat-button-toggle>
-                <mat-button-toggle>1</mat-button-toggle>
-                <mat-button-toggle>2</mat-button-toggle>
-                <mat-button-toggle>O(i)</mat-button-toggle>
-                <mat-button-toggle>1(i)</mat-button-toggle>
-                <mat-button-toggle>2(i)</mat-button-toggle>
+                <mat-button-toggle [checked]="req.priority == 'O'" (click)="updateRequirementPriority(i, 'O')">O</mat-button-toggle>
+                <mat-button-toggle [checked]="req.priority == '1'" (click)="updateRequirementPriority(i, '1')">1</mat-button-toggle>
+                <mat-button-toggle [checked]="req.priority == '2'" (click)="updateRequirementPriority(i, '2')">2</mat-button-toggle>
+                <mat-button-toggle [checked]="req.priority == 'O (i)'" (click)="updateRequirementPriority(i, 'O (i)')">O(i)</mat-button-toggle>
+                <mat-button-toggle [checked]="req.priority == '1 (i)'" (click)="updateRequirementPriority(i, '1 (i)')">1(i)</mat-button-toggle>
+                <mat-button-toggle [checked]="req.priority == '2 (i)'" (click)="updateRequirementPriority(i, '2 (i)')">2(i)</mat-button-toggle>
               </mat-button-toggle-group>
               <br>
               <button mat-raised-button>Slett</button>
@@ -101,19 +101,19 @@
           <div class="flex-column">
             <mat-form-field class="Krav-form">
               <mat-label>Krav</mat-label>
-              <textarea class="Krav-input" matInput placeholder="Nytt krav"></textarea>
+              <textarea class="Krav-input" matInput placeholder="Nytt krav" id="NyttKrav"></textarea>
             </mat-form-field>
             <div class="Krav-options">
-              <mat-button-toggle-group>
-                <mat-button-toggle>O</mat-button-toggle>
-                <mat-button-toggle>1</mat-button-toggle>
-                <mat-button-toggle>2</mat-button-toggle>
-                <mat-button-toggle>O(i)</mat-button-toggle>
-                <mat-button-toggle>1(i)</mat-button-toggle>
-                <mat-button-toggle>2(i)</mat-button-toggle>
+              <mat-button-toggle-group id="NewReqPriorityButtons">
+                <mat-button-toggle (click)="newReqPriorityChange('O')" checked>O</mat-button-toggle>
+                <mat-button-toggle (click)="newReqPriorityChange('1')">1</mat-button-toggle>
+                <mat-button-toggle (click)="newReqPriorityChange('2')">2</mat-button-toggle>
+                <mat-button-toggle (click)="newReqPriorityChange('O (i)')">O(i)</mat-button-toggle>
+                <mat-button-toggle (click)="newReqPriorityChange('1 (i)')">1(i)</mat-button-toggle>
+                <mat-button-toggle (click)="newReqPriorityChange('2 (i)')">2(i)</mat-button-toggle>
               </mat-button-toggle-group>
               <br>
-              <button mat-raised-button>Legg til krav</button>
+              <button mat-raised-button (click)="addRequirment()">Legg til krav</button>
             </div>
           </div>
         </mat-tab>
