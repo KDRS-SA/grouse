@@ -188,19 +188,59 @@ export class kravEditComponent implements OnInit {
       }
     }
     // this.sideBarOpen = false;
-    console.log(this.currentReq);
-    this.updateRequirement(1);
   }
 
-  updateRequirement(index: number) {
+  /**
+   * updateRequirementText
+   *
+   * handles a change in requirement text.
+   */
+  updateRequirementText(index: number) {
     const req = this.currentReq.referenceProjectRequirement[index];
 
-    const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
-      req.requirementText + '"}]';
-    console.log(req._links.self.href);
-    console.log(patchString);
+    // @ts-ignore
+    req.requirementText = document.getElementById('field-' + index).value;
 
-    this.http.patch(req._links.self.href, patchString, {
+    const patchString = '[{ "op": "replace", "path": "/requirementText", "value": "' +
+      req.requirementText + '"}]';
+
+    this.sendPatch(patchString, req._links.self.href);
+  }
+
+  /**
+   * updateFunctionalityProcessed
+   *
+   * handles a change in requirement text.
+   */
+  updateFunctionalityProcessed() {
+    const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
+      this.currentReq.processed + '"}]';
+
+    this.sendPatch(patchString, this.currentReq._links.self.href);
+  }
+
+  /**
+   * updateRequirementPriority
+   *
+   * handles a change in requirement priority.
+   */
+  updateRequirementPriority(index: number) {
+    const patchString = '[{ "op": "replace", "path": "/priority", "value": "' +
+      this.currentReq.referenceProjectRequirement[index].priority + '"}]';
+
+    this.sendPatch(patchString, this.currentReq.referenceProjectRequirement[index]._links.self.href);
+  }
+
+  /**
+   * sendPatch
+   *
+   * Sends patches to the server, used by all update functions
+   *
+   * @param patchString
+   * Inputted patchstring to send
+   */
+  sendPatch(patchString: string, url: string) {
+    this.http.patch(url, JSON.parse(patchString), {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
@@ -210,8 +250,6 @@ export class kravEditComponent implements OnInit {
       console.error(error);
     });
   }
-
-
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
 }
@@ -257,4 +295,4 @@ const TREE_DATA: Requirment[] = [
       }
     ]
   }
-]
+];
