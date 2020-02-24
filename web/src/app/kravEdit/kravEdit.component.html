@@ -75,6 +75,50 @@
     </mat-tree>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
+    <mat-card class="Krav-card-edit">
+      <mat-tab-group>
+        <mat-tab *ngFor="let req of this.currentReq.referenceProjectRequirement; let i = index" label="{{i+1}}">
+          <div class="flex-column">
+            <mat-form-field class="Krav-form">
+              <mat-label>Krav</mat-label>
+              <textarea class="Krav-input" matInput value="{{req.requirementText}}"></textarea>
+            </mat-form-field>
+            <div class="Krav-options">
+              <mat-button-toggle-group>
+                <mat-button-toggle>O</mat-button-toggle>
+                <mat-button-toggle>1</mat-button-toggle>
+                <mat-button-toggle>2</mat-button-toggle>
+                <mat-button-toggle>O(i)</mat-button-toggle>
+                <mat-button-toggle>1(i)</mat-button-toggle>
+                <mat-button-toggle>2(i)</mat-button-toggle>
+              </mat-button-toggle-group>
+              <br>
+              <button mat-raised-button>Slett</button>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Ny">
+          <div class="flex-column">
+            <mat-form-field class="Krav-form">
+              <mat-label>Krav</mat-label>
+              <textarea class="Krav-input" matInput placeholder="Nytt krav"></textarea>
+            </mat-form-field>
+            <div class="Krav-options">
+              <mat-button-toggle-group>
+                <mat-button-toggle>O</mat-button-toggle>
+                <mat-button-toggle>1</mat-button-toggle>
+                <mat-button-toggle>2</mat-button-toggle>
+                <mat-button-toggle>O(i)</mat-button-toggle>
+                <mat-button-toggle>1(i)</mat-button-toggle>
+                <mat-button-toggle>2(i)</mat-button-toggle>
+              </mat-button-toggle-group>
+              <br>
+              <button mat-raised-button>Legg til krav</button>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
     <mat-card class="Krav-card">
       <mat-card-header>
         <h2>{{currentReq.title}}</h2>
@@ -87,20 +131,6 @@
         <h4>Konsekvens</h4>
         <div>{{currentReq.consequence}}</div>
       </mat-card-content>
-    </mat-card>
-    <mat-card class="Krav-card-edit">
-      <mat-tab-group>
-        <mat-tab *ngFor="let req of this.currentReq.referenceProjectRequirement; let i = index" label="{{i+1}}">
-          <mat-form-field class="Krav-form">
-            <mat-label>Krav</mat-label>
-            <textarea id="field-{{i}}" class="Krav-input" matInput value="{{req.requirementText}}" (change)="updateRequirementText(i)"></textarea>
-          </mat-form-field>
-        </mat-tab>
-        <mat-tab label="Ny">
-          <p>test</p>
-          <button mat-raised-button>test</button>
-        </mat-tab>
-      </mat-tab-group>
     </mat-card>
   </mat-sidenav-content>
 </mat-sidenav-container>
