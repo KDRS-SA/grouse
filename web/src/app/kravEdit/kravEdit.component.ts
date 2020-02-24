@@ -201,10 +201,10 @@ export class kravEditComponent implements OnInit {
     // @ts-ignore
     req.requirementText = document.getElementById('field-' + index).value;
 
-    const patchString = JSON.parse('[{ "op": "replace", "path": "/requirementText", "value": "' +
-      req.requirementText + '"}]');
+    const patchString = '[{ "op": "replace", "path": "/requirementText", "value": "' +
+      req.requirementText + '"}]';
 
-    this.sendPatch(patchString);
+    this.sendPatch(patchString, req._links.self.href);
   }
 
   /**
@@ -213,10 +213,10 @@ export class kravEditComponent implements OnInit {
    * handles a change in requirement text.
    */
   updateFunctionalityProcessed() {
-    const patchString = JSON.parse('[{ "op": "replace", "path": "/processed", "value": "' +
-      this.currentReq.processed + '"}]');
+    const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
+      this.currentReq.processed + '"}]';
 
-    this.sendPatch(patchString);
+    this.sendPatch(patchString, this.currentReq._links.self.href);
   }
 
   /**
@@ -225,10 +225,10 @@ export class kravEditComponent implements OnInit {
    * handles a change in requirement priority.
    */
   updateRequirementPriority(index: number) {
-    const patchString = JSON.parse('[{ "op": "replace", "path": "/priority", "value": "' +
-      this.currentReq.referenceProjectRequirement[index].priority + '"}]');
+    const patchString = '[{ "op": "replace", "path": "/priority", "value": "' +
+      this.currentReq.referenceProjectRequirement[index].priority + '"}]';
 
-    this.sendPatch(patchString);
+    this.sendPatch(patchString, this.currentReq.referenceProjectRequirement[index]._links.self.href);
   }
 
   /**
@@ -239,8 +239,8 @@ export class kravEditComponent implements OnInit {
    * @param patchString
    * Inputted patchstring to send
    */
-  sendPatch(patchString: string) {
-    this.http.patch(this.currentReq._links.self.href, patchString, {
+  sendPatch(patchString: string, url: string) {
+    this.http.patch(url, JSON.parse(patchString), {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
