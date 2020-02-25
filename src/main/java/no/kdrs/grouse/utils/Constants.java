@@ -7,6 +7,10 @@ public final class Constants {
 
     // Used as part of webaddress
     public static final String SLASH = "/";
+    public static final String QUESTION_MARK = "?";
+    public static final String EQUALS = "=";
+    public static final String ESCAPE = "\\";
+    public static final String AMPERSAND = "&";
     public static final String REQUIREMENT = "krav";
     public static final String FUNCTIONALITY = "function";
     public static final String SELF = "self";
@@ -16,12 +20,19 @@ public final class Constants {
     public static final String TEMPLATE = "template";
     public static final String GROUSE = "grouse";
     public static final String CONTEXT_PATH = GROUSE;
+    public static final String SYSTEM_USER = "grouse";
 
     public static final String PROJECT_REQUIREMENT = "projectRequirement";
     public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
     public static final String TEMPLATE_REQUIREMENT = "templateRequirement";
     public static final String TEMPLATE_FUNCTIONALITY = "templateFunctionality";
     public static final String REQUIREMENT_TYPE = "krav_type";
+    public static final String PAGE = "page";
+    public static final String SIZE = "size";
+    public static final Integer DEFAULT_PAGE_NUMBER = 0;
+    public static final Integer DEFAULT_PAGE_SIZE = 20;
+    public static final String ETAG = "\"ETAG\"";
+    public static final String REPLACE = "replace";
 
     public static final String PROJECT_NUMBER = "projectNumber";
     public static final String TEMPLATE_ID = "templateId";
@@ -44,8 +55,11 @@ public final class Constants {
     public static final String OWNED_BY = "owned_by";
     public static final String VERSION = "version";
 
-    public static final String TEMPLATE_FUNCTIONALITY_AREAS =
+    public static final String TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME =
             "template_functionality_areas";
+
+    public static final String TEMPLATE_REQUIREMENT_TABLE_NAME =
+            "template_requirements";
 
     // Table cell ordering
     /**
@@ -81,4 +95,11 @@ public final class Constants {
     public static final String REL_LOGIN_OAUTH = "login OAuth2";
     public static final String REL_LOGOUT_OAUTH = "logout OAuth2";
     public static final String REL_USER = "konto";
+
+    public static final String ETAG_NAN =
+            "ETAG value is not numeric! ETAG must be a number >= 0.";
+    public static final String ETAG_MISSING =
+            "ETAG value is missing! Patch request requires an ETAG!";
+    public static final String ETAG_VALUE_LESS_0 =
+            "ETAG value is < 0! ETAG values start at 0!";
 }

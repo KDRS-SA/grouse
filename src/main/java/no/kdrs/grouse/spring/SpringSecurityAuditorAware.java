@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import javax.annotation.ManagedBean;
 import java.util.Optional;
 
+import static no.kdrs.grouse.utils.Constants.SYSTEM_USER;
+
 @ManagedBean
 public class SpringSecurityAuditorAware
         implements AuditorAware<String> {
@@ -16,6 +18,9 @@ public class SpringSecurityAuditorAware
     public Optional<String> getCurrentAuditor() {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return Optional.of(SYSTEM_USER);
+        }
         if (authentication.getPrincipal() instanceof String) {
             return Optional.of((String) authentication.getPrincipal());
         }

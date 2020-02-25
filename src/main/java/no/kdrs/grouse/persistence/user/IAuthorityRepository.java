@@ -1,7 +1,7 @@
 package no.kdrs.grouse.persistence.user;
 
 import no.kdrs.grouse.model.user.Authority;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAuthorityRepository
-        extends CrudRepository<Authority, String> {
+        extends PagingAndSortingRepository<Authority, String> {
 }

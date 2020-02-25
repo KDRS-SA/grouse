@@ -12,15 +12,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 import static javax.persistence.GenerationType.SEQUENCE;
-import static no.kdrs.grouse.utils.Constants.REQUIREMENT_PK_ID;
-import static no.kdrs.grouse.utils.Constants.VERSION;
+import static no.kdrs.grouse.utils.Constants.*;
 
 /**
  * Created by tsodring on 9/8/17.
  */
 
 @Entity
-@Table(name = "requirements")
+@Table(name = TEMPLATE_REQUIREMENT_TABLE_NAME)
 @XmlRootElement(name = "requirement")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TemplateRequirement

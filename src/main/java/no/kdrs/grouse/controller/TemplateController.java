@@ -1,45 +1,69 @@
-
 package no.kdrs.grouse.controller;
 
+import no.kdrs.grouse.assemblers.TemplateAssembler;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
+import no.kdrs.grouse.model.links.LinksTemplate;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
+import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.exception.InternalException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.List;
 
-import static javax.security.auth.callback.ConfirmationCallback.OK;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
-@RequestMapping(value = SLASH + TEMPLATE + SLASH)
+@RequestMapping(value = SLASH + TEMPLATE)
 public class TemplateController {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(TemplateController.class);
+
     private ITemplateService templateService;
+    private PagedResourcesAssembler<Template> pagedResourcesAssembler;
+    private TemplateAssembler templateAssembler;
 
-    public TemplateController(ITemplateService templateService) {
+    public TemplateController(
+            ITemplateService templateService,
+            PagedResourcesAssembler<Template> pagedResourcesAssembler,
+            TemplateAssembler templateAssembler) {
         this.templateService = templateService;
+        this.pagedResourcesAssembler = pagedResourcesAssembler;
+        this.templateAssembler = templateAssembler;
     }
 
-    @GetMapping(value = TEMPLATE_ID_PARAMETER)
-    public ResponseEntity<Template> getTemplate(
+    @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
+    public ResponseEntity<LinksTemplate> getTemplate(
             @PathVariable(TEMPLATE_ID) Long templateId) {
-        Template template = templateService.findById(templateId);
-        template.add(linkTo(methodOn(TemplateController.class).
-                getTemplate(templateId)).withSelfRel());
-        template.add(linkTo(methodOn(TemplateController.class).
-                getFunctionalityForTemplate(templateId))
-                .withRel(FUNCTIONALITY));
-        return ResponseEntity.status(OK)
-                .body(template);
+        return addTemplateLinks(templateService.findById(templateId), OK);
     }
 
-    @GetMapping(value = TEMPLATE_ID_PARAMETER + SLASH +
+    @GetMapping
+    public ResponseEntity<PagedModel<LinksTemplate>>
+    getTemplate(Pageable pageable) {
+        Page<Template> templates = templateService.findAll(pageable);
+        PagedModel<LinksTemplate> templateModels =
+                pagedResourcesAssembler.toModel(templates, templateAssembler);
+        return ResponseEntity.status(OK)
+                .body(templateModels);
+    }
+
+    @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH +
             FUNCTIONALITY + FUNCTIONALITY_PARAMETER)
     public ResponseEntity<List<TemplateRequirement>>
     getRequirementsForFunctionality(
@@ -54,7 +78,7 @@ public class TemplateController {
                 .body(templateRequirements);
     }
 
-    @GetMapping(value = TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
+    @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
     public ResponseEntity<List<TemplateFunctionality>>
     getFunctionalityForTemplate(
             @PathVariable(TEMPLATE_ID) Long templateId) {
@@ -129,26 +153,13 @@ public class TemplateController {
     }
 
     @PostMapping
-    public ResponseEntity<Template> createTemplate(
+    public ResponseEntity<LinksTemplate> createTemplate(
             @RequestBody Template template) throws Exception {
-
-        templateService.createTemplate(template);
-
-        template.add(linkTo(methodOn(TemplateController.class)
-                .getTemplate(template.getTemplateId())).withSelfRel());
-
-        template.add(linkTo(methodOn(TemplateController.class)
-                .getFunctionalityForTemplate(template.getTemplateId()))
-                .withRel(FUNCTIONALITY));
-
-        template.add(linkTo(methodOn(DocumentController.class)
-                .downloadDocument(template.getTemplateId()))
-                .withRel(DOCUMENT));
-
-        return ResponseEntity.status(CREATED).body(template);
+        return addTemplateLinks(
+                templateService.createTemplate(template), CREATED);
     }
 
-    @PostMapping(value = TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
+    @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
     public ResponseEntity<TemplateFunctionality> createFunctionality(
             @PathVariable(TEMPLATE_ID) Long templateId,
             @RequestBody TemplateFunctionality templateFunctionality) {
@@ -163,12 +174,43 @@ public class TemplateController {
         return ResponseEntity.status(CREATED).body(templateFunctionality);
     }
 
-    @DeleteMapping(TEMPLATE_ID_PARAMETER)
-    public ResponseEntity<String> deleteTemplate(
+    @PatchMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
+    public ResponseEntity<LinksTemplate> patchRequirement(
+            @PathVariable(TEMPLATE_ID) Long templateId,
+            @RequestBody PatchObjects patchObjects) throws Exception {
+        return addTemplateLinks(templateService.update(
+                templateId, patchObjects), OK);
+    }
+
+    @DeleteMapping(SLASH + TEMPLATE_ID_PARAMETER)
+    public ResponseEntity<Void> deleteTemplate(
             @PathVariable(TEMPLATE_ID) Long templateId) {
         templateService.delete(templateId);
-        return ResponseEntity.status(OK)
-                .body("{\"templateId\" : " + templateId + "}" +
-                        "{\"status\" : \"deleted\"}");
+        return ResponseEntity.status(NO_CONTENT)
+                .body(null);
+    }
+
+    private ResponseEntity<LinksTemplate> addTemplateLinks(
+            @NotNull final Template template,
+            @NotNull final HttpStatus status) {
+
+        try {
+            LinksTemplate linksTemplate = new LinksTemplate(template);
+            linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                    .getTemplate(template.getTemplateId())).withSelfRel());
+            linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                    .getFunctionalityForTemplate(template.getTemplateId()))
+                    .withRel(FUNCTIONALITY));
+            linksTemplate.add(linkTo(methodOn(DocumentController.class)
+                    .downloadDocument(template.getTemplateId()))
+                    .withRel(DOCUMENT));
+            return ResponseEntity.status(status)
+                    .body(linksTemplate);
+        } catch (IOException e) {
+            String errorMessage =
+                    "Error when adding template links: " + e.getMessage();
+            logger.error(errorMessage);
+            throw new InternalException(errorMessage);
+        }
     }
 }
