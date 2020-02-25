@@ -19,7 +19,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
-import {kravEditComponent} from './kravEdit/kravEdit.component';
+import {DeleteRequirmentDialog, kravEditComponent} from './kravEdit/kravEdit.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
 import {userEditComponent} from './UserEdit/userEdit.component';
@@ -33,7 +33,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     kravEditComponent,
     NewProjectDialog,
     GDPRContent,
-    userEditComponent
+    userEditComponent,
+    DeleteRequirmentDialog
   ],
     imports: [
         BrowserModule,
@@ -65,11 +66,13 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
   bootstrap: [AppComponent],
   exports: [
     NewProjectDialog,
-    GDPRContent
+    GDPRContent,
+    DeleteRequirmentDialog
   ],
   entryComponents: [
     NewProjectDialog,
-    GDPRContent
+    GDPRContent,
+    DeleteRequirmentDialog
   ]
 })
 export class AppModule { }

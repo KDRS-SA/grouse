@@ -76,14 +76,14 @@
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
     <mat-card class="Krav-card-edit">
-      <mat-tab-group>
+      <mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="selectedTab = $event">
         <mat-tab *ngFor="let req of this.currentReq.referenceProjectRequirement; let i = index" label="{{i+1}}">
           <div class="flex-column">
             <mat-form-field class="Krav-form">
               <mat-label>Krav</mat-label>
-              <textarea class="Krav-input" matInput value="{{req.requirementText}}"></textarea>
+              <textarea id="field-{{i}}" class="Krav-input" matInput value="{{req.requirementText}}" (change)="updateRequirementText(i)"></textarea>
             </mat-form-field>
-            <div class="Krav-options">
+            <div class="Krav-options flex-row-between p-10">
               <mat-button-toggle-group>
                 <mat-button-toggle [checked]="req.priority == 'O'" (click)="updateRequirementPriority(i, 'O')">O</mat-button-toggle>
                 <mat-button-toggle [checked]="req.priority == '1'" (click)="updateRequirementPriority(i, '1')">1</mat-button-toggle>
@@ -93,17 +93,20 @@
                 <mat-button-toggle [checked]="req.priority == '2 (i)'" (click)="updateRequirementPriority(i, '2 (i)')">2(i)</mat-button-toggle>
               </mat-button-toggle-group>
               <br>
-              <button mat-raised-button>Slett</button>
+              <div>
+                <button color="warn" mat-raised-button (click)="removeRequirment(i)" class="Krav-options-button"><i class="material-icons">delete_forever</i></button>
+              </div>
             </div>
           </div>
         </mat-tab>
+        <!--New Requirment-->
         <mat-tab label="Ny">
           <div class="flex-column">
             <mat-form-field class="Krav-form">
               <mat-label>Krav</mat-label>
               <textarea class="Krav-input" matInput placeholder="Nytt krav" id="NyttKrav"></textarea>
             </mat-form-field>
-            <div class="Krav-options">
+            <div class="Krav-options flex-row-between p-10">
               <mat-button-toggle-group id="NewReqPriorityButtons">
                 <mat-button-toggle (click)="newReqPriorityChange('O')" checked>O</mat-button-toggle>
                 <mat-button-toggle (click)="newReqPriorityChange('1')">1</mat-button-toggle>

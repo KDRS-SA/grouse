@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {UserData} from '../models/UserData.model';
@@ -7,6 +7,8 @@ import {convertFromLegacy, REL_FUNCTIONALITY, REL_PROJECT} from '../common';
 import {projectFunctionality} from '../models/projectFunctionality.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {INewProject} from "../menu/menu.component";
 
 @Component({
   selector: 'app-root',
@@ -30,36 +32,25 @@ export class kravEditComponent implements OnInit {
   private projectLink: string;
   private mainData: projectFunctionality[];
   private newReqPriority: string;
+  private selectedTab: number;
 
   private treeControl: NestedTreeControl<Requirment>;
   private dataSource: MatTreeNestedDataSource<Requirment>;
   private nav: Requirment[];
+  private dialog: MatDialog;
 
-  constructor(http: HttpClient, router: Router) {
+  constructor(http: HttpClient, router: Router, dialog: MatDialog) {
     this.http = http;
     this.router = router;
     this.projectLink = '';
     this.sideBarOpen = false;
+    this.dialog = dialog
   }
 
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
     this.projectLink = this.userData.currentProject._links.funksjon.href;
-    console.log(this.projectLink);
-    this.http.get(this.projectLink, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + this.userData.oauthClientSecret
-        }
-      )
-    }).subscribe(result => {
-      // @ts-ignore
-      this.mainData = result;
-      this.convertLegacyLinks();
-      this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
-      console.log(this.mainData);
-    }, error => {
-      console.error(error);
-    });
+    this.fetchMainData();
 
     this.treeControl = new NestedTreeControl<Requirment>(
       node => node.children
@@ -67,6 +58,29 @@ export class kravEditComponent implements OnInit {
 
     this.dataSource = new MatTreeNestedDataSource<Requirment>();
     this.dataSource.data = TREE_DATA;
+  }
+
+  fetchMainData(){
+    this.http.get(this.projectLink, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + this.userData.oauthClientSecret
+        }
+      )
+    }).subscribe(result => {
+      const newlyLoaded = (this.mainData === undefined);
+      // @ts-ignore
+      this.mainData = result;
+      this.convertLegacyLinks();
+      if(newlyLoaded) {
+        this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
+        this.selectedTab = 0;
+      }else{
+        this.changeReq(this.currentReq.projectFunctionalityId);
+      }
+      console.log(this.mainData);
+    }, error => {
+      console.error(error);
+    });
   }
 
   /*
@@ -190,6 +204,7 @@ export class kravEditComponent implements OnInit {
     }
     // this.sideBarOpen = false;
     this.newReqPriority = 'O';
+    this.selectedTab = 0;
   }
 
   /**
@@ -252,25 +267,46 @@ export class kravEditComponent implements OnInit {
     });
   }
 
-  addRequirment() {
-    let body = new HttpParams();
-    // @ts-ignore
-    body = body.set('requirmentText', document.getElementById('NyttKrav').value);
-    body = body.append('priority', this.newReqPriority);
+  addRequirment(index: number) {
+    const textfield = document.getElementById('NyttKrav');
 
     this.http.post(
       this.currentReq._links.self.href,
       {
-        requirmentText: document.getElementById('NyttKrav').value,
+        //@ts-ignore
+        requirementText: textfield.value,
         priority: this.newReqPriority
       }, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
-      console.log(result);
+      // @ts-ignore
+      textfield.value = null;
+      this.fetchMainData();
     }, error => {
       console.error(error);
+    });
+  }
+
+  removeRequirment(index: number) {
+    const dialogref = this.dialog.open(DeleteRequirmentDialog, {
+      width: '300px'
+    })
+
+    dialogref.afterClosed().subscribe(result => {
+      if (result){
+        this.http.delete(
+          this.currentReq.referenceProjectRequirement[index]._links.self.href,
+          {
+            headers: new HttpHeaders({
+              Authorization: 'Bearer ' + this.userData.oauthClientSecret
+            })
+          }).subscribe(
+            result => {
+              this.fetchMainData();
+            }, error => console.error(error));
+      }
     });
   }
 
@@ -323,3 +359,18 @@ const TREE_DATA: Requirment[] = [
     ]
   }
 ];
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'DeleteRequirment.Dialog',
+  templateUrl: '../Modals/RemoveReq.Dialog.html'
+})
+// tslint:disable-next-line:component-class-suffix
+export class DeleteRequirmentDialog {
+  constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
+    this.data = true;
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
+  }
+}
