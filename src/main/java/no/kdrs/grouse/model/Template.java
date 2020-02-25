@@ -36,7 +36,7 @@ public class Template
      * The date the project was created
      */
     @CreatedDate
-    @Column(name = CREATED_DATE)
+    @Column(name = CREATED_DATE, updatable = false)
     @DateTimeFormat(iso = DATE_TIME)
     private OffsetDateTime createdDate;
 

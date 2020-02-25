@@ -6,7 +6,9 @@ package no.kdrs.grouse.utils;
 public final class TestConstants {
 
     public static final String TEST_PROJECT_NAME = "Eksempel kommune kravspec";
-    public static final String TEST_TEMPLATE_NAME = "Example standard";
+    public static final String TEST_TEMPLATE_NAME = "Example template";
+    public static final String TEST_TEMPLATE_NAME_UPDATED =
+            "Example template updated";
     public static final String TEST_FUNCTIONALITY_DESCRIPTION =
             "test functionality description";
     public static final String TEST_FUNCTIONALITY_CONSEQUENCE =

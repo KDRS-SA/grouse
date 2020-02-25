@@ -8,7 +8,18 @@ import java.util.List;
 @JsonDeserialize(using = PatchObjectsDeserializer.class)
 public class PatchObjects {
 
-    private List<PatchObject> patchObjects = new ArrayList <>();
+    private List<PatchObject> patchObjects = new ArrayList<>();
+
+    public PatchObjects() {
+    }
+
+    public PatchObjects(PatchObject patchObject) {
+        patchObjects.add(patchObject);
+    }
+
+    public PatchObjects(List<PatchObject> patchObjects) {
+        this.patchObjects.addAll(patchObjects);
+    }
 
     public void add(PatchObject patchObject) {
         patchObjects.add(patchObject);

@@ -4,18 +4,21 @@ package no.kdrs.grouse.service.interfaces;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
+import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface ITemplateService {
-    List<Template> findAll();
+    Page<Template> findAll(Pageable page);
 
     Template findById(Long id);
 
     Template createTemplate(Template template);
 
-    Template update(Long id, Template template) throws Exception;
+    Template update(Long id, PatchObjects patchObjects) throws Exception;
 
     void delete(Long id);
 

@@ -8,6 +8,8 @@ import no.kdrs.grouse.persistence.user.UserRepository;
 import no.kdrs.grouse.spring.AuditConfiguration;
 import no.kdrs.grouse.spring.GrouseUserDetailsService;
 import no.kdrs.grouse.spring.TestSecurityConfiguration;
+import no.kdrs.grouse.utils.PatchObject;
+import no.kdrs.grouse.utils.PatchObjects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +33,7 @@ import java.util.regex.Pattern;
 import static java.util.regex.Pattern.compile;
 import static no.kdrs.grouse.utils.Constants.*;
 import static no.kdrs.grouse.utils.TestConstants.*;
-import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.*;
@@ -40,8 +42,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @SpringBootTest(classes = GrouseApplication.class,
@@ -65,6 +66,13 @@ public class TemplateIntegrationTest {
     @Autowired
     private AuditConfiguration auditConfiguration;
 
+    private Pattern selfRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
+            SLASH + "\\d+$");
+    private Pattern functionRel = compile(".+" + CONTEXT_PATH + SLASH +
+            TEMPLATE + SLASH + "\\d+" + SLASH + FUNCTIONALITY + "$");
+    private Pattern documentRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
+            SLASH + "\\d+" + SLASH + DOCUMENT + "$");
+
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext,
                       RestDocumentationContextProvider restDocumentation) {
@@ -79,6 +87,7 @@ public class TemplateIntegrationTest {
     }
 
     @Test
+    @Sql({"/db-tests/empty-database.sql"})
     public void testCreateTemplate() throws Exception {
         Template template = new Template();
         template.setTemplateName(TEST_TEMPLATE_NAME);
@@ -92,16 +101,6 @@ public class TemplateIntegrationTest {
                 .content(new Gson().toJson(template))
                 .with(user(grouseUserDetailsService
                         .loadUserByUsername("admin@example.com"))));
-
-        MockHttpServletResponse response = resultActions.andReturn().getResponse();
-        System.out.println(response.getContentAsString());
-
-        Pattern selfRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
-                SLASH + "\\d+$");
-        Pattern functionRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
-                SLASH + "\\d+" + SLASH + FUNCTIONALITY + "$");
-        Pattern documentRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
-                SLASH + "\\d+" + SLASH + DOCUMENT + "$");
 
         resultActions
                 .andExpect(status().isCreated())
@@ -142,7 +141,69 @@ public class TemplateIntegrationTest {
     }
 
     @Test
-    @Sql("/db-tests/single-template.sql")
+    // empty any templates from table and populate new values
+    @Sql({"/db-tests/empty-database.sql", "/db-tests/multiple-template.sql"})
+    public void testReadListTemplates() throws Exception {
+        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE;
+        Pattern selfRelTemplatePaged =
+                compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE + ESCAPE +
+                        QUESTION_MARK + PAGE + EQUALS + DEFAULT_PAGE_NUMBER +
+                        AMPERSAND + SIZE + EQUALS + DEFAULT_PAGE_SIZE + "$");
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .get(url)
+                .contextPath(SLASH + CONTEXT_PATH)
+                .accept(APPLICATION_JSON)
+                .with(user(grouseUserDetailsService
+                        .loadUserByUsername("admin@example.com"))));
+
+        MockHttpServletResponse response = resultActions
+                .andReturn().getResponse();
+        System.out.println(response.getContentAsString());
+
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded.templates",
+                        hasSize(3)))
+                .andExpect(jsonPath(
+                        "$._embedded.templates[0].templateId",
+                        is(notNullValue())))
+                .andExpect(jsonPath(
+                        "$._embedded.templates[0].createdDate",
+                        is(notNullValue())))
+                .andExpect(jsonPath(
+                        "$._embedded.templates[0].lastModifiedDate",
+                        is(notNullValue())))
+                .andExpect(jsonPath(
+                        "$._embedded.templates[0].ownedBy",
+                        is(notNullValue())))
+                .andExpect(jsonPath(
+                        "$._embedded.templates[0].templateName")
+                        .value(TEST_TEMPLATE_NAME))
+                .andExpect(jsonPath(
+                        "$._embedded.templates[0]._links.self.href",
+                        matchesPattern(selfRel)))
+                .andExpect(jsonPath(
+                        "$._embedded.templates[0]._links.function.href",
+                        matchesPattern(functionRel)))
+                .andExpect(jsonPath(
+                        "$._links.self.href",
+                        matchesPattern(selfRelTemplatePaged)));
+
+        resultActions
+                .andDo(document("home",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        links(halLinks(),
+                                linkWithRel(SELF).
+                                        description("Self REL")
+                        )
+                ));
+    }
+
+    @Test
+    // empty any templates from table
+    @Sql({"/db-tests/empty-database.sql", "/db-tests/single-template.sql"})
     public void testCreateFunctionality() throws Exception {
         TemplateFunctionality templateFunctionality =
                 new TemplateFunctionality.FunctionalityBuilder()
@@ -155,9 +216,9 @@ public class TemplateIntegrationTest {
                         .sectionOrder(1)
                         .build();
 
-        // 2 is the template number defined in single-template.sql
+        // 1 is the only template number defined in single-template.sql
         String url =
-                SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "2" + SLASH +
+                SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "1" + SLASH +
                         FUNCTIONALITY;
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .post(url)
@@ -205,13 +266,70 @@ public class TemplateIntegrationTest {
                 ));
     }
 
+    /**
+     * Add a single template to the database and test that it is possible to
+     * delete it. The expected result is:
+     * <p>
+     * - 206 No content
+     * - the body is empty
+     *
+     * @throws Exception can be thrown if there is a problem with perform or
+     *                   andExpect
+     */
     @Test
+    // empty any templates from table and populate new value
+    @Sql({"/db-tests/empty-database.sql", "/db-tests/single-template.sql"})
+    public void testDeleteTemplate() throws Exception {
+        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "1";
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .delete(url)
+                .contextPath(SLASH + CONTEXT_PATH));
+
+        resultActions
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("$").doesNotExist());
+    }
+
+    /**
+     * Add a single template to the database and test that it is possible to
+     * update it. The expected result is:
+     * <p>
+     * - Updated values are reflected in returned result
+     * - the ETAG value is updated
+     *
+     * @throws Exception can be thrown if there is a problem with perform or
+     *                   andExpect
+     */
+    @Test
+    // empty any templates from table and populate new value
+    @Sql({"/db-tests/empty-database.sql", "/db-tests/single-template.sql"})
+    public void testUpdateTemplate() throws Exception {
+        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "1";
+
+        PatchObject patchObject = new PatchObject();
+        patchObject.setPath(SLASH + "templateName");
+        patchObject.setValue(TEST_TEMPLATE_NAME_UPDATED);
+        patchObject.setOp(REPLACE);
+        PatchObjects patchObjects = new PatchObjects(patchObject);
+
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
+                .patch(url)
+                .header(ETAG, "0")
+                .contextPath(SLASH + CONTEXT_PATH)
+                .content(new Gson().toJson(patchObjects)));
+
+        resultActions
+                .andExpect(header().string(ETAG, instanceOf(String.class)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @Sql("/db-tests/empty-database.sql")
     public void testDeleteNonExistingTemplate() throws Exception {
         String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "9999";
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .delete(url)
-                .contextPath(SLASH + CONTEXT_PATH)
-                .accept(APPLICATION_JSON));
+                .contextPath(SLASH + CONTEXT_PATH));
 
         resultActions
                 .andExpect(status().isNotFound());

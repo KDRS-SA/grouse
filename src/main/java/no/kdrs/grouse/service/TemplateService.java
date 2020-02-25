@@ -7,6 +7,11 @@ import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
 import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
+import no.kdrs.grouse.utils.PatchObjects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +19,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,12 +32,20 @@ public class TemplateService
         extends GrouseService
         implements ITemplateService {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(TemplateService.class);
+
     private EntityManager entityManager;
     private ITemplateRepository templateRepository;
     private ITemplateRequirementRepository requirementRepository;
     private ITemplateFunctionalityRepository functionalityRepository;
     private ITemplateRequirementRepository templateRequirementRepository;
     private ITemplateFunctionalityRepository templateFunctionalityRepository;
+
+    // Columns that it is possible to update via a PATCH request
+    private ArrayList<String> allowableColumns =
+            new ArrayList<String>(Arrays.asList("templateName",
+                    "fileNameInternal", "ownedBy"));
 
     public TemplateService(
             EntityManager entityManager,
@@ -97,8 +112,8 @@ public class TemplateService
     }
 
     @Override
-    public List<Template> findAll() {
-        return (List<Template>) templateRepository.findAll();
+    public Page<Template> findAll(Pageable page) {
+        return templateRepository.findAll(page);
     }
 
     @Override
@@ -122,16 +137,9 @@ public class TemplateService
     }
 
     @Override
-    public Template update(Long id, Template template)
+    public Template update(Long id, PatchObjects patchObjects)
             throws EntityNotFoundException {
-
-        Template originalTemplate = getTemplateOrThrow(id);
-        // copy the values over
-        originalTemplate.setTemplateName(template.getTemplateName());
-
-        // probably don't want to expose this one
-        //originalTemplate.ListTemplateOwner(template.getTemplateOwner());
-        return originalTemplate;
+        return (Template) handlePatch(getTemplateOrThrow(id), patchObjects);
     }
 
     @Override
@@ -161,6 +169,11 @@ public class TemplateService
             templateFunctionalityRepository.delete(templateFunctionality);
         }
         templateRepository.delete(template);
+    }
+
+    @Override
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
     }
 
     /**

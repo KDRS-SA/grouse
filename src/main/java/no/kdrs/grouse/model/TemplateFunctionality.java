@@ -21,7 +21,7 @@ import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @Entity
-@Table(name = TEMPLATE_FUNCTIONALITY_AREAS)
+@Table(name = TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME)
 @EntityListeners(AuditingEntityListener.class)
 public class TemplateFunctionality
         extends RepresentationModel

@@ -66,8 +66,8 @@ public class AfterStartup {
                 // to
                 TemplateFunctionality parentTemplateFunctionality = new
                         TemplateFunctionality.FunctionalityBuilder()
-                        .id("0")
                         .sectionTitle("Kravspec")
+                        .functionalityNumber("0")
                         .build();
                 functionalityRepository.save(parentTemplateFunctionality);
 
@@ -80,7 +80,7 @@ public class AfterStartup {
                     // Handle the chapter description of functionality
                     TemplateFunctionality chapterTemplateFunctionality = new
                             TemplateFunctionality.FunctionalityBuilder()
-                            .id(chapterCount.toString())
+                            .functionalityNumber(chapterCount.toString())
                             .sectionTitle(chapter.getChapterTitle())
                             .type("mainmenu")
                             .showMe(chapter.getShowMe())
@@ -94,8 +94,8 @@ public class AfterStartup {
                         sectionCount++;
                         TemplateFunctionality templateFunctionality = new
                                 TemplateFunctionality.FunctionalityBuilder()
-                                .id(chapterCount.toString() + "." +
-                                        sectionCount.toString())
+                                .functionalityNumber(chapterCount.toString()
+                                        + "." + sectionCount.toString())
                                 .sectionTitle(section.getSectionTitle())
                                 .sectionOrder(section.getSectionOrder())
                                 .type(section.getType())
@@ -132,9 +132,10 @@ public class AfterStartup {
                             subSectionCount++;
                             TemplateFunctionality childTemplateFunctionality = new
                                     TemplateFunctionality.FunctionalityBuilder()
-                                    .id(chapterCount.toString() + "." +
-                                            sectionCount.toString() + "." +
-                                            subSectionCount.toString())
+                                    .functionalityNumber(
+                                            chapterCount.toString() + "." +
+                                                    sectionCount.toString() + "." +
+                                                    subSectionCount.toString())
                                     .sectionTitle(childSection.getSectionTitle())
                                     .description(childSection.getDescription())
                                     //.functionalityNumber(section.get)
