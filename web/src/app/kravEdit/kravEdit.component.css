@@ -40,9 +40,8 @@
   width: 350px;
 }
 .sidenav-content{
-  width: 70%;
-  padding-right: 15%;
-  padding-left: 15%;
+  width: 90%;
+  padding-left: 10%;
 }
 
 .Krav-card{
@@ -87,4 +86,17 @@
 
 .Krav-options-button{
   height: 80%;
+}
+
+.edit-column{
+  width: 80%;
+}
+
+.status-bar{
+  height: 100%;
+  width: 240px;
+}
+
+.nav{
+
 }

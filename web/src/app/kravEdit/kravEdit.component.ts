@@ -7,8 +7,7 @@ import {convertFromLegacy, REL_FUNCTIONALITY, REL_PROJECT} from '../common';
 import {projectFunctionality} from '../models/projectFunctionality.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {INewProject} from "../menu/menu.component";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +43,7 @@ export class kravEditComponent implements OnInit {
     this.router = router;
     this.projectLink = '';
     this.sideBarOpen = false;
-    this.dialog = dialog
+    this.dialog = dialog;
   }
 
   ngOnInit() {
@@ -60,7 +59,7 @@ export class kravEditComponent implements OnInit {
     this.dataSource.data = TREE_DATA;
   }
 
-  fetchMainData(){
+  fetchMainData() {
     this.http.get(this.projectLink, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -71,10 +70,10 @@ export class kravEditComponent implements OnInit {
       // @ts-ignore
       this.mainData = result;
       this.convertLegacyLinks();
-      if(newlyLoaded) {
+      if (newlyLoaded) {
         this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
         this.selectedTab = 0;
-      }else{
+      } else {
         this.changeReq(this.currentReq.projectFunctionalityId);
       }
       console.log(this.mainData);
@@ -94,7 +93,7 @@ export class kravEditComponent implements OnInit {
 
   /*
   * This method converts the links subsection of elements sent from the server from the old Spring Boot Standard to the new format
-  * This might not be required in newer version so this method might disapear later
+  * This might not be required in newer version so this method might disapear later wich whould be a nice thing
   */
   convertLegacyLinks() {
     const NavData: Requirment[] = [];     // For the sidenav Tree every NavReq is fo this purpose aswell
@@ -230,6 +229,8 @@ export class kravEditComponent implements OnInit {
    * handles a change in requirement text.
    */
   updateFunctionalityProcessed() {
+    this.currentReq.processed = !this.currentReq.processed;
+
     const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
       this.currentReq.processed + '"}]';
 
@@ -267,13 +268,13 @@ export class kravEditComponent implements OnInit {
     });
   }
 
-  addRequirment(index: number) {
+  addRequirment() {
     const textfield = document.getElementById('NyttKrav');
 
     this.http.post(
       this.currentReq._links.self.href,
       {
-        //@ts-ignore
+        // @ts-ignore
         requirementText: textfield.value,
         priority: this.newReqPriority
       }, {
@@ -292,10 +293,10 @@ export class kravEditComponent implements OnInit {
   removeRequirment(index: number) {
     const dialogref = this.dialog.open(DeleteRequirmentDialog, {
       width: '300px'
-    })
+    });
 
     dialogref.afterClosed().subscribe(result => {
-      if (result){
+      if (result) {
         this.http.delete(
           this.currentReq.referenceProjectRequirement[index]._links.self.href,
           {
@@ -303,6 +304,7 @@ export class kravEditComponent implements OnInit {
               Authorization: 'Bearer ' + this.userData.oauthClientSecret
             })
           }).subscribe(
+          // tslint:disable-next-line:no-shadowed-variable
             result => {
               this.fetchMainData();
             }, error => console.error(error));
@@ -312,6 +314,12 @@ export class kravEditComponent implements OnInit {
 
   newReqPriorityChange(priority: string) {
     this.newReqPriority = priority;
+  }
+
+  // Moves to the next requirment
+  nextReq() {
+    console.log(this.currentReq.projectFunctionalityId);
+    this.changeReq(this.currentReq.projectFunctionalityId++);
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
