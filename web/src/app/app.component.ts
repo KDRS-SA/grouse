@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 import {HttpClient} from '@angular/common/http';
 import {UserData} from './models/UserData.model';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',
@@ -13,14 +14,16 @@ export class AppComponent implements OnInit {
   private router: Router;
   private http: HttpClient;
   private userData: UserData;
+  private snackBar: MatSnackBar;
 
   public loading: boolean;
 
-  constructor(router: Router, http: HttpClient) {
+  constructor(router: Router, http: HttpClient, snackBar: MatSnackBar) {
     this.router = router;
     this.loading = true;
     this.http = http;
     this.userData = new UserData();
+    this.snackBar = snackBar;
   }
 
 
@@ -55,7 +58,14 @@ export class AppComponent implements OnInit {
       localStorage.setItem('UserData', JSON.stringify(this.userData));
       this.loading = false;
       this.navigate();
-    }, error => console.error(error));
+    }, error => {
+        console.error(error);
+        const ref = this.snackBar.open("Could not reach the Grouse server", "Try again");
+        ref.onAction().subscribe(() => {
+          this.getApiDetails();
+          this.snackBar.dismiss();
+        });
+    });
   }
 
   // Navigates the user to the componenet they were inn if the page is refreshed
