@@ -147,7 +147,7 @@
         </mat-card-header>
         <!--Actions for movment, goes forwards and backwards also aproves the current requirment-->
         <mat-card-actions class="nav flex-row">
-          <button mat-raised-button color="primary">
+          <button mat-raised-button color="primary" (click)="previousReq()">
             <i class="material-icons">arrow_left</i>
           </button>
           <button mat-raised-button [ngClass]="{'mat-primary' : !currentReq.processed, 'mat-accent' : currentReq.processed}" (click)="updateFunctionalityProcessed()">

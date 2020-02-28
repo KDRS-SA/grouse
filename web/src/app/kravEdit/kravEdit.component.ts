@@ -23,7 +23,7 @@ export class kravEditComponent implements OnInit {
 
   public title = 'Grouse';
   private sideBarOpen: boolean;
-  private currentReq;
+  private currentReq: projectFunctionality;
 
   private http: HttpClient;
   private router: Router;
@@ -181,6 +181,19 @@ export class kravEditComponent implements OnInit {
   * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
    */
   changeReq(id: number) {
+    this.currentReq = this.findReq(id);
+    this.newReqPriority = 'O';
+    this.selectedTab = 0;
+  }
+
+  /**
+   * findReq
+   *
+   * Finds the requirment inn main data with the specified id
+   * @param id
+   * Wich id to look for
+   */
+  findReq(id: number): projectFunctionality {
     // Primary level
     for (const primary of this.mainData) {
       if (primary.referenceChildProjectFunctionality.length > 0) {
@@ -190,20 +203,18 @@ export class kravEditComponent implements OnInit {
             // Tertiary level
             for (const tertiary of secondary.referenceChildProjectFunctionality) {
               if (tertiary.projectFunctionalityId === id) {
-                this.currentReq = tertiary;
+                return  tertiary;
               }
             }
           } else if (secondary.projectFunctionalityId === id) {
-            this.currentReq = secondary;
+            return secondary;
           }
         }
       } else if (primary.projectFunctionalityId === id) {
-        this.currentReq = primary;
+        return  primary;
       }
     }
-    // this.sideBarOpen = false;
-    this.newReqPriority = 'O';
-    this.selectedTab = 0;
+    return null;
   }
 
   /**
@@ -316,10 +327,74 @@ export class kravEditComponent implements OnInit {
     this.newReqPriority = priority;
   }
 
-  // Moves to the next requirment
+  /**
+   * nextReq
+   *
+   * Switches to the next rquirment
+   */
   nextReq() {
-    console.log(this.currentReq.projectFunctionalityId);
-    this.changeReq(this.currentReq.projectFunctionalityId++);
+    let switchto: projectFunctionality = null;
+    let id = this.currentReq.projectFunctionalityId;
+    id++;
+    while (switchto === null) {
+      switchto = this.findReq(id);
+      id++;
+    }
+    this.currentReq = switchto;
+    this.newReqPriority = 'O';
+    this.selectedTab = 0;
+  }
+
+  /**
+   * previousReq
+   *
+   * Switches to the previous rquirment
+   */
+  previousReq() {
+    let switchto: projectFunctionality = null;
+    let id = this.currentReq.projectFunctionalityId;
+    id--;
+    while (switchto === null) {
+      // This if-statment stops the function from going into a endless-loop
+      if (id < this.mainData[0].projectFunctionalityId) {
+        return;
+      }
+      switchto = this.findReq(id);
+      id--;
+    }
+    this.currentReq = switchto;
+    this.newReqPriority = 'O';
+    this.selectedTab = 0;
+  }
+
+  /**
+   * findParentReq (Currently unused)
+   *
+   * finds a parent of the given child, returns null if none
+   *
+   * @param child of wich the parent should be found
+   */
+  findParentReq(child: projectFunctionality): projectFunctionality {
+    // Primary level
+    for (const primary of this.mainData) {
+      if (primary.referenceChildProjectFunctionality.length > 0) {
+        // Secondary level
+        for (const secondary of primary.referenceChildProjectFunctionality) {
+          if (secondary.referenceChildProjectFunctionality.length > 0) {
+            // Tertiary level
+            for (const tertiary of secondary.referenceChildProjectFunctionality) {
+              if (tertiary.projectFunctionalityId === child.projectFunctionalityId) {
+                return  secondary;
+              }
+            }
+          } else if (secondary.projectFunctionalityId === child.projectFunctionalityId) {
+            return primary;
+          }
+        }
+      } else if (primary.projectFunctionalityId === child.projectFunctionalityId) {
+        return  null;
+      }
+    }
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
