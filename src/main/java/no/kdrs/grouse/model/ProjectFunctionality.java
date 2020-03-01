@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * Created by tsodring on 31/03/18.
  * <p>
- * A copy of the fields in TemplateFunctionality, with a project number. When creating a
- * project, we need to be able to copy all the fields from TemplateFunctionality to
+ * A copy of the fields in ProjectFunctionality, with a project number. When creating a
+ * project, we need to be able to copy all the fields from ProjectFunctionality to
  * project_functionalitys and associate the copy of the functionalitys with a
  * project number. This is because the user needs to have status associated
  * with progress of going through the functionality.
@@ -106,7 +106,7 @@ public class ProjectFunctionality
     @Column(name = "ownedBy", nullable = false)
     private String ownedBy;
 
-    // Link to parent TemplateFunctionality
+    // Link to parent ProjectFunctionality
     @JsonIgnore
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "parent")
@@ -127,6 +127,19 @@ public class ProjectFunctionality
     @JoinColumn(name = "project_number",
             referencedColumnName = "project_id")
     private Project referenceProject;
+
+    private ProjectFunctionality(FunctionalityBuilder functionalityBuilder) {
+        this.functionalityNumber = functionalityBuilder.functionalityNumber;
+        this.title = functionalityBuilder.sectionTitle;
+        this.description = functionalityBuilder.description;
+        this.explanation = functionalityBuilder.explanation;
+        this.consequence = functionalityBuilder.consequence;
+        this.type = functionalityBuilder.type;
+        this.showMe = functionalityBuilder.showMe;
+    }
+
+    public ProjectFunctionality() {
+    }
 
     public Long getProjectFunctionalityId() {
         return projectFunctionalityId;
@@ -278,5 +291,67 @@ public class ProjectFunctionality
                 ", type='" + type + '\'' +
                 ", ownedBy='" + ownedBy + '\'' +
                 '}';
+    }
+
+    public static class FunctionalityBuilder {
+
+        private String id;
+        private String sectionTitle;
+        private Integer sectionOrder;
+        private String functionalityNumber;
+        private String description;
+        private String explanation;
+        private String consequence;
+        private String type;
+        private Boolean showMe;
+
+        public ProjectFunctionality.FunctionalityBuilder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder sectionTitle(String sectionTitle) {
+            this.sectionTitle = sectionTitle;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder sectionOrder(Integer sectionOrder) {
+            this.sectionOrder = sectionOrder;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder functionalityNumber(String functionalityNumber) {
+            this.functionalityNumber = functionalityNumber;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder explanation(String explanation) {
+            this.explanation = explanation;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder consequence(String consequence) {
+            this.consequence = consequence;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public ProjectFunctionality.FunctionalityBuilder showMe(Boolean showMe) {
+            this.showMe = showMe;
+            return this;
+        }
+
+        public ProjectFunctionality build() {
+            return new ProjectFunctionality(this);
+        }
     }
 }
