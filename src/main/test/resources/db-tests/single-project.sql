@@ -1,1 +1,1 @@
-insert into project (project_id, project_name, created_date, changed_date, owned_by, version) values (1, 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
+insert into projects (project_id, project_name, created_date, changed_date, owned_by, version) values (1, 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);

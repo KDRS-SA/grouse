@@ -9,12 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.List;
 
+import static no.kdrs.grouse.utils.Constants.PROJECT_TABLE_NAME;
+
 /**
  * Created by tsodring on 9/8/17.
  */
 
 @Entity
-@Table(name = "projects")
+@Table(name = PROJECT_TABLE_NAME)
 @XmlRootElement
 public class Project
         extends RepresentationModel {

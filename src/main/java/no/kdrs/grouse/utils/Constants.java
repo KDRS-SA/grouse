@@ -55,9 +55,10 @@ public final class Constants {
     public static final String OWNED_BY = "owned_by";
     public static final String VERSION = "version";
 
+    public static final String PROJECT_TABLE_NAME = "projects";
+
     public static final String TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME =
             "template_functionality_areas";
-
     public static final String TEMPLATE_REQUIREMENT_TABLE_NAME =
             "template_requirements";
 
