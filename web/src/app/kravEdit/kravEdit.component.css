@@ -90,6 +90,7 @@
 
 .edit-column{
   width: 80%;
+  max-width: 800px;
 }
 
 .status-bar{
@@ -97,6 +98,30 @@
   width: 240px;
 }
 
-.nav{
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+  min-width: 40px !important;
+}
 
+::ng-deep.mat-tab-labels{
+  max-width: 100px;
+  margin: 0px;
+}
+
+.status-bar-button-container{
+  height: 500px !important;
+  width: 10px;
+}
+
+.color-success{
+  background-color: green;
+  color: white;
+}
+
+.color-lightgray{
+  background-color: lightgrey;
+}
+
+.big-button{
+  height: 60px;
+  width: 120px;
 }

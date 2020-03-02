@@ -24,7 +24,6 @@ export class kravEditComponent implements OnInit {
   public title = 'Grouse';
   private sideBarOpen: boolean;
   private currentReq: projectFunctionality;
-
   private http: HttpClient;
   private router: Router;
   private userData: UserData;
@@ -32,9 +31,11 @@ export class kravEditComponent implements OnInit {
   private mainData: projectFunctionality[];
   private newReqPriority: string;
   private selectedTab: number;
+  private maxID: number;
 
   private treeControl: NestedTreeControl<Requirment>;
   private dataSource: MatTreeNestedDataSource<Requirment>;
+  private statusbarData: projectFunctionality[];
   private nav: Requirment[];
   private dialog: MatDialog;
 
@@ -44,6 +45,7 @@ export class kravEditComponent implements OnInit {
     this.projectLink = '';
     this.sideBarOpen = false;
     this.dialog = dialog;
+    this.statusbarData = [];
   }
 
   ngOnInit() {
@@ -76,6 +78,7 @@ export class kravEditComponent implements OnInit {
       } else {
         this.changeReq(this.currentReq.projectFunctionalityId);
       }
+      this.statusBarInfo();
       console.log(this.mainData);
     }, error => {
       console.error(error);
@@ -97,16 +100,29 @@ export class kravEditComponent implements OnInit {
   */
   convertLegacyLinks() {
     const NavData: Requirment[] = [];     // For the sidenav Tree every NavReq is fo this purpose aswell
+    let maxID = 0;
     for (const prime of this.mainData) {
       const NavReqP = new Requirment();
       NavReqP.id = prime.projectFunctionalityId;
       NavReqP.name = prime.title;
       NavReqP.children = [];
+
+      // For MaxID
+      if (NavReqP.id > maxID) {
+        maxID = NavReqP.id;
+      }
+
       for (const secondary of prime.referenceChildProjectFunctionality) {
         const NavReqS = new Requirment();
         NavReqS.id = secondary.projectFunctionalityId;
         NavReqS.name = secondary.title;
         NavReqS.children = [];
+
+        // For MaxID
+        if (NavReqS.id > maxID) {
+          maxID = NavReqS.id;
+        }
+
         for (const tertiary of secondary.referenceChildProjectFunctionality) {
           // @ts-ignore
           tertiary._links = convertFromLegacy(tertiary.links);
@@ -118,6 +134,11 @@ export class kravEditComponent implements OnInit {
           NavReqT.id = tertiary.projectFunctionalityId;
           NavReqT.name = tertiary.title;
           NavReqS.children.push(NavReqT);
+
+          // For MaxID
+          if (NavReqT.id > maxID) {
+            maxID = NavReqT.id;
+          }
         }
         NavReqP.children.push(NavReqS);
         for (const tertiary of secondary.referenceProjectRequirement) {
@@ -133,6 +154,7 @@ export class kravEditComponent implements OnInit {
         secondary.links = null;
       }
       for (const secondary of prime.referenceProjectRequirement) {
+        /*
         for (const tertiary of secondary.referenceChildProjectFunctionality) {
           // @ts-ignore
           tertiary._links = convertFromLegacy(tertiary.links);
@@ -145,6 +167,7 @@ export class kravEditComponent implements OnInit {
           // @ts-ignore
           tertiary.links = null;
         }
+        */
         // @ts-ignore
         secondary._links = convertFromLegacy(secondary.links);
         // @ts-ignore
@@ -157,6 +180,7 @@ export class kravEditComponent implements OnInit {
       NavData.push(NavReqP);
     }
     this.dataSource.data = NavData;
+    this.maxID = maxID;
   }
 
   /*
@@ -184,6 +208,7 @@ export class kravEditComponent implements OnInit {
     this.currentReq = this.findReq(id);
     this.newReqPriority = 'O';
     this.selectedTab = 0;
+    this.statusBarInfo();
   }
 
   /**
@@ -273,7 +298,6 @@ export class kravEditComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
-      console.log(result);
     }, error => {
       console.error(error);
     });
@@ -333,16 +357,34 @@ export class kravEditComponent implements OnInit {
    * Switches to the next rquirment
    */
   nextReq() {
+    const switchto = this.findNextReq(this.currentReq.projectFunctionalityId);
+    if (switchto !== null) {
+      this.currentReq = switchto;
+      this.newReqPriority = 'O';
+      this.selectedTab = 0;
+    }
+    this.statusBarInfo();
+  }
+
+  /**
+   * findNextReq
+   * Finds the next requirment based on the given ID
+   *
+   * @param id
+   * ID to search for next of
+   */
+  findNextReq(id: number): projectFunctionality {
     let switchto: projectFunctionality = null;
-    let id = this.currentReq.projectFunctionalityId;
     id++;
     while (switchto === null) {
+      // This if-statment stops the function from going into a endless-loop
+      if (id > this.maxID) {
+        return null;
+      }
       switchto = this.findReq(id);
       id++;
     }
-    this.currentReq = switchto;
-    this.newReqPriority = 'O';
-    this.selectedTab = 0;
+    return switchto;
   }
 
   /**
@@ -351,20 +393,34 @@ export class kravEditComponent implements OnInit {
    * Switches to the previous rquirment
    */
   previousReq() {
+    const switchto = this.findPreviousReq(this.currentReq.projectFunctionalityId);
+    if (switchto !== null) {
+      this.currentReq = switchto;
+      this.newReqPriority = 'O';
+      this.selectedTab = 0;
+    }
+    this.statusBarInfo();
+  }
+
+  /**
+   * findPreviousReq
+   * Finds the previous requirment based on given ID
+   *
+   * @param id
+   * ID to find next requirment of
+   */
+  findPreviousReq(id: number): projectFunctionality {
     let switchto: projectFunctionality = null;
-    let id = this.currentReq.projectFunctionalityId;
     id--;
     while (switchto === null) {
       // This if-statment stops the function from going into a endless-loop
       if (id < this.mainData[0].projectFunctionalityId) {
-        return;
+        return null;
       }
       switchto = this.findReq(id);
       id--;
     }
-    this.currentReq = switchto;
-    this.newReqPriority = 'O';
-    this.selectedTab = 0;
+    return switchto;
   }
 
   /**
@@ -395,6 +451,33 @@ export class kravEditComponent implements OnInit {
         return  null;
       }
     }
+  }
+
+  /**
+   * statusBarInfo
+   *
+   * Provides an array for the statusbar with the previous 5 and next 5 requirments
+   * This directly updates the datafield, wich will then force the UI to load the elements
+   */
+  statusBarInfo() {
+    const ret: projectFunctionality[] = [this.currentReq];
+    for (let i = 0; i < 5; i++) {
+      const add = this.findPreviousReq(ret[0].projectFunctionalityId);
+      if (add === null) {
+        break;
+      } else {
+        ret.unshift(add);
+      }
+    }
+    while (ret.length < 11) {
+      const add = this.findNextReq(ret[ret.length - 1].projectFunctionalityId);
+      if (add !== null) {
+        ret.push(add);
+      } else {
+        ret.unshift(this.findPreviousReq(ret[0].projectFunctionalityId));
+      }
+    }
+    this.statusbarData = ret;
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;

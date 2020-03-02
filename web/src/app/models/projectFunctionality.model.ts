@@ -1,5 +1,5 @@
-import {Link} from "./link.model";
 import {Links} from './links.model';
+import {ProjectRequirment} from './ProjectRequirment.model';
 
 export class projectFunctionality{
   projectFunctionalityId: number;
@@ -8,16 +8,11 @@ export class projectFunctionality{
   description: string;
   consequence: string;
   explanation: string;
-  showMe: boolean;
   processed: boolean;
-  active: boolean;
   type: string;
-  ownedBy: string;
   referenceChildProjectFunctionality: projectFunctionality[];
-  referenceProjectRequirement: projectFunctionality[];
+  referenceProjectRequirement: ProjectRequirment[];
   _links: Links;
-  parentId: number;
-  requirementText: string;
 
   constructor() {}
 }

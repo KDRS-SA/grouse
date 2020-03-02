@@ -1,7 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 // tslint:disable-next-line:max-line-length
-import {MatCardModule, MatProgressSpinnerModule, MatSliderModule, MatSnackBarModule, MatTableModule, MatTabsModule} from '@angular/material';
+import {
+  MatCardModule,
+  MatProgressSpinnerModule,
+  MatSliderModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatTabsModule,
+  MatTooltipModule
+} from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule} from '@angular/common/http';
 import {GDPRContent, LoginComponent} from './Login/Login.component';
@@ -23,7 +31,7 @@ import {DeleteRequirmentDialog, kravEditComponent} from './kravEdit/kravEdit.com
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
 import {userEditComponent} from './UserEdit/userEdit.component';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -60,7 +68,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatSidenavModule,
         MatTreeModule,
         MatTabsModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatTooltipModule
     ],
   providers: [],
   bootstrap: [AppComponent],
