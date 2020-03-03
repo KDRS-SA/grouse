@@ -202,9 +202,10 @@ public class TemplateController {
                     .getFunctionalityForTemplate(template.getTemplateId()))
                     .withRel(FUNCTIONALITY));
             linksTemplate.add(linkTo(methodOn(DocumentController.class)
-                    .downloadDocument(template.getTemplateId()))
+                    .downloadDocumentTemplate(template.getTemplateId()))
                     .withRel(DOCUMENT));
             return ResponseEntity.status(status)
+                    .eTag(template.getVersion().toString())
                     .body(linksTemplate);
         } catch (IOException e) {
             String errorMessage =

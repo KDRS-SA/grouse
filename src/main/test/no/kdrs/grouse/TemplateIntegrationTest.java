@@ -312,11 +312,20 @@ public class TemplateIntegrationTest {
         patchObject.setOp(REPLACE);
         PatchObjects patchObjects = new PatchObjects(patchObject);
 
+
+//        objectMapper
+
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .patch(url)
                 .header(ETAG, "0")
                 .contextPath(SLASH + CONTEXT_PATH)
+                .contentType(APPLICATION_JSON)
                 .content(new Gson().toJson(patchObjects)));
+        MockHttpServletResponse response = resultActions
+                .andReturn().getResponse();
+        System.out.println(response.getContentAsString());
+        System.out.println("Status: " + response.getStatus());
+        response.getHeaderNames().forEach(System.out::print);
 
         resultActions
                 .andExpect(header().string(ETAG, instanceOf(String.class)))
