@@ -50,7 +50,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = {TestSecurityConfiguration.class})
 @ActiveProfiles({"test", "do-not-import-datasets"})
-
 public class ProjectIntegrationTest {
 
     private MockMvc mockMvc;
@@ -92,7 +91,7 @@ public class ProjectIntegrationTest {
     public void testCreateProject() throws Exception {
         Project project = new Project();
         project.setProjectName(TEST_PROJECT_NAME);
-        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH;
+        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT;
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .post(url)
@@ -102,6 +101,10 @@ public class ProjectIntegrationTest {
                 .content(new Gson().toJson(project))
                 .with(user(grouseUserDetailsService
                         .loadUserByUsername("admin@example.com"))));
+
+        MockHttpServletResponse response = resultActions
+                .andReturn().getResponse();
+        System.out.println(response.getContentAsString());
 
         resultActions
                 .andExpect(status().isCreated())

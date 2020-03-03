@@ -16,7 +16,7 @@ public final class Constants {
     public static final String SELF = "self";
     public static final String USER = "user";
     public static final String DOCUMENT = "document";
-    public static final String PROJECT = "prosjekt";
+    public static final String PROJECT = "project";
     public static final String TEMPLATE = "template";
     public static final String GROUSE = "grouse";
     public static final String CONTEXT_PATH = GROUSE;
@@ -31,7 +31,7 @@ public final class Constants {
     public static final String SIZE = "size";
     public static final Integer DEFAULT_PAGE_NUMBER = 0;
     public static final Integer DEFAULT_PAGE_SIZE = 20;
-    public static final String ETAG = "\"ETAG\"";
+    public static final String ETAG = "ETAG";
     public static final String REPLACE = "replace";
 
     public static final String PROJECT_NUMBER = "projectNumber";
