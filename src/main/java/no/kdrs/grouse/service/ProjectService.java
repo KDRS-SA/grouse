@@ -14,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +33,11 @@ public class ProjectService
     private ITemplateFunctionalityRepository functionalityRepository;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
+
+    // Columns that it is possible to update via a PATCH request
+    private ArrayList<String> allowableColumns =
+            new ArrayList<String>(Arrays.asList("projectName",
+                    "fileNameInternal", "ownedBy"));
 
     public ProjectService(
             EntityManager entityManager,
@@ -302,6 +308,11 @@ public class ProjectService
             projectFunctionalityRepository.delete(projectFunctionality);
         }
         projectRepository.delete(project);
+    }
+
+    @Override
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
     }
 
     /**
