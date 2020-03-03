@@ -1,6 +1,7 @@
 package no.kdrs.grouse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.google.gson.Gson;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
@@ -10,6 +11,7 @@ import no.kdrs.grouse.spring.GrouseUserDetailsService;
 import no.kdrs.grouse.spring.TestSecurityConfiguration;
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.PatchObjectsSerializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -312,15 +314,15 @@ public class TemplateIntegrationTest {
         patchObject.setOp(REPLACE);
         PatchObjects patchObjects = new PatchObjects(patchObject);
 
-
-//        objectMapper
+        objectMapper.registerModule(new SimpleModule("SimpleModule")
+                .addSerializer(new PatchObjectsSerializer()));
 
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .patch(url)
                 .header(ETAG, "0")
                 .contextPath(SLASH + CONTEXT_PATH)
                 .contentType(APPLICATION_JSON)
-                .content(new Gson().toJson(patchObjects)));
+                .content(objectMapper.writeValueAsString(patchObjects)));
         MockHttpServletResponse response = resultActions
                 .andReturn().getResponse();
         System.out.println(response.getContentAsString());

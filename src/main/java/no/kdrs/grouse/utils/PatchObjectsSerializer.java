@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static no.kdrs.grouse.utils.Constants.SLASH;
-
 public class PatchObjectsSerializer
         extends StdSerializer<PatchObjects> {
 
@@ -30,11 +28,9 @@ public class PatchObjectsSerializer
         for (PatchObject patchObject : patchObjects.getPatchObjects()) {
             jgen.writeStartObject();
             jgen.writeObjectField("op", patchObject.getOp());
-            jgen.writeObjectField("path", SLASH +
-                    patchObject.getPath());
+            jgen.writeObjectField("path", patchObject.getPath());
             // Do we have to handle various types here? String, Integer, Boolean
-            jgen.writeObjectField("value", SLASH +
-                    patchObject.getValue());
+            jgen.writeObjectField("value", patchObject.getValue());
             jgen.writeEndObject();
         }
         jgen.writeEndArray();
