@@ -11,7 +11,6 @@
           </div>
         </div>
       </button>
-      <button mat-button (click)="sideBarOpen = !sideBarOpen">Se krav</button>
     </div>
   </div>
   <div class="flex-row-right">
@@ -41,7 +40,7 @@
 <mat-sidenav-container class="sidebar" hasBackdrop="true">
   <mat-sidenav mode="over" [opened]="sideBarOpen" class="sidenav">
 
-    <!-- Tree Test DONT TOUCH IT FOR THE LOVE OF EVERYTHING HOLY-->
+    <!-- Tree DONT TOUCH IT FOR THE LOVE OF EVERYTHING HOLY-->
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
       <!-- This is the tree node template for leaf nodes -->
@@ -73,9 +72,16 @@
         <mat-divider></mat-divider>
       </mat-nested-tree-node>
     </mat-tree>
+    <button class="w-100" mat-button (click)="statusPage = !statusPage; this.statPageLoad()">Sluttside</button>
   </mat-sidenav>
-  <mat-sidenav-content class="sidenav-content flex-row">
-    <div class="edit-column">
+  <mat-sidenav-content class="sidenav-content flex-row-between">
+    <button mat-raised-button class="no-p no-m" (click)="sideBarOpen = !sideBarOpen">
+      <i class="material-icons">
+        list
+      </i>
+    </button>
+    <!--The centre column where you edit stuff-->
+    <div *ngIf="!statusPage" class="edit-column">
       <mat-card class="Krav-card-edit">
         <!--Edit part (with the tabs and the text fields)-->
         <mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="selectedTab = $event">
@@ -85,6 +91,7 @@
                 <mat-label>Krav</mat-label>
                 <textarea id="field-{{i}}" class="Krav-input" matInput value="{{req.requirementText}}" (change)="updateRequirementText(i)"></textarea>
               </mat-form-field>
+              <mat-label>Prioritet</mat-label>
               <div class="Krav-options flex-row-between p-10">
                 <mat-button-toggle-group>
                   <mat-button-toggle [checked]="req.priority == 'O'" (click)="updateRequirementPriority(i, 'O')">O</mat-button-toggle>
@@ -96,7 +103,7 @@
                 </mat-button-toggle-group>
                 <br>
                 <div>
-                  <button color="warn" mat-raised-button (click)="removeRequirment(i)" class="Krav-options-button"><i class="material-icons">delete_forever</i></button>
+                  <button matTooltip="Slett Krav" color="warn" mat-raised-button (click)="removeRequirment(i)" class="Krav-options-button"><i class="material-icons">delete_forever</i></button>
                 </div>
               </div>
             </div>
@@ -108,6 +115,7 @@
                 <mat-label>Krav</mat-label>
                 <textarea class="Krav-input" matInput placeholder="Nytt krav" id="NyttKrav"></textarea>
               </mat-form-field>
+              <mat-label>Prioritet</mat-label>
               <div class="Krav-options flex-row-between p-10">
                 <mat-button-toggle-group id="NewReqPriorityButtons">
                   <mat-button-toggle (click)="newReqPriorityChange('O')" checked>O</mat-button-toggle>
@@ -138,18 +146,51 @@
         </mat-card-content>
       </mat-card>
     </div>
+    <!--Status Page-->
+    <div *ngIf="statusPage" class="status-page">
+      <mat-card class="h-80 no-p m-t-10">
+        <mat-card-header class="flex-row-left">
+          <button mat-raised-button color="primary" (click)="this.statusPage = !this.statusPage"><i class="material-icons">arrow_left</i></button>
+          <h1 class="m-lr-10">{{this.userData.currentProject.projectName}}</h1>
+        </mat-card-header>
+        <!--Loading-->
+        <mat-card-content *ngIf="!statpageData.loaded" class="flex-column p-10">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card-content>
+        <mat-card-content *ngIf="statpageData.loaded" class="p-20">
+          <div class="flex-column">
+            <h4>Progresjon: {{statpageData.progress}}%</h4>
+            <mat-progress-bar mode="determinate" value="{{statpageData.progress}}"></mat-progress-bar>
+          </div>
+          <mat-divider class="m-t-10"></mat-divider>
+          <div class="m-t-10">
+            <div class="flex-row-between p-10">
+              <h4>Uferdige krav: </h4>
+              <button mat-button matTooltip="Viser krav som er bladd forbi som ikke har blitt akseptert"><i class="material-icons">help</i></button>
+            </div>
+            <div class="unfinished-box">
+              <button mat-raised-button class="color-lightgray unfinished-button" *ngFor="let req of statpageData.unfinished" matTooltip="{{req.title}}" (click)="changeReq(req.projectFunctionalityId); this.statusPage = !this.statusPage">
+                <p class="no-m">{{req.functionalityNumber}}</p>
+              </button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
     <!--The progress bar that shows the users progress-->
-    <div class="status-bar flex-column p-10">
+    <div *ngIf="!statusPage" class="status-bar flex-column p-10">
       <mat-card>
         <!--Actions for movment, goes forwards and backwards also aproves the current requirment-->
         <mat-card-actions class="nav flex-row">
-          <button mat-raised-button color="primary" (click)="previousReq()">
+          <button matTooltip="Forje Krav" mat-raised-button color="primary" (click)="previousReq()">
             <i class="material-icons">arrow_left</i>
           </button>
-          <button mat-raised-button [ngClass]="{'mat-primary' : !currentReq.processed, 'color-success' : currentReq.processed}" (click)="updateFunctionalityProcessed()">
+          <button mat-raised-button matTooltip="Godkjenn/Avis krav"
+            [ngClass]="{'mat-primary' : !currentReq.processed, 'color-success' : currentReq.processed}"
+            (click)="updateFunctionalityProcessed(currentReq)">
             <i class="material-icons">done_outline</i>
           </button>
-          <button mat-raised-button class="no-m" color="primary" (click)="nextReq()">
+          <button matTooltip="Neste Krav" mat-raised-button class="no-m" color="primary" (click)="nextReq()">
             <i class="material-icons">arrow_right</i>
           </button>
         </mat-card-actions>
@@ -159,9 +200,10 @@
             <div class="flex-column flex-center status-bar-button-container">
               <div *ngFor="let req of this.statusbarData">
                 <button mat-raised-button matTooltip="{{req.title}}" (click)="changeReq(req.projectFunctionalityId)" [ngClass]="{
-                  'mat-accent big-button' : this.currentReq.projectFunctionalityId === req.projectFunctionalityId,
+                  'mat-accent' : this.currentReq.projectFunctionalityId === req.projectFunctionalityId,
                   'color-success' : req.processed && req.projectFunctionalityId !== this.currentReq.projectFunctionalityId,
-                  'color-lightgray' : !req.processed && req.projectFunctionalityId < this.currentReq.projectFunctionalityId
+                  'color-lightgray' : !req.processed && req.projectFunctionalityId < this.currentReq.projectFunctionalityId,
+                  'big-button' : req.projectFunctionalityId === 0 || this.currentReq.projectFunctionalityId === req.projectFunctionalityId
                 }">
                   {{req.functionalityNumber}}
                 </button>

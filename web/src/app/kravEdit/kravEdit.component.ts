@@ -8,6 +8,7 @@ import {projectFunctionality} from '../models/projectFunctionality.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {statusPageData} from '../models/statusPageData.model';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,8 @@ export class kravEditComponent implements OnInit {
   private newReqPriority: string;
   private selectedTab: number;
   private maxID: number;
+  private statusPage: boolean;
+  private statpageData: statusPageData;
 
   private treeControl: NestedTreeControl<Requirment>;
   private dataSource: MatTreeNestedDataSource<Requirment>;
@@ -46,6 +49,8 @@ export class kravEditComponent implements OnInit {
     this.sideBarOpen = false;
     this.dialog = dialog;
     this.statusbarData = [];
+    this.statusPage = false;
+    this.statpageData = new statusPageData();
   }
 
   ngOnInit() {
@@ -205,10 +210,15 @@ export class kravEditComponent implements OnInit {
   * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
    */
   changeReq(id: number) {
-    this.currentReq = this.findReq(id);
-    this.newReqPriority = 'O';
-    this.selectedTab = 0;
-    this.statusBarInfo();
+    if (id === 0) { // Loads the statuspage
+      this.statusPage = !this.statusPage;
+      this.statPageLoad();
+    } else {
+      this.currentReq = this.findReq(id);
+      this.newReqPriority = 'O';
+      this.selectedTab = 0;
+      this.statusBarInfo();
+    }
   }
 
   /**
@@ -264,13 +274,27 @@ export class kravEditComponent implements OnInit {
    *
    * handles a change in requirement text.
    */
-  updateFunctionalityProcessed() {
-    this.currentReq.processed = !this.currentReq.processed;
+  updateFunctionalityProcessed(functionality: projectFunctionality) {
+    functionality.processed = !functionality.processed;
 
     const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
-      this.currentReq.processed + '"}]';
+      functionality.processed + '"}]';
 
-    this.sendPatch(patchString, this.currentReq._links.self.href);
+    this.sendPatch(patchString, functionality._links.self.href);
+
+    // Cheks to se if all children of current parent has been processed unless this is a prime
+    const parent = this.findParentReq(functionality);
+    if (parent !== undefined && parent !== null) {
+      let check = true;
+      for (const child of parent.referenceChildProjectFunctionality) {
+        if (!child.processed) {
+          check = false;
+        }
+      }
+      if (check !== parent.processed) {
+        this.updateFunctionalityProcessed(parent);
+      }
+    }
   }
 
   /**
@@ -298,6 +322,7 @@ export class kravEditComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
+      // console.log(result);
     }, error => {
       console.error(error);
     });
@@ -362,6 +387,9 @@ export class kravEditComponent implements OnInit {
       this.currentReq = switchto;
       this.newReqPriority = 'O';
       this.selectedTab = 0;
+    } else {
+      this.statusPage = !this.statusPage;
+      this.statPageLoad();
     }
     this.statusBarInfo();
   }
@@ -424,18 +452,27 @@ export class kravEditComponent implements OnInit {
   }
 
   /**
-   * findParentReq (Currently unused)
+   * findParentReq
    *
    * finds a parent of the given child, returns null if none
    *
    * @param child of wich the parent should be found
    */
   findParentReq(child: projectFunctionality): projectFunctionality {
+    if (child === null) {
+      return null;
+    }
     // Primary level
     for (const primary of this.mainData) {
+      if (primary.projectFunctionalityId === child.projectFunctionalityId) {
+        return  null;
+      }
       if (primary.referenceChildProjectFunctionality.length > 0) {
         // Secondary level
         for (const secondary of primary.referenceChildProjectFunctionality) {
+          if (secondary.projectFunctionalityId === child.projectFunctionalityId) {
+            return primary;
+          }
           if (secondary.referenceChildProjectFunctionality.length > 0) {
             // Tertiary level
             for (const tertiary of secondary.referenceChildProjectFunctionality) {
@@ -443,12 +480,8 @@ export class kravEditComponent implements OnInit {
                 return  secondary;
               }
             }
-          } else if (secondary.projectFunctionalityId === child.projectFunctionalityId) {
-            return primary;
           }
         }
-      } else if (primary.projectFunctionalityId === child.projectFunctionalityId) {
-        return  null;
       }
     }
   }
@@ -473,11 +506,96 @@ export class kravEditComponent implements OnInit {
       const add = this.findNextReq(ret[ret.length - 1].projectFunctionalityId);
       if (add !== null) {
         ret.push(add);
+      } else if (ret.length > 9) {
+        ret.unshift(this.findPreviousReq(ret[0].projectFunctionalityId));
+        // tslint:disable-next-line:no-shadowed-variable
+        const add = {
+          functionalityNumber: 'Ferdig',
+          projectFunctionalityId: 0,
+        };
+        // @ts-ignore
+        ret.push(add);
       } else {
         ret.unshift(this.findPreviousReq(ret[0].projectFunctionalityId));
       }
     }
     this.statusbarData = ret;
+  }
+
+  /**
+   * statPageLoad
+   *
+   * Loads and crunches all required data for the statpage
+   */
+  statPageLoad() {
+    this.statpageData.loaded = false;
+    this.statpageData.unfinished = [];
+    let add: projectFunctionality = this.currentReq;
+    while (add !== null) {
+      if (!add.processed) {
+        this.statpageData.unfinished.unshift(add);
+      }
+      add = this.findPreviousReq(add.projectFunctionalityId);
+      // tslint:disable-next-line:max-line-length
+      if ( add !== null && this.statpageData.unfinished.length > 0 && this.statpageData.unfinished[0].projectFunctionalityId === add.projectFunctionalityId) {
+        add = null;
+      }
+    }
+    this.statpageData.finished = true;
+    // Cheks if the project is finished, i could have used the values from progress instead, but this felt more reliable
+    for (const req of this.mainData) {
+      if ( !req.processed ) {
+        this.statpageData.finished = false;
+      }
+    }
+    if (!this.statpageData.finished) {
+      add = this.mainData[0];
+      let lastID = 0;
+      let numberOfReqs = 0;
+      let finished = 0;
+      while (add !== null && add.projectFunctionalityId !== lastID) {
+        if (add.processed) {
+          finished++;
+        }
+        lastID = add.projectFunctionalityId;
+        add = this.findNextReq(lastID);
+        numberOfReqs++;
+      }
+      this.statpageData.progress = Math.round((finished / numberOfReqs) * 100);
+    } else {
+      this.statpageData.progress = 100;
+    }
+    this.statpageData.loaded = true;
+  }
+
+  /**
+   * isPrime
+   * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
+   * @param inn
+   * The projectfunctionality to check
+   */
+  isPrime(inn: projectFunctionality): boolean {
+    for (const prime of this.mainData) {
+      if (prime === inn) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * isPrime
+   * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
+   * @param inn
+   * ID of the projectfunctionality to check
+   */
+  isPrimeID(ID: number): boolean {
+    for (const prime of this.mainData) {
+      if (prime.projectFunctionalityId === ID) {
+        return true;
+      }
+    }
+    return false;
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;

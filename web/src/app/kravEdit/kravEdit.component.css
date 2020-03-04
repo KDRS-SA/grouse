@@ -40,8 +40,7 @@
   width: 350px;
 }
 .sidenav-content{
-  width: 90%;
-  padding-left: 10%;
+  width: 100%;
 }
 
 .Krav-card{
@@ -91,6 +90,7 @@
 .edit-column{
   width: 80%;
   max-width: 800px;
+  margin-left: 10%;
 }
 
 .status-bar{
@@ -124,4 +124,34 @@
 .big-button{
   height: 60px;
   width: 120px;
+}
+
+.status-page{
+  width: 80%;
+  margin-right: 10%;
+}
+
+.unfinished-box{
+  background-color: rgb(245, 245, 245);
+  width: 90%;
+  height: 175px;
+  margin-left: 5%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px lightgrey;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+.unfinished-button{
+  height: 50px;
+  width: 80px;
+  margin: 2px;
+  padding: 0px;
+}
+
+::ng-deep.mat-card-header-text{
+  margin: 0 !important;
 }

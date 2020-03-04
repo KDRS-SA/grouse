@@ -2,13 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 // tslint:disable-next-line:max-line-length
 import {
-  MatCardModule,
-  MatProgressSpinnerModule,
-  MatSliderModule,
-  MatSnackBarModule,
-  MatTableModule,
-  MatTabsModule,
-  MatTooltipModule
+    MatCardModule, MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSliderModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatTabsModule,
+    MatTooltipModule
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule} from '@angular/common/http';
@@ -69,7 +69,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
         MatTreeModule,
         MatTabsModule,
         MatButtonToggleModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatProgressBarModule
     ],
   providers: [],
   bootstrap: [AppComponent],
