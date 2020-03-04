@@ -11,7 +11,7 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
-import { HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {GDPRContent, LoginComponent} from './Login/Login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -32,6 +32,12 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
 import {userEditComponent} from './UserEdit/userEdit.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function HttpLoaderFactory(http: HttpClient){
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -69,7 +75,15 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
         MatTreeModule,
         MatTabsModule,
         MatButtonToggleModule,
-        MatTooltipModule
+        MatTooltipModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+          }
+        )
     ],
   providers: [],
   bootstrap: [AppComponent],

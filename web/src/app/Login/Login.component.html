@@ -18,7 +18,7 @@
             <mat-card-content class="flex-center flex-column">
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>E-post</mat-label>
+                  <mat-label>{{'login.email' | translate}}</mat-label>
                   <input id="loginEmail" matInput formControlName="email" [(ngModel)]="loginUser.email" required placeholder="Odd-Bjarne@epost.no">
                   <mat-icon matSuffix>mail</mat-icon>
                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
@@ -26,7 +26,7 @@
               </div>
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>Passord</mat-label>
+                  <mat-label>{{'login.password' | translate}}</mat-label>
                   <input id="loginPassword" matInput formControlName="password" [(ngModel)]="loginUser.password" [type]="'password'" placeholder="Skriv inn passordet ditt">
                   <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
@@ -44,6 +44,11 @@
               </div>
             </mat-card-actions>
           </form>
+          <div class="lang-test">
+            <select #langselect (change)="translate.use(langselect.value)">
+              <option *ngFor="let lang of translate.getLangs()" value="lang">{{lang}}</option>
+            </select>
+          </div>
         </div>
 
         <div class="divider"></div>
@@ -54,7 +59,7 @@
             <mat-card-content class="flex-center flex-column">
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>E-post</mat-label>
+                  <mat-label>{{'login.email' | translate}}</mat-label>
                   <input id="regEmail" matInput formControlName="email" [(ngModel)]="regUser.email" required placeholder="Odd-Bjarne@epost.no">
                   <mat-icon matSuffix>mail</mat-icon>
                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
@@ -62,21 +67,21 @@
               </div>
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>Passord</mat-label>
+                  <mat-label>{{'login.password' | translate}}</mat-label>
                   <input id="regPassword" matInput formControlName="password" [(ngModel)]="regUser.password" [type]="'password'" placeholder="Skriv inn et passord">
                   <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
               </div>
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>Repeter passord</mat-label>
+                  <mat-label>{{'login.password2' | translate}}</mat-label>
                   <input id="regPasswordRepeat" matInput formControlName="passwordRepeat" [(ngModel)]="regUser.passwordRepeat" [type]="'password'" placeholder="Repeter passordet">
                   <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
               </div>
               <div style="width: 80%">
                   <mat-checkbox id="CheckBox" matInput formControlName="checkBox" [(ngModel)]="regUser.checkBox"></mat-checkbox>
-                  <a mat-button (click)="ReadGDPR()"> Jeg Har lest GDPR</a>
+                  <a mat-button (click)="ReadGDPR()">{{'login.gdpr' | translate}}</a>
               </div>
             </mat-card-content>
 
@@ -96,3 +101,4 @@
     </div>
   </mat-card>
 </div>
+

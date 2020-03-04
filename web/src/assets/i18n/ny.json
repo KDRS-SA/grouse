@@ -1,0 +1,8 @@
+{
+  "login": {
+    "email": "E-post",
+    "password": "Passord",
+    "password2": "Repeter passord",
+    "gdpr": "Eg har lest GDPR"
+  }
+}
