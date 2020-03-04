@@ -180,6 +180,14 @@ public class ProjectController {
                 projectService.createProject(project), CREATED);
     }
 
+    @PostMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
+            FUNCTIONALITY)
+    public ResponseEntity<ProjectFunctionality> createFunctionality(
+            @PathVariable(PROJECT_NUMBER) Long projectId,
+            @RequestBody ProjectFunctionality projectFunctionality) {
+        return ResponseEntity.status(CREATED).body(null);
+    }
+
     @DeleteMapping(SLASH + PROJECT_NUMBER_PARAMETER)
     public ResponseEntity<Void> deleteProject(
             @PathVariable(PROJECT_NUMBER) Long projectId) {
