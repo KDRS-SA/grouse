@@ -73,7 +73,6 @@ public final class Constants {
     public static final String TEMPLATE_REQUIREMENT_TABLE_NAME =
             "template_requirements";
     public static final String USER_TABLE_NAME = "user";
-    public static final String PROJECT_TABLE_NAME = "projects";
     public static final String AUTHORITY_TABLE_NAME = "authority";
 
     // Join tables
