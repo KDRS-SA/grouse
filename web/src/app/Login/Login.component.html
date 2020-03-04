@@ -7,6 +7,13 @@
           <div mat-card-avatar class="Grouse-Avatar"></div>
           <mat-card-title>Grouse</mat-card-title>
           <mat-card-subtitle>{{'login.subtitle' | translate}}</mat-card-subtitle>
+          <div class="lang-test">
+            <select #langselect (change)="translate.use(langselect.value)">
+              <option value="no">no</option>
+              <option value="ny">ny</option>
+              <option value="en">en</option>
+            </select>
+          </div>
         </mat-card-header>
       </div>
       <div class="flex-row-right">
@@ -44,11 +51,6 @@
               </div>
             </mat-card-actions>
           </form>
-          <div class="lang-test">
-            <select #langselect (change)="translate.use(langselect.value)">
-              <option *ngFor="let lang of translate.getLangs()" value="lang">{{lang}}</option>
-            </select>
-          </div>
         </div>
 
         <div class="divider"></div>
