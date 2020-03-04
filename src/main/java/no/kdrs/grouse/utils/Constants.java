@@ -21,6 +21,14 @@ public final class Constants {
     public static final String GROUSE = "grouse";
     public static final String CONTEXT_PATH = GROUSE;
     public static final String SYSTEM_USER = "grouse";
+    public static final String USERNAME = "username";
+    public static final String PASSWORD = "password";
+    public static final String ACCOUNT_NON_EXPIRED = "account_non_expired";
+    public static final String CREDENTIALS_NON_EXPIRED =
+            "credentials_non_expired";
+    public static final String ACCOUNT_NON_LOCKED = "account_non_locked";
+    public static final String ENABLED = "enabled";
+    public static final String ACCOUNT_CREATED_DATE = "account_created_date";
 
     public static final String PROJECT_REQUIREMENT = "projectRequirement";
     public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
@@ -54,12 +62,19 @@ public final class Constants {
     public static final String CHANGED_DATE = "changed_date";
     public static final String OWNED_BY = "owned_by";
     public static final String VERSION = "version";
+    public static final String AUTHORITY_NAME = "authority_name";
+    public static final String AUTHORITIES = "authorities";
 
     public static final String TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME =
             "template_functionality_areas";
-
     public static final String TEMPLATE_REQUIREMENT_TABLE_NAME =
             "template_requirements";
+    public static final String USER_TABLE_NAME = "user";
+    public static final String PROJECT_TABLE_NAME = "projects";
+    public static final String AUTHORITY_TABLE_NAME = "authority";
+
+    // Join tables
+    public static final String USER_AUTHORITY_JOIN = "user_authority";
 
     // Table cell ordering
     /**

@@ -8,20 +8,22 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
+import static no.kdrs.grouse.utils.Constants.*;
+
 @Entity
-@Table(name = "authority")
+@Table(name = AUTHORITY_TABLE_NAME)
 public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "authority_name", length = 50)
+    @Column(name = AUTHORITY_NAME, length = 50)
     @NotNull
     @Enumerated(EnumType.STRING)
     private AuthorityName name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = AUTHORITIES)
     private List<GrouseUser> users;
 
     public AuthorityName getName() {
