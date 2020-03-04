@@ -2,6 +2,7 @@ package no.kdrs.grouse.model;
 
 import no.kdrs.grouse.model.user.Authority;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -25,8 +26,9 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
  */
 @Entity
 @Table(name = USER_TABLE_NAME)
+@EntityListeners(AuditingEntityListener.class)
 public class GrouseUser
-        extends RepresentationModel {
+        extends RepresentationModel<GrouseUser> {
 
     @Id
     @Email
@@ -84,10 +86,6 @@ public class GrouseUser
 
     public OffsetDateTime getCreatedDate() {
         return createdDate;
-    }
-
-    public void setCreatedDate(OffsetDateTime createdDate) {
-        this.createdDate = createdDate;
     }
 
     public Boolean isEnabled() {
