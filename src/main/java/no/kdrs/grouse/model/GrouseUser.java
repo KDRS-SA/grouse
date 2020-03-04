@@ -1,13 +1,18 @@
 package no.kdrs.grouse.model;
 
 import no.kdrs.grouse.model.user.Authority;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.List;
+
+import static no.kdrs.grouse.utils.Constants.*;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 /**
  * Created by tsodring 28/03/2018
@@ -19,42 +24,46 @@ import java.util.List;
  * find it messy having both of these being used in the same method.
  */
 @Entity
-@Table(name = "user")
+@Table(name = USER_TABLE_NAME)
 public class GrouseUser
         extends RepresentationModel {
 
     @Id
     @Email
     @NotNull
-    @Column(name = "username", nullable = false)
+    @Column(name = USERNAME, nullable = false)
     private String username;
 
     @NotNull
-    @Column(name = "password", nullable = false)
+    @Column(name = PASSWORD, nullable = false)
     private String password;
 
-    @Column(name = "account_non_expired")
+    @Column(name = ACCOUNT_NON_EXPIRED)
     private Boolean accountNonExpired = true;
 
-    @Column(name = "credentials_non_expired")
+    @Column(name = CREDENTIALS_NON_EXPIRED)
     private Boolean credentialsNonExpired = true;
 
-    @Column(name = "account_non_locked")
+    @Column(name = ACCOUNT_NON_LOCKED)
     private Boolean accountNonLocked = true;
 
-    @Column(name = "enabled")
+    @Column(name = ENABLED)
     private Boolean enabled = true;
 
-    @Column(name = "account_created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
+    @CreatedDate
+    @Column(name = CREATED_DATE, updatable = false)
+    @DateTimeFormat(iso = DATE_TIME)
+    private OffsetDateTime createdDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_authority",
-            joinColumns = {@JoinColumn(name = "username", referencedColumnName = "username")},
-            inverseJoinColumns = {@JoinColumn(name = "authority", referencedColumnName = "authority_name")})
+            name = USER_AUTHORITY_JOIN,
+            joinColumns = {
+                    @JoinColumn(name = USERNAME,
+                            referencedColumnName = USERNAME)},
+            inverseJoinColumns =
+                    {@JoinColumn(name = AUTHORITY,
+                            referencedColumnName = AUTHORITY_NAME)})
     private List<Authority> authorities;
 
     public String getUsername() {
@@ -73,11 +82,11 @@ public class GrouseUser
         this.password = password;
     }
 
-    public Date getCreatedDate() {
+    public OffsetDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(OffsetDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
