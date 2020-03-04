@@ -3,7 +3,6 @@ package no.kdrs.grouse.model;
 import no.kdrs.grouse.model.user.Authority;
 import org.springframework.hateoas.RepresentationModel;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -35,13 +34,13 @@ public class GrouseUser
     private String password;
 
     @Column(name = "account_non_expired")
-    Boolean accountNonExpired = true;
+    private Boolean accountNonExpired = true;
 
     @Column(name = "credentials_non_expired")
-    Boolean credentialsNonExpired = true;
+    private Boolean credentialsNonExpired = true;
 
     @Column(name = "account_non_locked")
-    Boolean accountNonLocked = true;
+    private Boolean accountNonLocked = true;
 
     @Column(name = "enabled")
     private Boolean enabled = true;
