@@ -1,10 +1,14 @@
 
 package no.kdrs.grouse.controller;
 
+import no.kdrs.grouse.assemblers.UserAssembler;
 import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.model.Project;
+import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.*;
@@ -29,11 +34,18 @@ public class UserController {
 
     private IGrouseUserService grouseUserService;
     private IProjectService projectService;
+    private PagedResourcesAssembler<GrouseUser> pagedResourcesAssembler;
+    private UserAssembler userAssembler;
 
-    public UserController(IGrouseUserService grouseUserService,
-                          IProjectService projectService) {
+    public UserController(
+            IGrouseUserService grouseUserService,
+            IProjectService projectService,
+            PagedResourcesAssembler<GrouseUser> pagedResourcesAssembler,
+            UserAssembler userAssembler) {
         this.grouseUserService = grouseUserService;
         this.projectService = projectService;
+        this.pagedResourcesAssembler = pagedResourcesAssembler;
+        this.userAssembler = userAssembler;
     }
 
     @GetMapping
@@ -43,16 +55,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/{" + USER + "}")
-    public ResponseEntity<GrouseUser> getGrouseUser(
+    public ResponseEntity<LinksUser> getGrouseUser(
             @PathVariable(USER) String username) {
-        GrouseUser user = grouseUserService.findById(username);
-        user.add(linkTo(methodOn(UserController.class).
-                getGrouseUser(username)).withSelfRel());
-        user.add(linkTo(methodOn(UserController.class).
-                createProject(username, null)).withRel(PROJECT));
-
-        return ResponseEntity.status(OK)
-                .body(user);
+        return addUserLinks(grouseUserService.findById(username), OK);
     }
 
     @GetMapping(value = "/{" + USER + "}/" + PROJECT)
@@ -116,10 +121,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<GrouseUser> saveGrouseUser(
+    public ResponseEntity<LinksUser> saveGrouseUser(
             @RequestBody GrouseUser user) {
-        return ResponseEntity.status(CREATED)
-                .body(grouseUserService.save(user));
+        return addUserLinks(grouseUserService.save(user), CREATED);
     }
 
     @PutMapping(value = "/{" + USER + "}")
@@ -140,4 +144,13 @@ public class UserController {
                 .body("GrouseUser with username " + username +
                         " was deleted");
     }
+
+    private ResponseEntity<LinksUser> addUserLinks(
+            @NotNull final GrouseUser user,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(user.getVersion().toString())
+                .body(userAssembler.toModel(user));
+    }
+
 }
