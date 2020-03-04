@@ -44,8 +44,7 @@ public class UserController {
 
     @GetMapping(value = "/{" + USER + "}")
     public ResponseEntity<GrouseUser> getGrouseUser(
-            @PathVariable(USER) String username)
-    throws Exception {
+            @PathVariable(USER) String username) {
         GrouseUser user = grouseUserService.findById(username);
         user.add(linkTo(methodOn(UserController.class).
                 getGrouseUser(username)).withSelfRel());
@@ -91,7 +90,7 @@ public class UserController {
     @PostMapping(value = "/{" + USER + "}/" + PROJECT)
     public ResponseEntity<Project> createProject(
             @PathVariable(USER) String ownedBy,
-            @RequestBody Project project) throws Exception {
+            @RequestBody Project project) {
 
         String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
                 .getName();
@@ -108,10 +107,10 @@ public class UserController {
                 getFunctionalityForProject(project.getProjectId()))
                 .withRel(FUNCTIONALITY));
 
-        project.add(linkTo(DocumentController.class, DocumentController.class.
-                getMethod("downloadDocument", Long.class,
-                        HttpServletResponse.class), project.getProjectId()).
-                withRel(DOCUMENT));
+        project.add(linkTo(DocumentController.class,
+                methodOn(DocumentController.class)
+                        .downloadProjectDocument(project.getProjectId()))
+                .withRel(DOCUMENT));
 
         return ResponseEntity.status(OK)
                 .body(project);
