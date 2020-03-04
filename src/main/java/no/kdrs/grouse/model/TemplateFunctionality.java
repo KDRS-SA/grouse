@@ -99,7 +99,7 @@ public class TemplateFunctionality
     private OffsetDateTime createdDate;
 
     /**
-     * The date the project was changed
+     * The date the template was changed
      */
     @LastModifiedDate
     @Column(name = CHANGED_DATE)
@@ -297,7 +297,6 @@ public class TemplateFunctionality
         this.referenceFunctionalityRequirement.add(functionalityRequirement);
     }
 
-
     public static class FunctionalityBuilder {
 
         private String id;
@@ -358,6 +357,5 @@ public class TemplateFunctionality
         public TemplateFunctionality build() {
             return new TemplateFunctionality(this);
         }
-
     }
 }

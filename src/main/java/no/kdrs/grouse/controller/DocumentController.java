@@ -12,20 +12,18 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.CREATED;
+
 /**
  * Created by tsodring on 9/25/17.
  * <p>
@@ -50,6 +48,12 @@ public class DocumentController {
         this.templateService = templateService;
     }
 
+    /*
+    I'm not sure what the point of this endpoint / code is. It seems to allow
+    the client to POST a project number from the root of the application
+    followed by /document and it creates the document. We should probably
+    revisit this.
+
     @PostMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + DOCUMENT)
     public ResponseEntity<Project> getRequirement(
             @PathVariable(PROJECT_NUMBER) Long projectId)
@@ -57,7 +61,6 @@ public class DocumentController {
 
         Project project = projectService.findById(projectId);
         documentService.createDocument(project);
-        project.setChangedDate(new Date());
         project.setDocumentCreated(true);
         project.setProjectComplete(true);
         projectService.update(projectId, project);
@@ -70,17 +73,17 @@ public class DocumentController {
                 .withRel(FUNCTIONALITY));
 
         project.add(linkTo(DocumentController.class, DocumentController.class.
-                getMethod("downloadDocument", Long.class,
-                        HttpServletResponse.class), projectId).
+                getMethod("downloadDocumentProject", Long.class), projectId).
                 withRel(DOCUMENT));
 
         return ResponseEntity.status(CREATED)
                 .body(project);
     }
+*/
 
     @GetMapping(SLASH + PROJECT + SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
             DOCUMENT)
-    public HttpEntity<byte[]> downloadProjectDocument(
+    public HttpEntity<byte[]> downloadDocumentProject(
             @PathVariable(PROJECT_NUMBER) Long projectId)
             throws IOException {
         Project project = projectService.findById(projectId);
@@ -94,7 +97,7 @@ public class DocumentController {
 
     @GetMapping(SLASH + TEMPLATE + SLASH + TEMPLATE_ID_PARAMETER + SLASH +
             DOCUMENT)
-    public HttpEntity<byte[]> downloadDocument(
+    public HttpEntity<byte[]> downloadDocumentTemplate(
             @PathVariable(TEMPLATE_ID) Long templateId)
             throws IOException {
         Template template = templateService.findById(templateId);

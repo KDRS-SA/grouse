@@ -3,6 +3,9 @@ package no.kdrs.grouse.service;
 import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.persistence.*;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +33,11 @@ public class ProjectService
     private ITemplateFunctionalityRepository functionalityRepository;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
+
+    // Columns that it is possible to update via a PATCH request
+    private ArrayList<String> allowableColumns =
+            new ArrayList<String>(Arrays.asList("projectName",
+                    "fileNameInternal", "ownedBy"));
 
     public ProjectService(
             EntityManager entityManager,
@@ -78,9 +86,10 @@ public class ProjectService
                         getProjectOrThrow(projectId), type, true);
     }
 
+
     @Override
-    public List<Project> findAll() {
-        return (List<Project>) projectRepository.findAll();
+    public Page<Project> findAll(Pageable page) {
+        return projectRepository.findAll(page);
     }
 
     @Override
@@ -111,8 +120,6 @@ public class ProjectService
     @Override
     public Project createProject(Project project) {
         String ownedBy = getUser();
-        project.setCreatedDate(new Date());
-        project.setChangedDate(new Date());
         project.setDocumentCreated(false);
 
         project.setFileName(project.getProjectName());
@@ -272,17 +279,9 @@ public class ProjectService
     }
 
     @Override
-    public Project update(Long id, Project project)
+    public Project update(Long id, PatchObjects patchObjects)
             throws EntityNotFoundException {
-
-        Project originalProject = getProjectOrThrow(id);
-        // copy the values over
-        originalProject.setFileName(project.getFileName());
-        originalProject.setProjectName(project.getProjectName());
-
-        // probably don't want to expose this one
-        //originalProject.ListProjectOwner(project.getProjectOwner());
-        return originalProject;
+        return (Project) handlePatch(getProjectOrThrow(id), patchObjects);
     }
 
     @Override
@@ -309,6 +308,11 @@ public class ProjectService
             projectFunctionalityRepository.delete(projectFunctionality);
         }
         projectRepository.delete(project);
+    }
+
+    @Override
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
     }
 
     /**

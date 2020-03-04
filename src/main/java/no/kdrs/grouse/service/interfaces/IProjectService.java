@@ -4,23 +4,33 @@ package no.kdrs.grouse.service.interfaces;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
+import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 /**
  * Created by tsodring on 9/25/17.
  */
 public interface IProjectService {
-    List<Project> findAll();
+    Page<Project> findAll(Pageable page);
+
     Project findById(Long id);
 
     Project createProject(Project project);
 
-    Project update(Long id, Project project) throws Exception;
+    Project update(Long id, PatchObjects patchObjects)
+            throws EntityNotFoundException;
+
     void delete(Long id);
+
     List<Project> findByOwnedBy(String ownedBy);
-    List<ProjectRequirement> findByProjectIdOrderByProjectName (
+
+    List<ProjectRequirement> findByProjectIdOrderByProjectName(
             Long projectId, String functionalityNumber);
+
     List<ProjectFunctionality> findFunctionalityForProjectByType(
             Long projectId, String type);
 
