@@ -8,7 +8,6 @@ import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.PatchObjects;
-import no.kdrs.grouse.utils.exception.InternalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.*;
@@ -175,7 +173,7 @@ public class ProjectController {
 
     @PostMapping
     public ResponseEntity<LinksProject> createProject(
-            @RequestBody Project project) throws Exception {
+            @RequestBody Project project) {
         return addProjectLinks(
                 projectService.createProject(project), CREATED);
     }
@@ -200,24 +198,17 @@ public class ProjectController {
             @NotNull final Project project,
             @NotNull final HttpStatus status) {
 
-        try {
-            LinksProject linksProject = new LinksProject(project);
-            linksProject.add(linkTo(methodOn(ProjectController.class)
-                    .getProject(project.getProjectId())).withSelfRel());
-            linksProject.add(linkTo(methodOn(ProjectController.class)
-                    .getFunctionalityForProject(project.getProjectId()))
-                    .withRel(FUNCTIONALITY));
-            linksProject.add(linkTo(methodOn(DocumentController.class)
-                    .downloadDocumentProject(project.getProjectId()))
-                    .withRel(DOCUMENT));
-            return ResponseEntity.status(status)
-                    .eTag(project.getVersion().toString())
-                    .body(linksProject);
-        } catch (IOException e) {
-            String errorMessage =
-                    "Error when adding project links: " + e.getMessage();
-            logger.error(errorMessage);
-            throw new InternalException(errorMessage);
-        }
+        LinksProject linksProject = new LinksProject(project);
+        linksProject.add(linkTo(methodOn(ProjectController.class)
+                .getProject(project.getProjectId())).withSelfRel());
+        linksProject.add(linkTo(methodOn(ProjectController.class)
+                .getFunctionalityForProject(project.getProjectId()))
+                .withRel(FUNCTIONALITY));
+        linksProject.add(linkTo(methodOn(DocumentController.class)
+                .downloadProjectDocument(project.getProjectId()))
+                .withRel(DOCUMENT));
+        return ResponseEntity.status(status)
+                .eTag(project.getVersion().toString())
+                .body(linksProject);
     }
 }
