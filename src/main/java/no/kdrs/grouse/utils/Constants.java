@@ -119,4 +119,7 @@ public final class Constants {
             "ETAG value is missing! Patch request requires an ETAG!";
     public static final String ETAG_VALUE_LESS_0 =
             "ETAG value is < 0! ETAG values start at 0!";
+    public static final String NO_ACCESS_OTHER_USER =
+            "Attempt to access a user without permission. Admin role is " +
+                    "required to see other users";
 }

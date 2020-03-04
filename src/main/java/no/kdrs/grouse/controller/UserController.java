@@ -7,6 +7,9 @@ import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import no.kdrs.grouse.utils.RoleValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,20 +35,26 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping(value = SLASH + USER)
 public class UserController {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(UserController.class);
+
     private IGrouseUserService grouseUserService;
     private IProjectService projectService;
     private PagedResourcesAssembler<GrouseUser> pagedResourcesAssembler;
     private UserAssembler userAssembler;
+    private RoleValidator role;
 
     public UserController(
             IGrouseUserService grouseUserService,
             IProjectService projectService,
             PagedResourcesAssembler<GrouseUser> pagedResourcesAssembler,
-            UserAssembler userAssembler) {
+            UserAssembler userAssembler,
+            RoleValidator role) {
         this.grouseUserService = grouseUserService;
         this.projectService = projectService;
         this.pagedResourcesAssembler = pagedResourcesAssembler;
         this.userAssembler = userAssembler;
+        this.role = role;
     }
 
     @GetMapping
@@ -57,6 +66,7 @@ public class UserController {
     @GetMapping(value = "/{" + USER + "}")
     public ResponseEntity<LinksUser> getGrouseUser(
             @PathVariable(USER) String username) {
+        checkAccess(username);
         return addUserLinks(grouseUserService.findById(username), OK);
     }
 
@@ -130,6 +140,7 @@ public class UserController {
     public ResponseEntity<GrouseUser> updateGrouseUser(
             @PathVariable(USER) String username,
             @RequestBody GrouseUser user) throws EntityNotFoundException {
+        checkAccess(username);
         return ResponseEntity.status(OK)
                 .body(grouseUserService.update(username, user));
     }
@@ -153,4 +164,14 @@ public class UserController {
                 .body(userAssembler.toModel(user));
     }
 
+    private void checkAccess(String ownedBy) {
+        String loggedInUser = SecurityContextHolder.getContext()
+                .getAuthentication().getName();
+        if (!role.isAdmin()) {
+            if (!loggedInUser.equals(ownedBy)) {
+                logger.error(NO_ACCESS_OTHER_USER);
+                throw new AccessDeniedException(NO_ACCESS_OTHER_USER);
+            }
+        }
+    }
 }
