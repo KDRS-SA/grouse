@@ -74,7 +74,7 @@ public class UserController {
                     .withRel(FUNCTIONALITY));
 
             project.add(linkTo(DocumentController.class, DocumentController.class.
-                    getMethod("downloadDocument", Long.class,
+                    getMethod("downloadDocumentProject", Long.class,
                             HttpServletResponse.class), project.getProjectId()).
                     withRel(DOCUMENT));
 // Same for SRequirement
@@ -111,7 +111,6 @@ public class UserController {
                 methodOn(DocumentController.class)
                         .downloadProjectDocument(project.getProjectId()))
                 .withRel(DOCUMENT));
-
         return ResponseEntity.status(OK)
                 .body(project);
     }

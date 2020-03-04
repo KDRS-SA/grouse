@@ -1,16 +1,21 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.PROJECT_TABLE_NAME;
+import static no.kdrs.grouse.utils.Constants.VERSION;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 /**
  * Created by tsodring on 9/8/17.
@@ -18,7 +23,7 @@ import static no.kdrs.grouse.utils.Constants.PROJECT_TABLE_NAME;
 
 @Entity
 @Table(name = PROJECT_TABLE_NAME)
-@EntityListeners({AuditingEntityListener.class})
+@EntityListeners(AuditingEntityListener.class)
 @XmlRootElement
 public class Project
         extends RepresentationModel<Project> {
@@ -71,20 +76,26 @@ public class Project
     /**
      * The date the project was created
      */
+    @CreatedDate
     @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    @DateTimeFormat(iso = DATE_TIME)
+    private OffsetDateTime createdDate;
 
     /**
      * The date the project was accessed
      */
+    @LastModifiedDate
     @Column(name = "changed_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date changedDate;
+    @DateTimeFormat(iso = DATE_TIME)
+    private OffsetDateTime lastModifidDate;
 
     @NotNull
     @Column(name = "ownedBy", nullable = false)
     private String ownedBy;
+
+    @Version
+    @Column(name = VERSION)
+    private Long version;
 
     @JsonIgnore
     @OneToMany(mappedBy = "referenceProject")
@@ -127,20 +138,20 @@ public class Project
         this.fileName = fileName;
     }
 
-    public Date getCreatedDate() {
+    public OffsetDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(OffsetDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Date getChangedDate() {
-        return changedDate;
+    public OffsetDateTime getLastModifidDate() {
+        return lastModifidDate;
     }
 
-    public void setChangedDate(Date changedDate) {
-        this.changedDate = changedDate;
+    public void setLastModifidDate(OffsetDateTime lastModifidDate) {
+        this.lastModifidDate = lastModifidDate;
     }
 
     public Boolean getDocumentCreated() {
@@ -175,6 +186,14 @@ public class Project
         this.ownedBy = ownedBy;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     public List<ProjectRequirement> getReferenceProjectRequirement() {
         return referenceProjectRequirement;
     }
@@ -200,7 +219,7 @@ public class Project
                 ", organisationName='" + organisationName + '\'' +
                 ", fileName='" + fileName + '\'' +
                 ", createdDate=" + createdDate +
-                ", changedDate=" + changedDate +
+                ", lastModifidDate=" + lastModifidDate +
                 ", ownedBy='" + ownedBy + '\'' +
                 '}';
     }
