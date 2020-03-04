@@ -6,7 +6,7 @@
         <mat-card-header class="flex-center">
           <div mat-card-avatar class="Grouse-Avatar"></div>
           <mat-card-title>Grouse</mat-card-title>
-          <mat-card-subtitle>Logg Inn</mat-card-subtitle>
+          <mat-card-subtitle>{{'login.subtitle' | translate}}</mat-card-subtitle>
         </mat-card-header>
       </div>
       <div class="flex-row-right">
@@ -36,10 +36,10 @@
             <mat-card-actions> <!--Button area for Loggin side-->
               <div class="button-container">
                 <div class="flex-row-right">
-                  <button mat-raised-button type="submit" color="primary"  [disabled]="!loginForm.valid">Logg inn</button>
+                  <button mat-raised-button type="submit" color="primary"  [disabled]="!loginForm.valid">{{'login.login' | translate}}</button>
                 </div>
                 <div class="flex-row-right">
-                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">Registrer</button>
+                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">{{'login.register' | translate}}</button>
                 </div>
               </div>
             </mat-card-actions>
@@ -88,10 +88,10 @@
             <mat-card-actions> <!--Button area for the Registration side-->
               <div class="button-container">
                 <div class="flex-row-right">
-                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">Avbryt</button>
+                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">{{'login.cancel' | translate}}</button>
                 </div>
                 <div class="flex-row-right">
-                  <button mat-raised-button type="submit" color="primary"  [disabled]="!registerForm.valid">Bekreft</button>
+                  <button mat-raised-button type="submit" color="primary"  [disabled]="!registerForm.valid">{{'login.confirm' | translate}}</button>
                 </div>
               </div>
             </mat-card-actions>

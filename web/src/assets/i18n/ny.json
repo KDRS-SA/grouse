@@ -3,6 +3,11 @@
     "email": "E-post",
     "password": "Passord",
     "password2": "Repeter passord",
-    "gdpr": "Eg har lest GDPR"
+    "gdpr": "Eg har lest GDPR",
+    "confirm": "Stadfest",
+    "cancel": "Avbryt",
+    "subtitle": "Logg inn",
+    "register": "Registrer",
+    "login": "Logg inn"
   }
 }

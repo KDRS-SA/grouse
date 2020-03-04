@@ -3,6 +3,11 @@
     "email": "E-mail",
     "password": "Password",
     "password2": "Repeat password",
-    "gdpr": "I have read GDPR"
+    "gdpr": "I have read GDPR",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "subtitle": "Log in",
+    "register": "Register",
+    "login": "Log in"
   }
 }
