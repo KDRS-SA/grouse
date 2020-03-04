@@ -26,7 +26,7 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 @EntityListeners(AuditingEntityListener.class)
 @XmlRootElement
 public class Project
-        extends RepresentationModel {
+        extends RepresentationModel<Project> {
 
     private static final long serialVersionUID = 1L;
 
@@ -224,3 +224,5 @@ public class Project
                 '}';
     }
 }
+
+
