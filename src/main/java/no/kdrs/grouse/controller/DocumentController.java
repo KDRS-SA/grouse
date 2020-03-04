@@ -8,6 +8,8 @@ import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.exception.InternalException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpEntity;
@@ -37,6 +39,9 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping
 public class DocumentController {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(DocumentController.class);
 
     private IDocumentService documentService;
     private IProjectService projectService;
@@ -81,15 +86,22 @@ public class DocumentController {
     @GetMapping(SLASH + PROJECT + SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
             DOCUMENT)
     public HttpEntity<byte[]> downloadProjectDocument(
-            @PathVariable(PROJECT_NUMBER) Long projectId)
-            throws IOException {
+            @PathVariable(PROJECT_NUMBER) Long projectId) {
         Project project = projectService.findById(projectId);
         if (null != project.getFileNameInternal()) {
             throw new InternalException("Can't download document, no filename" +
                     "for project " + projectId);
         }
         var file = Paths.get(project.getFileNameInternal());
-        return getDocument(file, project.getFileName());
+
+        try {
+            return getDocument(file, project.getFileName());
+        } catch (IOException e) {
+            String errorMessage = "Problem getting file for project (" +
+                    projectId + ")";
+            logger.error(errorMessage);
+            throw new InternalException(errorMessage);
+        }
     }
 
     @GetMapping(SLASH + TEMPLATE + SLASH + TEMPLATE_ID_PARAMETER + SLASH +
