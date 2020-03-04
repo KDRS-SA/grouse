@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from './Login/Login.component';
-import {MenuComponent} from './menu/menu.component';
+import {MenuComponent} from './Menu/menu.component';
 import {AppComponent} from './app.component';
-import {kravEditComponent} from './kravEdit/kravEdit.component';
+import {kravEditComponent} from './KravEdit/kravEdit.component';
 import {userEditComponent} from './UserEdit/userEdit.component';
 
 const routes: Routes = [

@@ -6,6 +6,7 @@ import {Link} from '../models/link.model';
 import {convertFromLegacy, REL_PROJECT} from '../common';
 import {Project} from '../models/Project.model';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -25,11 +26,13 @@ export class MenuComponent implements OnInit {
 
   public title = 'Grouse';
 
-  constructor(http: HttpClient, router: Router, dialogBox: MatDialog) {
+  constructor(http: HttpClient, router: Router, dialogBox: MatDialog, public translate: TranslateService) {
     this.http = http;
     this.router = router;
     this.userData = new UserData();
     this.dialogBox = dialogBox;
+    translate.addLangs(['no', 'en', 'ny']);
+    translate.setDefaultLang('no');
   }
 
   ngOnInit() {

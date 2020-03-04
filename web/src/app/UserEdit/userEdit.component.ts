@@ -3,6 +3,8 @@ import {UserData} from '../models/UserData.model';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialog} from "@angular/material/dialog";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -26,10 +28,12 @@ export class userEditComponent implements  OnInit {
   private oldPassword: string;
   private repeatPassword: string;
 
-  constructor(http: HttpClient, router: Router, formBuilder: FormBuilder) {
+  constructor(http: HttpClient, router: Router, formBuilder: FormBuilder, public translate: TranslateService) {
     this.http = http;
     this.router = router;
     this.formBuilder = formBuilder;
+    translate.addLangs(['no', 'en', 'ny']);
+    translate.setDefaultLang('no');
   }
 
   ngOnInit(): void {
