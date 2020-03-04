@@ -1,6 +1,7 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -9,15 +10,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 import java.util.List;
 
+import static no.kdrs.grouse.utils.Constants.PROJECT_TABLE_NAME;
+
 /**
  * Created by tsodring on 9/8/17.
  */
 
 @Entity
-@Table(name = "projects")
+@Table(name = PROJECT_TABLE_NAME)
+@EntityListeners({AuditingEntityListener.class})
 @XmlRootElement
 public class Project
-        extends RepresentationModel {
+        extends RepresentationModel<Project> {
 
     private static final long serialVersionUID = 1L;
 
@@ -201,3 +205,5 @@ public class Project
                 '}';
     }
 }
+
+
