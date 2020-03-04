@@ -154,7 +154,7 @@ public class TemplateController {
 
     @PostMapping
     public ResponseEntity<LinksTemplate> createTemplate(
-            @RequestBody Template template) throws Exception {
+            @RequestBody Template template) {
         return addTemplateLinks(
                 templateService.createTemplate(template), CREATED);
     }
