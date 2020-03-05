@@ -11,8 +11,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static no.kdrs.grouse.utils.Constants.PROJECT;
-import static no.kdrs.grouse.utils.Constants.TEMPLATE;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -51,6 +50,11 @@ public class UserAssembler
                     .createTemplate(null))
                     .withRel(TEMPLATE));
         }
+        if (role.isAdmin()) {
+            linksUser.add(linkTo(methodOn(UserController.class)
+                    .getGrouseUsers(null))
+                    .withRel(USER));
+        }
         return linksUser;
     }
 
@@ -61,16 +65,22 @@ public class UserAssembler
                 super.toCollectionModel(users);
 
         linksUsers.forEach(user -> {
-            user
-                    .add(linkTo(methodOn(UserController.class)
-                            .getGrouseUser(user.getUsername()))
-                            .withSelfRel())
-                    .add(linkTo(methodOn(ProjectController.class)
-                            .createProject(null))
-                            .withRel(PROJECT))
-                    .add(linkTo(methodOn(TemplateController.class)
-                            .createTemplate(null))
-                            .withRel(TEMPLATE));
+            user.add(linkTo(methodOn(UserController.class)
+                    .getGrouseUser(user.getUsername()))
+                    .withSelfRel());
+            user.add(linkTo(methodOn(ProjectController.class)
+                    .createProject(null))
+                    .withRel(PROJECT));
+            if (role.isTemplate()) {
+                user.add(linkTo(methodOn(TemplateController.class)
+                        .createTemplate(null))
+                        .withRel(TEMPLATE));
+            }
+            if (role.isAdmin()) {
+                user.add(linkTo(methodOn(UserController.class)
+                        .getGrouseUsers(null))
+                        .withRel(USER));
+            }
         });
         return linksUsers;
     }
