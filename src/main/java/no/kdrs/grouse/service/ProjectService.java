@@ -2,6 +2,7 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.persistence.*;
+import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ public class ProjectService
         implements IProjectService {
 
     private EntityManager entityManager;
+    private IProjectRequirementService projectRequirementService;
     private IProjectRepository projectRepository;
     private ITemplateRequirementRepository requirementRepository;
     private ITemplateFunctionalityRepository functionalityRepository;
@@ -41,12 +43,14 @@ public class ProjectService
 
     public ProjectService(
             EntityManager entityManager,
+            IProjectRequirementService projectRequirementService,
             IProjectRepository projectRepository,
             ITemplateRequirementRepository requirementRepository,
             ITemplateFunctionalityRepository functionalityRepository,
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository) {
         this.entityManager = entityManager;
+        this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
         this.requirementRepository = requirementRepository;
         this.functionalityRepository = functionalityRepository;
@@ -299,12 +303,13 @@ public class ProjectService
     @Override
     public void delete(Long id) {
         Project project = getProjectOrThrow(id);
-        for (ProjectRequirement projectRequirement :
-                project.getReferenceProjectRequirement()) {
-            projectRequirementRepository.delete(projectRequirement);
-        }
         for (ProjectFunctionality projectFunctionality :
                 project.getReferenceProjectFunctionality()) {
+            for (ProjectRequirement projectRequirement :
+                    projectFunctionality.getReferenceProjectRequirement()) {
+                projectRequirementService
+                        .deleteRequirementByObject(projectRequirement);
+            }
             projectFunctionalityRepository.delete(projectFunctionality);
         }
         projectRepository.delete(project);

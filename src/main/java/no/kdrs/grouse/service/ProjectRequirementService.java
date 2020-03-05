@@ -41,9 +41,14 @@ public class ProjectRequirementService
         projectRequirementRepository.deleteById(requirementNumber);
     }
 
+    public void deleteRequirementByObject(
+            ProjectRequirement projectRequirement) {
+        projectRequirementRepository.delete(projectRequirement);
+    }
+
     @Override
     public ProjectRequirement getProjectRequirement(Long id) {
-            return getProjectRequirementOrThrow(id);
+        return getProjectRequirementOrThrow(id);
     }
 
     /**
