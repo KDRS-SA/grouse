@@ -8,6 +8,78 @@
     "cancel": "Avbryt",
     "subtitle": "Logg inn",
     "register": "Registrer",
-    "login": "Logg inn"
+    "login": "Logg inn",
+    "placeholder-email": "Odd-Bjarne@e-post.no",
+    "placeholder-pass": "Skriv inn passordet ditt",
+    "placeholder-email-reg": "Odd-Bjarne@e-post.no",
+    "placeholder-pass-reg": "Skriv inn eit passord",
+    "placeholder-pass-reg-rep": "Repeter passordet"
+  },
+  "GDPR": {
+    "User": "Brukar",
+    "UserTXT": "Som bruker vil du ha moglegheit til å oppretta nye prosjkter og prosjekt-malar. Du vil ha moglegheit til å redigera eksisterande malar på profilen din. Du vil òg ha moglegheit til å invitera andre til å delta i prosjekta dine, og dessutan bli med i prosjekt du blir invitert til å bli med i.",
+    "Admin": "Administrator",
+    "AdminTXT": "Som administrator vil du ha alle moglegheitene til ein vanleg brukar. I tillegg til dette vil du ha tilgang til å fiksa, sletta og eventulet redigera andre brukarane sine viss det dukkar opp noko dei treng hjelp med, eller viss noko må fiksast.",
+    "Infosave": "Informasjon vi lagrar",
+    "InfoSaveTXT": "I databasane våre kjem vi til å lagra e-posten din adresse, og dit passord vil lagrast sikkert og krypter slik at det ikkje kjem på avvege. Vi kjem òg til å lagra prosjekta dine. Dette inkluderer kva prosjekt du lagrar/eigar, og dessutan prosjekt du jobbar på kvar brukaren din ikkje er eigaren av prosjektet. Det siste som vil lagrast er rolla di i programmet, det vil seia om du er normal brukar eller administrator.",
+    "InfoDelete": "Sletting av informasjon",
+    "InfoDeleteTXT": "Når du er logga inn vil du kunna gå inn på instillingene for brukaren din. Inne på instillingene vil det vera ein knapp for å sletta brukaren og all tilhøyrande innformasjon. Trykkar du på denne vil du måtta stadfesta at du vil fjærne all informasjon tilhøyrande brukaren din. Dette er ikkje reverserbart. Når du har sletta alt er det ikkje mogleg og gjennopprette brukaren og tilhøyrande informasjon.",
+    "OBS!": "OBS! Dette vil IKKJE sletta prosjekt du ikkje er eigar av.",
+    "Close": "Lukk vindauge"
+  },
+  "Menu": {
+    "Logout": "Logg ut",
+    "NewProject": "Nytt prosjekt",
+    "Lastviewed": "Sist sett: "
+  },
+  "New": {
+    "Title": "Nytt Prosjekt",
+    "Name": "Namn på prosjekt:",
+    "Organisation": "Organisasjon",
+    "Cancel": "Avbryt",
+    "Create": "Opprett"
+  },
+  "Remove": {
+    "Confirm": "Stadfest sletting",
+    "Sure?": "Er du sikker på at du vil sletta dette kravet? Denne handlinga kan ikkje angrast!!",
+    "Cancel": "Avbryt",
+    "Delete": "Slett"
+  },
+  "UserEdit": {
+    "Logout": "Logg ut",
+    "Usersettings": "Brukerinstillinger",
+    "Details": "Detaljar: ",
+    "Email": "E-post",
+    "Created": "Konto oppretta:",
+    "Administration": "E-post og passord administrasjon:",
+    "Email-new": "E-post",
+    "Email-Invalid": "E-posten manglar, eller står på feil format",
+    "Email-Change": "Endre e-post",
+    "Password-Old": "Gammalt passord",
+    "Password-Old-Placeholder": "Skriv inn det gamle passordet",
+    "Password-New": "Nytt passord",
+    "Password-New-Placeholder": "Skriv inn nytt passord",
+    "Password-New-rep": "Repeter nytt passord",
+    "Password-New-rep-Placeholder": "Repeter det nye passordet",
+    "Password-Change": "Endre passord"
+  },
+  "KravEdit": {
+    "Logout": "Logg ut",
+    "Summary": "Samandrag",
+    "Requirement": "Krav",
+    "Priority": "Prioritet",
+    "Delete-warning": "Slett krav",
+    "New": "Ny",
+    "New-Req": "Nytt Krav",
+    "Add-Req": "Legg til krav",
+    "Description": "Skildring",
+    "Explaination": "Forklaring",
+    "Consequence": "Konsekvens",
+    "Progress": "Progresjon : ",
+    "Un-finished-req": "Uferdige krav : ",
+    "Un-finished-req-Tooltip": "Viser krav som er bladd forbi som ikkje har vorte akseptert",
+    "Previous-req": "Førre krav",
+    "Accept-Deny": "Godkjenn/avvis krav",
+    "Next-req": "Neste krav"
   }
 }

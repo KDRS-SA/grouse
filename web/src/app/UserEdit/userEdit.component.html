@@ -27,7 +27,7 @@
     <!--User info-->
     <mat-card class="cards no-p">
       <mat-card-header class="no-p flex-center">
-        <h4>Info: </h4>
+        <h4>{{'UserEdit.Details' | translate}}</h4>
       </mat-card-header>
       <mat-card-content>
         <div class="flex-row-between m-lr-10">
@@ -75,7 +75,7 @@
                 <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>
               <mat-form-field style="width: 100%" appearance="legacy">
-                <mat-label>{{'UserEdit.Password-new' | translate}}</mat-label>
+                <mat-label>{{'UserEdit.Password-New' | translate}}</mat-label>
                 <input matInput formControlName="newP" #newPassord [(ngModel)]="newPassword" [type]="'password'" placeholder="{{'UserEdit.Password-Old-Placeholder' | translate}}">
                 <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>

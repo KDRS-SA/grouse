@@ -33,6 +33,7 @@
     "Lastviewed": "Sist sett: "
   },
   "New": {
+    "Title": "Nytt Prosjekt",
     "Name": "Navn på prosjekt:",
     "Organisation": "Organisasjon",
     "Cancel": "Avbryt",
@@ -47,6 +48,7 @@
   "UserEdit": {
     "Logout": "Logg ut",
     "Usersettings": "Brukerinstillinger",
+    "Details": "Detaljer: ",
     "Email": "E-post",
     "Created": "Konto opprettet:",
     "Administration": "E-Post og passord administrasjon:",
@@ -62,6 +64,22 @@
     "Password-Change": "Endre passord"
     },
   "KravEdit": {
-
+    "Logout": "Logg ut",
+    "Summary": "Sammendrag",
+    "Requirement": "Krav",
+    "Priority": "Prioritet",
+    "Delete-warning": "Slett krav",
+    "New": "Ny",
+    "New-Req": "Nytt Krav",
+    "Add-Req": "Legg til krav",
+    "Description": "Beskrivelse",
+    "Explaination": "Forklaring",
+    "Consequence": "Konsekvens",
+    "Progress": "Progresjon : ",
+    "Un-finished-req": "Uferdige krav : ",
+    "Un-finished-req-Tooltip": "Viser krav som er bladd forbi som ikke har blitt akseptert",
+    "Previous-req": "Forrige krav",
+    "Accept-Deny": "Godkjenn/avvis krav",
+    "Next-req": "Neste krav"
   }
 }

@@ -1,13 +1,85 @@
 {
-  "login": {
-    "email": "E-mail",
-    "password": "Password",
+  "Login": {
+    "email": "Email",
+    "password": "password",
     "password2": "Repeat password",
     "gdpr": "I have read GDPR",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "subtitle": "Log in",
-    "register": "Register",
-    "login": "Log in"
+    "subtitle": "Login",
+    "register": "register",
+    "login": "Login",
+    "placeholder-email": "Odd-Bjarne@epost.no",
+    "placeholder pass": "Enter your password",
+    "placeholder-email-reg": "Odd-Bjarne@epost.no",
+    "placeholder-pass-reg": "enter a password",
+    "placeholder-pass-reg-rep": "Repeat the password"
+  },
+  "GDPR": {
+    "User": "User",
+    "UserTXT": "As a user you will have the opportunity to create new projects and project templates. You will have the opportunity to edit existing templates on your profile. You will also have the opportunity to invite others to participate in your projects, as well as join projects you are invited to join. ",
+    "Admin": "Administrator",
+    "AdminTXT": "As an administrator, you will have all the capabilities of a regular user. In addition, you will have access to fix, delete and event edit other users if anything they need help with or if something needs to be done. fixed. ",
+    "InfoSave": "Information we store",
+    "InfoSaveTXT": "In our databases we will store your e-mail address and your password will be stored securely and encrypted so that it does not go astray. We will also store your projects. This includes which projects you save / owner, as well as projects you work on where your user is not the owner of the project. The last thing that will be saved is your role in the program, that is, if you are a normal user or administrator. ",
+    "InfoDelete": "Deleting information",
+    "InfoDeleteTXT": "Once logged in you will be able to access the settings for your user. Inside the settings there will be a button to delete the user and all related information. Pressing this you will need to confirm that you want to remove all information belonging to your user. This is not reversible. After deleting everything it is not possible to recover the user and associated information. ",
+    "Attention!": "Attention! This will NOT delete projects you do not own.",
+    "Close": "Close window"
+  },
+  "Menu": {
+    "Logout": "Logout",
+    "NewProject": "New project",
+    "Lastviewed": "Last seen:"
+  },
+  "New": {
+    "Title": "New Project",
+    "Name": "Project Name:",
+    "Organization": "Organization",
+    "Cancel": "Cancel",
+    "Create": "Create"
+  },
+  "Remove": {
+    "Confirm": "Confirm deletion",
+    "Sure?": "Are you sure you want to delete this claim? This action cannot be undone !!",
+    "Cancel": "Cancel",
+    "Delete": "Delete"
+  },
+  "UserEdit": {
+    "Logout": "Logout",
+    "Usersettings": "User settings",
+    "Details": "Details: ",
+    "Email": "Email",
+    "Created": "Account created:",
+    "Administration": "Email and password management:",
+    "Email-new": "Email",
+    "Email-Invalid": "The email is missing or in the wrong format",
+    "Email-Change": "Change Email",
+    "Password-Old": "Old password",
+    "Password-Old-Placeholder": "Enter the old password",
+    "Password-New": "New password",
+    "Password-New-Placeholder": "Enter new password",
+    "Password-New-rep": "Repeat new password",
+    "Password-New-rep-Placeholder": "Repeat the new password",
+    "Password-Change": "Change Password"
+  },
+  "RequirementsEdit": {
+    "Logout": "Logout",
+    "Summary": "Summary",
+    "Requirement": "Requirements",
+    "Priority": "Priority",
+    "Delete-warning": "Delete Requirements",
+    "New": "New",
+    "New-Req": "New Requirement",
+    "Add-Req": "Add Requirements",
+    "Description": "Description",
+    "Explaination": "Explanation",
+    "Consequence": "Consistency",
+    "Progress": "Progress:",
+    "Un-finished-req": "Unfinished Requirements:",
+    "Un-finished-req-Tooltip": "Displays Requirements that have not been accepted",
+    "Previous-req": "Previous Requirements",
+    "Accept-Deny": "Approve / Reject Requirements",
+    "Next-req": "Next Requirements"
   }
 }

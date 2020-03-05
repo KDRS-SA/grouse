@@ -56,6 +56,12 @@ export class kravEditComponent implements OnInit {
     translate.setDefaultLang('no');
   }
 
+  enterUserEdit() {
+    this.userData.nav = 'userEdit';
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
+    this.router.navigate(['/userEdit']);
+  }
+
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
     this.projectLink = this.userData.currentProject._links.funksjon.href;
