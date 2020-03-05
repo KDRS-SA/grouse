@@ -69,7 +69,7 @@ public class TemplateRequirement
      * e.g 5.2.1
      */
     @XmlElement
-    @Column(name = "noark_requirement_number")
+    @Column(name = "requirement_number")
     private String noarkRequirementNumber;
 
     @XmlElement

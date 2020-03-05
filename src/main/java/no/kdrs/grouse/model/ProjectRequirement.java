@@ -71,7 +71,7 @@ public class ProjectRequirement
      * An actual requirement number from the standard
      * e.g 5.2.1
      */
-    @Column(name = "noark_requirement_number")
+    @Column(name = "requirement_number")
     private String requirementNumber;
 
     @NotNull

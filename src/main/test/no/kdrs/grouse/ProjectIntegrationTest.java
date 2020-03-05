@@ -286,7 +286,8 @@ public class ProjectIntegrationTest {
     @Test
     // empty any projects from table and populate new value
     @Sql({"/db-tests/empty-database.sql", "/db-tests/single-project.sql",
-            "/db-tests/multiple-functionality.sql"})
+            "/db-tests/multiple-functionality.sql",
+            "/db-tests/multiple-requirements.sql"})
     public void testDeleteProject() throws Exception {
         String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH + "1";
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
