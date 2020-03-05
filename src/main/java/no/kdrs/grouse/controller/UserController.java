@@ -7,7 +7,6 @@ import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
-import no.kdrs.grouse.utils.RoleValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -33,7 +32,8 @@ import static org.springframework.http.HttpStatus.OK;
  */
 @RestController
 @RequestMapping(value = SLASH + USER)
-public class UserController {
+public class UserController
+        extends GrouseController {
 
     private static final Logger logger =
             LoggerFactory.getLogger(UserController.class);
@@ -42,19 +42,16 @@ public class UserController {
     private IProjectService projectService;
     private PagedResourcesAssembler<GrouseUser> pagedResourcesAssembler;
     private UserAssembler userAssembler;
-    private RoleValidator role;
 
     public UserController(
             IGrouseUserService grouseUserService,
             IProjectService projectService,
             PagedResourcesAssembler<GrouseUser> pagedResourcesAssembler,
-            UserAssembler userAssembler,
-            RoleValidator role) {
+            UserAssembler userAssembler) {
         this.grouseUserService = grouseUserService;
         this.projectService = projectService;
         this.pagedResourcesAssembler = pagedResourcesAssembler;
         this.userAssembler = userAssembler;
-        this.role = role;
     }
 
     @GetMapping
@@ -63,14 +60,14 @@ public class UserController {
                 body(grouseUserService.findAll());
     }
 
-    @GetMapping(value = "/{" + USER + "}")
+    @GetMapping(value = SLASH + USER_PARAMETER)
     public ResponseEntity<LinksUser> getGrouseUser(
             @PathVariable(USER) String username) {
         checkAccess(username);
         return addUserLinks(grouseUserService.findById(username), OK);
     }
 
-    @GetMapping(value = "/{" + USER + "}/" + PROJECT)
+    @GetMapping(value = SLASH + USER_PARAMETER + SLASH + PROJECT)
     public ResponseEntity<List<Project>> getGrouseUserProjects(
             @PathVariable(USER) String username) throws Exception {
 
@@ -102,7 +99,7 @@ public class UserController {
                 .body(projects);
     }
 
-    @PostMapping(value = "/{" + USER + "}/" + PROJECT)
+    @PostMapping(value = SLASH + USER_PARAMETER + SLASH + PROJECT)
     public ResponseEntity<Project> createProject(
             @PathVariable(USER) String ownedBy,
             @RequestBody Project project) {
@@ -136,7 +133,7 @@ public class UserController {
         return addUserLinks(grouseUserService.save(user), CREATED);
     }
 
-    @PutMapping(value = "/{" + USER + "}")
+    @PutMapping(value = SLASH + USER_PARAMETER)
     public ResponseEntity<GrouseUser> updateGrouseUser(
             @PathVariable(USER) String username,
             @RequestBody GrouseUser user) throws EntityNotFoundException {
@@ -145,9 +142,10 @@ public class UserController {
                 .body(grouseUserService.update(username, user));
     }
 
-    @DeleteMapping(value = "/{" + USER + "}")
+    @DeleteMapping(value = USER_PARAMETER)
     public ResponseEntity<String> deleteGrouseUser(
             @PathVariable String username) {
+        checkAccess(username);
         projectService.findByOwnedBy(username)
                 .forEach(p -> projectService.delete(p.getProjectId()));
         grouseUserService.delete(username);
@@ -162,16 +160,5 @@ public class UserController {
         return ResponseEntity.status(status)
                 .eTag(user.getVersion().toString())
                 .body(userAssembler.toModel(user));
-    }
-
-    private void checkAccess(String ownedBy) {
-        String loggedInUser = SecurityContextHolder.getContext()
-                .getAuthentication().getName();
-        if (!role.isAdmin()) {
-            if (!loggedInUser.equals(ownedBy)) {
-                logger.error(NO_ACCESS_OTHER_USER);
-                throw new AccessDeniedException(NO_ACCESS_OTHER_USER);
-            }
-        }
     }
 }

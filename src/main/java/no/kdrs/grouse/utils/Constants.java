@@ -50,6 +50,7 @@ public final class Constants {
             FUNCTIONALITY + "}";
     public static final String TEMPLATE_ID_PARAMETER = "{" +
             TEMPLATE_ID + "}";
+    public static final String USER_PARAMETER = "{" + USER + "}";
 
     // Column names
     public static final String REQUIREMENT_NAME = "requirement_name";
