@@ -12,13 +12,13 @@
   <button mat-button (click)="logout()">
     <div class="flex-column">
       <i class="material-icons flex-center navbar-icon">exit_to_app</i>
-      <p class="no-m">Logg ut</p>
+      <p class="no-m">{{'UserEdit.Logout' | translate}}</p>
     </div>
   </button>
 </mat-toolbar>
 <div class="flex-column-start p-20">
   <div class="flex-row-between">
-    <h3>Brukerinstillinger: </h3>
+    <h3>{{'UserEdit.Usersettings' | translate}}</h3>
     <p>{{this.userData.userName}}</p>
   </div>
   <mat-divider></mat-divider>
@@ -31,12 +31,12 @@
       </mat-card-header>
       <mat-card-content>
         <div class="flex-row-between m-lr-10">
-          <p class="bold">E-post: </p>
+          <p class="bold">{{'UserEdit.Email' | translate}}</p>
           <p>{{this.userData.userName}}</p>
         </div>
         <mat-divider></mat-divider>
         <div class="flex-row-between m-lr-10">
-          <p class="bold">Konto opprettet: </p>
+          <p class="bold">{{'UserEdit.Created' | translate}}</p>
           <p>Utilgjengelig</p>
         </div>
       </mat-card-content>
@@ -46,21 +46,21 @@
     <!--Email-->
     <mat-card class="cards no-p">
       <mat-card-header class="no-p flex-center">
-        <h4>E-Post og passord administrasjon: </h4>
+        <h4>{{'UserEdit.Administration' | translate}}</h4>
       </mat-card-header>
       <mat-card-content class="p-10">
         <mat-card>
           <form [formGroup]="emailForm" (ngSubmit)="emailForm.valid && newEmailSubmit()" novalidate>
             <mat-card-content class="no-m">
               <mat-form-field style="width: 100%" appearance="legacy">
-                <mat-label>E-post</mat-label>
+                <mat-label>{{'UserEdit.Email-new' | translate}}</mat-label>
                 <input matInput id="email" formControlName="email" [(ngModel)]="newEmail" required placeholder="{{this.userData.userName}}">
                 <mat-icon matSuffix>mail</mat-icon>
-                <mat-error *ngIf="emailForm.invalid">E-posten mangler, eller står på feil format</mat-error>
+                <mat-error *ngIf="emailForm.invalid">{{'UserEdit.Email-Invalid' | translate}}</mat-error>
               </mat-form-field>
             </mat-card-content>
             <mat-card-actions class="flex-row-right no-p">
-              <button mat-raised-button type="submit" color="primary" class="no-m" [disabled]="emailForm.invalid">Endre E-Post</button>
+              <button mat-raised-button type="submit" color="primary" class="no-m" [disabled]="emailForm.invalid">{{'UserEdit.Email-Change' | translate}}</button>
             </mat-card-actions>
           </form>
         </mat-card>
@@ -70,23 +70,23 @@
           <form [formGroup]="passwordForm" (ngSubmit)="passwordForm && newPasswordSubmit()" novalidate>
             <mat-card-content>
               <mat-form-field style="width: 100%" appearance="legacy">
-                <mat-label>Gammelt passord</mat-label>
-                <input matInput formControlName="oldP" [(ngModel)]="oldPassword" [type]="'password'" placeholder="Skriv inn det gamle passordet">
+                <mat-label>{{'UserEdit.Password-Old' | translate}}</mat-label>
+                <input matInput formControlName="oldP" [(ngModel)]="oldPassword" [type]="'password'" placeholder="{{'UserEdit.Password-Old-Placeholder' | translate}}">
                 <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>
               <mat-form-field style="width: 100%" appearance="legacy">
-                <mat-label>Nytt passord</mat-label>
-                <input matInput formControlName="newP" #newPassord [(ngModel)]="newPassword" [type]="'password'" placeholder="Skriv inn nytt passord">
+                <mat-label>{{'UserEdit.Password-new' | translate}}</mat-label>
+                <input matInput formControlName="newP" #newPassord [(ngModel)]="newPassword" [type]="'password'" placeholder="{{'UserEdit.Password-Old-Placeholder' | translate}}">
                 <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>
               <mat-form-field style="width: 100%" appearance="legacy">
-                <mat-label>Repeter passord</mat-label>
-                <input matInput formControlName="repP" [(ngModel)]="repeatPassword" [type]="'password'" placeholder="Repeter det nye passordet">
+                <mat-label>{{'UserEdit.Password-New-rep' | translate}}</mat-label>
+                <input matInput formControlName="repP" [(ngModel)]="repeatPassword" [type]="'password'" placeholder="{{'UserEdit.Password-Old-Placeholder' | translate}}">
                 <mat-icon matSuffix>lock</mat-icon>
               </mat-form-field>
             </mat-card-content>
             <mat-card-actions class="flex-row-right no-p">
-              <button type="submit" mat-raised-button color="primary" [disabled]="passwordForm.invalid" class="no-m">Endre Passord</button>
+              <button type="submit" mat-raised-button color="primary" [disabled]="passwordForm.invalid" class="no-m">{{'UserEdit.Password-Change' | translate}}</button>
             </mat-card-actions>
           </form>
         </mat-card>

@@ -1,0 +1,13 @@
+{
+  "Login": {
+    "email": "E-post",
+    "password": "Passord",
+    "password2": "Repeter passord",
+    "gdpr": "Eg har lese GDPR",
+    "confirm": "Stadfest",
+    "cancel": "Avbryt",
+    "subtitle": "Logg inn",
+    "register": "Registrer",
+    "login": "Logg inn"
+  }
+}

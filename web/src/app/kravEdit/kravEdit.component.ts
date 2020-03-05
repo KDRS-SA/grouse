@@ -9,6 +9,7 @@ import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {statusPageData} from '../models/statusPageData.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +43,7 @@ export class kravEditComponent implements OnInit {
   private nav: Requirment[];
   private dialog: MatDialog;
 
-  constructor(http: HttpClient, router: Router, dialog: MatDialog) {
+  constructor(http: HttpClient, router: Router, dialog: MatDialog, public translate: TranslateService) {
     this.http = http;
     this.router = router;
     this.projectLink = '';
@@ -51,6 +52,8 @@ export class kravEditComponent implements OnInit {
     this.statusbarData = [];
     this.statusPage = false;
     this.statpageData = new statusPageData();
+    translate.addLangs(['no', 'en', 'ny']);
+    translate.setDefaultLang('no');
   }
 
   ngOnInit() {

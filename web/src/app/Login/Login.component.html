@@ -6,7 +6,14 @@
         <mat-card-header class="flex-center">
           <div mat-card-avatar class="Grouse-Avatar"></div>
           <mat-card-title>Grouse</mat-card-title>
-          <mat-card-subtitle>Logg Inn</mat-card-subtitle>
+          <mat-card-subtitle>{{'Login.subtitle' | translate}}</mat-card-subtitle>
+          <div class="lang-test">
+            <select #langselect (change)="translate.use(langselect.value)">
+              <option value="no">no</option>
+              <option value="ny">ny</option>
+              <option value="en">en</option>
+            </select>
+          </div>
         </mat-card-header>
       </div>
       <div class="flex-row-right">
@@ -18,16 +25,16 @@
             <mat-card-content class="flex-center flex-column">
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>E-post</mat-label>
-                  <input id="loginEmail" matInput formControlName="email" [(ngModel)]="loginUser.email" required placeholder="Odd-Bjarne@epost.no">
+                  <mat-label>{{'Login.email' | translate}}</mat-label>
+                  <input id="loginEmail" matInput formControlName="email" [(ngModel)]="loginUser.email" required placeholder="{{'Login.placeholder-email' |translate}}">
                   <mat-icon matSuffix>mail</mat-icon>
                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
               </div>
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>Passord</mat-label>
-                  <input id="loginPassword" matInput formControlName="password" [(ngModel)]="loginUser.password" [type]="'password'" placeholder="Skriv inn passordet ditt">
+                  <mat-label>{{'Login.password' | translate}}</mat-label>
+                  <input id="loginPassword" matInput formControlName="password" [(ngModel)]="loginUser.password" [type]="'password'" placeholder="{{'Login.placeholder-pass' | translate}}">
                   <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
               </div>
@@ -36,10 +43,10 @@
             <mat-card-actions> <!--Button area for Loggin side-->
               <div class="button-container">
                 <div class="flex-row-right">
-                  <button mat-raised-button type="submit" color="primary"  [disabled]="!loginForm.valid">Logg inn</button>
+                  <button mat-raised-button type="submit" color="primary"  [disabled]="!loginForm.valid">{{'Login.login' | translate}}</button>
                 </div>
                 <div class="flex-row-right">
-                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">Registrer</button>
+                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">{{'Login.register' | translate}}</button>
                 </div>
               </div>
             </mat-card-actions>
@@ -54,39 +61,39 @@
             <mat-card-content class="flex-center flex-column">
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>E-post</mat-label>
-                  <input id="regEmail" matInput formControlName="email" [(ngModel)]="regUser.email" required placeholder="Odd-Bjarne@epost.no">
+                  <mat-label>{{'Login.email' | translate}}</mat-label>
+                  <input id="regEmail" matInput formControlName="email" [(ngModel)]="regUser.email" required placeholder="{{'Login.placeholder-email-reg' | translate}}">
                   <mat-icon matSuffix>mail</mat-icon>
                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
                 </mat-form-field>
               </div>
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>Passord</mat-label>
-                  <input id="regPassword" matInput formControlName="password" [(ngModel)]="regUser.password" [type]="'password'" placeholder="Skriv inn et passord">
+                  <mat-label>{{'Login.password' | translate}}</mat-label>
+                  <input id="regPassword" matInput formControlName="password" [(ngModel)]="regUser.password" [type]="'password'" placeholder="{{'Login.placeholder-pass-reg' | translate}}">
                   <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
               </div>
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">
-                  <mat-label>Repeter passord</mat-label>
-                  <input id="regPasswordRepeat" matInput formControlName="passwordRepeat" [(ngModel)]="regUser.passwordRepeat" [type]="'password'" placeholder="Repeter passordet">
+                  <mat-label>{{'Login.password2' | translate}}</mat-label>
+                  <input id="regPasswordRepeat" matInput formControlName="passwordRepeat" [(ngModel)]="regUser.passwordRepeat" [type]="'password'" placeholder="{{'Login.placeholder-pass-reg-rep' | translate}}">
                   <mat-icon matSuffix>lock</mat-icon>
                 </mat-form-field>
               </div>
               <div style="width: 80%">
                   <mat-checkbox id="CheckBox" matInput formControlName="checkBox" [(ngModel)]="regUser.checkBox"></mat-checkbox>
-                  <a mat-button (click)="ReadGDPR()"> Jeg Har lest GDPR</a>
+                  <a mat-button (click)="ReadGDPR()">{{'Login.gdpr' | translate}}</a>
               </div>
             </mat-card-content>
 
             <mat-card-actions> <!--Button area for the Registration side-->
               <div class="button-container">
                 <div class="flex-row-right">
-                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">Avbryt</button>
+                  <button mat-raised-button type="button" color="secondary" (click)="changeMode()">{{'Login.cancel' | translate}}</button>
                 </div>
                 <div class="flex-row-right">
-                  <button mat-raised-button type="submit" color="primary"  [disabled]="!registerForm.valid">Bekreft</button>
+                  <button mat-raised-button type="submit" color="primary"  [disabled]="!registerForm.valid">{{'Login.confirm' | translate}}</button>
                 </div>
               </div>
             </mat-card-actions>
@@ -96,3 +103,4 @@
     </div>
   </mat-card>
 </div>
+

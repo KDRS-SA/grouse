@@ -1,0 +1,67 @@
+{
+  "Login": {
+    "email": "E-post",
+    "password": "Passord",
+    "password2": "Repeter passord",
+    "gdpr": "Jeg har lest GDPR",
+    "confirm": "Bekreft",
+    "cancel": "Avbryt",
+    "subtitle": "Logg inn",
+    "register": "Registrer",
+    "login": "Logg inn",
+    "placeholder-email": "Odd-Bjarne@epost.no",
+    "placeholder-pass": "Skriv inn passordet ditt",
+    "placeholder-email-reg": "Odd-Bjarne@epost.no",
+    "placeholder-pass-reg": "Skriv inn et passord",
+    "placeholder-pass-reg-rep": "Repeter passordet"
+  },
+  "GDPR": {
+    "User": "Bruker",
+    "UserTXT": "Som bruker vil du ha mulighet til å opprette nye prosjkter og prosjekt-maler. Du vil ha mulighet til å redigere eksisterende maler på din profil. Du vil også ha mulighet til å invitere andre til å delta i dine prosjekter, samt bli med i prosjekter du blir invitert til å bli med i.",
+    "Admin": "Administrator",
+    "AdminTXT": "Som administrator vil du ha alle mulighetene til en vanlig bruker. I tillegg til dette vil du ha tilgang til å fikse, slette og eventulet redigere andre sine brukere hvis det dukker opp noe de trenger hjelp med, eller hvis noe må fikses.",
+    "InfoSave": "Informasjon vi lagrer",
+    "InfoSaveTXT": "I våre databaser kommer vi til å lagre din e-post adresse, og dit passord vil lagres sikkert og krypter slik at det ikke kommer på avveie. Vi kommer også til å lagre dine prosjekter. Dette inkluderer hvilke prosjekter du lagrer/eier, samt prosjekter du jobber på hvor brukeren din ikke er eieren av prosjektet. Det siste som vil lagres er din rolle i programmet, det vil si om du er normal bruker eller administrator.",
+    "InfoDelete": "Sletting av informasjon",
+    "InfoDeleteTXT": "Når du er logget inn vil du kunne gå inn på instillingene for din bruker. Inne på instillingene vil det være en knapp for å slette brukeren og all tilhørende innformasjon. Trykker du på denne vil du måtte bekrefte at du vil fjærne all informasjon tilhørende din bruker. Dette er ikke reverserbart. Når du har slettet alt er det ikke mulig og gjennopprette brukeren og tilhørende informasjon.",
+    "OBS!": "OBS! Dette vil IKKE slette prosjekter du ikke er eier av.",
+    "Close": "Lukk vindu"
+  },
+  "Menu": {
+    "Logout": "Logg ut",
+    "NewProject": "Nytt prosjekt",
+    "Lastviewed": "Sist sett: "
+  },
+  "New": {
+    "Name": "Navn på prosjekt:",
+    "Organisation": "Organisasjon",
+    "Cancel": "Avbryt",
+    "Create": "Opprett"
+  },
+  "Remove": {
+    "Confirm": "Bekreft sletting",
+    "Sure?": "Er du sikker på at du vil slette dette kravet? Denne handlingen kan ikke angres!!",
+    "Cancel": "Avbryt",
+    "Delete": "Slett"
+  },
+  "UserEdit": {
+    "Logout": "Logg ut",
+    "Usersettings": "Brukerinstillinger",
+    "Email": "E-post",
+    "Created": "Konto opprettet:",
+    "Administration": "E-Post og passord administrasjon:",
+    "Email-new": "E-post",
+    "Email-Invalid": "E-posten mangler, eller står på feil format",
+    "Email-Change": "Endre e-post",
+    "Password-Old": "Gammelt passord",
+    "Password-Old-Placeholder": "Skriv inn det gamle passordet",
+    "Password-New": "Nytt passord",
+    "Password-New-Placeholder": "Skriv inn nytt passord",
+    "Password-New-rep": "Repeter nytt passord",
+    "Password-New-rep-Placeholder": "Repeter det nye passordet",
+    "Password-Change": "Endre passord"
+    },
+  "KravEdit": {
+
+  }
+}

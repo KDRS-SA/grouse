@@ -1,6 +1,6 @@
 import {projectFunctionality} from './projectFunctionality.model';
 
-export class statusPageData{
+export class statusPageData {
   progress: number;
   unfinished: projectFunctionality[];
   loaded: boolean;

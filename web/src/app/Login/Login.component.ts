@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {UserData} from '../models/UserData.model';
 import {MatSnackBar} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-root',
@@ -45,13 +46,15 @@ export class LoginComponent implements  OnInit {
       this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
   }
 
-  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog) {
+  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
     this.login = true;
     this.http = http;
     this.router = router;
     this.userData = new UserData();
     this.shake = false;
     this.snackBar = snackBar;
+    translate.addLangs(['no', 'en', 'ny']);
+    translate.setDefaultLang('no');
   }
 
   ngOnInit() {

@@ -1,15 +1,15 @@
 <h1 mat-dialog-title>Nytt Prosjekt</h1>
 <div mat-dialog-content>
-  <p>Navn på prosjekt:</p>
+  <p>{{'New.Name' | translate}}</p>
   <mat-form-field>
     <input matInput [(ngModel)]="data.Name">
   </mat-form-field>
-  <p>Organisasjon:</p>
+  <p>{{'New.Organisation' | translate}}</p>
   <mat-form-field>
     <input matInput [(ngModel)]="data.Org">
   </mat-form-field>
 </div>
 <div mat-dialog-actions class="flex-row-evenlyer">
-  <button mat-raised-button color="accent" (click)="onNoClick()">Avbryt</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="data">Opprett</button>
+  <button mat-raised-button color="accent" (click)="onNoClick()">{{'New.Cancel' | translate}}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">{{'New.Create' | translate}}</button>
 </div>
