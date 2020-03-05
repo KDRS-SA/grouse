@@ -90,3 +90,90 @@ This will give you a list like the following:
       }
     }
 `
+
+
+## Get a list of users
+
+Only a user with the ROLE_ADMIN can retrieve a list of users. Log on as an admin:
+
+    curl -v -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=admin@example.com -d password=password
+
+
+and issue the following:
+
+    curl -X GET http://localhost:9294/grouse/user  -H 'Authorization: Bearer 2e234261-620a-4d8e-bd06-7adb82d8ce84
+    
+
+You will then get a paged list of users. The default setup of grouse returns three users:
+
+    {
+      "_embedded": {
+        "users": [
+          {
+            "username": "admin@example.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "enabled": true,
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/user/admin@example.com"
+              },
+              "project": {
+                "href": "http://localhost:9294/grouse/project"
+              },
+              "template": {
+                "href": "http://localhost:9294/grouse/template"
+              }
+            }
+          },
+          {
+            "username": "user@example.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "enabled": true,
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/user/user@example.com"
+              },
+              "project": {
+                "href": "http://localhost:9294/grouse/project"
+              },
+              "template": {
+                "href": "http://localhost:9294/grouse/template"
+              }
+            }
+          },
+          {
+            "username": "template@example.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "enabled": true,
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/user/template@example.com"
+              },
+              "project": {
+                "href": "http://localhost:9294/grouse/project"
+              },
+              "template": {
+                "href": "http://localhost:9294/grouse/template"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/user?page=0&size=20"
+        }
+      },
+      "page": {
+        "size": 20,
+        "totalElements": 3,
+        "totalPages": 1,
+        "number": 0
+      }
+    }
