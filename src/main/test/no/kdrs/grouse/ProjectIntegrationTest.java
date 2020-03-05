@@ -236,6 +236,11 @@ public class ProjectIntegrationTest {
                 .with(user(grouseUserDetailsService
                         .loadUserByUsername("admin@example.com"))));
 
+        MockHttpServletResponse response = resultActions
+                .andReturn().getResponse();
+        System.out.println(response.getContentAsString());
+        System.out.println(response.getStatus());
+
         Pattern pattern = compile(".+" + CONTEXT_PATH + SLASH + PROJECT +
                 SLASH + FUNCTIONALITY + SLASH + "\\d$");
         resultActions
