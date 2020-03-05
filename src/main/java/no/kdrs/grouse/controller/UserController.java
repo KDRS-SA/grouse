@@ -2,7 +2,6 @@
 package no.kdrs.grouse.controller;
 
 import no.kdrs.grouse.model.GrouseUser;
-import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
@@ -18,8 +17,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -66,29 +63,6 @@ public class UserController {
         commonController.checkAccess(username);
         return commonController.addPagedProjectLinks(
                 projectService.findByOwnedBy(username), OK);
-    }
-
-    @PostMapping(value = SLASH + USER_PARAMETER + SLASH + PROJECT)
-    public ResponseEntity<Project> createProject(
-            @PathVariable(USER) String username,
-            @RequestBody Project project) {
-        commonController.checkAccess(username);
-
-        projectService.createProject(project);
-
-        project.add(linkTo(methodOn(ProjectController.class).
-                getProject(project.getProjectId())).withSelfRel());
-
-        project.add(linkTo(methodOn(ProjectController.class).
-                getFunctionalityForProject(project.getProjectId()))
-                .withRel(FUNCTIONALITY));
-
-        project.add(linkTo(DocumentController.class,
-                methodOn(DocumentController.class)
-                        .downloadProjectDocument(project.getProjectId()))
-                .withRel(DOCUMENT));
-        return ResponseEntity.status(OK)
-                .body(project);
     }
 
     @PostMapping
