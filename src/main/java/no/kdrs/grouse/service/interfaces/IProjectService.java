@@ -26,7 +26,7 @@ public interface IProjectService {
 
     void delete(Long id);
 
-    List<Project> findByOwnedBy(String ownedBy);
+    Page<Project> findByOwnedBy(String ownedBy);
 
     List<ProjectRequirement> findByProjectIdOrderByProjectName(
             Long projectId, String functionalityNumber);

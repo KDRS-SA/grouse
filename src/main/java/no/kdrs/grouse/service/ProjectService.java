@@ -289,7 +289,7 @@ public class ProjectService
     }
 
     @Override
-    public List<Project> findByOwnedBy(String ownedBy) {
+    public Page<Project> findByOwnedBy(String ownedBy) {
         return projectRepository.findByOwnedBy(ownedBy);
     }
 
