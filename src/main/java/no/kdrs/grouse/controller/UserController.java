@@ -9,12 +9,12 @@ import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.CommonController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -44,9 +44,10 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GrouseUser>> getGrouseUsers() {
-        return ResponseEntity.status(OK).
-                body(grouseUserService.findAll());
+    public ResponseEntity<PagedModel<LinksUser>> getGrouseUsers(
+            Pageable pageable) {
+        return commonController.addPagedUserLinks(
+                grouseUserService.findAll(pageable), OK);
     }
 
     @GetMapping(value = SLASH + USER_PARAMETER)
@@ -59,16 +60,18 @@ public class UserController {
 
     @GetMapping(value = SLASH + USER_PARAMETER + SLASH + PROJECT)
     public ResponseEntity<PagedModel<LinksProject>> getGrouseUserProjects(
+            Pageable pageable,
             @PathVariable(USER) String username) {
         commonController.checkAccess(username);
         return commonController.addPagedProjectLinks(
-                projectService.findByOwnedBy(username), OK);
+                projectService.findByOwnedBy(username, pageable), OK);
     }
 
     @PostMapping
     public ResponseEntity<LinksUser> saveGrouseUser(
             @RequestBody GrouseUser user) {
-        return commonController.addUserLinks(grouseUserService.save(user), CREATED);
+        return commonController.addUserLinks(grouseUserService.save(user),
+                CREATED);
     }
 
     @PutMapping(value = SLASH + USER_PARAMETER)

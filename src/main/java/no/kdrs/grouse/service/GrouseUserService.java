@@ -4,14 +4,14 @@ import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.persistence.IGrouseUserRepository;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.utils.exception.UserAlreadyExistsException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,9 +31,9 @@ public class GrouseUserService
         this.encoder = encoder;
     }
 
-    @SuppressWarnings("unchecked")
-    public List<GrouseUser> findAll() {
-        return (ArrayList) userRepository.findAll();
+    @Override
+    public Page<GrouseUser> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     @Override

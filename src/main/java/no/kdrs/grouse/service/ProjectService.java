@@ -90,7 +90,6 @@ public class ProjectService
                         getProjectOrThrow(projectId), type, true);
     }
 
-
     @Override
     public Page<Project> findAll(Pageable page) {
         return projectRepository.findAll(page);
@@ -289,8 +288,13 @@ public class ProjectService
     }
 
     @Override
-    public Page<Project> findByOwnedBy(String ownedBy) {
-        return projectRepository.findByOwnedBy(ownedBy);
+    public Page<Project> findByOwnedBy(String ownedBy, Pageable pageable) {
+        return projectRepository.findByOwnedBy(ownedBy, pageable);
+    }
+
+    @Override
+    public Iterable<Project> findByOwnedBy(String username) {
+        return projectRepository.findByOwnedBy(username);
     }
 
     /**

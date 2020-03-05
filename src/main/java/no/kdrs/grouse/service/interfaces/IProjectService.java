@@ -15,6 +15,7 @@ import java.util.List;
  * Created by tsodring on 9/25/17.
  */
 public interface IProjectService {
+
     Page<Project> findAll(Pageable page);
 
     Project findById(Long id);
@@ -24,9 +25,9 @@ public interface IProjectService {
     Project update(Long id, PatchObjects patchObjects)
             throws EntityNotFoundException;
 
-    void delete(Long id);
+    Page<Project> findByOwnedBy(String ownedBy, Pageable pageable);
 
-    Page<Project> findByOwnedBy(String ownedBy);
+    void delete(Long id);
 
     List<ProjectRequirement> findByProjectIdOrderByProjectName(
             Long projectId, String functionalityNumber);
@@ -34,4 +35,5 @@ public interface IProjectService {
     List<ProjectFunctionality> findFunctionalityForProjectByType(
             Long projectId, String type);
 
+    Iterable<Project> findByOwnedBy(String username);
 }

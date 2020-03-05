@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -109,10 +108,13 @@ public class CommonController {
                 .body(userAssembler.toModel(user));
     }
 
-    public ResponseEntity<CollectionModel<LinksUser>> addUserLinks(
-            @NotNull Iterable<? extends GrouseUser> users,
+    public ResponseEntity<PagedModel<LinksUser>> addPagedUserLinks(
+            @NotNull final Page<GrouseUser> users,
             @NotNull final HttpStatus status) {
+        PagedModel<LinksUser> UserModels =
+                pagedUserResourcesAssembler
+                        .toModel(users, userAssembler);
         return ResponseEntity.status(status)
-                .body(userAssembler.toCollectionModel(users));
+                .body(UserModels);
     }
 }

@@ -1,6 +1,8 @@
 package no.kdrs.grouse.persistence;
 
 import no.kdrs.grouse.model.GrouseUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IGrouseUserRepository
         extends PagingAndSortingRepository<GrouseUser, String> {
-
+    Page<GrouseUser> findAll(Pageable pageable);
 }
