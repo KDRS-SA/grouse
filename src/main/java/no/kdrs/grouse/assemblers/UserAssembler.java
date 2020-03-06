@@ -1,18 +1,26 @@
 package no.kdrs.grouse.assemblers;
 
+import no.kdrs.grouse.controller.ProjectController;
+import no.kdrs.grouse.controller.TemplateController;
 import no.kdrs.grouse.controller.UserController;
 import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.model.links.LinksUser;
+import no.kdrs.grouse.utils.RoleValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class UserAssembler
         extends RepresentationModelAssemblerSupport<GrouseUser, LinksUser> {
+
+    @Autowired
+    private RoleValidator role;
 
     public UserAssembler() {
         super(UserController.class, LinksUser.class);
@@ -32,10 +40,21 @@ public class UserAssembler
         linksUser.add(linkTo(methodOn(UserController.class)
                 .getGrouseUser(user.getUsername()))
                 .withSelfRel());
-
-        //linksUser.add(linkTo(methodOn(ProjectController.class)
-        //        .createProject()
-        //        .withRel(FUNCTIONALITY));
+        if (role.isUser()) {
+            linksUser.add(linkTo(methodOn(ProjectController.class)
+                    .createProject(null))
+                    .withRel(PROJECT));
+        }
+        if (role.isTemplate()) {
+            linksUser.add(linkTo(methodOn(TemplateController.class)
+                    .createTemplate(null))
+                    .withRel(TEMPLATE));
+        }
+        if (role.isAdmin()) {
+            linksUser.add(linkTo(methodOn(UserController.class)
+                    .getGrouseUsers(null))
+                    .withRel(USER));
+        }
         return linksUser;
     }
 
@@ -46,16 +65,22 @@ public class UserAssembler
                 super.toCollectionModel(users);
 
         linksUsers.forEach(user -> {
-            user
-                    .add(linkTo(methodOn(UserController.class)
-                            .getGrouseUser(user.getUsername()))
-                            .withSelfRel());
-          /*  user
-                    .add(linkTo(methodOn(UserController.class)
-                            .getFunctionalityForUser(
-                                    user.getUserId()))
-                            .withRel(FUNCTIONALITY));
-                            */
+            user.add(linkTo(methodOn(UserController.class)
+                    .getGrouseUser(user.getUsername()))
+                    .withSelfRel());
+            user.add(linkTo(methodOn(ProjectController.class)
+                    .createProject(null))
+                    .withRel(PROJECT));
+            if (role.isTemplate()) {
+                user.add(linkTo(methodOn(TemplateController.class)
+                        .createTemplate(null))
+                        .withRel(TEMPLATE));
+            }
+            if (role.isAdmin()) {
+                user.add(linkTo(methodOn(UserController.class)
+                        .getGrouseUsers(null))
+                        .withRel(USER));
+            }
         });
         return linksUsers;
     }

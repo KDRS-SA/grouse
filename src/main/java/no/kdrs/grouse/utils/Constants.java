@@ -50,6 +50,7 @@ public final class Constants {
             FUNCTIONALITY + "}";
     public static final String TEMPLATE_ID_PARAMETER = "{" +
             TEMPLATE_ID + "}";
+    public static final String USER_PARAMETER = "{" + USER + "}";
 
     // Column names
     public static final String REQUIREMENT_NAME = "requirement_name";
@@ -73,7 +74,6 @@ public final class Constants {
     public static final String TEMPLATE_REQUIREMENT_TABLE_NAME =
             "template_requirements";
     public static final String USER_TABLE_NAME = "user";
-    public static final String PROJECT_TABLE_NAME = "projects";
     public static final String AUTHORITY_TABLE_NAME = "authority";
 
     // Join tables
@@ -120,4 +120,7 @@ public final class Constants {
             "ETAG value is missing! Patch request requires an ETAG!";
     public static final String ETAG_VALUE_LESS_0 =
             "ETAG value is < 0! ETAG values start at 0!";
+    public static final String NO_ACCESS_OTHER_USER =
+            "Attempt to access a user without permission. Admin role is " +
+                    "required to see other users";
 }

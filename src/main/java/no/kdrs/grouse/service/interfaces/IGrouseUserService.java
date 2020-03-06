@@ -2,15 +2,17 @@ package no.kdrs.grouse.service.interfaces;
 
 
 import no.kdrs.grouse.model.GrouseUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 /**
  * Created by tsodring on 28/03/18.
  */
 public interface IGrouseUserService {
-    List<GrouseUser> findAll();
+
+    Page<GrouseUser> findAll(Pageable pageable);
 
     GrouseUser findById(String id);
 

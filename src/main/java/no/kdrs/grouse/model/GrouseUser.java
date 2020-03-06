@@ -57,6 +57,10 @@ public class GrouseUser
     @DateTimeFormat(iso = DATE_TIME)
     private OffsetDateTime createdDate;
 
+    @Version
+    @Column(name = VERSION)
+    private Long version;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = USER_AUTHORITY_JOIN,
@@ -128,7 +132,9 @@ public class GrouseUser
         this.accountNonLocked = accountNonLocked;
     }
 
-
+    public Long getVersion() {
+        return version;
+    }
 
     @Override
     public String toString() {
@@ -138,8 +144,9 @@ public class GrouseUser
                 ", accountNonExpired=" + accountNonExpired +
                 ", credentialsNonExpired=" + credentialsNonExpired +
                 ", accountNonLocked=" + accountNonLocked +
-                ", createdDate=" + createdDate +
                 ", enabled=" + enabled +
+                ", createdDate=" + createdDate +
+                ", version=" + version +
                 '}';
     }
 }
