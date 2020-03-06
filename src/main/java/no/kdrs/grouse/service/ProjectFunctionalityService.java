@@ -58,8 +58,6 @@ public class ProjectFunctionalityService
             projectRequirement.setOwnedBy(loggedInUser);
             projectRequirement.setReferenceFunctionality(
                     projectFunctionality.get());
-            projectRequirement.setReferenceProject(projectFunctionality.
-                    get().getReferenceProject());
         } else {
             throw new EntityNotFoundException(
                     "Cannot find ProjectFunctionality [" +

@@ -99,10 +99,6 @@ public class Project
 
     @JsonIgnore
     @OneToMany(mappedBy = "referenceProject")
-    private List<ProjectRequirement> referenceProjectRequirement;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "referenceProject")
     @OrderBy("projectFunctionalityId ASC")
     private List<ProjectFunctionality> referenceProjectFunctionality;
 
@@ -192,14 +188,6 @@ public class Project
 
     public void setVersion(Long version) {
         this.version = version;
-    }
-
-    public List<ProjectRequirement> getReferenceProjectRequirement() {
-        return referenceProjectRequirement;
-    }
-
-    public void setReferenceProjectRequirement(List<ProjectRequirement> referenceProjectRequirement) {
-        this.referenceProjectRequirement = referenceProjectRequirement;
     }
 
     public List<ProjectFunctionality> getReferenceProjectFunctionality() {

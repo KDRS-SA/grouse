@@ -250,7 +250,6 @@ public class ProjectService
                 (ArrayList<TemplateRequirement>) requirementRepository.findAll();
         for (TemplateRequirement templateRequirement : templateRequirements) {
             ProjectRequirement projectRequirement = new ProjectRequirement();
-            projectRequirement.setReferenceProject(project);
             projectRequirement.setOrder(templateRequirement.getShowOrder());
             projectRequirement.setPriority(templateRequirement.getPriority());
             projectRequirement.setOwnedBy(ownedBy);

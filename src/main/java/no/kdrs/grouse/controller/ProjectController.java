@@ -57,20 +57,6 @@ public class ProjectController {
     }
 
     @GetMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
-            FUNCTIONALITY + FUNCTIONALITY_PARAMETER)
-    public ResponseEntity<List<ProjectRequirement>>
-    getRequirementsForFunctionality(
-            @PathVariable(PROJECT_NUMBER) Long projectId,
-            @PathVariable(FUNCTIONALITY) String functionalityNumber) {
-
-        List<ProjectRequirement> projectRequirements =
-                projectService.findByProjectIdOrderByProjectName(
-                        projectId, functionalityNumber);
-        return ResponseEntity.status(OK)
-                .body(projectRequirements);
-    }
-
-    @GetMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
             FUNCTIONALITY)
     public ResponseEntity<List<ProjectFunctionality>>
     getFunctionalityForProject(

@@ -84,12 +84,6 @@ public class ProjectRequirement
             referencedColumnName = "id")
     private ProjectFunctionality referenceFunctionality;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_number",
-            referencedColumnName = "project_id")
-    private Project referenceProject;
-
     public Long getProjectRequirementId() {
         return projectRequirementId;
     }
@@ -144,14 +138,6 @@ public class ProjectRequirement
 
     public void setReferenceFunctionality(ProjectFunctionality referenceFunctionality) {
         this.referenceFunctionality = referenceFunctionality;
-    }
-
-    public Project getReferenceProject() {
-        return referenceProject;
-    }
-
-    public void setReferenceProject(Project referenceProject) {
-        this.referenceProject = referenceProject;
     }
 
     @Override
