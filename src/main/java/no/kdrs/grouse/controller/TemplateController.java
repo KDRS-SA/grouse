@@ -55,7 +55,7 @@ public class TemplateController {
 
     @GetMapping
     public ResponseEntity<PagedModel<LinksTemplate>>
-    getTemplate(Pageable pageable) {
+    getTemplates(Pageable pageable) {
         Page<Template> templates = templateService.findAll(pageable);
         PagedModel<LinksTemplate> templateModels =
                 pagedResourcesAssembler.toModel(templates, templateAssembler);
