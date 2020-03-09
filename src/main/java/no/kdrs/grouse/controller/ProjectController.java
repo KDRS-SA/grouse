@@ -51,7 +51,7 @@ public class ProjectController {
 
     @GetMapping
     public ResponseEntity<PagedModel<LinksProject>>
-    getProject(Pageable pageable) {
+    getProjects(Pageable pageable) {
         return commonController.addPagedProjectLinks(projectService
                 .findAll(pageable), OK);
     }
@@ -137,6 +137,13 @@ public class ProjectController {
             @RequestBody PatchObjects patchObjects) throws Exception {
         return commonController.addProjectLinks(projectService.update(
                 projectId, patchObjects), OK);
+    }
+
+    @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
+    public ResponseEntity<LinksProject> createProject(
+            @PathVariable(TEMPLATE_ID) Long templateId) {
+        return commonController.addProjectLinks(
+                projectService.createProjectFromTemplate(templateId), CREATED);
     }
 
     @PostMapping
