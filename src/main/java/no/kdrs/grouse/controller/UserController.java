@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 
 import static no.kdrs.grouse.utils.Constants.*;
+import static org.springframework.hateoas.MediaTypes.HAL_JSON_VALUE;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -25,7 +26,7 @@ import static org.springframework.http.HttpStatus.OK;
  * Created by tsodring on 28/03/18.
  */
 @RestController
-@RequestMapping(value = SLASH + USER)
+@RequestMapping(value = SLASH + USER, produces = HAL_JSON_VALUE)
 public class UserController {
 
     private static final Logger logger =
@@ -52,7 +53,7 @@ public class UserController {
                 grouseUserService.findAll(pageable), OK);
     }
 
-    @GetMapping(value = SLASH + USER_PARAMETER)
+    @GetMapping(value = SLASH + "{" + USER + ":.+}")
     public ResponseEntity<LinksUser> getGrouseUser(
             @PathVariable(USER) String username) {
         commonController.checkAccess(username);
