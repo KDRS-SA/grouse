@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 import {HttpClient} from '@angular/common/http';
 import {UserData} from './models/UserData.model';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +39,7 @@ export class AppComponent implements OnInit {
   // Fetches ApiDetails from the server, that is utialized for further communication
   public getApiDetails() {
     this.http.get<IApiFetchResponse>(startUrl).subscribe(result => {
+      console.log(result);
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < result.apiDetails.length; i++) {
         const rel = result.apiDetails[i].rel;
@@ -60,7 +61,7 @@ export class AppComponent implements OnInit {
       this.navigate();
     }, error => {
         console.error(error);
-        const ref = this.snackBar.open("Could not reach the Grouse server", "Try again");
+        const ref = this.snackBar.open('Could not reach the Grouse server', 'Try again');
         ref.onAction().subscribe(() => {
           this.getApiDetails();
           this.snackBar.dismiss();

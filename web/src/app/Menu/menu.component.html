@@ -35,9 +35,9 @@
   </button>
   <button mat-raised-button class="mal-card" *ngFor="let project of projects" (click)="openProject(project)">
     <div class="flex-column-squish">
-      <h3>{{project.organisationName}}</h3>
-      <p>{{project.projectName}}</p>
-      <h6>{{'Menu.Lastviewed' | translate}} {{project.changedDate.split('-')[2].split('T')[0]}}.{{project.changedDate.split('-')[1]}}.{{project.changedDate.split('-')[0]}}</h6>
+      <p>{{project.ownedBy}}</p>
+      <h3>{{project.projectName}}</h3>
+      <h6>{{'Menu.Lastviewed' | translate}} {{project.lastModifiedDate.split('-')[2].split('T')[0]}}.{{project.lastModifiedDate.split('-')[1]}}.{{project.lastModifiedDate.split('-')[0]}}</h6>
     </div>
   </button>
 </div>

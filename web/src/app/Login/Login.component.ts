@@ -88,6 +88,7 @@ export class LoginComponent implements  OnInit {
       ]]
     });
     this.userData = JSON.parse(localStorage.getItem('UserData'));
+    console.log(this.userData);
   }
 
   ReadGDPR() {
@@ -136,7 +137,7 @@ export class LoginComponent implements  OnInit {
 
   loginSubmit() {
     // Resolves an error where refreshed user might have gotten an error due to unwanted data retention
-    if(this.userData.oauthClientSecret != 'secret'){
+    if (this.userData.oauthClientSecret !== 'secret') {
       this.userData.oauthClientSecret = 'secret';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
     }
@@ -159,6 +160,7 @@ export class LoginComponent implements  OnInit {
       })
     }).subscribe(
       result => {
+        console.log(result);
         // @ts-ignore
         this.userData.oauthClientSecret = result.access_token;
         this.userData.userName = this.loginUser.email;

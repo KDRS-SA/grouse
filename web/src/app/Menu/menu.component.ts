@@ -6,7 +6,7 @@ import {Link} from '../models/link.model';
 import {convertFromLegacy, REL_PROJECT} from '../common';
 import {Project} from '../models/Project.model';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -47,9 +47,10 @@ export class MenuComponent implements OnInit {
         }
       )
     }).subscribe(result => {
+      console.log(result);
       // @ts-ignore
       this.userData._links = result._links;
-      this.projectsLink = this.userData._links.prosjekt.href;
+      this.projectsLink = this.userData._links.project.href;
       this.getActiveProjects();
     }, error => {
       console.error(error);
@@ -77,14 +78,11 @@ export class MenuComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
-      const temp = result;
       // @ts-ignore
-      for (const proj of temp) {
-        proj._links = convertFromLegacy(proj.links);
-        proj.links = null;
+      if (result._embedded !== undefined) {
+        // @ts-ignore
+        this.projects = result._embedded.projects;
       }
-      // @ts-ignore
-      this.projects = temp;
     }, error => {
       console.error(error);
     });
@@ -93,7 +91,6 @@ export class MenuComponent implements OnInit {
   newProject() {
     let ProjectName: string;
     let OrgName: string;
-
     const dialogRef = this.dialogBox.open(NewProjectDialog, {
       width: '300px',
       data: {Name: ProjectName, Org: OrgName}

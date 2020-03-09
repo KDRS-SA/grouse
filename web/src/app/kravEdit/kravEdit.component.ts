@@ -58,7 +58,7 @@ export class kravEditComponent implements OnInit {
 
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
-    this.projectLink = this.userData.currentProject._links.funksjon.href;
+    this.projectLink = this.userData.currentProject._links.function.href;
     this.fetchMainData();
 
     this.treeControl = new NestedTreeControl<Requirment>(
@@ -390,6 +390,7 @@ export class kravEditComponent implements OnInit {
       this.currentReq = switchto;
       this.newReqPriority = 'O';
       this.selectedTab = 0;
+      this.loadRequirment();
     } else {
       this.statusPage = !this.statusPage;
       this.statPageLoad();
@@ -572,7 +573,7 @@ export class kravEditComponent implements OnInit {
   }
 
   /**
-   * isPrime
+   * isPrime (Unused)
    * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
    * @param inn
    * The projectfunctionality to check
@@ -587,7 +588,7 @@ export class kravEditComponent implements OnInit {
   }
 
   /**
-   * isPrime
+   * isPrime (Unused)
    * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
    * @param inn
    * ID of the projectfunctionality to check
@@ -599,6 +600,19 @@ export class kravEditComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  loadRequirment() {
+    this.http.get(this.currentReq._links.krav.href, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer ' + this.userData.oauthClientSecret
+        }
+      )
+    }).subscribe(result => {
+      console.log(result);
+    }, error => {
+      console.error(error);
+    });
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;

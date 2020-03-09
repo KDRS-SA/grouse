@@ -81,7 +81,7 @@
       </i>
     </button>
     <!--The centre column where you edit stuff-->
-    <div *ngIf="!statusPage" class="edit-column">
+    <div *ngIf="!statusPage && currentReq !== undefined" class="edit-column">
       <mat-card class="Krav-card-edit">
         <!--Edit part (with the tabs and the text fields)-->
         <mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="selectedTab = $event">
