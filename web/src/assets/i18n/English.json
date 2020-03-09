@@ -81,5 +81,13 @@
     "Previous-req": "Previous Requirements",
     "Accept-Deny": "Approve / Reject Requirements",
     "Next-req": "Next Requirements"
+  },
+  "ErrorsAndWarns": {
+    "Wrong-Password" : "Wrong Email or password entered!",
+    "Close" : "Close",
+    "Unexpected" : "An unexpected error has occured, try again or see the console for further details.",
+    "UserAlreadyExists" : "A user with this email adress allready exists, have you forgotten your password?",
+    "MustEnterEmail" : "Email required",
+    "InnvalidEmail" : "The email entered is not in the correct format"
   }
 }

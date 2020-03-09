@@ -81,5 +81,13 @@
     "Previous-req": "Førre krav",
     "Accept-Deny": "Godkjenn/avvis krav",
     "Next-req": "Neste krav"
+  },
+  "ErrorsAndWarns": {
+    "Wrong-Password" : "Feil e-post eller passord!",
+    "Close" : "Lukk",
+    "Unexpected" : "Ein uventa feil har oppstått, prøv igjen. Eller sjå konsol, for fleire detaljar",
+    "UserAlreadyExists" : "Ein brukar med denne e-posten eksisterer allereie, har du gløymt passordet ditt?",
+    "MustEnterEmail" : "Du må skriva inn ein e-post",
+    "InnvalidEmail" : "E-post er angitt på feil format!"
   }
 }
