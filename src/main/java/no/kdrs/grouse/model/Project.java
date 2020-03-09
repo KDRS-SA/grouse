@@ -64,7 +64,7 @@ public class Project
      * Name of the requirements document
      */
     @Column(name = "document_created")
-    private Boolean documentCreated;
+    private Boolean documentCreated = false;
 
     /**
      * Used to identify if all the steps have been
