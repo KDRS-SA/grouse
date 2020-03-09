@@ -99,6 +99,29 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  downloadDocument(){
+    this.http.get(this.projectLink, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer' + this.userData.oauthClientSecret
+        }
+      ),
+      responseType: "arraybuffer"
+    }).subscribe(result => {
+      var file = new Blob([result], {
+        type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      });
+
+      var fileURL = URL.createObjectURL(file);
+      var a = document.createElement('a');
+      a.href = fileURL;
+      a.target = '_blank';
+      a.download = this.userData.currentProject.projectName + '.docx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    })
+  }
+
   /*
   * This method sends the user to the main menu when called
   */
