@@ -32,8 +32,8 @@ export class userEditComponent implements  OnInit {
     this.http = http;
     this.router = router;
     this.formBuilder = formBuilder;
-    translate.addLangs(['no', 'en', 'ny']);
-    translate.setDefaultLang('no');
+    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmål');
   }
 
   ngOnInit(): void {

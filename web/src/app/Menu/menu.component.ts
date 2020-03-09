@@ -31,8 +31,8 @@ export class MenuComponent implements OnInit {
     this.router = router;
     this.userData = new UserData();
     this.dialogBox = dialogBox;
-    translate.addLangs(['no', 'en', 'ny']);
-    translate.setDefaultLang('no');
+    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmål');
   }
 
   ngOnInit() {

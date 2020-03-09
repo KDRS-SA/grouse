@@ -53,8 +53,8 @@ export class LoginComponent implements  OnInit {
     this.userData = new UserData();
     this.shake = false;
     this.snackBar = snackBar;
-    translate.addLangs(['no', 'en', 'ny']);
-    translate.setDefaultLang('no');
+    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmål');
   }
 
   ngOnInit() {

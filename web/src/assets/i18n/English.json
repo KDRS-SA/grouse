@@ -24,7 +24,7 @@
     "InfoSaveTXT": "In our databases we will store your e-mail address and your password will be stored securely and encrypted so that it does not go astray. We will also store your projects. This includes which projects you save / owner, as well as projects you work on where your user is not the owner of the project. The last thing that will be saved is your role in the program, that is, if you are a normal user or administrator. ",
     "InfoDelete": "Deleting information",
     "InfoDeleteTXT": "Once logged in you will be able to access the settings for your user. Inside the settings there will be a button to delete the user and all related information. Pressing this you will need to confirm that you want to remove all information belonging to your user. This is not reversible. After deleting everything it is not possible to recover the user and associated information. ",
-    "Attention!": "Attention! This will NOT delete projects you do not own.",
+    "OBS!": "Attention! This will NOT delete projects you do not own.",
     "Close": "Close window"
   },
   "Menu": {
@@ -63,7 +63,7 @@
     "Password-New-rep-Placeholder": "Repeat the new password",
     "Password-Change": "Change Password"
   },
-  "RequirementsEdit": {
+  "KravEdit": {
     "Logout": "Logout",
     "Summary": "Summary",
     "Requirement": "Requirements",
