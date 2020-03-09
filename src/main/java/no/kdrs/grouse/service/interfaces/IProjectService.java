@@ -22,6 +22,8 @@ public interface IProjectService {
 
     Project createProject(Project project);
 
+    Project createProjectFromTemplate(Long templateId);
+
     Project update(Long id, PatchObjects patchObjects)
             throws EntityNotFoundException;
 

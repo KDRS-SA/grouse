@@ -4,6 +4,7 @@ import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.persistence.*;
 import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,7 @@ public class ProjectService
     private ITemplateFunctionalityRepository functionalityRepository;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
+    private ITemplateService templateService;
 
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
@@ -48,7 +50,8 @@ public class ProjectService
             ITemplateRequirementRepository requirementRepository,
             ITemplateFunctionalityRepository functionalityRepository,
             IProjectRequirementRepository projectRequirementRepository,
-            IProjectFunctionalityRepository projectFunctionalityRepository) {
+            IProjectFunctionalityRepository projectFunctionalityRepository,
+            ITemplateService templateService) {
         this.entityManager = entityManager;
         this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
@@ -56,6 +59,7 @@ public class ProjectService
         this.functionalityRepository = functionalityRepository;
         this.projectRequirementRepository = projectRequirementRepository;
         this.projectFunctionalityRepository = projectFunctionalityRepository;
+        this.templateService = templateService;
     }
 
     @Override
@@ -101,6 +105,18 @@ public class ProjectService
     }
 
     /**
+     * Create a new empty project that is not based on a template
+     *
+     * @param project
+     * @return
+     */
+    public Project createProject(Project project) {
+        String ownedBy = getUser();
+        project.setFileName(project.getProjectName());
+        return projectRepository.save(project);
+    }
+
+    /**
      * Create a new project.
      * <p>
      * The following steps are performed:
@@ -121,24 +137,26 @@ public class ProjectService
      * @return The persisted object after it was persisted with associated data
      */
     @Override
-    public Project createProject(Project project) {
+    public Project createProjectFromTemplate(Long templateId) {
+        Template template = templateService.findById(templateId);
+        Project project = new Project();
         String ownedBy = getUser();
         project.setDocumentCreated(false);
-
+        project.setProjectName(template.getTemplateName());
         project.setFileName(project.getProjectName());
         project.setOwnedBy(ownedBy);
         projectRepository.save(project);
 
-        ArrayList<TemplateFunctionality> functionalities = (ArrayList<TemplateFunctionality>)
-                functionalityRepository.findAll();
-        //findAllByOrderById();
+        List<TemplateFunctionality> functionalities =
+                template.getReferenceTemplateFunctionality();
 
         HashMap<String, ProjectFunctionality> parents = new HashMap<>();
 
         for (TemplateFunctionality templateFunctionality : functionalities) {
 
             ProjectFunctionality existingProjectFunctionality
-                    = parents.get(templateFunctionality.getFunctionalityNumber());
+                    = parents.get(
+                    templateFunctionality.getFunctionalityNumber());
 
             if (existingProjectFunctionality != null) {
                 continue;
