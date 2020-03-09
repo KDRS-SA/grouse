@@ -89,5 +89,8 @@
     "UserAlreadyExists" : "Ein brukar med denne e-posten eksisterer allereie, har du gløymt passordet ditt?",
     "MustEnterEmail" : "Du må skriva inn ein e-post",
     "InnvalidEmail" : "E-post er angitt på feil format!"
+  },
+  "Language": {
+    "Language": "Nynorsk"
   }
 }
