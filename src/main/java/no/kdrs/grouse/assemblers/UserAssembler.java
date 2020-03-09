@@ -42,8 +42,11 @@ public class UserAssembler
                 .withSelfRel());
         if (role.isUser()) {
             linksUser.add(linkTo(methodOn(ProjectController.class)
-                    .createProject(null))
+                    .getProjects(null))
                     .withRel(PROJECT));
+            linksUser.add(linkTo(methodOn(TemplateController.class)
+                    .getTemplates(null))
+                    .withRel(TEMPLATE));
         }
         if (role.isTemplate()) {
             linksUser.add(linkTo(methodOn(TemplateController.class)
@@ -69,7 +72,8 @@ public class UserAssembler
                     .getGrouseUser(user.getUsername()))
                     .withSelfRel());
             user.add(linkTo(methodOn(ProjectController.class)
-                    .createProject(null))
+                    // TODO
+                    .createProject((long) 1))
                     .withRel(PROJECT));
             if (role.isTemplate()) {
                 user.add(linkTo(methodOn(TemplateController.class)
