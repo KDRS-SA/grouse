@@ -169,7 +169,23 @@
               </button>
             </div>
           </div>
-          <button mat-raised-button (click)="downloadDocument()">Last ned</button>
+          <mat-divider></mat-divider>
+          <div class="flex-center flex-column p-20" *ngIf="statpageData.progress === 100 && !statpageData.generatingDocument">
+            <h4>{{'KravEdit.Document' | translate}}</h4>
+            <div class="color-lightgray flex-row-left rounded">
+              <p class="m-lr-10">{{userData.currentProject.projectName}}.docx</p>
+              <button mat-raised-button (click)="downloadDocument()">Last ned</button>
+            </div>
+          </div>
+          <div class="flex-center flex-column p-20" *ngIf="statpageData.progress !== 100 && !statpageData.generatingDocument">
+            <h4>{{'KravEdit.Document' | translate}}</h4>
+            <p>{{'KravEdit.NotReady' | translate}}</p>
+          </div>
+          <div class="flex-center flex-column p-20" *ngIf="statpageData.generatingDocument">
+            <h4>{{'KravEdit.Document' | translate}}</h4>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <p>{{'KravEdit.GeneratingDoc' | translate}}</p>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
