@@ -22,6 +22,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -65,7 +66,7 @@ public class TemplateService
     @Override
     @SuppressWarnings("unchecked")
     public List<TemplateRequirement> findByTemplateIdOrderByTemplateName(
-            Long templateId, String functionalityNumber) {
+            UUID templateId, String functionalityNumber) {
         String queryString =
                 "select p from TemplateRequirement as p where " +
                         "p.referenceTemplate.templateId = :templateId " +
@@ -88,7 +89,7 @@ public class TemplateService
      */
     @Override
     public List<TemplateFunctionality> findFunctionalityForTemplateByType(
-            Long templateId, String type) {
+            UUID templateId, String type) {
 
 
         /*
@@ -103,7 +104,7 @@ public class TemplateService
 
     @Override
     public void createFunctionality(
-            @NotNull final Long templateId,
+            @NotNull final UUID templateId,
             TemplateFunctionality templateFunctionality) {
         Template template = getTemplateOrThrow(templateId);
         template.addTemplateFunctionality(templateFunctionality);
@@ -117,7 +118,7 @@ public class TemplateService
     }
 
     @Override
-    public Template findById(@NotNull Long id) {
+    public Template findById(@NotNull UUID id) {
         return getTemplateOrThrow(id);
     }
 
@@ -137,7 +138,7 @@ public class TemplateService
     }
 
     @Override
-    public Template update(Long id, PatchObjects patchObjects)
+    public Template update(UUID id, PatchObjects patchObjects)
             throws EntityNotFoundException {
         return (Template) handlePatch(getTemplateOrThrow(id), patchObjects);
     }
@@ -155,7 +156,7 @@ public class TemplateService
      * @param id the id of the template ot delete
      */
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         Template template = getTemplateOrThrow(id);
         /* revisit this
         for (TemplateRequirement templateRequirement :
@@ -185,7 +186,7 @@ public class TemplateService
      * @param id The systemId of the template object to retrieve
      * @return the template object
      */
-    private Template getTemplateOrThrow(@NotNull Long id)
+    private Template getTemplateOrThrow(@NotNull UUID id)
             throws EntityNotFoundException {
         return templateRepository.findById(id)
                 .orElseThrow(() ->

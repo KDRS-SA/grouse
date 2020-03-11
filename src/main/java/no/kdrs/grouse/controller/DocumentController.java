@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
 
@@ -110,7 +111,7 @@ public class DocumentController {
     @GetMapping(SLASH + TEMPLATE + SLASH + TEMPLATE_ID_PARAMETER + SLASH +
             DOCUMENT)
     public HttpEntity<byte[]> downloadDocumentTemplate(
-            @PathVariable(TEMPLATE_ID) Long templateId)
+            @PathVariable(TEMPLATE_ID) UUID templateId)
             throws IOException {
         Template template = templateService.findById(templateId);
         if (null != template.getFileNameInternal()) {

@@ -15,10 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -137,7 +134,7 @@ public class ProjectService
      * @return The persisted object after it was persisted with associated data
      */
     @Override
-    public Project createProjectFromTemplate(Long templateId) {
+    public Project createProjectFromTemplate(UUID templateId) {
         Template template = templateService.findById(templateId);
         Project project = new Project();
         String ownedBy = getUser();

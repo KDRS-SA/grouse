@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -49,7 +50,7 @@ public class TemplateController {
 
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
     public ResponseEntity<LinksTemplate> getTemplate(
-            @PathVariable(TEMPLATE_ID) Long templateId) {
+            @PathVariable(TEMPLATE_ID) UUID templateId) {
         return addTemplateLinks(templateService.findById(templateId), OK);
     }
 
@@ -67,7 +68,7 @@ public class TemplateController {
             FUNCTIONALITY + FUNCTIONALITY_PARAMETER)
     public ResponseEntity<List<TemplateRequirement>>
     getRequirementsForFunctionality(
-            @PathVariable(TEMPLATE_ID) Long templateId,
+            @PathVariable(TEMPLATE_ID) UUID templateId,
             @PathVariable(FUNCTIONALITY) String functionalityNumber) {
 
         List<TemplateRequirement> templateRequirements =
@@ -81,7 +82,7 @@ public class TemplateController {
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
     public ResponseEntity<List<TemplateFunctionality>>
     getFunctionalityForTemplate(
-            @PathVariable(TEMPLATE_ID) Long templateId) {
+            @PathVariable(TEMPLATE_ID) UUID templateId) {
 
         List<TemplateFunctionality> templateFunctionalities =
                 templateService.findFunctionalityForTemplateByType(templateId,
@@ -161,7 +162,7 @@ public class TemplateController {
 
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
     public ResponseEntity<TemplateFunctionality> createFunctionality(
-            @PathVariable(TEMPLATE_ID) Long templateId,
+            @PathVariable(TEMPLATE_ID) UUID templateId,
             @RequestBody TemplateFunctionality templateFunctionality) {
 
         templateService.createFunctionality(templateId, templateFunctionality);
@@ -176,7 +177,7 @@ public class TemplateController {
 
     @PatchMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
     public ResponseEntity<LinksTemplate> patchRequirement(
-            @PathVariable(TEMPLATE_ID) Long templateId,
+            @PathVariable(TEMPLATE_ID) UUID templateId,
             @RequestBody PatchObjects patchObjects) throws Exception {
         return addTemplateLinks(templateService.update(
                 templateId, patchObjects), OK);
@@ -184,7 +185,7 @@ public class TemplateController {
 
     @DeleteMapping(SLASH + TEMPLATE_ID_PARAMETER)
     public ResponseEntity<Void> deleteTemplate(
-            @PathVariable(TEMPLATE_ID) Long templateId) {
+            @PathVariable(TEMPLATE_ID) UUID templateId) {
         templateService.delete(templateId);
         return ResponseEntity.status(NO_CONTENT)
                 .body(null);

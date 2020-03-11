@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -20,7 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class LinksTemplate
         extends RepresentationModel<LinksTemplate> {
 
-    private Long templateId;
+    private UUID templateId;
     private String templateName;
     private OffsetDateTime createdDate;
     private OffsetDateTime lastModifiedDate;
@@ -34,11 +35,11 @@ public class LinksTemplate
         this.ownedBy = template.getOwnedBy();
     }
 
-    public Long getTemplateId() {
+    public UUID getTemplateId() {
         return templateId;
     }
 
-    public void setTemplateId(Long templateId) {
+    public void setTemplateId(UUID templateId) {
         this.templateId = templateId;
     }
 

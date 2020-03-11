@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -22,7 +23,7 @@ public interface IProjectService {
 
     Project createProject(Project project);
 
-    Project createProjectFromTemplate(Long templateId);
+    Project createProjectFromTemplate(UUID templateId);
 
     Project update(Long id, PatchObjects patchObjects)
             throws EntityNotFoundException;

@@ -7,6 +7,7 @@ import no.kdrs.grouse.model.imp.Chapters;
 import no.kdrs.grouse.model.imp.Requirements;
 import no.kdrs.grouse.model.imp.Section;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
+import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -31,15 +32,19 @@ public class AfterStartup {
 
     private ITemplateFunctionalityRepository functionalityRepository;
     private ITemplateRequirementRepository requirementRepository;
+    private ITemplateRepository templateRepository;
+
     private Environment environment;
 
     public AfterStartup(
             Environment environment,
+            ITemplateRepository templateRepository,
             ITemplateFunctionalityRepository functionalityRepository,
             ITemplateRequirementRepository requirementRepository) {
+        this.environment = environment;
+        this.templateRepository = templateRepository;
         this.functionalityRepository = functionalityRepository;
         this.requirementRepository = requirementRepository;
-        this.environment = environment;
     }
 
     @EventListener

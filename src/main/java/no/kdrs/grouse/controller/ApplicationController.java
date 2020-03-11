@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static no.kdrs.grouse.utils.Constants.SLASH;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
  * Created by tsodring on 24/06/18.
  */
 @RestController
-@RequestMapping(value = SLASH)
+@RequestMapping
 public class ApplicationController {
 
     private static final Logger logger =

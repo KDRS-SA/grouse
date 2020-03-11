@@ -10,27 +10,28 @@ import org.springframework.data.domain.Pageable;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 public interface ITemplateService {
     Page<Template> findAll(Pageable page);
 
-    Template findById(Long id);
+    Template findById(UUID id);
 
     Template createTemplate(Template template);
 
-    Template update(Long id, PatchObjects patchObjects) throws Exception;
+    Template update(UUID id, PatchObjects patchObjects) throws Exception;
 
-    void delete(Long id);
+    void delete(UUID id);
 
     List<Template> findByOwnedBy(String ownedBy);
 
     List<TemplateRequirement> findByTemplateIdOrderByTemplateName(
-            Long templateId, String functionalityNumber);
+            UUID templateId, String functionalityNumber);
 
     List<TemplateFunctionality> findFunctionalityForTemplateByType(
-            Long templateId, String type);
+            UUID templateId, String type);
 
-    void createFunctionality(@NotNull final Long templateId,
+    void createFunctionality(@NotNull final UUID templateId,
                              @NotNull TemplateFunctionality
                                      templateFunctionality);
 }
