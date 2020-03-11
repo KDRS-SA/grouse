@@ -140,7 +140,7 @@ export class LoginComponent implements  OnInit {
 
   loginSubmit() {
     // Resolves an error where refreshed user might have gotten an error due to unwanted data retention
-    if(this.userData.oauthClientSecret != 'secret'){
+    if(this.userData.oauthClientSecret !== 'secret') {
       this.userData.oauthClientSecret = 'secret';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
     }

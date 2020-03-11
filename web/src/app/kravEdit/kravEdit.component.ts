@@ -10,6 +10,7 @@ import {MatTreeNestedDataSource} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {statusPageData} from '../models/statusPageData.model';
 import {TranslateService} from '@ngx-translate/core';
+import {error} from 'util';
 
 @Component({
   selector: 'app-root',
@@ -96,6 +97,26 @@ export class kravEditComponent implements OnInit {
       console.log(this.mainData);
     }, error => {
       console.error(error);
+    });
+  }
+
+  downloadDocument() {
+    console.log(this.userData.currentProject);
+    this.http.get(this.userData.currentProject._links.dokument.href, {
+      headers: new HttpHeaders({
+          Authorization: 'Bearer' + this.userData.oauthClientSecret
+        }
+      ),
+      responseType: 'blob'
+    }).subscribe(result => {
+      const url = window.URL.createObjectURL(result);
+      const a = document.createElement('a');
+      a.setAttribute('style', 'display:none;');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = this.userData.currentProject.projectName + '.docx';
+      a.click();
+      return url;
     });
   }
 
@@ -227,6 +248,7 @@ export class kravEditComponent implements OnInit {
       this.newReqPriority = 'O';
       this.selectedTab = 0;
       this.statusBarInfo();
+      this.statusPage = false;
     }
   }
 
@@ -360,6 +382,7 @@ export class kravEditComponent implements OnInit {
   }
 
   removeRequirment(index: number) {
+    console.log(this.currentReq.referenceProjectRequirement[index]);
     const dialogref = this.dialog.open(DeleteRequirmentDialog, {
       width: '300px'
     });
@@ -537,6 +560,7 @@ export class kravEditComponent implements OnInit {
    * Loads and crunches all required data for the statpage
    */
   statPageLoad() {
+    this.sideBarOpen = false;
     this.statpageData.loaded = false;
     this.statpageData.unfinished = [];
     let add: projectFunctionality = this.currentReq;
@@ -573,6 +597,19 @@ export class kravEditComponent implements OnInit {
       this.statpageData.progress = Math.round((finished / numberOfReqs) * 100);
     } else {
       this.statpageData.progress = 100;
+
+      // Calls a post to generate document if download is finnished
+      this.statpageData.generatingDocument = true;
+      this.http.post(this.userData.currentProject._links.dokument.href, {}, {
+        headers: new HttpHeaders({
+            Authorization: 'Bearer ' + this.userData.oauthClientSecret
+          }
+        )
+      }).subscribe(result => {
+        this.statpageData.generatingDocument = false;
+      }, error => {
+        alert(error);
+      });
     }
     this.statpageData.loaded = true;
   }

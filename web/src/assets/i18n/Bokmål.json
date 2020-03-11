@@ -80,6 +80,10 @@
     "Un-finished-req-Tooltip": "Viser krav som er bladd forbi som ikke har blitt akseptert",
     "Previous-req": "Forrige krav",
     "Accept-Deny": "Godkjenn/avvis krav",
+    "Next-req": "Neste krav",
+    "Document": "Dokument",
+    "NotReady": "Documentet er ikke klar til nedlasting før alle punkter er godkjent",
+    "GeneratingDoc": "Dokumentet genereres venligst vent"
     "Next-req": "Neste krav"
   },
   "ErrorsAndWarns": {

@@ -80,6 +80,10 @@
     "Un-finished-req-Tooltip": "Displays Requirements that have not been accepted",
     "Previous-req": "Previous Requirements",
     "Accept-Deny": "Approve / Reject Requirements",
+    "Next-req": "Next Requirements",
+    "Document": "Document",
+    "NotReady": "The document will not be ready before all the requirments are accepted",
+    "GeneratingDoc": "Generating document, please wait"
     "Next-req": "Next Requirements"
   },
   "ErrorsAndWarns": {
