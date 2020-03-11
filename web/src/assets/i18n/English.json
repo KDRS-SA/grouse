@@ -84,5 +84,17 @@
     "Document": "Document",
     "NotReady": "The document will not be ready before all the requirments are accepted",
     "GeneratingDoc": "Generating document, please wait"
+    "Next-req": "Next Requirements"
+  },
+  "ErrorsAndWarns": {
+    "Wrong-Password" : "Wrong Email or password entered!",
+    "Close" : "Close",
+    "Unexpected" : "An unexpected error has occured, try again or see the console for further details.",
+    "UserAlreadyExists" : "A user with this email adress allready exists, have you forgotten your password?",
+    "MustEnterEmail" : "Email required",
+    "InnvalidEmail" : "The email entered is not in the correct format"
+  },
+  "Language": {
+    "Language": "English"
   }
 }

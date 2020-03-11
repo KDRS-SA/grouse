@@ -11,6 +11,14 @@
   </button>
   <div class="flex-row-right">
     <div class="flex-row-between">
+      <div class="lang-test m-t-14">
+        <button mat-button [matMenuTriggerFor]="langselect">{{'Language.Language' | translate}}</button>
+        <mat-menu #langselect="matMenu" xPosition="after">
+          <button mat-menu-item (click)="translate.use('Bokmål')">Bokmål</button>
+          <button mat-menu-item (click)="translate.use('Nynorsk')">Nynorsk</button>
+          <button mat-menu-item (click)="translate.use('English')">English</button>
+        </mat-menu>
+      </div>
       <button mat-button (click)="enterUserEdit()">
         <div class="flex-row-between">
           <div class="flex-center">

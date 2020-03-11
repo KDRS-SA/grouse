@@ -42,10 +42,12 @@ export class LoginComponent implements  OnInit {
     [Validators.required, Validators.email]);
 
   getErrorMessage() {
-    return this.email.hasError('required') ? 'Du må skrive inn en E-post adresse' :
-      this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
+    // @ts-ignore
+    // tslint:disable-next-line:max-line-length
+    return this.email.hasError('required') ? this.translate.get('ErrorsAndWarns.MustEnterEmail').value : this.email.hasError('email') ? this.translate.get('ErrorsAndWarns.InnvalidEmail').value : '';
   }
 
+  // tslint:disable-next-line:max-line-length
   constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
     this.login = true;
     this.http = http;
@@ -128,7 +130,9 @@ export class LoginComponent implements  OnInit {
           // A user with the email entered allready exists
           if (error.error.message.startsWith('No GrouseUser exists')) {
             this.shake = true;
-            this.snackBar.open('En bruker med denne e-posten eksisterer allerede', 'Lukk');
+            // @ts-ignore
+            // tslint:disable-next-line:max-line-length
+            this.snackBar.open(this.translate.get('ErrorsAndWarns.UserAlreadyExists').value, this.translate.get('ErrorsAndWarns.Close').value);
           }
         });
     }
@@ -168,9 +172,11 @@ export class LoginComponent implements  OnInit {
       }, error => {
         if (error.error.error_description === 'Bad credentials') {
           this.shake = true; // Shakes the main card to illustrate that there was en error
-          this.snackBar.open('Feil med passord eller e-post', 'Lukk');
+          // @ts-ignore
+          this.snackBar.open(this.translate.get('ErrorsAndWarns.Wrong-Password').value, this.translate.get('ErrorsAndWarns.Close').value);
         } else {
-          alert('En uventet feil har oppstått, prøv igjen. Eller se konsol, for flere detaljer');
+          // @ts-ignore
+          alert(this.translate.get('ErrorsAndWarns.Unexpected').value);
           console.log(error);
         }
       }

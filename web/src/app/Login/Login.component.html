@@ -8,11 +8,12 @@
           <mat-card-title>Grouse</mat-card-title>
           <mat-card-subtitle>{{'Login.subtitle' | translate}}</mat-card-subtitle>
           <div class="lang-test">
-            <select #langselect (change)="translate.use(langselect.value)">
-              <option value="Bokmål">Bokmål</option>
-              <option value="Nynorsk">Nynorsk</option>
-              <option value="English">English</option>
-            </select>
+            <button mat-button [matMenuTriggerFor]="langselect">{{'Language.Language' | translate}}</button>
+            <mat-menu #langselect="matMenu" xPosition="after">
+              <button mat-menu-item (click)="translate.use('Bokmål')">Bokmål</button>
+              <button mat-menu-item (click)="translate.use('Nynorsk')">Nynorsk</button>
+              <button mat-menu-item (click)="translate.use('English')">English</button>
+            </mat-menu>
           </div>
         </mat-card-header>
       </div>

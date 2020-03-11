@@ -84,5 +84,17 @@
     "Document": "Dokument",
     "NotReady": "Documentet er ikke klar til nedlasting før alle punkter er godkjent",
     "GeneratingDoc": "Dokumentet genereres venligst vent"
+    "Next-req": "Neste krav"
+  },
+  "ErrorsAndWarns": {
+    "Wrong-Password" : "Feil e-post eller passord!",
+    "Close" : "Lukk",
+    "Unexpected" : "En uventet feil har oppstått, prøv igjen. Eller se konsol, for flere detaljer",
+    "UserAlreadyExists" : "En bruker med denne e-posten eksisterer allerede, har du glemt passordet ditt?",
+    "MustEnterEmail" : "Du må skrive inn en e-post",
+    "InnvalidEmail" : "E-post er angitt på feil format!"
+  },
+  "Language": {
+    "Language": "Bokmål"
   }
 }
