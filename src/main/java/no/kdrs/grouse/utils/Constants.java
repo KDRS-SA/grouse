@@ -18,6 +18,10 @@ public final class Constants {
     public static final String DOCUMENT = "document";
     public static final String PROJECT = "project";
     public static final String TEMPLATE = "template";
+    public static final String REL_PROJECT_LIST = "project-list";
+    public static final String REL_TEMPLATE_LIST = "template-list";
+    public static final String REL_PROJECT_LIST_ALL = "project-list-all";
+    public static final String REL_TEMPLATE_LIST_ALL = "template-list-all";
     public static final String GROUSE = "grouse";
     public static final String CONTEXT_PATH = GROUSE;
     public static final String SYSTEM_USER = "grouse";
@@ -123,4 +127,6 @@ public final class Constants {
     public static final String NO_ACCESS_OTHER_USER =
             "Attempt to access a user without permission. Admin role is " +
                     "required to see other users";
+    public static final String NO_LOGIN_ENDPOINT_METHOD =
+            "Endpoint problem for login method ";
 }
