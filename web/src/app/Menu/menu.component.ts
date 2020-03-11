@@ -7,6 +7,7 @@ import {convertFromLegacy, REL_PROJECT} from '../common';
 import {Project} from '../models/Project.model';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
+import {DeleteRequirmentDialog} from "../kravEdit/kravEdit.component";
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ export class MenuComponent implements OnInit {
   private projects: Project[];
   private projectsLink: string;
   private dialogBox: MatDialog;
+  private deleteMode: boolean;
 
   public title = 'Grouse';
 
@@ -33,6 +35,7 @@ export class MenuComponent implements OnInit {
     this.dialogBox = dialogBox;
     translate.addLangs(['no', 'en', 'ny']);
     translate.setDefaultLang('no');
+    this.deleteMode = false;
   }
 
   ngOnInit() {
@@ -121,6 +124,40 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/kravEdit']);
   }
 
+  removeProject(project){
+    const dialogref = this.dialogBox.open(DeleteProjectDialog, {
+      width: '300px'
+    });
+
+    dialogref.afterClosed().subscribe(result => {
+      if (result) {
+        this.http.delete(
+          project._links.self.href,
+          {
+            headers: new HttpHeaders({
+              Authorization: 'Bearer ' + this.userData.oauthClientSecret
+            })
+          }).subscribe(
+          // tslint:disable-next-line:no-shadowed-variable
+          result => {
+            this.getActiveProjects()
+          }, error => console.error(error));
+      }
+    });
+  }
+
+  selectProject(project){
+    if (!this.deleteMode){
+      this.openProject(project);
+    }else {
+      this.removeProject(project);
+    }
+  }
+
+  deleteToggle(){
+    this.deleteMode = !this.deleteMode;
+  }
+
   enterUserEdit() {
     this.userData.nav = 'userEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
@@ -141,6 +178,21 @@ export interface INewProject {
 // tslint:disable-next-line:component-class-suffix
 export class NewProjectDialog {
   constructor(public dialogRef: MatDialogRef<NewProjectDialog>, @Inject(MAT_DIALOG_DATA) public data: INewProject) {}
+
+  onNoClick() {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'DeleteProject.Dialog',
+  templateUrl: '../Modals/RemoveProject.Dialog.html'
+})
+
+export class DeleteProjectDialog {
+  constructor(public dialogRef: MatDialogRef<DeleteProjectDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
+    this.data = true;
+  }
 
   onNoClick() {
     this.dialogRef.close();

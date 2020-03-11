@@ -19,7 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import {MenuComponent, NewProjectDialog} from './Menu/menu.component';
+import {DeleteProjectDialog, MenuComponent, NewProjectDialog} from './Menu/menu.component';
 import {AppComponent} from './app.component';
 import {Data} from './data.service';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -48,7 +48,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NewProjectDialog,
     GDPRContent,
     userEditComponent,
-    DeleteRequirmentDialog
+    DeleteRequirmentDialog,
+    DeleteProjectDialog
   ],
     imports: [
         BrowserModule,
@@ -91,12 +92,14 @@ export function HttpLoaderFactory(http: HttpClient) {
   exports: [
     NewProjectDialog,
     GDPRContent,
-    DeleteRequirmentDialog
+    DeleteRequirmentDialog,
+    DeleteProjectDialog
   ],
   entryComponents: [
     NewProjectDialog,
     GDPRContent,
-    DeleteRequirmentDialog
+    DeleteRequirmentDialog,
+    DeleteProjectDialog
   ]
 })
 export class AppModule { }

@@ -11,6 +11,7 @@
   </button>
   <div class="flex-row-right">
     <div class="flex-row-between">
+      <button mat-raised-button  color="warn" (click)="deleteToggle()">Slett</button>
       <button mat-button (click)="enterUserEdit()">
         <div class="flex-row-between">
           <div class="flex-center">
@@ -33,7 +34,7 @@
     <i class="material-icons">add_circle_outline</i>
     <p>{{'Menu.NewProject' | translate}}</p>
   </button>
-  <button mat-raised-button class="mal-card" *ngFor="let project of projects" (click)="openProject(project)">
+  <button mat-raised-button class="mal-card" *ngFor="let project of projects" (click)="selectProject(project)">
     <div class="flex-column-squish">
       <p>{{project.ownedBy}}</p>
       <h3>{{project.projectName}}</h3>
@@ -41,3 +42,4 @@
     </div>
   </button>
 </div>
+

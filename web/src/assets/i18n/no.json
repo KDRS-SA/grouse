@@ -44,6 +44,12 @@
     "Cancel": "Avbryt",
     "Delete": "Slett"
   },
+  "Delete": {
+    "Confirm": "Bekreft sletting",
+    "Sure?": "Er du sikker på at du vil slette dette prosjektet? Denne handlingen kan ikke angres!!",
+    "Cancel": "Avbryt",
+    "Delete": "Slett"
+  },
   "UserEdit": {
     "Logout": "Logg ut",
     "Usersettings": "Brukerinstillinger",
