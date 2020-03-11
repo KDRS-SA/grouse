@@ -248,6 +248,7 @@ export class kravEditComponent implements OnInit {
       this.newReqPriority = 'O';
       this.selectedTab = 0;
       this.statusBarInfo();
+      this.statusPage = false;
     }
   }
 
@@ -381,6 +382,7 @@ export class kravEditComponent implements OnInit {
   }
 
   removeRequirment(index: number) {
+    console.log(this.currentReq.referenceProjectRequirement[index]);
     const dialogref = this.dialog.open(DeleteRequirmentDialog, {
       width: '300px'
     });
@@ -558,6 +560,7 @@ export class kravEditComponent implements OnInit {
    * Loads and crunches all required data for the statpage
    */
   statPageLoad() {
+    this.sideBarOpen = false;
     this.statpageData.loaded = false;
     this.statpageData.unfinished = [];
     let add: projectFunctionality = this.currentReq;

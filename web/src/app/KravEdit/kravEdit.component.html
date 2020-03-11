@@ -67,9 +67,10 @@
         <mat-divider></mat-divider>
       </mat-nested-tree-node>
     </mat-tree>
-    <button class="w-100" mat-button (click)="statusPage = !statusPage; this.statPageLoad()">{{'KravEdit.Summary' | translate}}</button>
+    <button *ngIf="!statusPage" class="w-100" mat-button (click)="statusPage = true; this.statPageLoad()">{{'KravEdit.Summary' | translate}}</button>
+    <button *ngIf="statusPage" class="w-100" mat-button (click)="statusPage = false; sideBarOpen = false">{{'KravEdit.Document' | translate}}</button>
   </mat-sidenav>
-  <mat-sidenav-content class="sidenav-content flex-row-between">
+  <mat-sidenav-content class="sidenav-content flex-row-between" (mouseover)="sideBarOpen = false">
     <button mat-raised-button class="no-p no-m" (click)="sideBarOpen = !sideBarOpen">
       <i class="material-icons">
         list
