@@ -84,7 +84,6 @@
     "Document": "Dokument",
     "NotReady": "Documentet er ikke klar til nedlasting før alle punkter er godkjent",
     "GeneratingDoc": "Dokumentet genereres venligst vent"
-    "Next-req": "Neste krav"
   },
   "ErrorsAndWarns": {
     "Wrong-Password" : "Feil e-post eller passord!",

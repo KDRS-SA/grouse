@@ -84,7 +84,6 @@
     "Document": "Document",
     "NotReady": "The document will not be ready before all the requirments are accepted",
     "GeneratingDoc": "Generating document, please wait"
-    "Next-req": "Next Requirements"
   },
   "ErrorsAndWarns": {
     "Wrong-Password" : "Wrong Email or password entered!",
