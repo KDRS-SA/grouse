@@ -6,6 +6,7 @@ export class Links {
   function: Link;
   krav: Link;
   dokument: Link;
+  ['login OAuth2']: Link;
 
   constructor() {
     this.self = new Link();

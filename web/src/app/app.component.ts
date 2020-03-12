@@ -4,6 +4,7 @@ import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 import {HttpClient} from '@angular/common/http';
 import {UserData} from './models/UserData.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Links} from './models/links.model';
 
 @Component({
   selector: 'app-root',
@@ -40,22 +41,7 @@ export class AppComponent implements OnInit {
   public getApiDetails() {
     this.http.get<IApiFetchResponse>(startUrl).subscribe(result => {
       console.log(result);
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < result.apiDetails.length; i++) {
-        const rel = result.apiDetails[i].rel;
-        if (rel === REL_LOGIN_OAUTH) {
-          this.userData.loginAdress = result.apiDetails[i].href.split(/(\?)/)[0];
-          console.log('loginAddress  is set to [' + this.userData.loginAdress + ']');
-        }
-        if (rel === REL_USER) {
-          this.userData.userAdress = result.apiDetails[i].href;
-          console.log('userAddress  is set to [' + this.userData.userAdress + ']');
-        }
-        if (rel === REL_LOGOUT_OAUTH) {
-          this.userData.logoutAdress = result.apiDetails[i].href;
-          console.log('logoutAddress   is set to [' + this.userData.logoutAdress + ']');
-        }
-      }
+      this.userData.loginAdress = result._links['login OAuth2'].href;
       localStorage.setItem('UserData', JSON.stringify(this.userData));
       this.loading = false;
       this.navigate();
@@ -81,8 +67,7 @@ export class AppComponent implements OnInit {
 
 // Interfaces for Response messages that deals with login
 interface IApiFetchResponse {
-  apiDetails: IapiDetails[];
-  Links: string[];
+  _links: Links;
 }
 
 interface IapiDetails {
