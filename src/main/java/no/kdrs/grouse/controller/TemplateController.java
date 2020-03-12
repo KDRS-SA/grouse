@@ -4,8 +4,11 @@ import no.kdrs.grouse.assemblers.TemplateAssembler;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
+import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.model.links.LinksTemplate;
+import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
+import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
 import no.kdrs.grouse.utils.exception.InternalException;
 import org.slf4j.Logger;
@@ -36,16 +39,22 @@ public class TemplateController {
             LoggerFactory.getLogger(TemplateController.class);
 
     private ITemplateService templateService;
+    private IProjectService projectService;
     private PagedResourcesAssembler<Template> pagedResourcesAssembler;
     private TemplateAssembler templateAssembler;
+    private CommonController commonController;
 
     public TemplateController(
             ITemplateService templateService,
+            IProjectService projectService,
             PagedResourcesAssembler<Template> pagedResourcesAssembler,
-            TemplateAssembler templateAssembler) {
+            TemplateAssembler templateAssembler,
+            CommonController commonController) {
         this.templateService = templateService;
+        this.projectService = projectService;
         this.pagedResourcesAssembler = pagedResourcesAssembler;
         this.templateAssembler = templateAssembler;
+        this.commonController = commonController;
     }
 
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
@@ -151,6 +160,13 @@ public class TemplateController {
         }
         return ResponseEntity.status(OK)
                 .body(templateFunctionalities);
+    }
+
+    @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + PROJECT)
+    public ResponseEntity<LinksProject> createProjectFromTemplate(
+            @PathVariable(TEMPLATE_ID) UUID templateId) {
+        return commonController.addProjectLinks(
+                projectService.createProjectFromTemplate(templateId), CREATED);
     }
 
     @PostMapping
