@@ -9,6 +9,8 @@ import {UserData} from '../models/UserData.model';
 import {MatSnackBar} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from "@ngx-translate/core";
+import {startUrl} from '../common';
+import {Links} from '../models/links.model';
 
 @Component({
   selector: 'app-root',
@@ -92,7 +94,7 @@ export class LoginComponent implements  OnInit {
   }
 
   ReadGDPR() {
-    console.log('Read GDPR TEST')
+    console.log('Read GDPR TEST');
     const dialogRef = this.dialog.open(GDPRContent);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -102,7 +104,6 @@ export class LoginComponent implements  OnInit {
 
   @Input()
   Checked: boolean;
-
 
   // Creates a new user
   registerSubmit() {
@@ -116,7 +117,7 @@ export class LoginComponent implements  OnInit {
         username: this.regUser.email,
         password: this.regUser.password
       };
-      this.http.post(this.userData.userAdress, body).subscribe(
+      this.http.post(this.userData._links.konto.href, body).subscribe(
         result => {
           // The transmission was a succsess and the server accepted the new user
           console.log('Account creation was a success! Signing in with the new user');
@@ -163,10 +164,7 @@ export class LoginComponent implements  OnInit {
         console.log(result);
         // @ts-ignore
         this.userData.oauthClientSecret = result.access_token;
-        this.userData.userName = this.loginUser.email;
-        this.userData.nav = 'Menu';
-        localStorage.setItem('UserData', JSON.stringify(this.userData));
-        this.router.navigate(['/Menu']);
+        this.getFurtherApiDetails();
       }, error => {
         if (error.error.error_description === 'Bad credentials') {
           this.shake = true; // Shakes the main card to illustrate that there was en error
@@ -177,6 +175,23 @@ export class LoginComponent implements  OnInit {
         }
       }
     );
+  }
+
+  getFurtherApiDetails() {
+    this.http.get<IAPIResponse>(startUrl, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      console.log(result);
+      this.userData.userName = this.loginUser.email;
+      this.userData._links = result._links;
+      this.userData.nav = 'Menu';
+      localStorage.setItem('UserData', JSON.stringify(this.userData));
+      this.router.navigate(['/Menu']);
+    }, error => {
+      console.error(error);
+    });
   }
 
   public changeMode() {
@@ -201,4 +216,8 @@ export class GDPRContent {
 interface INewUser {
   username: string;
   password: string;
+}
+
+interface IAPIResponse {
+  _links: Links;
 }

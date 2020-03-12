@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 // tslint:disable-next-line:max-line-length
 import {
     MatCardModule, MatProgressBarModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule, MatSelectModule,
     MatSliderModule,
     MatSnackBarModule,
     MatTableModule,
@@ -79,13 +79,14 @@ export function HttpLoaderFactory(http: HttpClient) {
         MatTooltipModule,
         MatProgressBarModule,
         TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-          }
-          }
-        )
+                loader: {
+                    provide: TranslateLoader,
+                    useFactory: HttpLoaderFactory,
+                    deps: [HttpClient]
+                }
+            }
+        ),
+        MatSelectModule
     ],
   providers: [],
   bootstrap: [AppComponent],

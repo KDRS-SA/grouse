@@ -4,12 +4,19 @@
   <mat-form-field>
     <input matInput [(ngModel)]="data.Name">
   </mat-form-field>
-  <p>{{'New.Organisation' | translate}}</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.Org">
-  </mat-form-field>
+  <mat-divider></mat-divider>
+  <div class="flex-column">
+    <mat-form-field>
+      <mat-label>Velg Mal</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let template of data.Templates" [value]="template" class="w-100" (onSelectionChange)="data.SelectedTemplate = template">
+          <p>{{template.templateName}} - Laget av {{template.ownedBy}}</p>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
-<div mat-dialog-actions class="flex-row-evenlyer">
-  <button mat-raised-button color="accent" (click)="onNoClick()">{{'New.Cancel' | translate}}</button>
+<div mat-dialog-actions class="flex-row-between">
+  <button mat-raised-button color="warn" (click)="onNoClick()">{{'New.Cancel' | translate}}</button>
   <button mat-raised-button color="primary" [mat-dialog-close]="data">{{'New.Create' | translate}}</button>
 </div>

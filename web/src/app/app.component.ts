@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   public getApiDetails() {
     this.http.get<IApiFetchResponse>(startUrl).subscribe(result => {
       console.log(result);
-      this.userData.loginAdress = result._links['login OAuth2'].href;
+      this.userData.loginAdress = result._links['login OAuth2'].href.split('?')[0];
       localStorage.setItem('UserData', JSON.stringify(this.userData));
       this.loading = false;
       this.navigate();

@@ -8,6 +8,7 @@ import {Project} from '../models/Project.model';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {DeleteRequirmentDialog} from "../kravEdit/kravEdit.component";
+import {Template} from '../models/template';
 
 @Component({
   selector: 'app-root',
@@ -44,26 +45,14 @@ export class MenuComponent implements OnInit {
   }
 
   getUserData() {
-    this.http.get(this.userData.userAdress + '/' + this.userData.userName, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + this.userData.oauthClientSecret
-        }
-      )
-    }).subscribe(result => {
-      console.log(result);
-      // @ts-ignore
-      this.userData._links = result._links;
-      this.projectsLink = this.userData._links.project.href;
-      this.getActiveProjects();
-    }, error => {
-      console.error(error);
-      this.logout();
-    });
+    console.log(this.userData._links['project-list'].href);
+    this.projectsLink = this.userData._links['project-list'].href;
+    this.getActiveProjects();
   }
 
   logout() {
     localStorage.clear();
-    this.http.get(this.userData.logoutAdress, {
+    this.http.get(this.userData._links['logout OAuth2'].href, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
@@ -81,6 +70,7 @@ export class MenuComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
+      console.log(result);
       // @ts-ignore
       if (result._embedded !== undefined) {
         // @ts-ignore
@@ -93,18 +83,42 @@ export class MenuComponent implements OnInit {
 
   newProject() {
     let ProjectName: string;
-    let OrgName: string;
-    const dialogRef = this.dialogBox.open(NewProjectDialog, {
-      width: '300px',
-      data: {Name: ProjectName, Org: OrgName}
+    this.http.get(this.userData._links['template-list'].href, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      // Opens new projectdialog
+      const dialogRef = this.dialogBox.open(NewProjectDialog, {
+        width: '450px',
+        // @ts-ignore
+        data: {Name: ProjectName, Templates: result._embedded.templates}
+      });
+
+      // After the dialog closers creates a new project
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(ProjectName);
+        this.http.post(result.SelectedTemplate._links.project.href, {projectName: result.Name}, {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + this.userData.oauthClientSecret
+          })
+          // tslint:disable-next-line:no-shadowed-variable
+        }).subscribe(result => {
+          this.getActiveProjects();
+        }, error => {
+          console.error(error);
+        });
+      });
+    }, error => {
+      console.error(error);
     });
+    /*
 
     dialogRef.afterClosed().subscribe(result => {
       // Result is now what the user entered in the dialog
       ProjectName = result.Name;
-      OrgName = result.Org;
 
-      this.http.post(this.projectsLink, {projectName: ProjectName, organisationName: OrgName}, {
+      this.http.post(this.projectsLink, {projectName: ProjectName}, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + this.userData.oauthClientSecret
         })
@@ -115,6 +129,7 @@ export class MenuComponent implements OnInit {
         console.error(error);
       });
     });
+     */
   }
 
   openProject(project) {
@@ -124,7 +139,7 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/kravEdit']);
   }
 
-  removeProject(project){
+  removeProject(project) {
     const dialogref = this.dialogBox.open(DeleteProjectDialog, {
       width: '300px'
     });
@@ -140,21 +155,21 @@ export class MenuComponent implements OnInit {
           }).subscribe(
           // tslint:disable-next-line:no-shadowed-variable
           result => {
-            this.getActiveProjects()
+            this.getActiveProjects();
           }, error => console.error(error));
       }
     });
   }
 
-  selectProject(project){
-    if (!this.deleteMode){
+  selectProject(project) {
+    if (!this.deleteMode) {
       this.openProject(project);
-    }else {
+    } else {
       this.removeProject(project);
     }
   }
 
-  deleteToggle(){
+  deleteToggle() {
     this.deleteMode = !this.deleteMode;
   }
 
@@ -167,7 +182,8 @@ export class MenuComponent implements OnInit {
 
 export interface INewProject {
   Name: string;
-  Org: string;
+  Templates: Template[];
+  SelectedTemplate: Template;
 }
 
 @Component({
