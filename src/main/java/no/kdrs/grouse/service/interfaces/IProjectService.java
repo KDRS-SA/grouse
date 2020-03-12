@@ -23,7 +23,7 @@ public interface IProjectService {
 
     Project createProject(Project project);
 
-    Project createProjectFromTemplate(UUID templateId);
+    Project createProjectFromTemplate(Project project, UUID templateId);
 
     Project update(Long id, PatchObjects patchObjects)
             throws EntityNotFoundException;

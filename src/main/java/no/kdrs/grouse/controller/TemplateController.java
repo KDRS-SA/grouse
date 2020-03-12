@@ -1,6 +1,7 @@
 package no.kdrs.grouse.controller;
 
 import no.kdrs.grouse.assemblers.TemplateAssembler;
+import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
@@ -164,9 +165,11 @@ public class TemplateController {
 
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + PROJECT)
     public ResponseEntity<LinksProject> createProjectFromTemplate(
-            @PathVariable(TEMPLATE_ID) UUID templateId) {
+            @PathVariable(TEMPLATE_ID) UUID templateId,
+            @RequestBody Project project) {
         return commonController.addProjectLinks(
-                projectService.createProjectFromTemplate(templateId), CREATED);
+                projectService.createProjectFromTemplate(project, templateId),
+                CREATED);
     }
 
     @PostMapping

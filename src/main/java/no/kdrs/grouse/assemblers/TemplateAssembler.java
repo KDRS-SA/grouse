@@ -36,7 +36,7 @@ public class TemplateAssembler
                 .getFunctionalityForTemplate(template.getTemplateId()))
                 .withRel(FUNCTIONALITY));
         linksTemplate.add(linkTo(methodOn(TemplateController.class)
-                .createProjectFromTemplate(template.getTemplateId()))
+                .createProjectFromTemplate(template.getTemplateId(), null))
                 .withRel(PROJECT));
         return linksTemplate;
     }

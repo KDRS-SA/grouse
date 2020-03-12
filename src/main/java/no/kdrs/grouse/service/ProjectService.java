@@ -137,11 +137,12 @@ public class ProjectService
      * @return The project after it was copied from a template
      */
     @Override
-    public Project createProjectFromTemplate(UUID templateId) {
+    public Project createProjectFromTemplate(Project project, UUID templateId) {
         Template template = templateService.findById(templateId);
-        Project project = new Project();
         project.setDocumentCreated(false);
-        project.setProjectName(template.getTemplateName());
+        if (project.getProjectName() == null) {
+            project.setProjectName(template.getTemplateName());
+        }
         project.setFileName(project.getProjectName());
         project.setOwnedBy(getUser());
         project = projectRepository.save(project);

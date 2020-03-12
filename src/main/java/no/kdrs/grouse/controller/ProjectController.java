@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -138,13 +137,6 @@ public class ProjectController {
             @RequestBody PatchObjects patchObjects) throws Exception {
         return commonController.addProjectLinks(projectService.update(
                 projectId, patchObjects), OK);
-    }
-
-    @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
-    public ResponseEntity<LinksProject> createProjectFromTemplate(
-            @PathVariable(TEMPLATE_ID) UUID templateId) {
-        return commonController.addProjectLinks(
-                projectService.createProjectFromTemplate(templateId), CREATED);
     }
 
     @PostMapping
