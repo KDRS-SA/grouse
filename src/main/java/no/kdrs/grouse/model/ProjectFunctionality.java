@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY_NUMBER;
+
 
 /**
  * Created by tsodring on 31/03/18.
@@ -25,7 +27,7 @@ import java.util.List;
 @Table(name = "project_functionality_areas",
         uniqueConstraints = {
         @UniqueConstraint(
-                columnNames={"functionality_number", "project_number"})
+                columnNames = {FUNCTIONALITY_NUMBER, "project_number"})
         }
 )
 @XmlRootElement
@@ -44,7 +46,7 @@ public class ProjectFunctionality
      * Number of the functional area. e.g 1.2.3
      * This is an internal number that the project themselves decides
      */
-    @Column(name = "functionality_number")
+    @Column(name = FUNCTIONALITY_NUMBER)
     private String functionalityNumber;
 
     /**
@@ -118,7 +120,7 @@ public class ProjectFunctionality
             new ArrayList<>();
 
     @OneToMany(mappedBy = "referenceFunctionality")
-    @OrderBy("order ASC")
+    @OrderBy("show_order ASC")
     private List<ProjectRequirement> referenceProjectRequirement =
             new ArrayList<>();
 

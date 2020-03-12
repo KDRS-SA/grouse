@@ -2,18 +2,19 @@ package no.kdrs.grouse.model.imp;
 
 import no.kdrs.grouse.model.TemplateRequirement;
 
-import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.xml.bind.annotation.XmlAccessType.FIELD;
+
 @XmlRootElement(name = "requirements")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(FIELD)
 public class Requirements {
 
-    @XmlElement(name = "templateRequirement")
+    @XmlElement(name = "requirement")
     private List<TemplateRequirement> templateRequirement = new ArrayList<>();
 
     public List<TemplateRequirement> getTemplateRequirement() {

@@ -15,7 +15,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -130,24 +133,152 @@ public class ProjectService
      * <p>
      * State is stored in the database, not the GUI
      *
-     * @param project The project object to create
-     * @return The persisted object after it was persisted with associated data
+     * @param templateId The id of the template to copy
+     * @return The project after it was copied from a template
      */
     @Override
     public Project createProjectFromTemplate(UUID templateId) {
         Template template = templateService.findById(templateId);
         Project project = new Project();
-        String ownedBy = getUser();
         project.setDocumentCreated(false);
         project.setProjectName(template.getTemplateName());
         project.setFileName(project.getProjectName());
-        project.setOwnedBy(ownedBy);
-        projectRepository.save(project);
+        project.setOwnedBy(getUser());
+        project = projectRepository.save(project);
+
+        for (TemplateFunctionality templateFunctionality :
+                template.getReferenceTemplateFunctionality()) {
+            processFunctionalities(project, templateFunctionality
+                    .getReferenceChildTemplateFunctionality());
+        }
+        return project;
+    }
+
+    private void processFunctionalities(
+            Project project, List<TemplateFunctionality> functionalities) {
+
+        for (TemplateFunctionality templateFunctionality : functionalities) {
+
+            ProjectFunctionality projectFunctionality =
+                    new ProjectFunctionality();
+
+            projectFunctionality.setFunctionalityNumber(
+                    templateFunctionality.getFunctionalityNumber());
+            projectFunctionality.setTitle(
+                    templateFunctionality.getTitle());
+            projectFunctionality.setConsequence(
+                    templateFunctionality.getConsequence());
+            projectFunctionality.setDescription(
+                    templateFunctionality.getDescription());
+            projectFunctionality.setExplanation(
+                    templateFunctionality.getExplanation());
+            projectFunctionality.setType(
+                    templateFunctionality.getType());
+            projectFunctionality.setShowMe(
+                    templateFunctionality.getShowMe());
+            projectFunctionality.setOwnedBy(getUser());
+            projectFunctionality.setProcessed(false);
+            projectFunctionality.setActive(false);
+            projectFunctionality.setReferenceProject(project);
+            projectFunctionality =
+                    projectFunctionalityRepository.save(projectFunctionality);
+            // copy requirements if present
+            processRequirements(projectFunctionality, templateFunctionality
+                    .getReferenceFunctionalityRequirement());
+            // Only the top functionality should have a reference to the project
+            processFunctionalities(null, templateFunctionality
+                    .getReferenceChildTemplateFunctionality());
+        }
+    }
+
+    private void processRequirements(
+            ProjectFunctionality projectFunctionality,
+            List<TemplateRequirement> templateRequirements) {
+
+        for (TemplateRequirement templateRequirement : templateRequirements) {
+            ProjectRequirement projectRequirement = new ProjectRequirement();
+            projectRequirement.setOrder(templateRequirement.getShowOrder());
+            projectRequirement.setPriority(templateRequirement.getPriority());
+            projectRequirement.setOwnedBy(getUser());
+            projectRequirement.setRequirementText(
+                    templateRequirement.getRequirementText());
+            projectRequirement.setReferenceFunctionality(projectFunctionality);
+            projectRequirementRepository.save(projectRequirement);
+        }
+    }
+
+    @Override
+    public Project update(Long id, PatchObjects patchObjects)
+            throws EntityNotFoundException {
+        return (Project) handlePatch(getProjectOrThrow(id), patchObjects);
+    }
+
+    @Override
+    public Page<Project> findByOwnedBy(String ownedBy, Pageable pageable) {
+        return projectRepository.findByOwnedBy(ownedBy, pageable);
+    }
+
+    @Override
+    public Iterable<Project> findByOwnedBy(String username) {
+        return projectRepository.findByOwnedBy(username);
+    }
+
+    /**
+     * delete the project identified by the id. Find all children related to
+     * the project. These are projectRequirements and projectFunctionality.
+     * These are deleted first before the project is deleted
+     *
+     * @param id the id of the project ot delete
+     */
+    @Override
+    public void delete(Long id) {
+        Project project = getProjectOrThrow(id);
+        for (ProjectFunctionality projectFunctionality :
+                project.getReferenceProjectFunctionality()) {
+            for (ProjectRequirement projectRequirement :
+                    projectFunctionality.getReferenceProjectRequirement()) {
+                projectRequirementService
+                        .deleteRequirementByObject(projectRequirement);
+            }
+            projectFunctionalityRepository.delete(projectFunctionality);
+        }
+        projectRepository.delete(project);
+    }
+
+    @Override
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
+    }
+
+    /**
+     * Internal helper method. Rather than having a find and try catch in
+     * multiple methods, we have it here once. If you call this, be aware
+     * that you will only ever get a valid Project back. If there is no valid
+     * Project, a EntityNotFoundException exception is thrown
+     *
+     * @param id The systemId of the project object to retrieve
+     * @return the project object
+     */
+    private Project getProjectOrThrow(@NotNull Long id)
+            throws EntityNotFoundException {
+        return projectRepository.findById(id)
+                .orElseThrow(() ->
+                        new EntityNotFoundException(
+                                "No Project exists with Id " + id));
+    }
+}
+
+
+/*
+
 
         List<TemplateFunctionality> functionalities =
                 template.getReferenceTemplateFunctionality();
 
+        System.out.println(functionalities.size());
         HashMap<String, ProjectFunctionality> parents = new HashMap<>();
+
+
 
         for (TemplateFunctionality templateFunctionality : functionalities) {
 
@@ -292,66 +423,6 @@ public class ProjectService
 
             projectRequirementRepository.save(projectRequirement);
         }
-        return project;
-    }
 
-    @Override
-    public Project update(Long id, PatchObjects patchObjects)
-            throws EntityNotFoundException {
-        return (Project) handlePatch(getProjectOrThrow(id), patchObjects);
-    }
 
-    @Override
-    public Page<Project> findByOwnedBy(String ownedBy, Pageable pageable) {
-        return projectRepository.findByOwnedBy(ownedBy, pageable);
-    }
-
-    @Override
-    public Iterable<Project> findByOwnedBy(String username) {
-        return projectRepository.findByOwnedBy(username);
-    }
-
-    /**
-     * delete the project identified by the id. Find all children related to
-     * the project. These are projectRequirements and projectFunctionality.
-     * These are deleted first before the project is deleted
-     *
-     * @param id the id of the project ot delete
-     */
-    @Override
-    public void delete(Long id) {
-        Project project = getProjectOrThrow(id);
-        for (ProjectFunctionality projectFunctionality :
-                project.getReferenceProjectFunctionality()) {
-            for (ProjectRequirement projectRequirement :
-                    projectFunctionality.getReferenceProjectRequirement()) {
-                projectRequirementService
-                        .deleteRequirementByObject(projectRequirement);
-            }
-            projectFunctionalityRepository.delete(projectFunctionality);
-        }
-        projectRepository.delete(project);
-    }
-
-    @Override
-    protected boolean checkColumnUpdatable(String path) {
-        return allowableColumns.contains(path);
-    }
-
-    /**
-     * Internal helper method. Rather than having a find and try catch in
-     * multiple methods, we have it here once. If you call this, be aware
-     * that you will only ever get a valid Project back. If there is no valid
-     * Project, a EntityNotFoundException exception is thrown
-     *
-     * @param id The systemId of the project object to retrieve
-     * @return the project object
-     */
-    private Project getProjectOrThrow(@NotNull Long id)
-            throws EntityNotFoundException {
-        return projectRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException(
-                                "No Project exists with Id " + id));
-    }
-}
+ */

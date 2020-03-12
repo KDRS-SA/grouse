@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 import static no.kdrs.grouse.utils.Constants.*;
 
 /**
@@ -21,7 +21,7 @@ import static no.kdrs.grouse.utils.Constants.*;
 @Entity
 @Table(name = TEMPLATE_REQUIREMENT_TABLE_NAME)
 @XmlRootElement(name = "requirement")
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(FIELD)
 public class TemplateRequirement
         extends RepresentationModel
         implements Serializable {
@@ -39,14 +39,14 @@ public class TemplateRequirement
      * Order == 0, is a formål
      */
     @XmlElement
-    @Column(name = "show_order")
+    @Column(name = SHOW_ORDER)
     private Integer showOrder;
 
     /**
      * requirementText (no:tekst)*
      */
     @XmlElement
-    @Column(name = "requirement_text", length = 4000)
+    @Column(name = REQUIREMENT_TEXT, length = 4000)
     private String requirementText;
 
     /**
@@ -60,7 +60,7 @@ public class TemplateRequirement
      * 2 - Viktig for oppdragsgiver
      */
     @XmlElement
-    @Column(name = "priority")
+    @Column(name = PRIORITY)
     private String priority;
 
     /**
@@ -69,28 +69,30 @@ public class TemplateRequirement
      * e.g 5.2.1
      */
     @XmlElement
-    @Column(name = "requirement_number")
-    private String noarkRequirementNumber;
+    @Column(name = REQUIREMENT_NUMBER)
+    private String requirementNumber;
 
     @XmlElement
-    private Boolean noarkRequirement;
+    @Column(name = IS_REQUIREMENT)
+    private Boolean requirement;
 
     @XmlElement
-    private String noarkRequirementType;
+    @Column(name = REQUIREMENT_TYPE)
+    private String requirementType;
 
     @Version
     @Column(name = VERSION)
     private Long version;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "functionality",
-            referencedColumnName = "functionality_number")
+    @ManyToOne
+    @JoinColumn(name = FUNCTIONALITY_FK_ID,
+            referencedColumnName = FUNCTIONALITY_NUMBER)
     private TemplateFunctionality referenceFunctionality;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "template_number",
-            referencedColumnName = "template_id")
+    @JoinColumn(name = TEMPLATE_FK_ID,
+            referencedColumnName = TEMPLATE_PK_ID)
     private Template referenceTemplate;
 
     public Long getRequirementId() {
@@ -133,28 +135,28 @@ public class TemplateRequirement
         this.referenceFunctionality = functionality;
     }
 
-    public String getNoarkRequirementNumber() {
-        return noarkRequirementNumber;
+    public String getRequirementNumber() {
+        return requirementNumber;
     }
 
-    public void setNoarkRequirementNumber(String noarkRequirementNumber) {
-        this.noarkRequirementNumber = noarkRequirementNumber;
+    public void setRequirementNumber(String requirementNumber) {
+        this.requirementNumber = requirementNumber;
     }
 
-    public Boolean getNoarkRequirement() {
-        return noarkRequirement;
+    public Boolean getRequirement() {
+        return requirement;
     }
 
-    public void setNoarkRequirement(Boolean noarkRequirement) {
-        this.noarkRequirement = noarkRequirement;
+    public void setRequirement(Boolean requirement) {
+        this.requirement = requirement;
     }
 
-    public String getNoarkRequirementType() {
-        return noarkRequirementType;
+    public String getRequirementType() {
+        return requirementType;
     }
 
-    public void setNoarkRequirementType(String noarkRequirementType) {
-        this.noarkRequirementType = noarkRequirementType;
+    public void setRequirementType(String requirementType) {
+        this.requirementType = requirementType;
     }
 
     public TemplateFunctionality getReferenceTemplateFunctionality() {
@@ -180,9 +182,10 @@ public class TemplateRequirement
                 ", showOrder=" + showOrder +
                 ", requirementText='" + requirementText + '\'' +
                 ", priority='" + priority + '\'' +
-                ", noarkRequirementNumber='" + noarkRequirementNumber + '\'' +
-                ", noarkRequirement=" + noarkRequirement +
-                ", noarkRequirementType='" + noarkRequirementType + '\'' +
+                ", requirementNumber='" + requirementNumber + '\'' +
+                ", requirement=" + requirement +
+                ", requirementType='" + requirementType + '\'' +
+                ", version=" + version +
                 '}';
     }
 }

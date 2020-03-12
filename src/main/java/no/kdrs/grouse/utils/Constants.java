@@ -13,7 +13,6 @@ public final class Constants {
     public static final String EQUALS = "=";
     public static final String ESCAPE = "\\";
     public static final String AMPERSAND = "&";
-    public static final String REQUIREMENT = "krav";
     public static final String FUNCTIONALITY = "function";
     public static final String SELF = "self";
     public static final String USER = "user";
@@ -40,7 +39,6 @@ public final class Constants {
     public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
     public static final String TEMPLATE_REQUIREMENT = "templateRequirement";
     public static final String TEMPLATE_FUNCTIONALITY = "templateFunctionality";
-    public static final String REQUIREMENT_TYPE = "krav_type";
     public static final String PAGE = "page";
     public static final String SIZE = "size";
     public static final Integer DEFAULT_PAGE_NUMBER = 0;
@@ -66,9 +64,18 @@ public final class Constants {
     public static final String TEMPLATE_NAME = "template_name";
     public static final String TEMPLATE_TYPE = "template_type";
     public static final String TEMPLATE_AREA = "template_area";
+    public static final String SHOW_ORDER = "show_order";
+    public static final String REQUIREMENT_TEXT = "requirement_text";
+    public static final String PRIORITY = "priority";
+    public static final String REQUIREMENT_NUMBER = "requirement_number";
+    public static final String REQUIREMENT_TYPE = "requirement_type";
+    public static final String FUNCTIONALITY_NUMBER = "functionality_number";
+    public static final String IS_REQUIREMENT = "is_requirement";
     public static final String TEMPLATE_FILE_NAME_INTERNAL = "file_name_internal";
     public static final String TEMPLATE_DESCRIPTION = "template_description";
     public static final String TEMPLATE_PK_ID = "template_id";
+    public static final String TEMPLATE_FK_ID = "fk_template_id";
+    public static final String FUNCTIONALITY_FK_ID = "fk_functionality_id";
     public static final String CREATED_DATE = "created_date";
     public static final String CHANGED_DATE = "changed_date";
     public static final String OWNED_BY = "owned_by";
@@ -76,11 +83,12 @@ public final class Constants {
     public static final String AUTHORITY_NAME = "authority_name";
     public static final String AUTHORITIES = "authorities";
     public static final String AUTHORITY = "authority";
+    public static final String REQUIREMENT = "requirement";
 
     public static final String PROJECT_TABLE_NAME = "projects";
 
     public static final String TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME =
-            "template_functionality_areas";
+            "template_functionality";
     public static final String TEMPLATE_REQUIREMENT_TABLE_NAME =
             "template_requirements";
     public static final String USER_TABLE_NAME = "user";

@@ -3,6 +3,8 @@ package no.kdrs.grouse.model.imp;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
@@ -73,8 +75,12 @@ public class ImpTemplate {
         this.area = area;
     }
 
-    public Chapters getChapters() {
-        return chapters;
+    public List<Chapter> getChapters() {
+        if (chapters != null) {
+            return chapters.getChapters();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     public void setChapters(Chapters chapters) {

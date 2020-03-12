@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+import static no.kdrs.grouse.utils.Constants.*;
+
 /**
  * Created by tsodring on 29/03/18.
  *
@@ -44,13 +46,13 @@ public class ProjectRequirement
      * Used to identify an order that the requirements have to follow
      * Order == 0, is a 'formål'
      */
-    @Column(name = "show_order")
+    @Column(name = SHOW_ORDER)
     private Integer order;
 
     /**
      * requirementText (no:tekst)*
      */
-    @Column(name = "requirement_text", length = 4000)
+    @Column(name = REQUIREMENT_TEXT, length = 4000)
     private String requirementText;
 
      /**
@@ -63,7 +65,7 @@ public class ProjectRequirement
      *   1 - Svært viktig for oppdragsgiver
      *   2 - Viktig for oppdragsgiver
      */
-    @Column(name = "priority")
+     @Column(name = PRIORITY)
     private String priority;
 
     /**
@@ -71,7 +73,7 @@ public class ProjectRequirement
      * An actual requirement number from the standard
      * e.g 5.2.1
      */
-    @Column(name = "requirement_number")
+    @Column(name = REQUIREMENT_NUMBER)
     private String requirementNumber;
 
     @NotNull

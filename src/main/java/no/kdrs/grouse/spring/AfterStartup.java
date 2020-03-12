@@ -3,7 +3,9 @@ package no.kdrs.grouse.spring;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
-import no.kdrs.grouse.model.imp.*;
+import no.kdrs.grouse.model.imp.Chapter;
+import no.kdrs.grouse.model.imp.ImpTemplate;
+import no.kdrs.grouse.model.imp.Section;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
 import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
@@ -22,8 +24,8 @@ import javax.xml.bind.Unmarshaller;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.RESOURCE_TEMPLATES;
 
@@ -57,7 +59,7 @@ public class AfterStartup {
 
     @EventListener
     public void onApplicationEvent(ContextRefreshedEvent event) {
-
+        logger.debug(event.toString());
         try {
             if (!Arrays.asList(environment.getActiveProfiles())
                     .contains("do-not-import-templates")) {
@@ -77,9 +79,9 @@ public class AfterStartup {
      * Currently, we assume that the template XML document is not large enough
      * to cause problems with a DOM approach.
      *
-     * @param resource
-     * @throws JAXBException
-     * @throws IOException
+     * @param resource A Resource file from the resources directory
+     * @throws JAXBException there is a problem with XML
+     * @throws IOException   there is a problem reading file
      */
     private void importTemplate(Resource resource)
             throws JAXBException, IOException {
@@ -96,10 +98,11 @@ public class AfterStartup {
         // to templates in XML have to be manually updated in the database.
         // Currently we do not support an automatic update approach. It may
         // come later if it is required.
-
         if (templateRepository
                 .findById(impTemplate.getTemplateId())
                 .isEmpty()) {
+            // Create a default template object from the header of the
+            // template file
             Template template = new Template();
             template.setTemplateId(impTemplate.getTemplateId());
             template.setTemplateName(impTemplate.getName());
@@ -107,119 +110,80 @@ public class AfterStartup {
             template.setArea(impTemplate.getArea());
             template.setType(impTemplate.getType());
 
-            Chapters chapters = impTemplate.getChapters();
             // Create a "root" functionality that all functionality in this
             // template can be traced back to.
-            TemplateFunctionality parentTemplateFunctionality = new
+            TemplateFunctionality rootTemplateFunctionality = new
                     TemplateFunctionality.FunctionalityBuilder()
                     .sectionTitle("Requirements")
                     .functionalityNumber("0")
                     .build();
 
-            parentTemplateFunctionality.setReferenceTemplate(
+            rootTemplateFunctionality.setReferenceTemplate(
                     templateRepository.save(template));
+            rootTemplateFunctionality =
+                    functionalityRepository.save(rootTemplateFunctionality);
 
-            functionalityRepository.save(parentTemplateFunctionality);
-
-            Integer chapterCount = 0;
-            for (Chapter chapter : chapters.getChapters()) {
-                chapterCount++;
-                Integer sectionCount = 0;
-                TemplateFunctionality localParentTemplateFunctionality = parentTemplateFunctionality;
-
+            int chapterCount = 1;
+            for (Chapter chapter : impTemplate.getChapters()) {
                 // Handle the chapter description of functionality
-                TemplateFunctionality chapterTemplateFunctionality = new
+                TemplateFunctionality templateFunctionality = new
                         TemplateFunctionality.FunctionalityBuilder()
-                        .functionalityNumber(chapterCount.toString())
+                        .functionalityNumber(Integer.toString(chapterCount++))
                         .sectionTitle(chapter.getChapterTitle())
                         .type("mainmenu")
                         .showMe(chapter.getShowMe())
                         .build();
 
-                chapterTemplateFunctionality.setReferenceParentTemplateFunctionality(
-                        parentTemplateFunctionality);
-                functionalityRepository.save(chapterTemplateFunctionality);
+                templateFunctionality
+                        .setReferenceParentTemplateFunctionality(
+                                rootTemplateFunctionality);
+                templateFunctionality =
+                        functionalityRepository.save(templateFunctionality);
 
-                for (Section section : chapter.getSections()) {
-                    sectionCount++;
-                    TemplateFunctionality templateFunctionality = new
-                            TemplateFunctionality.FunctionalityBuilder()
-                            .functionalityNumber(chapterCount.toString()
-                                    + "." + sectionCount.toString())
-                            .sectionTitle(section.getSectionTitle())
-                            .sectionOrder(section.getSectionOrder())
-                            .type(section.getType())
-                            .description(section.getDescription())
-                            .consequence(section.getConsequence())
-                            .explanation(section.getExplanation())
-                            .showMe(section.getShowMe())
-                            .build();
-
-                    templateFunctionality.setReferenceParentTemplateFunctionality(
-                            chapterTemplateFunctionality);
-                    functionalityRepository.save(templateFunctionality);
-
-                    Requirements requirements = section.getRequirements();
-
-                    if (requirements != null) {
-                        ArrayList<TemplateRequirement> allTemplateRequirements =
-                                (ArrayList<TemplateRequirement>)
-                                        requirements.getTemplateRequirement();
-
-                        for (TemplateRequirement templateRequirement : allTemplateRequirements) {
-                            System.out.println(templateRequirement.toString());
-
-                            templateRequirement.setFunctionality(templateFunctionality);
-                            requirementRepository.save(templateRequirement);
-                        }
-                    }
-
-                    ArrayList<Section> childSections =
-                            (ArrayList<Section>) section.getSections();
-
-                    Integer subSectionCount = -1;
-                    for (Section childSection : childSections) {
-                        subSectionCount++;
-                        TemplateFunctionality childTemplateFunctionality = new
-                                TemplateFunctionality.FunctionalityBuilder()
-                                .functionalityNumber(
-                                        chapterCount.toString() + "." +
-                                                sectionCount.toString() + "." +
-                                                subSectionCount.toString())
-                                .sectionTitle(childSection.getSectionTitle())
-                                .description(childSection.getDescription())
-                                //.functionalityNumber(section.get)
-                                .consequence(childSection.getConsequence())
-                                .explanation(childSection.getExplanation())
-                                .showMe(childSection.getShowMe())
-                                .build();
-
-                        childTemplateFunctionality.setReferenceParentTemplateFunctionality(
-                                templateFunctionality);
-                        functionalityRepository.save(childTemplateFunctionality);
-
-                        Requirements childRequirements = childSection
-                                .getRequirements();
-
-                        if (childRequirements != null) {
-                            ArrayList<TemplateRequirement>
-                                    allTemplateRequirements =
-                                    (ArrayList<TemplateRequirement>)
-                                            childRequirements.getTemplateRequirement();
-
-                            for (TemplateRequirement templateRequirement : allTemplateRequirements) {
-                                System.out.println(templateRequirement.toString());
-
-                                templateRequirement.setFunctionality(childTemplateFunctionality);
-                                requirementRepository.save(templateRequirement);
-                            }
-                        }
-
-                    }
-                }
+                processFunctionality(templateFunctionality,
+                        chapter.getSections(), Integer.toString(chapterCount));
             }
         } else {
             logger.info("Not importing " + resource.getFilename());
+        }
+    }
+
+    private void processFunctionality(
+            TemplateFunctionality parentFunctionality, List<Section> sections,
+            String count) {
+        int sectionCount = 0;
+        for (Section section : sections) {
+            String sectionId = count + "." + sectionCount++;
+            TemplateFunctionality templateFunctionality = new
+                    TemplateFunctionality.FunctionalityBuilder()
+                    .functionalityNumber(sectionId)
+                    .sectionTitle(section.getSectionTitle())
+                    .sectionOrder(section.getSectionOrder())
+                    .type(section.getType())
+                    .description(section.getDescription())
+                    .consequence(section.getConsequence())
+                    .explanation(section.getExplanation())
+                    .showMe(section.getShowMe())
+                    .build();
+            templateFunctionality.setReferenceParentTemplateFunctionality(
+                    parentFunctionality);
+            templateFunctionality =
+                    functionalityRepository.save(templateFunctionality);
+            if (section.getRequirements() != null) {
+                processRequirements(templateFunctionality,
+                        section.getRequirements().getTemplateRequirement());
+            }
+            processFunctionality(templateFunctionality, section.getSections(),
+                    sectionId);
+        }
+    }
+
+    private void processRequirements(
+            TemplateFunctionality templateFunctionality,
+            List<TemplateRequirement> templateRequirements) {
+        for (TemplateRequirement templateRequirement : templateRequirements) {
+            templateRequirement.setFunctionality(templateFunctionality);
+            requirementRepository.save(templateRequirement);
         }
     }
 }
