@@ -13,7 +13,6 @@ public class Chapters {
     @XmlElement(name = "chapter")
     private List<Chapter> chapters;
 
-
     public List<Chapter> getChapters() {
         return chapters;
     }

@@ -51,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = GrouseApplication.class,
         webEnvironment = RANDOM_PORT)
 @ContextConfiguration(classes = {TestSecurityConfiguration.class})
-@ActiveProfiles({"test", "do-not-import-datasets"})
+@ActiveProfiles({"test", "do-not-import-templates"})
 public class ProjectIntegrationTest {
 
     private MockMvc mockMvc;

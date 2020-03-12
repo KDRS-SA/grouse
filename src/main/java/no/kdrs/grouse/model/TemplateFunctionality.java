@@ -38,7 +38,6 @@ public class TemplateFunctionality
     @Column(name = FUNCTIONALITY_PK_ID, nullable = false, updatable = false)
     private Long functionalityId;
 
-
     @Column(name = "functionality_number", nullable = false, updatable = false)
     private String functionalityNumber;
 
@@ -56,7 +55,6 @@ public class TemplateFunctionality
      */
     @Column(name = "description", length = 4000)
     private String description;
-
 
     /**
      * Description of consequence of excluding this functionality

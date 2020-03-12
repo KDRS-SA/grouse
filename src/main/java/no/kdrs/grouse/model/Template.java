@@ -33,6 +33,15 @@ public class Template
     @Column(name = TEMPLATE_NAME)
     private String templateName;
 
+    @Column(name = TEMPLATE_DESCRIPTION, length = 10000)
+    private String description;
+
+    @Column(name = TEMPLATE_AREA)
+    private String area;
+
+    @Column(name = TEMPLATE_TYPE)
+    private String type;
+
     /**
      * The date the project was created
      */
@@ -44,7 +53,7 @@ public class Template
     /**
      * Name of the requirements document stored on disk
      */
-    @Column(name = "file_name_internal")
+    @Column(name = TEMPLATE_FILE_NAME_INTERNAL)
     private String fileNameInternal;
 
     /**
@@ -87,6 +96,30 @@ public class Template
 
     public void setTemplateName(String templateName) {
         this.templateName = templateName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getFileNameInternal() {

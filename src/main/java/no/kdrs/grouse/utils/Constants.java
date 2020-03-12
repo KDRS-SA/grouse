@@ -1,5 +1,7 @@
 package no.kdrs.grouse.utils;
 
+import java.io.File;
+
 /**
  * Application constants.
  */
@@ -62,6 +64,10 @@ public final class Constants {
     public static final String FUNCTIONALITY_NAME = "functionality_name";
     public static final String FUNCTIONALITY_PK_ID = "functionality_id";
     public static final String TEMPLATE_NAME = "template_name";
+    public static final String TEMPLATE_TYPE = "template_type";
+    public static final String TEMPLATE_AREA = "template_area";
+    public static final String TEMPLATE_FILE_NAME_INTERNAL = "file_name_internal";
+    public static final String TEMPLATE_DESCRIPTION = "template_description";
     public static final String TEMPLATE_PK_ID = "template_id";
     public static final String CREATED_DATE = "created_date";
     public static final String CHANGED_DATE = "changed_date";
@@ -129,4 +135,7 @@ public final class Constants {
                     "required to see other users";
     public static final String NO_LOGIN_ENDPOINT_METHOD =
             "Endpoint problem for login method ";
+
+    public static final String RESOURCE_TEMPLATES =
+            "classpath:templates" + File.separator + "*.xml";
 }
