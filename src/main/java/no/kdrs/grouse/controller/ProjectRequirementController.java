@@ -36,7 +36,7 @@ public class ProjectRequirementController {
 
         projectRequirement.add(linkTo(methodOn
                 (ProjectRequirementController.class).
-                getRequirement(projectRequirement.getProjectRequirementId())).
+                getRequirement(projectRequirement.getRequirementId())).
                 withSelfRel());
 
         return ResponseEntity.status(OK)
@@ -54,7 +54,7 @@ public class ProjectRequirementController {
 
         projectRequirement.add(linkTo(methodOn
                 (ProjectRequirementController.class).
-                getRequirement(projectRequirement.getProjectRequirementId())).
+                getRequirement(projectRequirement.getRequirementId())).
                 withSelfRel());
 
         return ResponseEntity.status(OK)
@@ -73,7 +73,7 @@ public class ProjectRequirementController {
 
         projectRequirement.add(linkTo(methodOn
                 (ProjectRequirementController.class).
-                getRequirement(projectRequirement.getProjectRequirementId())).
+                getRequirement(projectRequirement.getRequirementId())).
                 withSelfRel());
 
         return ResponseEntity.status(CREATED)

@@ -202,7 +202,7 @@ public class ProjectService
 
         for (TemplateRequirement templateRequirement : templateRequirements) {
             ProjectRequirement projectRequirement = new ProjectRequirement();
-            projectRequirement.setOrder(templateRequirement.getShowOrder());
+            projectRequirement.setShowOrder(templateRequirement.getShowOrder());
             projectRequirement.setPriority(templateRequirement.getPriority());
             projectRequirement.setOwnedBy(getUser());
             projectRequirement.setRequirementText(

@@ -6,6 +6,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
 import static no.kdrs.grouse.utils.Constants.*;
@@ -29,7 +30,7 @@ import static no.kdrs.grouse.utils.Constants.*;
  */
 
 @Entity
-@Table(name = "project_requirements")
+@Table(name = PROJECT_REQUIREMENT_TABLE_NAME)
 public class ProjectRequirement
     extends RepresentationModel
         implements Serializable {
@@ -38,8 +39,8 @@ public class ProjectRequirement
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "requirement_id", nullable = false)
-    private Long projectRequirementId;
+    @Column(name = REQUIREMENT_PK_ID, nullable = false)
+    private Long requirementId;
 
     /**
      * order (no:kravtype)
@@ -47,7 +48,7 @@ public class ProjectRequirement
      * Order == 0, is a 'formål'
      */
     @Column(name = SHOW_ORDER)
-    private Integer order;
+    private Integer showOrder;
 
     /**
      * requirementText (no:tekst)*
@@ -66,7 +67,7 @@ public class ProjectRequirement
      *   2 - Viktig for oppdragsgiver
      */
      @Column(name = PRIORITY)
-    private String priority;
+     private String priority;
 
     /**
      * requirement (no:kravnr)
@@ -75,6 +76,18 @@ public class ProjectRequirement
      */
     @Column(name = REQUIREMENT_NUMBER)
     private String requirementNumber;
+
+    @XmlElement
+    @Column(name = IS_REQUIREMENT)
+    private Boolean requirement;
+
+    @XmlElement
+    @Column(name = REQUIREMENT_TYPE)
+    private String requirementType;
+
+    @Version
+    @Column(name = VERSION)
+    private Long version;
 
     @NotNull
     @Column(name = "ownedBy", nullable = false)
@@ -86,20 +99,20 @@ public class ProjectRequirement
             referencedColumnName = "id")
     private ProjectFunctionality referenceFunctionality;
 
-    public Long getProjectRequirementId() {
-        return projectRequirementId;
+    public Long getRequirementId() {
+        return requirementId;
     }
 
-    public void setProjectRequirementId(Long projectRequirementId) {
-        this.projectRequirementId = projectRequirementId;
+    public void setRequirementId(Long requirementId) {
+        this.requirementId = requirementId;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getShowOrder() {
+        return showOrder;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setShowOrder(Integer showOrder) {
+        this.showOrder = showOrder;
     }
 
     public String getRequirementText() {
@@ -126,6 +139,30 @@ public class ProjectRequirement
         this.requirementNumber = requirementNumber;
     }
 
+    public Boolean getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Boolean requirement) {
+        this.requirement = requirement;
+    }
+
+    public String getRequirementType() {
+        return requirementType;
+    }
+
+    public void setRequirementType(String requirementType) {
+        this.requirementType = requirementType;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     public String getOwnedBy() {
         return ownedBy;
     }
@@ -145,11 +182,14 @@ public class ProjectRequirement
     @Override
     public String toString() {
         return "ProjectRequirement{" +
-                "projectRequirementId=" + projectRequirementId +
-                ", order=" + order +
+                "requirementId=" + requirementId +
+                ", showOrder=" + showOrder +
                 ", requirementText='" + requirementText + '\'' +
                 ", priority='" + priority + '\'' +
                 ", requirementNumber='" + requirementNumber + '\'' +
+                ", requirement=" + requirement +
+                ", requirementType='" + requirementType + '\'' +
+                ", version=" + version +
                 ", ownedBy='" + ownedBy + '\'' +
                 '}';
     }

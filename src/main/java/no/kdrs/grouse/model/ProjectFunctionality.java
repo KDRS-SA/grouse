@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY_NUMBER;
+import static no.kdrs.grouse.utils.Constants.VERSION;
 
 
 /**
@@ -90,6 +91,9 @@ public class ProjectFunctionality
     @Column(name = "processed")
     private Boolean processed;
 
+    @Version
+    @Column(name = VERSION)
+    private Long version;
 
     /**
      * Used by the GUI. Should not really be here, but leaving it here
@@ -205,6 +209,14 @@ public class ProjectFunctionality
 
     public void setProcessed(Boolean processed) {
         this.processed = processed;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public Boolean getActive() {

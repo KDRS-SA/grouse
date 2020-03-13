@@ -8,6 +8,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
+import static no.kdrs.grouse.utils.Constants.REQUIREMENT;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -37,11 +38,15 @@ public class ProjectFunctionalityAssembler
                                             .getProjectFunctionalityId()))
                             .withRel(FUNCTIONALITY));
         }
-        linksProjectFunctionality
-                .add(linkTo(methodOn(ProjectFunctionalityController.class)
-                        .getProjectFunctionality(projectFunctionality
-                                .getProjectFunctionalityId()))
-                        .withSelfRel());
+        if (projectFunctionality
+                .getReferenceProjectRequirement()
+                .size() > 0) {
+            linksProjectFunctionality
+                    .add(linkTo(methodOn(ProjectFunctionalityController.class)
+                            .getProjectRequirements(null, projectFunctionality
+                                    .getProjectFunctionalityId()))
+                            .withRel(REQUIREMENT));
+        }
         return linksProjectFunctionality;
     }
 
@@ -56,10 +61,10 @@ public class ProjectFunctionalityAssembler
 
             projectFunctionality
                     .add(linkTo(methodOn(ProjectFunctionalityController.class)
-                            .getProjectFunctionality(
+                            .getProjectRequirements(null,
                                     projectFunctionality
                                             .getProjectFunctionalityId()))
-                            .withSelfRel());
+                            .withRel(REQUIREMENT));
         });
         return linksProjectFunctionalitys;
     }

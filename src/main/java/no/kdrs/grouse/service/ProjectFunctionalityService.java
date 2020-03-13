@@ -57,6 +57,15 @@ public class ProjectFunctionalityService
     }
 
     @Override
+    public Page<ProjectRequirement> getRequirements(
+            Pageable pageable, Long projectFunctionalityId) {
+        return projectRequirementRepository
+                .findByReferenceFunctionality(
+                        getProjectFunctionalityOrThrow(projectFunctionalityId),
+                        pageable);
+    }
+
+    @Override
     public ProjectRequirement createProjectRequirement(
             Long projectFunctionalityId, ProjectRequirement projectRequirement) {
 

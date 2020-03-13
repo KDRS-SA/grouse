@@ -15,6 +15,9 @@ public interface IProjectFunctionalityService {
     Page<ProjectFunctionality> getChildFunctionality(
             Pageable pageable, Long projectFunctionalityId);
 
+    Page<ProjectRequirement> getRequirements(
+            Pageable pageable, Long projectFunctionalityId);
+
     ProjectRequirement createProjectRequirement(
             Long functionalityNumber, ProjectRequirement projectRequirement);
 
