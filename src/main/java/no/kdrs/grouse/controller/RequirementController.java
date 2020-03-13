@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static no.kdrs.grouse.utils.Constants.REQUIREMENT;
-import static no.kdrs.grouse.utils.Constants.SLASH;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 /**
@@ -31,9 +30,9 @@ public class RequirementController {
                 body(requirementService.findAll());
     }
 
-    @GetMapping(value = "/{krav:.+}")
+    @GetMapping(value = "/{" + REQUIREMENT + ":.+}")
     public ResponseEntity<TemplateRequirement> getRequirement(
-            @PathVariable("krav") Long requirementNumber) {
+            @PathVariable(REQUIREMENT) Long requirementNumber) {
         return ResponseEntity.status(OK)
                 .body(requirementService.
                         findById(requirementNumber));
@@ -47,9 +46,9 @@ public class RequirementController {
                 .body(requirementService.save(templateRequirement));
     }
 
-    @PatchMapping(value = "/{krav}")
+    @PatchMapping(value = SLASH + REQUIREMENT_PARAMETER)
     public ResponseEntity<TemplateRequirement> patchRequirement(
-            @PathVariable("krav") Long requirementNumber,
+            @PathVariable(REQUIREMENT) Long requirementNumber,
             @RequestBody PatchObjects patchObjects) {
         TemplateRequirement templateRequirement = requirementService
                 .updateTemplateRequirement(patchObjects, requirementNumber);

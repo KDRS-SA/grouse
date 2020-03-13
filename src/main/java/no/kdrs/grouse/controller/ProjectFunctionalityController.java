@@ -29,9 +29,9 @@ public class ProjectFunctionalityController {
         this.projectFunctionalityService = projectFunctionalityService;
     }
 
-    @GetMapping(value = "/{krav}/" + REQUIREMENT)
+    @GetMapping(value = SLASH + REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<ProjectFunctionality> getProjectFunctionality(
-            @PathVariable("krav") Long projectFunctionalityId) {
+            @PathVariable(REQUIREMENT) Long projectFunctionalityId) {
 
         ProjectFunctionality projectFunctionality = projectFunctionalityService.
                 getProjectFunctionality(projectFunctionalityId);
@@ -59,9 +59,9 @@ public class ProjectFunctionalityController {
                 .body(projectFunctionality);
     }
 
-    @PostMapping(value = "/{krav}/" + REQUIREMENT)
+    @PostMapping(value = SLASH + REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<ProjectRequirement> createProjectRequirement(
-            @PathVariable("krav") Long projectFunctionalityId,
+            @PathVariable(REQUIREMENT) Long projectFunctionalityId,
             @RequestBody ProjectRequirement projectRequirement) {
 
         projectFunctionalityService.
@@ -80,7 +80,7 @@ public class ProjectFunctionalityController {
 
     @PatchMapping(value = REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<ProjectFunctionality> patchFunctionality(
-            @PathVariable("krav") Long functionalityNumber,
+            @PathVariable(REQUIREMENT) Long functionalityNumber,
             @RequestBody PatchObjects patchObjects)
             throws Exception {
 

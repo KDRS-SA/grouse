@@ -52,19 +52,6 @@ public class TemplateController {
                 templateService.findAll(pageable), OK);
     }
 /*
-    @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH +
-            FUNCTIONALITY + FUNCTIONALITY_PARAMETER)
-    public ResponseEntity<PagedModel<LinksTemplateRequirement>>
-    getRequirementsForFunctionality(
-            Pageable pageable,
-            @PathVariable(TEMPLATE_ID) UUID templateId,
-            @PathVariable(FUNCTIONALITY) String functionalityNumber) {
-        return commonController.addPagedTemplateRequirementLinks(
-                templateService.findByTemplateIdOrderByTemplateName(
-                        pageable, templateId, functionalityNumber), OK);
-    }
-*/
-    /*
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
     public ResponseEntity<PagedModel<TemplateFunctionality>>
     getFunctionalityForTemplate(

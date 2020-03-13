@@ -60,9 +60,9 @@ public class TemplateFunctionalityController {
                 .body(templateFunctionality);
     }
 
-    @PostMapping(value = "/{krav}/" + REQUIREMENT)
+    @PostMapping(value = SLASH + REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<TemplateRequirement> createTemplateRequirement(
-            @PathVariable("krav") Long templateFunctionalityId,
+            @PathVariable(REQUIREMENT) Long templateFunctionalityId,
             @RequestBody TemplateRequirement templateRequirement) {
 
         templateFunctionalityService.
@@ -80,9 +80,9 @@ public class TemplateFunctionalityController {
     }
 
 
-    @PatchMapping(value = "/{krav}/krav")
+    @PatchMapping(value = SLASH + REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<TemplateFunctionality> patchFunctionality(
-            @PathVariable("krav") Long functionalityNumber,
+            @PathVariable(REQUIREMENT) Long functionalityNumber,
             @RequestBody PatchObjects patchObjects)
             throws Exception {
 
