@@ -5,11 +5,14 @@ import no.kdrs.grouse.assemblers.TemplateAssembler;
 import no.kdrs.grouse.assemblers.UserAssembler;
 import no.kdrs.grouse.controller.DocumentController;
 import no.kdrs.grouse.controller.ProjectController;
+import no.kdrs.grouse.controller.TemplateController;
 import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.links.LinksProject;
+import no.kdrs.grouse.model.links.LinksTemplate;
 import no.kdrs.grouse.model.links.LinksUser;
+import no.kdrs.grouse.utils.exception.InternalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -117,4 +121,40 @@ public class CommonController {
         return ResponseEntity.status(status)
                 .body(UserModels);
     }
+
+    public ResponseEntity<LinksTemplate> addTemplateLinks(
+            @NotNull final Template template,
+            @NotNull final HttpStatus status) {
+
+        try {
+            LinksTemplate linksTemplate = new LinksTemplate(template);
+            linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                    .getTemplate(template.getTemplateId())).withSelfRel());
+            linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                    .getFunctionalityForTemplate(template.getTemplateId()))
+                    .withRel(FUNCTIONALITY));
+            linksTemplate.add(linkTo(methodOn(DocumentController.class)
+                    .downloadDocumentTemplate(template.getTemplateId()))
+                    .withRel(DOCUMENT));
+            return ResponseEntity.status(status)
+                    .eTag(template.getVersion().toString())
+                    .body(linksTemplate);
+        } catch (IOException e) {
+            String errorMessage =
+                    "Error when adding template links: " + e.getMessage();
+            logger.error(errorMessage);
+            throw new InternalException(errorMessage);
+        }
+    }
+
+    public ResponseEntity<PagedModel<LinksTemplate>> addPagedTemplateLinks(
+            @NotNull final Page<Template> templates,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksTemplate> templateModels =
+                pagedTemplateResourcesAssembler
+                        .toModel(templates, templateAssembler);
+        return ResponseEntity.status(status)
+                .body(templateModels);
+    }
+
 }
