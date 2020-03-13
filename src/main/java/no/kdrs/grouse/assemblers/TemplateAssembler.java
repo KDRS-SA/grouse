@@ -29,11 +29,12 @@ public class TemplateAssembler
         linksTemplate.setOwnedBy(template.getOwnedBy());
         linksTemplate.setCreatedDate(template.getCreatedDate());
         linksTemplate.setLastModifiedDate(template.getLastModifiedDate());
+        linksTemplate.setPercentForDocument(template.getPercentForDocument());
 
         linksTemplate.add(linkTo(methodOn(TemplateController.class)
                 .getTemplate(template.getTemplateId())).withSelfRel());
         linksTemplate.add(linkTo(methodOn(TemplateController.class)
-                .getFunctionalityForTemplate(template.getTemplateId()))
+                .getFunctionalityForTemplate(null, template.getTemplateId()))
                 .withRel(FUNCTIONALITY));
         linksTemplate.add(linkTo(methodOn(TemplateController.class)
                 .createProjectFromTemplate(template.getTemplateId(), null))
@@ -54,7 +55,7 @@ public class TemplateAssembler
                             .withSelfRel());
             template
                     .add(linkTo(methodOn(TemplateController.class)
-                            .getFunctionalityForTemplate(
+                            .getFunctionalityForTemplate(null,
                                     template.getTemplateId()))
                             .withRel(FUNCTIONALITY));
         });

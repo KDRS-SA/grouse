@@ -57,6 +57,13 @@ public class Template
     private String fileNameInternal;
 
     /**
+     * Value showing how much 0-100 (%) of requirements that have to
+     * be accepted before the user can download the document
+     */
+    @Column(name = PERCENT_FOR_DOCUMENT)
+    private Integer percentForDocument;
+
+    /**
      * The date the project was accessed
      */
     @LastModifiedDate
@@ -128,6 +135,14 @@ public class Template
 
     public void setFileNameInternal(String fileNameInternal) {
         this.fileNameInternal = fileNameInternal;
+    }
+
+    public Integer getPercentForDocument() {
+        return percentForDocument;
+    }
+
+    public void setPercentForDocument(Integer percentForDocument) {
+        this.percentForDocument = percentForDocument;
     }
 
     public OffsetDateTime getCreatedDate() {

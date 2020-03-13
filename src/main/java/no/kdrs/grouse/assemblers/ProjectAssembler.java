@@ -22,13 +22,12 @@ public class ProjectAssembler
     @Override
     public LinksProject toModel(Project project) {
         LinksProject linksProject = instantiateModel(project);
-
         linksProject.setProjectId(project.getProjectId());
         linksProject.setProjectName(project.getProjectName());
         linksProject.setOwnedBy(project.getOwnedBy());
         linksProject.setCreatedDate(project.getCreatedDate());
         linksProject.setLastModifiedDate(project.getLastModifidDate());
-
+        linksProject.setPercentForDocument(project.getPercentForDocument());
         linksProject.add(linkTo(methodOn(ProjectController.class).
                 getProject(project.getProjectId())).withSelfRel());
         linksProject.add(linkTo(methodOn(ProjectController.class).

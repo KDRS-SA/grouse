@@ -26,6 +26,7 @@ public class LinksTemplate
     private OffsetDateTime createdDate;
     private OffsetDateTime lastModifiedDate;
     private String ownedBy;
+    private Integer percentForDocument;
 
     public LinksTemplate(Template template) {
         this.templateId = template.getTemplateId();
@@ -33,6 +34,7 @@ public class LinksTemplate
         this.createdDate = template.getCreatedDate();
         this.lastModifiedDate = template.getLastModifiedDate();
         this.ownedBy = template.getOwnedBy();
+        this.percentForDocument = template.getPercentForDocument();
     }
 
     public UUID getTemplateId() {
@@ -73,5 +75,13 @@ public class LinksTemplate
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
+    }
+
+    public Integer getPercentForDocument() {
+        return percentForDocument;
+    }
+
+    public void setPercentForDocument(Integer percentForDocument) {
+        this.percentForDocument = percentForDocument;
     }
 }

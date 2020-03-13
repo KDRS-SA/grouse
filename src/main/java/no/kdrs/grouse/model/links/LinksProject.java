@@ -25,6 +25,7 @@ public class LinksProject
     private OffsetDateTime createdDate;
     private OffsetDateTime lastModifiedDate;
     private String ownedBy;
+    private Integer percentForDocument;
 
     public LinksProject(Project project) {
         this.projectId = project.getProjectId();
@@ -32,6 +33,7 @@ public class LinksProject
         this.createdDate = project.getCreatedDate();
         this.lastModifiedDate = project.getLastModifidDate();
         this.ownedBy = project.getOwnedBy();
+        this.percentForDocument = project.getPercentForDocument();
     }
 
     public Long getProjectId() {
@@ -72,5 +74,13 @@ public class LinksProject
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
+    }
+
+    public Integer getPercentForDocument() {
+        return percentForDocument;
+    }
+
+    public void setPercentForDocument(Integer percentForDocument) {
+        this.percentForDocument = percentForDocument;
     }
 }
