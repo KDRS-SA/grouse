@@ -68,7 +68,7 @@ public Page<TemplateRequirement> findByTemplateIdOrderByTemplateName(
         Pageable page, UUID templateId, String functionalityNumber) {
 
     return templateRequirementRepository.findByFunctionalityFunctionalityNumber(
-            functionalityNumber);
+            functionalityNumber, page);
 }
 
     /**
