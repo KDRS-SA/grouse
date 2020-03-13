@@ -32,7 +32,8 @@ import static no.kdrs.grouse.utils.Constants.RESOURCE_TEMPLATES;
 /**
  * Import datasets to database. Note import will occur as long as there is no
  * profile 'do-not-import-templates' active. However, if the database contains
- * a template with the same name, then the template will not be be imported.
+ * an identifier that the xml file contains, then the template will not be be
+ * imported.
  */
 @Configuration
 public class AfterStartup {
