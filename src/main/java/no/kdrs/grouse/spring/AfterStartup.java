@@ -129,7 +129,7 @@ public class AfterStartup {
                 // Handle the chapter description of functionality
                 TemplateFunctionality templateFunctionality = new
                         TemplateFunctionality.FunctionalityBuilder()
-                        .functionalityNumber(Integer.toString(chapterCount++))
+                        .functionalityNumber(Integer.toString(chapterCount))
                         .sectionTitle(chapter.getChapterTitle())
                         .type("mainmenu")
                         .showMe(chapter.getShowMe())
@@ -142,7 +142,8 @@ public class AfterStartup {
                         functionalityRepository.save(templateFunctionality);
 
                 processFunctionality(templateFunctionality,
-                        chapter.getSections(), Integer.toString(chapterCount));
+                        chapter.getSections(),
+                        Integer.toString(chapterCount++));
             }
         } else {
             logger.info("Not importing " + resource.getFilename());

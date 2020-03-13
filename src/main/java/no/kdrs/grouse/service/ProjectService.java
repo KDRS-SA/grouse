@@ -83,11 +83,11 @@ public class ProjectService
      * @return list of ProjectFunctionality
      */
     @Override
-    public List<ProjectFunctionality> findFunctionalityForProjectByType(
-            Long projectId, String type) {
+    public Page<ProjectFunctionality> findFunctionalityForProjectByType(
+            Pageable pageable, Long projectId, String type) {
         return projectFunctionalityRepository.
                 findByReferenceProjectAndTypeAndShowMe(
-                        getProjectOrThrow(projectId), type, true);
+                        getProjectOrThrow(projectId), type, true, pageable);
     }
 
     @Override
@@ -144,14 +144,17 @@ public class ProjectService
 
         for (TemplateFunctionality templateFunctionality :
                 template.getReferenceTemplateFunctionality()) {
-            processFunctionalities(project, templateFunctionality
-                    .getReferenceChildTemplateFunctionality());
+            processFunctionalities(project, null,
+                    templateFunctionality
+                            .getReferenceChildTemplateFunctionality());
         }
         return project;
     }
 
     private void processFunctionalities(
-            Project project, List<TemplateFunctionality> functionalities) {
+            Project project,
+            ProjectFunctionality parentProjectFunctionality,
+            List<TemplateFunctionality> functionalities) {
 
         for (TemplateFunctionality templateFunctionality : functionalities) {
 
@@ -176,14 +179,20 @@ public class ProjectService
             projectFunctionality.setProcessed(false);
             projectFunctionality.setActive(false);
             projectFunctionality.setReferenceProject(project);
+
+            if (parentProjectFunctionality != null) {
+                projectFunctionality.setReferenceParentFunctionality(
+                        parentProjectFunctionality);
+            }
             projectFunctionality =
                     projectFunctionalityRepository.save(projectFunctionality);
             // copy requirements if present
             processRequirements(projectFunctionality, templateFunctionality
                     .getReferenceFunctionalityRequirement());
             // Only the top functionality should have a reference to the project
-            processFunctionalities(null, templateFunctionality
-                    .getReferenceChildTemplateFunctionality());
+            processFunctionalities(null, projectFunctionality,
+                    templateFunctionality
+                            .getReferenceChildTemplateFunctionality());
         }
     }
 

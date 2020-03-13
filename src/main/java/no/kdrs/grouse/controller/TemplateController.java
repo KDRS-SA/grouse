@@ -126,6 +126,7 @@ public class TemplateController {
         return ResponseEntity.status(OK)
                 .body(templateFunctionalities);
     }
+
 */
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + PROJECT)
     public ResponseEntity<LinksProject> createProjectFromTemplate(

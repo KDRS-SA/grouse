@@ -35,8 +35,8 @@ public interface IProjectService {
     List<ProjectRequirement> findByProjectIdOrderByProjectName(
             Long projectId, String functionalityNumber);
 
-    List<ProjectFunctionality> findFunctionalityForProjectByType(
-            Long projectId, String type);
+    Page<ProjectFunctionality> findFunctionalityForProjectByType(
+            Pageable pageable, Long projectId, String type);
 
     Iterable<Project> findByOwnedBy(String username);
 }

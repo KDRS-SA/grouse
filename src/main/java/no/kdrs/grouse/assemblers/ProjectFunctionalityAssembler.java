@@ -1,0 +1,89 @@
+package no.kdrs.grouse.assemblers;
+
+import no.kdrs.grouse.controller.ProjectFunctionalityController;
+import no.kdrs.grouse.model.ProjectFunctionality;
+import no.kdrs.grouse.model.links.LinksProjectFunctionality;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.stereotype.Component;
+
+import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+@Component
+public class ProjectFunctionalityAssembler
+        extends RepresentationModelAssemblerSupport
+        <ProjectFunctionality, LinksProjectFunctionality> {
+
+    public ProjectFunctionalityAssembler() {
+        super(ProjectFunctionalityController.class,
+                LinksProjectFunctionality.class);
+    }
+
+    @Override
+    public LinksProjectFunctionality toModel(
+            ProjectFunctionality projectFunctionality) {
+        LinksProjectFunctionality linksProjectFunctionality =
+                instantiateModel(projectFunctionality);
+        copyValues(linksProjectFunctionality, projectFunctionality);
+        if (projectFunctionality
+                .getReferenceChildProjectFunctionality()
+                .size() > 0) {
+            linksProjectFunctionality
+                    .add(linkTo(methodOn(ProjectFunctionalityController.class)
+                            .getChildFunctionality(null,
+                                    projectFunctionality
+                                            .getProjectFunctionalityId()))
+                            .withRel(FUNCTIONALITY));
+        }
+        linksProjectFunctionality
+                .add(linkTo(methodOn(ProjectFunctionalityController.class)
+                        .getProjectFunctionality(projectFunctionality
+                                .getProjectFunctionalityId()))
+                        .withSelfRel());
+        return linksProjectFunctionality;
+    }
+
+    @Override
+    public CollectionModel<LinksProjectFunctionality> toCollectionModel(
+            Iterable<? extends ProjectFunctionality> projectFunctionalitys) {
+
+        CollectionModel<LinksProjectFunctionality> linksProjectFunctionalitys =
+                super.toCollectionModel(projectFunctionalitys);
+
+        linksProjectFunctionalitys.forEach(projectFunctionality -> {
+
+            projectFunctionality
+                    .add(linkTo(methodOn(ProjectFunctionalityController.class)
+                            .getProjectFunctionality(
+                                    projectFunctionality
+                                            .getProjectFunctionalityId()))
+                            .withSelfRel());
+        });
+        return linksProjectFunctionalitys;
+    }
+
+    private void copyValues(
+            LinksProjectFunctionality linksProjectFunctionality,
+            ProjectFunctionality projectFunctionality) {
+        linksProjectFunctionality.setProjectFunctionalityId(projectFunctionality
+                .getProjectFunctionalityId());
+        linksProjectFunctionality.setFunctionalityNumber(projectFunctionality
+                .getFunctionalityNumber());
+        linksProjectFunctionality.setTitle(projectFunctionality.getTitle());
+        linksProjectFunctionality.setDescription(
+                projectFunctionality.getDescription());
+        linksProjectFunctionality.setConsequence(
+                projectFunctionality.getConsequence());
+        linksProjectFunctionality.setExplanation(
+                projectFunctionality.getExplanation());
+        linksProjectFunctionality.setShowMe(projectFunctionality.getShowMe());
+        linksProjectFunctionality.setProcessed(
+                projectFunctionality.getProcessed());
+        linksProjectFunctionality.setActive(projectFunctionality.getActive());
+        linksProjectFunctionality.setType(projectFunctionality.getType());
+        linksProjectFunctionality.setOwnedBy(projectFunctionality.getOwnedBy());
+
+    }
+}

@@ -7,6 +7,8 @@ import no.kdrs.grouse.persistence.IProjectRequirementRepository;
 import no.kdrs.grouse.service.interfaces.IProjectFunctionalityService;
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,14 @@ public class ProjectFunctionalityService
     public ProjectFunctionality getProjectFunctionality(
             Long projectFunctionalityId) {
         return getProjectFunctionalityOrThrow(projectFunctionalityId);
+    }
+
+    @Override
+    public Page<ProjectFunctionality> getChildFunctionality(
+            Pageable pageable, Long projectFunctionalityId) {
+        return projectFunctionalityRepository
+                .findByReferenceParentFunctionality(pageable,
+                        getProjectFunctionalityOrThrow(projectFunctionalityId));
     }
 
     @Override
@@ -119,9 +129,10 @@ public class ProjectFunctionalityService
      * multiple methods, we have it here once. If you call this, be aware
      * that you will only ever get a valid Project back. If there is no valid
      * ProjectRequirement, a EntityNotFoundException exception is thrown
-     *
+     * <p>
      * We also check that you only can access things you own. If you try
      * to access an object you don't own, then a AccessDeniedException is thrown.
+     *
      * @param id The id  of the ProjectRequirement object to retrieve
      * @return the ProjectRequirement object
      */

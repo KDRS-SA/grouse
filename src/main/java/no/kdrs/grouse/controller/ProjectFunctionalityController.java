@@ -3,8 +3,12 @@ package no.kdrs.grouse.controller;
 
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
+import no.kdrs.grouse.model.links.LinksProjectFunctionality;
 import no.kdrs.grouse.service.interfaces.IProjectFunctionalityService;
+import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +26,15 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping(value = SLASH + PROJECT_FUNCTIONALITY)
 public class ProjectFunctionalityController {
+
     private IProjectFunctionalityService projectFunctionalityService;
+    private CommonController commonController;
 
     public ProjectFunctionalityController(
-            IProjectFunctionalityService projectFunctionalityService) {
+            IProjectFunctionalityService projectFunctionalityService,
+            CommonController commonController) {
         this.projectFunctionalityService = projectFunctionalityService;
+        this.commonController = commonController;
     }
 
     @GetMapping(value = SLASH + REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
@@ -59,6 +67,42 @@ public class ProjectFunctionalityController {
                 .body(projectFunctionality);
     }
 
+    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
+    public ResponseEntity<PagedModel<LinksProjectFunctionality>>
+    getChildFunctionality(
+            Pageable pageable,
+            @PathVariable(FUNCTIONALITY) Long projectFunctionalityId) {
+
+        return commonController.addPagedProjectFunctionalityLinks(
+                projectFunctionalityService
+                        .getChildFunctionality(pageable,
+                                projectFunctionalityId), OK);
+/*
+        List<ProjectRequirement> projectRequirements =
+                projectFunctionality.getReferenceProjectRequirement();
+
+        for (ProjectRequirement projectRequirement : projectRequirements) {
+            projectRequirement.add(
+                    linkTo(
+                            methodOn(ProjectRequirementController.class)
+                                    .getRequirement(projectRequirement
+                                            .getProjectRequirementId())).withSelfRel());
+        }
+        projectFunctionality.add(linkTo(methodOn
+                (ProjectFunctionalityController.class).
+                getProjectFunctionality(projectFunctionalityId)).withSelfRel());
+
+        projectFunctionality.add(linkTo(methodOn
+                (ProjectFunctionalityController.class).
+                getProjectFunctionality(projectFunctionalityId)).
+                withRel(PROJECT_REQUIREMENT));
+
+        return ResponseEntity.status(OK)
+                .body(projectFunctionality);
+  */
+
+    }
+
     @PostMapping(value = SLASH + REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<ProjectRequirement> createProjectRequirement(
             @PathVariable(REQUIREMENT) Long projectFunctionalityId,
@@ -76,7 +120,6 @@ public class ProjectFunctionalityController {
         return ResponseEntity.status(CREATED)
                 .body(projectRequirement);
     }
-
 
     @PatchMapping(value = REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<ProjectFunctionality> patchFunctionality(

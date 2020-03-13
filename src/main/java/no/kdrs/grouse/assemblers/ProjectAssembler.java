@@ -31,7 +31,8 @@ public class ProjectAssembler
         linksProject.add(linkTo(methodOn(ProjectController.class).
                 getProject(project.getProjectId())).withSelfRel());
         linksProject.add(linkTo(methodOn(ProjectController.class).
-                getFunctionalityForProject(project.getProjectId()))
+                getFunctionalityForProject(null,
+                        project.getProjectId()))
                 .withRel(FUNCTIONALITY));
         return linksProject;
     }
@@ -50,7 +51,7 @@ public class ProjectAssembler
             project
                     .add(linkTo(methodOn(ProjectController.class)
                             .getFunctionalityForProject(
-                                    project.getProjectId()))
+                                    null, project.getProjectId()))
                             .withRel(FUNCTIONALITY));
         });
         return linksProjects;
