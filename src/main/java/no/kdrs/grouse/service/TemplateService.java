@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,21 +62,14 @@ public class TemplateService
         this.templateFunctionalityRepository = templateFunctionalityRepository;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<TemplateRequirement> findByTemplateIdOrderByTemplateName(
-            UUID templateId, String functionalityNumber) {
-        String queryString =
-                "select p from TemplateRequirement as p where " +
-                        "p.referenceTemplate.templateId = :templateId " +
-                        "AND p.referenceFunctionality.functionalityNumber = " +
-                        ":functionalityNumber";
+//    @Override
+@SuppressWarnings("unchecked")
+public Page<TemplateRequirement> findByTemplateIdOrderByTemplateName(
+        Pageable page, UUID templateId, String functionalityNumber) {
 
-        Query query = entityManager.createQuery(queryString);
-        query.setParameter("templateId", templateId);
-        query.setParameter("functionalityNumber", functionalityNumber);
-        return query.getResultList();
-    }
+    return templateRequirementRepository.findByFunctionalityFunctionalityNumber(
+            functionalityNumber);
+}
 
     /**
      * findFunctionalityForTemplate
@@ -87,9 +79,9 @@ public class TemplateService
      * @param templateId Id of the template to retrieve TemplateFunctionality
      * @return list of TemplateFunctionality
      */
-    @Override
+    //@Override
     public List<TemplateFunctionality> findFunctionalityForTemplateByType(
-            UUID templateId, String type) {
+            Pageable pageable, UUID templateId, String type) {
 
 
         /*

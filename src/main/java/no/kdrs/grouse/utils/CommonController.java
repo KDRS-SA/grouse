@@ -2,6 +2,7 @@ package no.kdrs.grouse.utils;
 
 import no.kdrs.grouse.assemblers.ProjectAssembler;
 import no.kdrs.grouse.assemblers.TemplateAssembler;
+import no.kdrs.grouse.assemblers.TemplateRequirementAssembler;
 import no.kdrs.grouse.assemblers.UserAssembler;
 import no.kdrs.grouse.controller.DocumentController;
 import no.kdrs.grouse.controller.ProjectController;
@@ -9,8 +10,10 @@ import no.kdrs.grouse.controller.TemplateController;
 import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.Template;
+import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.model.links.LinksTemplate;
+import no.kdrs.grouse.model.links.LinksTemplateRequirement;
 import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.utils.exception.InternalException;
 import org.slf4j.Logger;
@@ -45,24 +48,33 @@ public class CommonController {
     private PagedResourcesAssembler<GrouseUser> pagedUserResourcesAssembler;
     private PagedResourcesAssembler<Project> pagedProjectResourcesAssembler;
     private PagedResourcesAssembler<Template> pagedTemplateResourcesAssembler;
+    private PagedResourcesAssembler<TemplateRequirement>
+            pagedTemplateRequirementResourcesAssembler;
     private ProjectAssembler projectAssembler;
     private TemplateAssembler templateAssembler;
     private UserAssembler userAssembler;
+    private TemplateRequirementAssembler templateRequirementAssembler;
 
     public CommonController(
             RoleValidator role,
             PagedResourcesAssembler<GrouseUser> pagedUserResourcesAssembler,
             PagedResourcesAssembler<Project> pagedProjectResourcesAssembler,
             PagedResourcesAssembler<Template> pagedTemplateResourcesAssembler,
+            PagedResourcesAssembler<TemplateRequirement>
+                    pagedTemplateRequirementResourcesAssembler,
             ProjectAssembler projectAssembler,
             TemplateAssembler templateAssembler,
+            TemplateRequirementAssembler templateRequirementAssembler,
             UserAssembler userAssembler) {
         this.role = role;
         this.pagedUserResourcesAssembler = pagedUserResourcesAssembler;
         this.pagedProjectResourcesAssembler = pagedProjectResourcesAssembler;
         this.pagedTemplateResourcesAssembler = pagedTemplateResourcesAssembler;
+        this.pagedTemplateRequirementResourcesAssembler =
+                pagedTemplateRequirementResourcesAssembler;
         this.projectAssembler = projectAssembler;
         this.templateAssembler = templateAssembler;
+        this.templateRequirementAssembler = templateRequirementAssembler;
         this.userAssembler = userAssembler;
     }
 
@@ -130,9 +142,10 @@ public class CommonController {
             LinksTemplate linksTemplate = new LinksTemplate(template);
             linksTemplate.add(linkTo(methodOn(TemplateController.class)
                     .getTemplate(template.getTemplateId())).withSelfRel());
-            linksTemplate.add(linkTo(methodOn(TemplateController.class)
-                    .getFunctionalityForTemplate(template.getTemplateId()))
-                    .withRel(FUNCTIONALITY));
+//            linksTemplate.add(linkTo(methodOn(TemplateController.class)
+//                    .getFunctionalityForTemplate(null,
+//                            template.getTemplateId()))
+//                    .withRel(FUNCTIONALITY));
             linksTemplate.add(linkTo(methodOn(DocumentController.class)
                     .downloadDocumentTemplate(template.getTemplateId()))
                     .withRel(DOCUMENT));
@@ -155,6 +168,18 @@ public class CommonController {
                         .toModel(templates, templateAssembler);
         return ResponseEntity.status(status)
                 .body(templateModels);
+    }
+
+    public ResponseEntity<PagedModel<LinksTemplateRequirement>>
+    addPagedTemplateRequirementLinks(
+            @NotNull final Page<TemplateRequirement> templateRequirements,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksTemplateRequirement> templateRequirementModels =
+                pagedTemplateRequirementResourcesAssembler
+                        .toModel(templateRequirements,
+                                templateRequirementAssembler);
+        return ResponseEntity.status(status)
+                .body(templateRequirementModels);
     }
 
 }

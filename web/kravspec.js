@@ -167,7 +167,8 @@ var requirementsController = app.controller('RequirementsController',
 
 
         var patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
-          functionality.processed + '"}]';
+            functionality.processed + '"}]'
+        g;
 
         console.log("updateFunctionalityProcessed. Attempting PATCH[" + patchString + "].\n");
 

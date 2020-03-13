@@ -3,7 +3,6 @@ package no.kdrs.grouse.controller;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
-import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.model.links.LinksTemplate;
 import no.kdrs.grouse.service.interfaces.IProjectService;
@@ -15,7 +14,6 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
@@ -53,25 +51,24 @@ public class TemplateController {
         return commonController.addPagedTemplateLinks(
                 templateService.findAll(pageable), OK);
     }
-
+/*
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH +
             FUNCTIONALITY + FUNCTIONALITY_PARAMETER)
-    public ResponseEntity<List<TemplateRequirement>>
+    public ResponseEntity<PagedModel<LinksTemplateRequirement>>
     getRequirementsForFunctionality(
+            Pageable pageable,
             @PathVariable(TEMPLATE_ID) UUID templateId,
             @PathVariable(FUNCTIONALITY) String functionalityNumber) {
-
-        List<TemplateRequirement> templateRequirements =
+        return commonController.addPagedTemplateRequirementLinks(
                 templateService.findByTemplateIdOrderByTemplateName(
-                        templateId, functionalityNumber);
-
-        return ResponseEntity.status(OK)
-                .body(templateRequirements);
+                        pageable, templateId, functionalityNumber), OK);
     }
-
+*/
+    /*
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
-    public ResponseEntity<List<TemplateFunctionality>>
+    public ResponseEntity<PagedModel<TemplateFunctionality>>
     getFunctionalityForTemplate(
+            Pageable pageable,
             @PathVariable(TEMPLATE_ID) UUID templateId) {
 
         List<TemplateFunctionality> templateFunctionalities =
@@ -142,7 +139,7 @@ public class TemplateController {
         return ResponseEntity.status(OK)
                 .body(templateFunctionalities);
     }
-
+*/
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + PROJECT)
     public ResponseEntity<LinksProject> createProjectFromTemplate(
             @PathVariable(TEMPLATE_ID) UUID templateId,
