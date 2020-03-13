@@ -1,4 +1,4 @@
-<mat-toolbar class="flex-row-between" color="primary" style="padding: 0">
+<mat-toolbar class="flex-row-between" [ngClass]="{'mat-primary' : !deleteMode, 'mat-warn' : deleteMode}" style="padding: 0">
   <button mat-button>
     <div class="flex-row-left">
       <div class="flex-row-evenlyer">
@@ -29,12 +29,15 @@
     </div>
   </div>
 </mat-toolbar>
-<div class="flex-row-left mal-container">
+<div *ngIf="!deleteMode" class="flex-row-left mal-container">
   <button mat-raised-button class="flex-column flex-center mal-card" (click)="newProject()">
     <i class="material-icons">add_circle_outline</i>
     <p>{{'Menu.NewProject' | translate}}</p>
   </button>
-  <button mat-raised-button class="mal-card" *ngFor="let project of projects" (click)="selectProject(project)">
+  <button
+    mat-raised-button class="mal-card"
+    *ngFor="let project of projects"
+    (click)="openProject(project);">
     <div class="flex-column-squish">
       <p>{{project.ownedBy}}</p>
       <h3>{{project.projectName}}</h3>
@@ -42,4 +45,19 @@
     </div>
   </button>
 </div>
-
+<!--Delete mode-->
+<div *ngIf="deleteMode" class="flex-row-left mal-container">
+  <button
+    mat-raised-button class="mal-card"
+    *ngFor="let project of projects; let i = index"
+    (click)="removeProject(project);"
+    (mouseover)="shaking = i+1"
+    (mouseleave)="shaking = 0"
+    [@shake]="shaking === i+1 ? 'end' : ''">
+    <div class="flex-column-squish">
+      <p>{{project.ownedBy}}</p>
+      <h3>{{project.projectName}}</h3>
+      <h6>{{'Menu.Lastviewed' | translate}} {{project.lastModifiedDate.split('-')[2].split('T')[0]}}.{{project.lastModifiedDate.split('-')[1]}}.{{project.lastModifiedDate.split('-')[0]}}</h6>
+    </div>
+  </button>
+</div>

@@ -37,7 +37,7 @@
     </div>
   </div>
 </mat-toolbar>
-<mat-sidenav-container class="sidebar" hasBackdrop="true">
+<mat-sidenav-container *ngIf="!loading" class="sidebar" hasBackdrop="true">
   <mat-sidenav mode="over" [opened]="sideBarOpen" class="sidenav">
 
     <!-- Tree DONT TOUCH IT FOR THE LOVE OF EVERYTHING HOLY-->

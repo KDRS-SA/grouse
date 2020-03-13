@@ -42,8 +42,10 @@ export class kravEditComponent implements OnInit {
   private statusbarData: projectFunctionality[];
   private nav: Requirment[];
   private dialog: MatDialog;
+  private loading: boolean;
 
   constructor(http: HttpClient, router: Router, dialog: MatDialog, public translate: TranslateService) {
+    this.loading = true;
     this.http = http;
     this.router = router;
     this.projectLink = '';
@@ -76,18 +78,24 @@ export class kravEditComponent implements OnInit {
         }
       )
     }).subscribe(result => {
+      console.log(result);
+      this.loading = false;
       const newlyLoaded = (this.mainData === undefined);
       // @ts-ignore
       this.mainData = result;
       this.convertLegacyLinks();
       if (newlyLoaded) {
-        this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
+        const first = this.mainData[0];
+        if (first.referenceProjectRequirement.length > 0) {
+          this.currentReq = first.referenceChildProjectFunctionality[0];
+        } else {
+          this.currentReq = first;
+        }
         this.selectedTab = 0;
       } else {
         this.changeReq(this.currentReq.projectFunctionalityId);
       }
       this.statusBarInfo();
-      console.log(this.mainData);
     }, error => {
       console.error(error);
     });
@@ -320,6 +328,7 @@ export class kravEditComponent implements OnInit {
    * Inputted patchstring to send
    */
   sendPatch(patchString: string, url: string) {
+    console.log(JSON.parse(patchString));
     this.http.patch(url, JSON.parse(patchString), {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -359,6 +368,7 @@ export class kravEditComponent implements OnInit {
     });
 
     dialogref.afterClosed().subscribe(result => {
+      console.log(this.currentReq.referenceProjectRequirement[index]._links.self.href);
       if (result) {
         this.http.delete(
           this.currentReq.referenceProjectRequirement[index]._links.self.href,
@@ -390,7 +400,7 @@ export class kravEditComponent implements OnInit {
       this.currentReq = switchto;
       this.newReqPriority = 'O';
       this.selectedTab = 0;
-      this.loadRequirment();
+      // this.loadRequirment();
     } else {
       this.statusPage = !this.statusPage;
       this.statPageLoad();
@@ -510,7 +520,7 @@ export class kravEditComponent implements OnInit {
       const add = this.findNextReq(ret[ret.length - 1].projectFunctionalityId);
       if (add !== null) {
         ret.push(add);
-      } else if (ret.length > 9) {
+      } else if (ret.length > Math.max(9, this.maxID - this.mainData[0].projectFunctionalityId)) {
         ret.unshift(this.findPreviousReq(ret[0].projectFunctionalityId));
         // tslint:disable-next-line:no-shadowed-variable
         const add = {
@@ -519,6 +529,8 @@ export class kravEditComponent implements OnInit {
         };
         // @ts-ignore
         ret.push(add);
+      } else if (add === null) {
+        break;
       } else {
         ret.unshift(this.findPreviousReq(ret[0].projectFunctionalityId));
       }
@@ -600,19 +612,6 @@ export class kravEditComponent implements OnInit {
       }
     }
     return false;
-  }
-
-  loadRequirment() {
-    this.http.get(this.currentReq._links.krav.href, {
-      headers: new HttpHeaders({
-          Authorization: 'Bearer ' + this.userData.oauthClientSecret
-        }
-      )
-    }).subscribe(result => {
-      console.log(result);
-    }, error => {
-      console.error(error);
-    });
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;

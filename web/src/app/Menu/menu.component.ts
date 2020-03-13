@@ -9,6 +9,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {TranslateService} from '@ngx-translate/core';
 import {DeleteRequirmentDialog} from "../kravEdit/kravEdit.component";
 import {Template} from '../models/template';
+import {Animations} from '../app.animations';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,9 @@ import {Template} from '../models/template';
   styleUrls: [
     './menu.component.css',
     '../common.css'
+  ],
+  animations: [
+    Animations.shake
   ]
 })
 export class MenuComponent implements OnInit {
@@ -26,6 +30,7 @@ export class MenuComponent implements OnInit {
   private projectsLink: string;
   private dialogBox: MatDialog;
   private deleteMode: boolean;
+  private shaking: number;
 
   public title = 'Grouse';
 
@@ -37,6 +42,7 @@ export class MenuComponent implements OnInit {
     translate.addLangs(['no', 'en', 'ny']);
     translate.setDefaultLang('no');
     this.deleteMode = false;
+    this.shaking = 0;
   }
 
   ngOnInit() {
@@ -58,6 +64,8 @@ export class MenuComponent implements OnInit {
       })
     }).subscribe(result => {
     }, error => {
+      this.router.navigate(['/']);
+      location.reload();
       console.log(error);
     });
     this.router.navigate(['/']);
@@ -77,12 +85,11 @@ export class MenuComponent implements OnInit {
         this.projects = result._embedded.projects;
       }
     }, error => {
-      console.error(error);
+      this.logout();
     });
   }
 
   newProject() {
-    let ProjectName: string;
     this.http.get(this.userData._links['template-list'].href, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -92,12 +99,11 @@ export class MenuComponent implements OnInit {
       const dialogRef = this.dialogBox.open(NewProjectDialog, {
         width: '450px',
         // @ts-ignore
-        data: {Name: ProjectName, Templates: result._embedded.templates}
+        data: {Name: '', Templates: result._embedded.templates}
       });
 
       // After the dialog closers creates a new project
       dialogRef.afterClosed().subscribe(result => {
-        console.log(ProjectName);
         this.http.post(result.SelectedTemplate._links.project.href, {projectName: result.Name}, {
           headers: new HttpHeaders({
             Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -112,24 +118,6 @@ export class MenuComponent implements OnInit {
     }, error => {
       console.error(error);
     });
-    /*
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Result is now what the user entered in the dialog
-      ProjectName = result.Name;
-
-      this.http.post(this.projectsLink, {projectName: ProjectName}, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + this.userData.oauthClientSecret
-        })
-        // tslint:disable-next-line:no-shadowed-variable
-      }).subscribe(result => {
-        this.getActiveProjects();
-      }, error => {
-        console.error(error);
-      });
-    });
-     */
   }
 
   openProject(project) {
@@ -159,14 +147,6 @@ export class MenuComponent implements OnInit {
           }, error => console.error(error));
       }
     });
-  }
-
-  selectProject(project) {
-    if (!this.deleteMode) {
-      this.openProject(project);
-    } else {
-      this.removeProject(project);
-    }
   }
 
   deleteToggle() {
