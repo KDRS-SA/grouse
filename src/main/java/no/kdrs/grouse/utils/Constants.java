@@ -19,6 +19,7 @@ public final class Constants {
     public static final String DOCUMENT = "document";
     public static final String PROJECT = "project";
     public static final String TEMPLATE = "template";
+    public static final String REQUIREMENT = "requirement";
     public static final String REL_PROJECT_LIST = "project-list";
     public static final String REL_TEMPLATE_LIST = "template-list";
     public static final String REL_PROJECT_LIST_ALL = "project-list-all";
@@ -55,6 +56,7 @@ public final class Constants {
     public static final String TEMPLATE_ID_PARAMETER = "{" +
             TEMPLATE_ID + "}";
     public static final String USER_PARAMETER = "{" + USER + "}";
+    public static final String REQUIREMENT_PARAMETER = "{" + REQUIREMENT + "}";
 
     // Column names
     public static final String REQUIREMENT_NAME = "requirement_name";
@@ -72,6 +74,7 @@ public final class Constants {
     public static final String FUNCTIONALITY_NUMBER = "functionality_number";
     public static final String IS_REQUIREMENT = "is_requirement";
     public static final String TEMPLATE_FILE_NAME_INTERNAL = "file_name_internal";
+    public static final String PERCENT_FOR_DOCUMENT = "procent_for_document";
     public static final String TEMPLATE_DESCRIPTION = "template_description";
     public static final String TEMPLATE_PK_ID = "template_id";
     public static final String TEMPLATE_FK_ID = "fk_template_id";
@@ -83,7 +86,7 @@ public final class Constants {
     public static final String AUTHORITY_NAME = "authority_name";
     public static final String AUTHORITIES = "authorities";
     public static final String AUTHORITY = "authority";
-    public static final String REQUIREMENT = "requirement";
+
 
     public static final String PROJECT_TABLE_NAME = "projects";
 

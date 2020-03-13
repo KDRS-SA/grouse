@@ -15,6 +15,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+
 /**
  * Created by tsodring on 29/03/18.
  */
@@ -29,7 +30,7 @@ public class ProjectFunctionalityController {
     }
 
     @GetMapping(value = "/{krav}/" + REQUIREMENT)
-    public ResponseEntity<ProjectFunctionality> getProjectFunctionality (
+    public ResponseEntity<ProjectFunctionality> getProjectFunctionality(
             @PathVariable("krav") Long projectFunctionalityId) {
 
         ProjectFunctionality projectFunctionality = projectFunctionalityService.
@@ -41,9 +42,9 @@ public class ProjectFunctionalityController {
         for (ProjectRequirement projectRequirement : projectRequirements) {
             projectRequirement.add(
                     linkTo(
-                    methodOn(ProjectRequirementController.class)
-                    .getRequirement(projectRequirement
-                            .getProjectRequirementId())).withSelfRel());
+                            methodOn(ProjectRequirementController.class)
+                                    .getRequirement(projectRequirement
+                                            .getProjectRequirementId())).withSelfRel());
         }
         projectFunctionality.add(linkTo(methodOn
                 (ProjectFunctionalityController.class).
@@ -77,7 +78,7 @@ public class ProjectFunctionalityController {
     }
 
 
-    @PatchMapping(value = "/{krav}/krav")
+    @PatchMapping(value = REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<ProjectFunctionality> patchFunctionality(
             @PathVariable("krav") Long functionalityNumber,
             @RequestBody PatchObjects patchObjects)
