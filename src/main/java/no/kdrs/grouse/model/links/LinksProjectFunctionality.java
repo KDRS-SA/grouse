@@ -30,6 +30,8 @@ public class LinksProjectFunctionality
     private Boolean active;
     private String type;
     private String ownedBy;
+    private Boolean hasRequirements = false;
+    private Boolean hasFunctionality = false;
 
     public LinksProjectFunctionality(ProjectFunctionality projectFunctionality) {
         this.projectFunctionalityId = projectFunctionality
@@ -45,6 +47,16 @@ public class LinksProjectFunctionality
         this.active = projectFunctionality.getActive();
         this.type = projectFunctionality.getType();
         this.ownedBy = projectFunctionality.getOwnedBy();
+        if (projectFunctionality
+                .getReferenceProjectRequirement()
+                .size() > 0) {
+            this.hasRequirements = true;
+        }
+        if (projectFunctionality
+                .getReferenceChildProjectFunctionality()
+                .size() > 0) {
+            this.hasFunctionality = true;
+        }
     }
 
     public Long getProjectFunctionalityId() {
@@ -133,5 +145,21 @@ public class LinksProjectFunctionality
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
+    }
+
+    public Boolean hasRequirements() {
+        return hasRequirements;
+    }
+
+    public void setHasRequirements(Boolean hasRequirements) {
+        this.hasRequirements = hasRequirements;
+    }
+
+    public Boolean hasFunctionality() {
+        return hasFunctionality;
+    }
+
+    public void setHasFunctionality(Boolean hasFunctionality) {
+        this.hasFunctionality = hasFunctionality;
     }
 }
