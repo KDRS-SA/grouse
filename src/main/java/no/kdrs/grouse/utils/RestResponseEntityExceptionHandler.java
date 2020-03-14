@@ -1,5 +1,6 @@
 package no.kdrs.grouse.utils;
 
+import no.kdrs.grouse.utils.exception.BadRequestException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -65,7 +66,8 @@ public class RestResponseEntityExceptionHandler
                 BAD_REQUEST, request);
     }
 
-    @ExceptionHandler({DataIntegrityViolationException.class})
+    @ExceptionHandler({DataIntegrityViolationException.class,
+            BadRequestException.class})
     public ResponseEntity<Object> handleBadRequest(
             final DataIntegrityViolationException ex,
             final WebRequest request) {

@@ -2,6 +2,7 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.exception.BadRequestException;
 import no.kdrs.grouse.utils.exception.InternalException;
 import no.kdrs.grouse.utils.exception.PatchMisconfigurationException;
 import org.slf4j.Logger;
@@ -118,6 +119,6 @@ public class GrouseService {
     protected boolean checkColumnUpdatable(String path) {
         String errorMessage = getServletPath() + " has no checkColumnUpdatable";
         logger.error(errorMessage);
-        throw new InternalException(errorMessage);
+        throw new BadRequestException(errorMessage);
     }
 }
