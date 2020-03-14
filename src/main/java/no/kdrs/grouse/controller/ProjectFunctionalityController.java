@@ -128,7 +128,7 @@ public class ProjectFunctionalityController {
                                 projectRequirement), CREATED);
     }
 
-    @PatchMapping(value = FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
+    @PatchMapping(value = FUNCTIONALITY_PARAMETER)
     public ResponseEntity<LinksProjectFunctionality> patchFunctionality(
             @PathVariable(FUNCTIONALITY) Long functionalityNumber,
             @RequestBody PatchObjects patchObjects)
