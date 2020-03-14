@@ -47,7 +47,7 @@ public class ProjectFunctionalityAssembler
                                     .getProjectFunctionalityId()))
                             .withRel(REQUIREMENT));
         }
-        projectFunctionality
+        linksProjectFunctionality
                 .add(linkTo(methodOn(ProjectFunctionalityController.class)
                         .getProjectFunctionality(projectFunctionality
                                 .getProjectFunctionalityId()))
@@ -63,17 +63,29 @@ public class ProjectFunctionalityAssembler
         CollectionModel<LinksProjectFunctionality> linksProjectFunctionalitys =
                 super.toCollectionModel(projectFunctionalitys);
 
-        linksProjectFunctionalitys.forEach(projectFunctionality -> {
+        linksProjectFunctionalitys.forEach(linksProjectFunctionality -> {
 
-            projectFunctionality
+            if (linksProjectFunctionality.hasFunctionality()) {
+                linksProjectFunctionality
+                        .add(linkTo(
+                                methodOn(ProjectFunctionalityController.class)
+                                        .getChildFunctionality(null,
+                                                linksProjectFunctionality
+                                                        .getProjectFunctionalityId()))
+                                .withRel(FUNCTIONALITY));
+            }
+            if (linksProjectFunctionality.hasRequirements()) {
+                linksProjectFunctionality
+                        .add(linkTo(
+                                methodOn(ProjectFunctionalityController.class)
+                                        .getProjectRequirements(null,
+                                                linksProjectFunctionality
+                                                        .getProjectFunctionalityId()))
+                                .withRel(REQUIREMENT));
+            }
+            linksProjectFunctionality
                     .add(linkTo(methodOn(ProjectFunctionalityController.class)
-                            .getProjectRequirements(null,
-                                    projectFunctionality
-                                            .getProjectFunctionalityId()))
-                            .withRel(REQUIREMENT));
-            projectFunctionality
-                    .add(linkTo(methodOn(ProjectFunctionalityController.class)
-                            .getProjectFunctionality(projectFunctionality
+                            .getProjectFunctionality(linksProjectFunctionality
                                     .getProjectFunctionalityId()))
                             .withSelfRel());
         });
