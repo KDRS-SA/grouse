@@ -224,7 +224,7 @@ You will then get a paged list of users. The default setup of grouse returns thr
 ## Get a list of templates
 The first step to do anything useful in grouse is to retrieve a list of templates. 
 
-    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc' | jq
+    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
 
 This will return the following payload:
 
@@ -272,7 +272,7 @@ Make a note of the *href* corresponding to the "project" *rel*. You can use this
 
 Use the following example to create (POST)  a project from a template. Note. Currently you have to provide a Project object (--data ) to give the project a name 
 
-     curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc' | jq
+     curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
 
 This gives the following result:
 
@@ -304,7 +304,7 @@ Make a note of the *href* corresponding to the "function" *rel*. You can use thi
 ## Retrieve top level functionality descriptions 
 
 
-    curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc' | jq
+    curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
 
 This will return the following:
 
@@ -373,7 +373,7 @@ This will return the following:
 
 Make a note of the *rel*/*href* for each projectFunctionality object. As there is only a "function" *rel*, this means that there are project functionalities to be retrieved from following the *href* associated with the "function" *rel*. The children functionality belonging to project functionality 1338 can be retrieved using: 
 
-    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1338/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc' | jq
+    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1338/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
  
 This results in the following:
 
@@ -573,6 +573,46 @@ results in the following payload:
       }
     }
 
+## Get en individual requirement
+
+
+    curl -v -X GET http://localhost:9294/grouse/projectRequirement/1376 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+
+This generates the following payload:
+
+    {
+      "requirementId": 1376,
+      "showOrder": 4,
+      "requirementText": "Organisasjonen har en eksisterende lisensavtale  ....",
+      "priority": "1 (i)",
+      "requirementNumber": null,
+      "requirement": null,
+      "requirementType": null,
+      "version": 0,
+      "ownedBy": "user@example.com",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/projectRequirement/1376"
+        }
+      }
+    }
+
+Make a note of the ETAG value in the header:
+
 ## Get a list of projects
 
-    curl -v -X GET http://localhost:9294/grouse/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc' | jq    
+The project is updated with a PATCH request:
+
+    curl -v -H 'ETAG: ""0"" '-H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '[{ "op": "replace", "path": "/processed", "value": true}]'  -X PATCH http://localhost:9294/grouse/projectRequirement/1376  -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+
+The payload for updating is an array:
+
+    [{ "op": "replace", "path": "/processed", "value": true}]
+
+This instructs grouese to replace the processed value with a new value, namely *false*.
+
+Note the  eTag uses double quotes around the value. That is why the header is `-H 'ETAG: ""0""`
+
+## Get a list of projects
+
+    curl -v -X GET http://localhost:9294/grouse/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'    
