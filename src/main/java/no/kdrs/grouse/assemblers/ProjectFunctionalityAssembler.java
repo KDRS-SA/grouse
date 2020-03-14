@@ -33,7 +33,7 @@ public class ProjectFunctionalityAssembler
                 .size() > 0) {
             linksProjectFunctionality
                     .add(linkTo(methodOn(ProjectFunctionalityController.class)
-                            .getChildFunctionality(null,
+                            .getProjectFunctionality(
                                     projectFunctionality
                                             .getProjectFunctionalityId()))
                             .withRel(FUNCTIONALITY));
@@ -67,11 +67,11 @@ public class ProjectFunctionalityAssembler
 
             if (linksProjectFunctionality.hasFunctionality()) {
                 linksProjectFunctionality
-                        .add(linkTo(
-                                methodOn(ProjectFunctionalityController.class)
-                                        .getChildFunctionality(null,
-                                                linksProjectFunctionality
-                                                        .getProjectFunctionalityId()))
+                        .add(linkTo(methodOn(
+                                ProjectFunctionalityController.class)
+                                .getProjectFunctionality(
+                                        linksProjectFunctionality
+                                                .getProjectFunctionalityId()))
                                 .withRel(FUNCTIONALITY));
             }
             if (linksProjectFunctionality.hasRequirements()) {
@@ -112,5 +112,6 @@ public class ProjectFunctionalityAssembler
         linksProjectFunctionality.setActive(projectFunctionality.getActive());
         linksProjectFunctionality.setType(projectFunctionality.getType());
         linksProjectFunctionality.setOwnedBy(projectFunctionality.getOwnedBy());
+        linksProjectFunctionality.setVersion(projectFunctionality.getVersion());
     }
 }

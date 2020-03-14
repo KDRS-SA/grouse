@@ -4,25 +4,25 @@
 
 In src/main/test there  are a number of integration tests that test endpoint functionality
 
-## Curl tests
+## Manual curl tests
 
 First get a OAuth2 token
 
-    `curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=password`
+    curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=password
 
 This should give you the following
 
-    `{
-       "access_token": "7b29cd6d-0af4-414e-987c-2f14b6749f00",
-       "token_type": "bearer",
-       "refresh_token": "4bf294e7-8927-4773-a3d5-7e7c24eec0c9",
-       "expires_in": 42903,
-       "scope": "all"
-     }
+    {
+      "access_token": "52cbc177-c6ed-4716-9ceb-3e796f3b51b4",
+      "token_type": "bearer",
+      "refresh_token": "a2fcebd3-9bb4-4379-8373-c1cac4916a06",
+      "expires_in": 30674,
+      "scope": "all"
+    }
 
 Once you have a token you can call root of the application to see what you can do:
 
-    curl -v -X GET http://localhost:9294/grouse/ -H 'Accept: application/hal+json' -H 'Authorization: Bearer 7b29cd6d-0af4-414e-987c-2f14b6749f00'  
+    curl -v -X GET http://localhost:9294/grouse/ -H 'Accept: application/hal+json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'  
 
 
 You should get the following payload back:
@@ -50,7 +50,7 @@ You should get the following payload back:
 
 The **project-list** REL can be use to get a list of projects, while the **template-list** REL can give a list of templates you can use to create a project. First get a list of templates:
 
-    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Authorization: Bearer 7b29cd6d-0af4-414e-987c-2f14b6749f00'  
+    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'  
   
 You will get something like the following:    
     
@@ -60,15 +60,15 @@ You will get something like the following:
           {
             "templateId": "b920dd07-89bd-4702-b1e6-b36910d1482b",
             "templateName": "Noark 5",
-            "createdDate": "2020-03-12T10:36:22+01:00",
-            "lastModifiedDate": "2020-03-12T10:36:22+01:00",
+            "createdDate": "2020-03-14T13:59:26+01:00",
+            "lastModifiedDate": "2020-03-14T13:59:26+01:00",
             "ownedBy": "grouse",
             "_links": {
               "self": {
                 "href": "http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b"
               },
-              "function": {
-                "href": "http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/function"
+              "project": {
+                "href": "http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project"
               }
             }
           }
@@ -86,145 +86,12 @@ You will get something like the following:
         "number": 0
       }
     }
-           
-
      
-To get an individual project:
-
-    `curl -v -H 'Authorization: Bearer 07fbcd9d-9dd3-440c-8456-bca9f339683e' -X GET http://localhost:9294/grouse/project/112`
-
-To get a list of projects:
-
-   `curl -v -H 'Authorization: Bearer 07fbcd9d-9dd3-440c-8456-bca9f339683e' -X GET http://localhost:9294/grouse/project`
-
-
-This will give you a list like the following:
- 
-    `{
-      "_embedded": {
-        "projects": [
-          {
-            "projectId": 112,
-            "projectName": "test project",
-            "createdDate": "2020-03-05T19:38:08+01:00",
-            "lastModifiedDate": "2020-03-05T19:38:08+01:00",
-            "ownedBy": "user@example.com",
-            "_links": {
-              "self": {
-                "href": "http://localhost:9294/grouse/project/112"
-              },
-              "function": {
-                "href": "http://localhost:9294/grouse/project/112/function"
-              }
-            }
-          }
-        ]
-      },
-      "_links": {
-        "self": {
-          "href": "http://localhost:9294/grouse/project?page=0&size=20"
-        }
-      },
-      "page": {
-        "size": 20,
-        "totalElements": 1,
-        "totalPages": 1,
-        "number": 0
-      }
-    }
-`
-
-
-## Get a list of users
-
-Only a user with the ROLE_ADMIN can retrieve a list of users. Log on as an admin:
-
-    curl -v -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=admin@example.com -d password=password
-
-
-and issue the following:
-
-    curl -X GET http://localhost:9294/grouse/user  -H 'Authorization: Bearer 2e234261-620a-4d8e-bd06-7adb82d8ce84
-    
-
-You will then get a paged list of users. The default setup of grouse returns three users:
-
-    {
-      "_embedded": {
-        "users": [
-          {
-            "username": "admin@example.com",
-            "accountNonExpired": true,
-            "credentialsNonExpired": true,
-            "accountNonLocked": true,
-            "enabled": true,
-            "_links": {
-              "self": {
-                "href": "http://localhost:9294/grouse/user/admin@example.com"
-              },
-              "project": {
-                "href": "http://localhost:9294/grouse/project"
-              },
-              "template": {
-                "href": "http://localhost:9294/grouse/template"
-              }
-            }
-          },
-          {
-            "username": "user@example.com",
-            "accountNonExpired": true,
-            "credentialsNonExpired": true,
-            "accountNonLocked": true,
-            "enabled": true,
-            "_links": {
-              "self": {
-                "href": "http://localhost:9294/grouse/user/user@example.com"
-              },
-              "project": {
-                "href": "http://localhost:9294/grouse/project"
-              },
-              "template": {
-                "href": "http://localhost:9294/grouse/template"
-              }
-            }
-          },
-          {
-            "username": "template@example.com",
-            "accountNonExpired": true,
-            "credentialsNonExpired": true,
-            "accountNonLocked": true,
-            "enabled": true,
-            "_links": {
-              "self": {
-                "href": "http://localhost:9294/grouse/user/template@example.com"
-              },
-              "project": {
-                "href": "http://localhost:9294/grouse/project"
-              },
-              "template": {
-                "href": "http://localhost:9294/grouse/template"
-              }
-            }
-          }
-        ]
-      },
-      "_links": {
-        "self": {
-          "href": "http://localhost:9294/grouse/user?page=0&size=20"
-        }
-      },
-      "page": {
-        "size": 20,
-        "totalElements": 3,
-        "totalPages": 1,
-        "number": 0
-      }
-    }
-
 ## Get a list of templates
+
 The first step to do anything useful in grouse is to retrieve a list of templates. 
 
-    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
 
 This will return the following payload:
 
@@ -234,8 +101,8 @@ This will return the following payload:
           {
             "templateId": "b920dd07-89bd-4702-b1e6-b36910d1482b",
             "templateName": "Noark 5",
-            "createdDate": "2020-03-14T07:54:41+01:00",
-            "lastModifiedDate": "2020-03-14T07:54:41+01:00",
+            "createdDate": "2020-03-14T13:59:26+01:00",
+            "lastModifiedDate": "2020-03-14T13:59:26+01:00",
             "ownedBy": "grouse",
             "_links": {
               "self": {
@@ -261,7 +128,6 @@ This will return the following payload:
       }
     }
 
-
 Make a note of the *href* corresponding to the "project" *rel*. You can use this to create a project from that template. In this case the relevant *rel*/*href* are:
 
     "project": {
@@ -272,15 +138,15 @@ Make a note of the *href* corresponding to the "project" *rel*. You can use this
 
 Use the following example to create (POST)  a project from a template. Note. Currently you have to provide a Project object (--data ) to give the project a name 
 
-     curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+     curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
 
 This gives the following result:
 
     {
       "projectId": 718,
       "projectName": "Requirements project",
-      "createdDate": "2020-03-14T08:08:37.999472+01:00",
-      "lastModifiedDate": "2020-03-14T08:08:37.999472+01:00",
+      "createdDate": "2020-03-14T17:35:27.377301+01:00",
+      "lastModifiedDate": "2020-03-14T17:35:27.377301+01:00",
       "ownedBy": "user@example.com",
       "_links": {
         "self": {
@@ -303,8 +169,7 @@ Make a note of the *href* corresponding to the "function" *rel*. You can use thi
 
 ## Retrieve top level functionality descriptions 
 
-
-    curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+    curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
 
 This will return the following:
 
@@ -320,9 +185,14 @@ This will return the following:
             "active": false,
             "type": "mainmenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "function": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/727/function"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/727"
               }
             }
           },
@@ -335,9 +205,14 @@ This will return the following:
             "active": false,
             "type": "mainmenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "function": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/1338/function"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/1338"
               }
             }
           },
@@ -350,9 +225,14 @@ This will return the following:
             "active": false,
             "type": "mainmenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "function": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/1378/function"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/1378"
               }
             }
           }
@@ -373,7 +253,7 @@ This will return the following:
 
 Make a note of the *rel*/*href* for each projectFunctionality object. As there is only a "function" *rel*, this means that there are project functionalities to be retrieved from following the *href* associated with the "function" *rel*. The children functionality belonging to project functionality 1338 can be retrieved using: 
 
-    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1338/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1338/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
  
 This results in the following:
 
@@ -392,9 +272,14 @@ This results in the following:
             "active": false,
             "type": "submenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "requirement": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/1339/requirement"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/1339"
               }
             }
           },
@@ -410,9 +295,14 @@ This results in the following:
             "active": false,
             "type": "submenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "requirement": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/1345/requirement"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/1345"
               }
             }
           },
@@ -428,9 +318,14 @@ This results in the following:
             "active": false,
             "type": "submenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "requirement": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/1354/requirement"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/1354"
               }
             }
           },
@@ -446,9 +341,14 @@ This results in the following:
             "active": false,
             "type": "submenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "requirement": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/1364/requirement"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/1364"
               }
             }
           },
@@ -464,9 +364,14 @@ This results in the following:
             "active": false,
             "type": "submenu",
             "ownedBy": "user@example.com",
+            "hasRequirements": false,
+            "hasFunctionality": false,
             "_links": {
               "requirement": {
                 "href": "http://localhost:9294/grouse/projectFunctionality/1372/requirement"
+              },
+              "self": {
+                "href": "http://localhost:9294/grouse/projectFunctionality/1372"
               }
             }
           }
@@ -485,17 +390,9 @@ This results in the following:
       }
     }
 
-Here we can see that there is "function" *rel*, just a "requirement" *rel* for each projectFunctionality. So from here we know there are no sub project functionalities.
-
-The project requirements can be retrieved using the following:
-
-    "requirement": {
-           "href": "http://localhost:9294/grouse/projectFunctionality/1372/requirement"
-    }
-
 Retrieving a list of requirements using the following:
 
-
+    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/980/requirement -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
 
 
 results in the following payload:
@@ -504,71 +401,135 @@ results in the following payload:
       "_embedded": {
         "projectRequirements": [
           {
-            "requirementId": 1373,
-            "requirementText": "Leverandøren skal opplyse om eventuelle ytterligere krav som stilles til\n                            komplett løsning, og som ikke er etterspurt her i andre krav. Både minimumskrav og anbefalte\n                            krav beskrives.\n                        ",
+            "requirementId": 981,
+            "requirementText": "NOARK 10.2.1 (V): Det skal være mulig å sette opp varslinger (f. eks. i\n                                form av meldingsbokser) når tidsfrister er overskredet m.v.\n                            ",
             "showOrder": 1,
-            "priority": "1 (i)",
+            "priority": "1",
             "_links": {
               "self": {
-                "href": "http://localhost:9294/grouse/projectRequirement/1373"
+                "href": "http://localhost:9294/grouse/projectRequirement/981"
               }
             }
           },
           {
-            "requirementId": 1374,
-            "requirementText": "Systemet skal fungere ..",
+            "requirementId": 982,
+            "requirementText": "Løsningen skal kunne håndtere all saksbehandling elektronisk slik at man\n                                ikke blir tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen.\n                                Eventuelle begrensninger og forutsetninger knyttet til dette skal beskrives.\n                            ",
             "showOrder": 2,
             "priority": "1 (i)",
             "_links": {
               "self": {
-                "href": "http://localhost:9294/grouse/projectRequirement/1374"
+                "href": "http://localhost:9294/grouse/projectRequirement/982"
               }
             }
           },
           {
-            "requirementId": 1375,
-            "requirementText": "Systemet skal fungere tilfredsstillende ....",
+            "requirementId": 983,
+            "requirementText": "Løsningen skal muliggjøre sikker og effektiv journalføring av sms/chat.\n                                Løsningen må også håndtere innkommende svar på sendte sms/chat. Leverandøren skal\n                                beskrive hvordan løsningen håndterer dette – ved utsendelse av sms/chat fra selve\n                                løsningen, alternativt også mulighet for journalføring av sms til og fra mobiltelefon.\n                            ",
             "showOrder": 3,
-            "priority": "1 (i)",
+            "priority": "1",
             "_links": {
               "self": {
-                "href": "http://localhost:9294/grouse/projectRequirement/1375"
+                "href": "http://localhost:9294/grouse/projectRequirement/983"
               }
             }
           },
           {
-            "requirementId": 1376,
-            "requirementText": "Organisasjonen har en eksisterende lisensavtale  ...",
+            "requirementId": 984,
+            "requirementText": "Leverandøren skal beskrive hvordan tilbudt løsning tilrettelegger for\n                                forenklet registrering jf. NOARK5, og hvilke utfordringer bruk av forenklet registrering\n                                kan medføre for den enkelte bruker, og for kommunen.\n                            ",
             "showOrder": 4,
-            "priority": "1 (i)",
+            "priority": "O (i)",
             "_links": {
               "self": {
-                "href": "http://localhost:9294/grouse/projectRequirement/1376"
+                "href": "http://localhost:9294/grouse/projectRequirement/984"
               }
             }
           },
           {
-            "requirementId": 1377,
-            "requirementText": "Redegjør for hvordan løsningen ivaretar de sju overordnede prinsipper for",
+            "requirementId": 985,
+            "requirementText": "Mottaker av notater skal enkelt kunne avskrive disse, dvs. det skal ikke\n                                være behov for mer enn én operasjon for å registrere et notat som mottatt og avskrevet.\n                            ",
             "showOrder": 5,
-            "priority": "1 (i)",
+            "priority": "1",
             "_links": {
               "self": {
-                "href": "http://localhost:9294/grouse/projectRequirement/1377"
+                "href": "http://localhost:9294/grouse/projectRequirement/985"
+              }
+            }
+          },
+          {
+            "requirementId": 986,
+            "requirementText": "Det skal være lett å få oversikt over egne restanser –\n                                henvendelser/dokumenter\n                            ",
+            "showOrder": 6,
+            "priority": "O",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/projectRequirement/986"
+              }
+            }
+          },
+          {
+            "requirementId": 987,
+            "requirementText": "Det skal være mulig å flette svarbrev til mange på en enkel måte, dvs. å\n                                produsere likelydende brev til mange mottakere.\n                            ",
+            "showOrder": 7,
+            "priority": "O",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/projectRequirement/987"
+              }
+            }
+          },
+          {
+            "requirementId": 988,
+            "requirementText": "Saksbehandler skal kunne legge på flere mottakere på en inngående\n                                journalpost og ekspedere dokumenter og vedlegg selv (dvs. videresende dette som en ny\n                                utgående post). Ekspedering må skje med godkjente arkivformat.\n                            ",
+            "showOrder": 8,
+            "priority": "O",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/projectRequirement/988"
+              }
+            }
+          },
+          {
+            "requirementId": 989,
+            "requirementText": "Det skal være enkelt å knytte til vedlegg som skal være med til en\n                                journalpost.\n                            ",
+            "showOrder": 9,
+            "priority": "O",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/projectRequirement/989"
+              }
+            }
+          },
+          {
+            "requirementId": 990,
+            "requirementText": "Et hoveddokument må kunne være vedlegg på en annen journalpost.",
+            "showOrder": 10,
+            "priority": "O",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/projectRequirement/990"
               }
             }
           }
         ]
       },
       "_links": {
+        "first": {
+          "href": "http://localhost:9294/grouse/projectFunctionality/980/requirement?page=0&size=10"
+        },
         "self": {
-          "href": "http://localhost:9294/grouse/projectFunctionality/1372/requirement?page=0&size=10"
+          "href": "http://localhost:9294/grouse/projectFunctionality/980/requirement?page=0&size=10"
+        },
+        "next": {
+          "href": "http://localhost:9294/grouse/projectFunctionality/980/requirement?page=1&size=10"
+        },
+        "last": {
+          "href": "http://localhost:9294/grouse/projectFunctionality/980/requirement?page=1&size=10"
         }
       },
       "page": {
         "size": 10,
-        "totalElements": 5,
-        "totalPages": 1,
+        "totalElements": 13,
+        "totalPages": 2,
         "number": 0
       }
     }
@@ -576,15 +537,15 @@ results in the following payload:
 ## Get en individual requirement
 
 
-    curl -v -X GET http://localhost:9294/grouse/projectRequirement/1376 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+    curl -v -X GET http://localhost:9294/grouse/projectRequirement/990 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
 
 This generates the following payload:
 
     {
-      "requirementId": 1376,
-      "showOrder": 4,
-      "requirementText": "Organisasjonen har en eksisterende lisensavtale  ....",
-      "priority": "1 (i)",
+      "requirementId": 990,
+      "showOrder": 10,
+      "requirementText": "Et hoveddokument må kunne være vedlegg på en annen journalpost.",
+      "priority": "O",
       "requirementNumber": null,
       "requirement": null,
       "requirementType": null,
@@ -592,27 +553,250 @@ This generates the following payload:
       "ownedBy": "user@example.com",
       "_links": {
         "self": {
-          "href": "http://localhost:9294/grouse/projectRequirement/1376"
+          "href": "http://localhost:9294/grouse/projectRequirement/990"
         }
       }
     }
 
-Make a note of the ETAG value in the header:
+Make a note of the ETAG value in the header, or use the value in version when creating a PATCH request to change the requirement. Note, a user can only change _ownedBy_, _showOrder_, _requirementText_, _priority_ and _requirementNumber_ attributes.
 
-## Get a list of projects
+To update an allowable field, issue a PATCH request to the href corresponding to the self rel. A Patch object must be used for this:
 
-The project is updated with a PATCH request:
+    curl -v -X PATCH http://localhost:9294/grouse/projectRequirement/990 -H 'ETAG: ""0""' -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4' --data '[{ "op": "replace", "path": "/requirementText", "value": "Oppdatert kravtekst."}]' 
 
-    curl -v -H 'ETAG: ""0"" '-H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '[{ "op": "replace", "path": "/processed", "value": true}]'  -X PATCH http://localhost:9294/grouse/projectRequirement/1376  -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'
+The updated object looks like this:
 
-The payload for updating is an array:
+    {
+      "requirementId": 990,
+      "showOrder": 10,
+      "requirementText": "Oppdatert kravtekst.",
+      "priority": "O",
+      "requirementNumber": null,
+      "requirement": null,
+      "requirementType": null,
+      "version": 1,
+      "ownedBy": "user@example.com",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/projectRequirement/990"
+        }
+      }
+    }
 
-    [{ "op": "replace", "path": "/processed", "value": true}]
+Note the change in version number. A further update will require this value or to retrieve the ETAG header and reuse it.
 
-This instructs grouese to replace the processed value with a new value, namely *false*.
+## Get en individual functionality
+
+If we go back to the list of functionalities over, we can retrieve a single functionality and change it with PATCH. To get a particular functionality, look for its self rel e.g.: 
+
+    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1372 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4' 
+    
+This will show the individual functionality object:
+
+    {
+      "projectFunctionalityId": 1372,
+      "functionalityNumber": "5.4",
+      "title": "Generelle tekniske krav",
+      "description": "",
+      "consequence": "",
+      "explanation": "",
+      "showMe": true,
+      "processed": false,
+      "active": false,
+      "type": "submenu",
+      "ownedBy": "user@example.com",
+      "version": 0,
+      "hasRequirements": false,
+      "hasFunctionality": false,
+      "_links": {
+        "requirement": {
+          "href": "http://localhost:9294/grouse/projectFunctionality/1372/requirement"
+        },
+        "self": {
+          "href": "http://localhost:9294/grouse/projectFunctionality/1372"
+        }
+      }
+    }
+
+The self rel can be used to update the object with a PATCH request. Note. Only the following attributes can be changed: _title_, _ownedBy_, _processed_ and _functionalityNumber_.
+
+    curl -v -X PATCH http://localhost:9294/grouse/projectFunctionality/1372 -H 'ETAG: ""0""' -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4' --data '[{ "op": "replace", "path": "/processed", "value": true}]' 
+
+The following payload shows how the _processed_ value is now set to true:
+
+    {
+      "projectFunctionalityId": 1372,
+      "functionalityNumber": "5.4",
+      "title": "Generelle tekniske krav",
+      "description": "",
+      "consequence": "",
+      "explanation": "",
+      "showMe": true,
+      "processed": true,
+      "active": false,
+      "type": "submenu",
+      "ownedBy": "user@example.com",
+      "version": 1,
+      "hasRequirements": false,
+      "hasFunctionality": false,
+      "_links": {
+        "requirement": {
+          "href": "http://localhost:9294/grouse/projectFunctionality/1372/requirement"
+        },
+        "self": {
+          "href": "http://localhost:9294/grouse/projectFunctionality/1372"
+        }
+      }
+    }
 
 Note the  eTag uses double quotes around the value. That is why the header is `-H 'ETAG: ""0""`
 
 ## Get a list of projects
 
-    curl -v -X GET http://localhost:9294/grouse/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 1e0d528b-4395-4abe-af5b-d6c5e5b1f1fc'    
+    curl -v -X GET http://localhost:9294/grouse/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'    
+    
+To get an individual project:
+    
+        `curl -v -H 'Authorization: Bearer 07fbcd9d-9dd3-440c-8456-bca9f339683e' -X GET http://localhost:9294/grouse/project/112`
+    
+    
+For the following example, two projects are owned by the user:
+     
+    {
+      "_embedded": {
+        "projects": [
+          {
+            "projectId": 718,
+            "projectName": "test",
+            "createdDate": "2020-03-14T18:15:17+01:00",
+            "lastModifiedDate": "2020-03-14T18:15:17+01:00",
+            "ownedBy": "user@example.com",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/project/718"
+              },
+              "function": {
+                "href": "http://localhost:9294/grouse/project/718/function"
+              },
+              "document": {
+                "href": "http://localhost:9294/grouse/project/718/document"
+              }
+            }
+          },
+          {
+            "projectId": 1435,
+            "projectName": "test",
+            "createdDate": "2020-03-14T18:15:20+01:00",
+            "lastModifiedDate": "2020-03-14T18:15:20+01:00",
+            "ownedBy": "user@example.com",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/project/1435"
+              },
+              "function": {
+                "href": "http://localhost:9294/grouse/project/1435/function"
+              },
+              "document": {
+                "href": "http://localhost:9294/grouse/project/1435/document"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project?page=0&size=10"
+        }
+      },
+      "page": {
+        "size": 10,
+        "totalElements": 2,
+        "totalPages": 1,
+        "number": 0
+      }
+    }
+    
+## Get a list of users
+    
+Only a user with the ROLE_ADMIN can retrieve a list of users. Log on as an admin:
+    
+    curl -v -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=admin@example.com -d password=password
+   
+and issue the following:
+    
+    curl -X GET http://localhost:9294/grouse/user  -H 'Authorization: Bearer 2e234261-620a-4d8e-bd06-7adb82d8ce84
+           
+You will then get a paged list of users. The default setup of grouse returns three users:
+    
+        {
+          "_embedded": {
+            "users": [
+              {
+                "username": "admin@example.com",
+                "accountNonExpired": true,
+                "credentialsNonExpired": true,
+                "accountNonLocked": true,
+                "enabled": true,
+                "_links": {
+                  "self": {
+                    "href": "http://localhost:9294/grouse/user/admin@example.com"
+                  },
+                  "project": {
+                    "href": "http://localhost:9294/grouse/project"
+                  },
+                  "template": {
+                    "href": "http://localhost:9294/grouse/template"
+                  }
+                }
+              },
+              {
+                "username": "user@example.com",
+                "accountNonExpired": true,
+                "credentialsNonExpired": true,
+                "accountNonLocked": true,
+                "enabled": true,
+                "_links": {
+                  "self": {
+                    "href": "http://localhost:9294/grouse/user/user@example.com"
+                  },
+                  "project": {
+                    "href": "http://localhost:9294/grouse/project"
+                  },
+                  "template": {
+                    "href": "http://localhost:9294/grouse/template"
+                  }
+                }
+              },
+              {
+                "username": "template@example.com",
+                "accountNonExpired": true,
+                "credentialsNonExpired": true,
+                "accountNonLocked": true,
+                "enabled": true,
+                "_links": {
+                  "self": {
+                    "href": "http://localhost:9294/grouse/user/template@example.com"
+                  },
+                  "project": {
+                    "href": "http://localhost:9294/grouse/project"
+                  },
+                  "template": {
+                    "href": "http://localhost:9294/grouse/template"
+                  }
+                }
+              }
+            ]
+          },
+          "_links": {
+            "self": {
+              "href": "http://localhost:9294/grouse/user?page=0&size=20"
+            }
+          },
+          "page": {
+            "size": 20,
+            "totalElements": 3,
+            "totalPages": 1,
+            "number": 0
+          }
+        }
+    
