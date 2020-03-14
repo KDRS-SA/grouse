@@ -47,6 +47,12 @@ public class ProjectFunctionalityAssembler
                                     .getProjectFunctionalityId()))
                             .withRel(REQUIREMENT));
         }
+        projectFunctionality
+                .add(linkTo(methodOn(ProjectFunctionalityController.class)
+                        .getProjectFunctionality(projectFunctionality
+                                .getProjectFunctionalityId()))
+                        .withSelfRel());
+
         return linksProjectFunctionality;
     }
 
@@ -65,6 +71,11 @@ public class ProjectFunctionalityAssembler
                                     projectFunctionality
                                             .getProjectFunctionalityId()))
                             .withRel(REQUIREMENT));
+            projectFunctionality
+                    .add(linkTo(methodOn(ProjectFunctionalityController.class)
+                            .getProjectFunctionality(projectFunctionality
+                                    .getProjectFunctionalityId()))
+                            .withSelfRel());
         });
         return linksProjectFunctionalitys;
     }
@@ -89,6 +100,5 @@ public class ProjectFunctionalityAssembler
         linksProjectFunctionality.setActive(projectFunctionality.getActive());
         linksProjectFunctionality.setType(projectFunctionality.getType());
         linksProjectFunctionality.setOwnedBy(projectFunctionality.getOwnedBy());
-
     }
 }
