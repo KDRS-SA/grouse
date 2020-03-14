@@ -1,12 +1,8 @@
 package no.kdrs.grouse.utils;
 
 import no.kdrs.grouse.assemblers.*;
-import no.kdrs.grouse.controller.DocumentController;
-import no.kdrs.grouse.controller.ProjectController;
-import no.kdrs.grouse.controller.TemplateController;
 import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.model.links.*;
-import no.kdrs.grouse.utils.exception.InternalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,11 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
 
-import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static no.kdrs.grouse.utils.Constants.NO_ACCESS_OTHER_USER;
 
 /**
  * Utility class that deals with a lot the links stuff added to the response
@@ -111,19 +104,9 @@ public class CommonController {
     public ResponseEntity<LinksProject> addProjectLinks(
             @NotNull final Project project,
             @NotNull final HttpStatus status) {
-        LinksProject linksProject = new LinksProject(project);
-        linksProject.add(linkTo(methodOn(ProjectController.class)
-                .getProject(project.getProjectId())).withSelfRel());
-        linksProject.add(linkTo(methodOn(ProjectController.class)
-                .getFunctionalityForProject(null,
-                        project.getProjectId()))
-                .withRel(FUNCTIONALITY));
-        linksProject.add(linkTo(methodOn(DocumentController.class)
-                .downloadProjectDocument(project.getProjectId()))
-                .withRel(DOCUMENT));
         return ResponseEntity.status(status)
                 .eTag(project.getVersion().toString())
-                .body(linksProject);
+                .body(projectAssembler.toModel(project));
     }
 
     public ResponseEntity<LinksUser> addUserLinks(
@@ -140,7 +123,8 @@ public class CommonController {
             @NotNull final HttpStatus status) {
         return ResponseEntity.status(status)
                 .eTag(projectFunctionality.getVersion().toString())
-                .body(projectFunctionalityAssembler.toModel(projectFunctionality));
+                .body(projectFunctionalityAssembler
+                        .toModel(projectFunctionality));
     }
 
     public ResponseEntity<LinksProjectRequirement>
@@ -165,27 +149,9 @@ public class CommonController {
     public ResponseEntity<LinksTemplate> addTemplateLinks(
             @NotNull final Template template,
             @NotNull final HttpStatus status) {
-
-        try {
-            LinksTemplate linksTemplate = new LinksTemplate(template);
-            linksTemplate.add(linkTo(methodOn(TemplateController.class)
-                    .getTemplate(template.getTemplateId())).withSelfRel());
-//            linksTemplate.add(linkTo(methodOn(TemplateController.class)
-//                    .getFunctionalityForTemplate(null,
-//                            template.getTemplateId()))
-//                    .withRel(FUNCTIONALITY));
-            linksTemplate.add(linkTo(methodOn(DocumentController.class)
-                    .downloadDocumentTemplate(template.getTemplateId()))
-                    .withRel(DOCUMENT));
-            return ResponseEntity.status(status)
-                    .eTag(template.getVersion().toString())
-                    .body(linksTemplate);
-        } catch (IOException e) {
-            String errorMessage =
-                    "Error when adding template links: " + e.getMessage();
-            logger.error(errorMessage);
-            throw new InternalException(errorMessage);
-        }
+        return ResponseEntity.status(status)
+                .eTag(template.getVersion().toString())
+                .body(templateAssembler.toModel(template));
     }
 
     public ResponseEntity<PagedModel<LinksTemplate>> addPagedTemplateLinks(
@@ -228,7 +194,8 @@ public class CommonController {
             @NotNull final HttpStatus status) {
         PagedModel<LinksProjectFunctionality> projectFunctionalityModels =
                 pagedProjectFunctionalityResourcesAssembler
-                        .toModel(projectFunctionalitys, projectFunctionalityAssembler);
+                        .toModel(projectFunctionalitys,
+                                projectFunctionalityAssembler);
         return ResponseEntity.status(status)
                 .body(projectFunctionalityModels);
     }
