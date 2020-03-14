@@ -50,12 +50,17 @@ public class GrouseService {
                     logger.error(errorMessage);
                     throw new PatchMisconfigurationException(errorMessage);
                 }
-                String methodName = "set" + path.substring(0, 1)
+                String baseMethodName = path.substring(0, 1)
                         .toUpperCase() + path.substring(1);
+                String setMethodName = "set" + baseMethodName;
+                String getMethodName = "get" + baseMethodName;
                 try {
-                    Method method = object.getClass()
-                            .getMethod(methodName, String.class);
-                    method.invoke(object, patchObject.getValue());
+                    Method getMethod =
+                            object.getClass().getMethod(getMethodName);
+                    Method setMethod =
+                            object.getClass().getMethod(setMethodName,
+                                    getMethod.getReturnType());
+                    setMethod.invoke(object, patchObject.getValue());
                 } catch (SecurityException | NoSuchMethodException |
                         IllegalArgumentException | IllegalAccessException |
                         InvocationTargetException e) {
