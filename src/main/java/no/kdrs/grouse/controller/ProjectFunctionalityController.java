@@ -1,7 +1,6 @@
 
 package no.kdrs.grouse.controller;
 
-import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.model.links.LinksProjectFunctionality;
 import no.kdrs.grouse.model.links.LinksProjectRequirement;
@@ -14,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -120,41 +117,24 @@ public class ProjectFunctionalityController {
 
     }
 
-    @PostMapping(value = SLASH + REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
-    public ResponseEntity<ProjectRequirement> createProjectRequirement(
-            @PathVariable(REQUIREMENT) Long projectFunctionalityId,
+    @PostMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
+    public ResponseEntity<LinksProjectRequirement> createProjectRequirement(
+            @PathVariable(FUNCTIONALITY) Long projectFunctionalityId,
             @RequestBody ProjectRequirement projectRequirement) {
 
-        projectFunctionalityService.
-                createProjectRequirement(projectFunctionalityId,
-                        projectRequirement);
-
-        projectRequirement.add(linkTo(methodOn
-                (ProjectRequirementController.class).
-                getRequirement(projectRequirement.
-                        getRequirementId()))
-                .withRel(REQUIREMENT));
-
-        return ResponseEntity.status(CREATED)
-                .body(projectRequirement);
+        return commonController.addProjectRequirementLinks(
+                projectFunctionalityService.
+                        createProjectRequirement(projectFunctionalityId,
+                                projectRequirement), CREATED);
     }
 
-    @PatchMapping(value = REQUIREMENT_PARAMETER + SLASH + REQUIREMENT)
-    public ResponseEntity<ProjectFunctionality> patchFunctionality(
-            @PathVariable(REQUIREMENT) Long functionalityNumber,
+    @PatchMapping(value = FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
+    public ResponseEntity<LinksProjectFunctionality> patchFunctionality(
+            @PathVariable(FUNCTIONALITY) Long functionalityNumber,
             @RequestBody PatchObjects patchObjects)
             throws Exception {
-
-        ProjectFunctionality projectFunctionality = projectFunctionalityService.
-                updateProjectFunctionality(patchObjects, functionalityNumber);
-
-        projectFunctionality.add(linkTo(methodOn
-                (ProjectFunctionalityController.class).
-                getProjectFunctionality(projectFunctionality
-                        .getProjectFunctionalityId())).
-                withSelfRel());
-
-        return ResponseEntity.status(OK)
-                .body(projectFunctionality);
+        return commonController.addProjectFunctionalityLinks(
+                projectFunctionalityService.updateProjectFunctionality(
+                        patchObjects, functionalityNumber), OK);
     }
 }
