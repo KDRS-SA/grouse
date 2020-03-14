@@ -143,6 +143,15 @@ public class CommonController {
                 .body(projectFunctionalityAssembler.toModel(projectFunctionality));
     }
 
+    public ResponseEntity<LinksProjectRequirement>
+    addProjectRequirementLinks(
+            @NotNull final ProjectRequirement projectRequirement,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(projectRequirement.getVersion().toString())
+                .body(projectRequirementAssembler.toModel(projectRequirement));
+    }
+
     public ResponseEntity<PagedModel<LinksUser>> addPagedUserLinks(
             @NotNull final Page<GrouseUser> users,
             @NotNull final HttpStatus status) {
