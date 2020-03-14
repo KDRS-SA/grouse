@@ -30,7 +30,7 @@ public class ProjectRequirementService
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
             new ArrayList<>(Arrays.asList("requirementText", "showOrder",
-                    "ownedBy", "priority"));
+                    "ownedBy", "priority", "requirementNumber"));
 
     public ProjectRequirementService(
             EntityManager em,

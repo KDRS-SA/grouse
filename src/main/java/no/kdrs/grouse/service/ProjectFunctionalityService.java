@@ -33,7 +33,8 @@ public class ProjectFunctionalityService
 
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
-            new ArrayList<>(Arrays.asList("title", "processed", "ownedBy"));
+            new ArrayList<>(Arrays.asList("title", "processed", "ownedBy",
+                    "functionalityNumber"));
 
     public ProjectFunctionalityService(IProjectRequirementRepository
                                                projectRequirementRepository,
