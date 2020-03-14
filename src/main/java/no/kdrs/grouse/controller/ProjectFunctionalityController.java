@@ -47,81 +47,15 @@ public class ProjectFunctionalityController {
     getProjectRequirements(
             Pageable page,
             @PathVariable(FUNCTIONALITY) Long projectFunctionalityId) {
-
         return commonController.addPagedProjectRequirementLinks(
                 projectFunctionalityService.getRequirements(page,
                         projectFunctionalityId), OK);
-
-                /*
-
-
-        ProjectFunctionality projectFunctionality = projectFunctionalityService.
-                getProjectFunctionality(projectFunctionalityId);
-
-        List<ProjectRequirement> projectRequirements =
-                projectFunctionality.getReferenceProjectRequirement();
-
-
-        for (ProjectRequirement projectRequirement : projectRequirements) {
-            projectRequirement.add(
-                    linkTo(
-                            methodOn(ProjectRequirementController.class)
-                                    .getRequirement(projectRequirement
-                                            .getRequirementId())).withSelfRel());
-        }
-
-        projectFunctionality.add(linkTo(methodOn
-                (ProjectFunctionalityController.class)
-                .getProjectFunctionality(projectFunctionalityId)).withSelfRel());
-
-        projectFunctionality.add(linkTo(methodOn
-                (ProjectFunctionalityController.class).
-                getProjectFunctionality(projectFunctionalityId)).
-                withRel(PROJECT_REQUIREMENT));
-*/
-    }
-
-    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
-    public ResponseEntity<PagedModel<LinksProjectFunctionality>>
-    getChildFunctionality(
-            Pageable pageable,
-            @PathVariable(FUNCTIONALITY) Long projectFunctionalityId) {
-
-        return commonController.addPagedProjectFunctionalityLinks(
-                projectFunctionalityService
-                        .getChildFunctionality(pageable,
-                                projectFunctionalityId), OK);
-/*
-        List<ProjectRequirement> projectRequirements =
-                projectFunctionality.getReferenceProjectRequirement();
-
-        for (ProjectRequirement projectRequirement : projectRequirements) {
-            projectRequirement.add(
-                    linkTo(
-                            methodOn(ProjectRequirementController.class)
-                                    .getRequirement(projectRequirement
-                                            .getProjectRequirementId())).withSelfRel());
-        }
-        projectFunctionality.add(linkTo(methodOn
-                (ProjectFunctionalityController.class).
-                getProjectFunctionality(projectFunctionalityId)).withSelfRel());
-
-        projectFunctionality.add(linkTo(methodOn
-                (ProjectFunctionalityController.class).
-                getProjectFunctionality(projectFunctionalityId)).
-                withRel(PROJECT_REQUIREMENT));
-
-        return ResponseEntity.status(OK)
-                .body(projectFunctionality);
-  */
-
-    }
+ }
 
     @PostMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<LinksProjectRequirement> createProjectRequirement(
             @PathVariable(FUNCTIONALITY) Long projectFunctionalityId,
             @RequestBody ProjectRequirement projectRequirement) {
-
         return commonController.addProjectRequirementLinks(
                 projectFunctionalityService.
                         createProjectRequirement(projectFunctionalityId,
