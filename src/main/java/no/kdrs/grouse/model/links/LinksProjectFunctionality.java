@@ -30,6 +30,7 @@ public class LinksProjectFunctionality
     private Boolean active;
     private String type;
     private String ownedBy;
+    private Long version;
     private Boolean hasRequirements = false;
     private Boolean hasFunctionality = false;
 
@@ -47,6 +48,7 @@ public class LinksProjectFunctionality
         this.active = projectFunctionality.getActive();
         this.type = projectFunctionality.getType();
         this.ownedBy = projectFunctionality.getOwnedBy();
+        this.version = projectFunctionality.getVersion();
         if (projectFunctionality
                 .getReferenceProjectRequirement()
                 .size() > 0) {
@@ -145,6 +147,14 @@ public class LinksProjectFunctionality
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public Boolean hasRequirements() {
