@@ -2,7 +2,6 @@
 package no.kdrs.grouse.controller;
 
 import no.kdrs.grouse.model.Project;
-import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.model.links.LinksProjectFunctionality;
 import no.kdrs.grouse.service.interfaces.IProjectService;
@@ -58,82 +57,15 @@ public class ProjectController {
     getFunctionalityForProject(
             Pageable pageable,
             @PathVariable(PROJECT_NUMBER) Long projectId) {
-
         return commonController.addPagedProjectFunctionalityLinks(
                 projectService.findFunctionalityForProjectByType(
                         pageable, projectId, "mainmenu"), OK);
     }
 
-    /*
-            for (ProjectFunctionality projectFunctionality :
-                    projectFunctionalities) {
-
-                for (ProjectFunctionality childProjectFunctionality :
-                        projectFunctionality
-                                .getReferenceChildProjectFunctionality()) {
-
-                    // Add REL to retrieve all requirements
-                    childProjectFunctionality.add(linkTo(methodOn(
-                            ProjectFunctionalityController.class).
-                            getProjectFunctionality(projectFunctionality.
-                                    getProjectFunctionalityId())).
-                            withRel(REQUIREMENT));
-
-                    childProjectFunctionality.add(linkTo(methodOn
-                            (ProjectFunctionalityController.class).
-                            getProjectFunctionality(childProjectFunctionality.
-                                    getProjectFunctionalityId())).withSelfRel());
-
-
-                    // Add SELF REL to each projectRequirement at this level
-                    for (ProjectRequirement projectRequirement :
-                            childProjectFunctionality
-                                    .getReferenceProjectRequirement()) {
-                        projectRequirement.add(linkTo(methodOn(
-                                ProjectRequirementController.class).
-                                getRequirement(projectRequirement.
-                                        getProjectRequirementId())).withSelfRel());
-                    }
-
-                    for (ProjectFunctionality childChildProjectFunctionality2 :
-                            childProjectFunctionality
-                                    .getReferenceChildProjectFunctionality()) {
-
-                        childChildProjectFunctionality2.add(linkTo(methodOn
-                                (ProjectFunctionalityController.class).
-                                getProjectFunctionality(childChildProjectFunctionality2.
-                                        getProjectFunctionalityId())).withSelfRel());
-
-                        for (ProjectRequirement projectRequirement :
-                                childChildProjectFunctionality2.
-                                        getReferenceProjectRequirement()) {
-                            projectRequirement.add(linkTo(methodOn(
-                                    ProjectRequirementController.class).
-                                    getRequirement(projectRequirement.
-                                            getProjectRequirementId())).withSelfRel());
-                        }
-                    }
-                }
-
-                // Add REL to retrieve all requirements
-                projectFunctionality.add(linkTo(methodOn(
-                        ProjectFunctionalityController.class).
-                        getProjectFunctionality(projectFunctionality.
-                                getProjectFunctionalityId())).
-                        withRel(REQUIREMENT));
-                projectFunctionality.add(linkTo(methodOn
-                        (ProjectFunctionalityController.class).
-                        getProjectFunctionality(projectFunctionality.
-                                getProjectFunctionalityId())).withSelfRel());
-            }
-            return ResponseEntity.status(OK)
-                    .body(projectFunctionalities);
-        }
-    */
     @PatchMapping(value = SLASH + PROJECT_NUMBER_PARAMETER)
     public ResponseEntity<LinksProject> patchRequirement(
             @PathVariable(PROJECT_NUMBER) Long projectId,
-            @RequestBody PatchObjects patchObjects) throws Exception {
+            @RequestBody PatchObjects patchObjects) {
         return commonController.addProjectLinks(projectService.update(
                 projectId, patchObjects), OK);
     }
@@ -143,14 +75,6 @@ public class ProjectController {
             @RequestBody Project project) {
         return commonController.addProjectLinks(
                 projectService.createProject(project), CREATED);
-    }
-
-    @PostMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
-            FUNCTIONALITY)
-    public ResponseEntity<ProjectFunctionality> createFunctionality(
-            @PathVariable(PROJECT_NUMBER) Long projectId,
-            @RequestBody ProjectFunctionality projectFunctionality) {
-        return ResponseEntity.status(CREATED).body(null);
     }
 
     @DeleteMapping(SLASH + PROJECT_NUMBER_PARAMETER)
