@@ -36,7 +36,6 @@ public class ProjectFunctionalityAssembler
                             .getProjectChildFunctionality(null,
                                     linksProjectFunctionality
                                             .getProjectFunctionalityId()))
-                            .slash(FUNCTIONALITY)
                             .withRel(FUNCTIONALITY));
         }
         if (projectFunctionality
@@ -46,7 +45,6 @@ public class ProjectFunctionalityAssembler
                     .add(linkTo(methodOn(ProjectFunctionalityController.class)
                             .getProjectRequirements(null, projectFunctionality
                                     .getProjectFunctionalityId()))
-                            .slash(REQUIREMENT)
                             .withRel(REQUIREMENT));
         }
         linksProjectFunctionality
@@ -74,7 +72,6 @@ public class ProjectFunctionalityAssembler
                                 .getProjectChildFunctionality(null,
                                         linksProjectFunctionality
                                                 .getProjectFunctionalityId()))
-                                .slash(FUNCTIONALITY)
                                 .withRel(FUNCTIONALITY));
             }
             if (linksProjectFunctionality.hasRequirements()) {
@@ -84,7 +81,6 @@ public class ProjectFunctionalityAssembler
                                         .getProjectRequirements(null,
                                                 linksProjectFunctionality
                                                         .getProjectFunctionalityId()))
-                                .slash(REQUIREMENT)
                                 .withRel(REQUIREMENT));
             }
             linksProjectFunctionality
