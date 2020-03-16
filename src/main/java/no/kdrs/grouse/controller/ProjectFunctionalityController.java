@@ -43,6 +43,16 @@ public class ProjectFunctionalityController {
     }
 
     @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
+    public ResponseEntity<PagedModel<LinksProjectFunctionality>>
+    getProjectChildFunctionality(
+            Pageable pageable,
+            @PathVariable(FUNCTIONALITY) Long projectFunctionalityId) {
+        return commonController.addPagedProjectFunctionalityLinks(
+                projectFunctionalityService.getChildFunctionality(pageable,
+                        projectFunctionalityId), OK);
+    }
+
+    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<PagedModel<LinksProjectRequirement>>
     getProjectRequirements(
             Pageable page,

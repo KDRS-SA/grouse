@@ -33,8 +33,9 @@ public class ProjectFunctionalityAssembler
                 .size() > 0) {
             linksProjectFunctionality
                     .add(linkTo(methodOn(ProjectFunctionalityController.class)
-                            .getProjectFunctionality(linksProjectFunctionality
-                                    .getProjectFunctionalityId()))
+                            .getProjectChildFunctionality(null,
+                                    linksProjectFunctionality
+                                            .getProjectFunctionalityId()))
                             .slash(FUNCTIONALITY)
                             .withRel(FUNCTIONALITY));
         }
@@ -70,7 +71,7 @@ public class ProjectFunctionalityAssembler
                 linksProjectFunctionality
                         .add(linkTo(methodOn(
                                 ProjectFunctionalityController.class)
-                                .getProjectFunctionality(
+                                .getProjectChildFunctionality(null,
                                         linksProjectFunctionality
                                                 .getProjectFunctionalityId()))
                                 .slash(FUNCTIONALITY)
