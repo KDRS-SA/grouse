@@ -33,9 +33,9 @@ public class ProjectFunctionalityAssembler
                 .size() > 0) {
             linksProjectFunctionality
                     .add(linkTo(methodOn(ProjectFunctionalityController.class)
-                            .getProjectFunctionality(
-                                    projectFunctionality
-                                            .getProjectFunctionalityId()))
+                            .getProjectFunctionality(linksProjectFunctionality
+                                    .getProjectFunctionalityId()))
+                            .slash(FUNCTIONALITY)
                             .withRel(FUNCTIONALITY));
         }
         if (projectFunctionality
@@ -45,6 +45,7 @@ public class ProjectFunctionalityAssembler
                     .add(linkTo(methodOn(ProjectFunctionalityController.class)
                             .getProjectRequirements(null, projectFunctionality
                                     .getProjectFunctionalityId()))
+                            .slash(REQUIREMENT)
                             .withRel(REQUIREMENT));
         }
         linksProjectFunctionality
@@ -72,6 +73,7 @@ public class ProjectFunctionalityAssembler
                                 .getProjectFunctionality(
                                         linksProjectFunctionality
                                                 .getProjectFunctionalityId()))
+                                .slash(FUNCTIONALITY)
                                 .withRel(FUNCTIONALITY));
             }
             if (linksProjectFunctionality.hasRequirements()) {
@@ -81,6 +83,7 @@ public class ProjectFunctionalityAssembler
                                         .getProjectRequirements(null,
                                                 linksProjectFunctionality
                                                         .getProjectFunctionalityId()))
+                                .slash(REQUIREMENT)
                                 .withRel(REQUIREMENT));
             }
             linksProjectFunctionality
