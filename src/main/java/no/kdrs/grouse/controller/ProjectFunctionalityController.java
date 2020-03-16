@@ -42,7 +42,7 @@ public class ProjectFunctionalityController {
                         projectFunctionalityId), OK);
     }
 
-    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
+    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
     public ResponseEntity<PagedModel<LinksProjectFunctionality>>
     getProjectChildFunctionality(
             Pageable pageable,
