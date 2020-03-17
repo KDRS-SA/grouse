@@ -13,6 +13,7 @@ export class Links {
   ['logout OAuth2']: Link;
   ['project-list-all']: Link;
   ['template-list-all']: Link;
+  requirement: Link;
 
   constructor() {
     this.self = new Link();
@@ -26,5 +27,6 @@ export class Links {
     this['template-list'] = new Link();
     this['project-list-all'] = new Link();
     this['template-list-all'] = new Link();
+    this.requirement = new Link();
   }
 }

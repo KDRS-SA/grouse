@@ -10,6 +10,7 @@ import {MatTreeNestedDataSource} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {statusPageData} from '../models/statusPageData.model';
 import {TranslateService} from '@ngx-translate/core';
+import {isIterable} from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'app-root',
@@ -78,27 +79,165 @@ export class kravEditComponent implements OnInit {
         }
       )
     }).subscribe(result => {
-      console.log(result);
       this.loading = false;
       const newlyLoaded = (this.mainData === undefined);
       // @ts-ignore
-      this.mainData = result;
-      this.convertLegacyLinks();
-      if (newlyLoaded) {
-        const first = this.mainData[0];
-        if (first.referenceProjectRequirement.length > 0) {
-          this.currentReq = first.referenceChildProjectFunctionality[0];
-        } else {
-          this.currentReq = first;
+      this.mainData = result._embedded.projectFunctionalities;
+      // Calls all children, but makes sure that it is finnished before it proceeds
+      let calls = 0;
+      let maxID = 0;
+      const NavData: Requirment[] = [];
+      for (const prime of this.mainData) {
+        const NavReqP = new Requirment();
+        NavReqP.id = prime.projectFunctionalityId;
+        NavReqP.name = prime.title;
+        NavReqP.children = [];
+        if (prime._links.function !== undefined) {
+          calls++;
+          this.http.get(prime._links.function.href, {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + this.userData.oauthClientSecret
+              }
+            )
+            // tslint:disable-next-line:no-shadowed-variable
+          }).subscribe(result => {
+            calls--;
+            // @ts-ignore
+            prime.referenceChildProjectFunctionality = result._embedded.projectFunctionalities;
+
+            // Does it all again if there are more levels of children
+            for (const secondary of prime.referenceChildProjectFunctionality) {
+              const NavReqS = new Requirment();
+              NavReqS.id = secondary.projectFunctionalityId;
+              NavReqS.name = secondary.title;
+              NavReqS.children = [];
+              if (secondary._links.function !== undefined) {
+                calls++;
+                this.http.get(secondary._links.function.href, {
+                  headers: new HttpHeaders({
+                      Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                    }
+                  )
+                  // tslint:disable-next-line:no-shadowed-variable
+                }).subscribe(result => {
+                  calls--;
+                  // @ts-ignore
+                  secondary.referenceChildProjectFunctionality = result._embedded.projectFunctionalities;
+
+                  // Does it all again again for the next generation
+                  for (const tertiary of secondary.referenceChildProjectFunctionality) {
+                    const NavReqT = new Requirment();
+                    NavReqT.id = tertiary.projectFunctionalityId;
+                    NavReqT.name = tertiary.title;
+                    NavReqS.children.push(NavReqT);
+                    if (tertiary._links.requirement !== undefined) {
+                      calls++;
+                      this.http.get(tertiary._links.requirement.href, {
+                        headers: new HttpHeaders({
+                            Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                          }
+                        )
+                        // tslint:disable-next-line:no-shadowed-variable
+                      }).subscribe(result => {
+                        calls--;
+                        // @ts-ignore
+                        tertiary.referenceProjectRequirement = result._embedded.projectRequirements;
+                        if (calls === 0) {
+                          this.crunchGatheredData(newlyLoaded);
+                        }
+                      }, error => {
+                        console.error(error);
+                      });
+                    }
+                    if (maxID < prime.projectFunctionalityId) {
+                      maxID = prime.projectFunctionalityId;
+                    }
+                  }
+                  // If this was the last call exits to next step
+                  if (calls === 0) {
+                    this.crunchGatheredData(newlyLoaded);
+                  }
+                }, error => {
+                  console.error(error);
+                });
+              } else if (secondary._links.requirement !== undefined) {
+                calls++;
+                this.http.get(secondary._links.requirement.href, {
+                  headers: new HttpHeaders({
+                      Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                    }
+                  )
+                  // tslint:disable-next-line:no-shadowed-variable
+                }).subscribe(result => {
+                  calls--;
+                  // @ts-ignore
+                  secondary.referenceProjectRequirement = result._embedded.projectRequirements;
+                  if (calls === 0) {
+                    this.crunchGatheredData(newlyLoaded);
+                  }
+                }, error => {
+                  console.error(error);
+                });
+              }
+              if (maxID < secondary.projectFunctionalityId) {
+                maxID = secondary.projectFunctionalityId;
+              }
+              NavReqP.children.push(NavReqS);
+            }
+            // If this was the last call exits to next step
+            if (calls === 0) {
+              this.crunchGatheredData(newlyLoaded);
+            }
+          }, error => {
+            console.error(error);
+          });
+        } else if (prime._links.requirement !== undefined) {
+          calls++;
+          this.http.get(prime._links.requirement.href, {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + this.userData.oauthClientSecret
+              }
+            )
+            // tslint:disable-next-line:no-shadowed-variable
+          }).subscribe(result => {
+            calls--;
+            // @ts-ignore
+            prime.referenceProjectRequirement = result._embedded.projectRequirements;
+            if (calls === 0) {
+              this.crunchGatheredData(newlyLoaded);
+            }
+          }, error => {
+            console.log(error);
+          });
         }
-        this.selectedTab = 0;
-      } else {
-        this.changeReq(this.currentReq.projectFunctionalityId);
+        if (maxID < prime.projectFunctionalityId) {
+          maxID = prime.projectFunctionalityId;
+        }
+        NavData.push(NavReqP);
       }
-      this.statusBarInfo();
+      this.dataSource.data = NavData;
+      this.maxID = maxID;
+      console.log(NavData);
     }, error => {
       console.error(error);
     });
+  }
+
+  crunchGatheredData(newlyLoaded: boolean) {
+    console.log(this.mainData);
+    // this.convertLegacyLinks();
+    if (newlyLoaded) {
+      const first = this.mainData[0];
+      if (first.referenceProjectRequirement === undefined) {
+        this.currentReq = first.referenceChildProjectFunctionality[0];
+      } else {
+        this.currentReq = first;
+      }
+      this.selectedTab = 0;
+    } else {
+      this.changeReq(this.currentReq.projectFunctionalityId);
+    }
+    this.statusBarInfo();
   }
 
   /*
@@ -138,25 +277,26 @@ export class kravEditComponent implements OnInit {
         if (NavReqS.id > maxID) {
           maxID = NavReqS.id;
         }
+        if (false) {
+          for (const tertiary of secondary.referenceChildProjectFunctionality) {
+            // @ts-ignore
+            tertiary._links = convertFromLegacy(tertiary.links);
+            // @ts-ignore
+            tertiary.links = null;
 
-        for (const tertiary of secondary.referenceChildProjectFunctionality) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
+            // For the navigation tree
+            const NavReqT = new Requirment();
+            NavReqT.id = tertiary.projectFunctionalityId;
+            NavReqT.name = tertiary.title;
+            NavReqS.children.push(NavReqT);
 
-          // For the navigation tree
-          const NavReqT = new Requirment();
-          NavReqT.id = tertiary.projectFunctionalityId;
-          NavReqT.name = tertiary.title;
-          NavReqS.children.push(NavReqT);
-
-          // For MaxID
-          if (NavReqT.id > maxID) {
-            maxID = NavReqT.id;
+            // For MaxID
+            if (NavReqT.id > maxID) {
+              maxID = NavReqT.id;
+            }
           }
+          NavReqP.children.push(NavReqS);
         }
-        NavReqP.children.push(NavReqS);
         for (const tertiary of secondary.referenceProjectRequirement) {
           // @ts-ignore
           tertiary._links = convertFromLegacy(tertiary.links);
@@ -245,7 +385,7 @@ export class kravEditComponent implements OnInit {
       if (primary.referenceChildProjectFunctionality.length > 0) {
         // Secondary level
         for (const secondary of primary.referenceChildProjectFunctionality) {
-          if (secondary.referenceChildProjectFunctionality.length > 0) {
+          if (secondary.referenceChildProjectFunctionality !== undefined) {
             // Tertiary level
             for (const tertiary of secondary.referenceChildProjectFunctionality) {
               if (tertiary.projectFunctionalityId === id) {
