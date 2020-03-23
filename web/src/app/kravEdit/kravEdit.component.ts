@@ -484,11 +484,10 @@ export class kravEditComponent implements OnInit {
     const textfield = document.getElementById('NyttKrav');
 
     this.http.post(
-      this.currentReq._links.self.href,
+      this.currentReq._links.requirement.href,
       {
         // @ts-ignore
-        requirementText: textfield.value,
-        priority: this.newReqPriority
+        requirementText: textfield.value
       }, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
