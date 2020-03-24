@@ -63,29 +63,32 @@ export class kravEditComponent implements OnInit {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
     this.projectLink = this.userData.currentProject._links.function.href;
     this.fetchMainData();
-
     this.treeControl = new NestedTreeControl<Requirment>(
       node => node.children
     );
-
     this.dataSource = new MatTreeNestedDataSource<Requirment>();
     this.dataSource.data = TREE_DATA;
   }
 
+  /**
+   * fetchMainData
+   *
+   * A Monster method that calls all required links to fetech the entire project form the server
+   */
   fetchMainData() {
+    this.loading = true;
     this.http.get(this.projectLink, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + this.userData.oauthClientSecret
         }
       )
     }).subscribe(result => {
-      this.loading = false;
       const newlyLoaded = (this.mainData === undefined);
       // @ts-ignore
       this.mainData = result._embedded.projectFunctionalities;
       // Calls all children, but makes sure that it is finnished before it proceeds
       let calls = 0;
-      let maxID = 0;
+      this.maxID = 0;
       const NavData: Requirment[] = [];
       for (const prime of this.mainData) {
         const NavReqP = new Requirment();
@@ -107,6 +110,7 @@ export class kravEditComponent implements OnInit {
 
             // Does it all again if there are more levels of children
             for (const secondary of prime.referenceChildProjectFunctionality) {
+              secondary.parent = prime;
               const NavReqS = new Requirment();
               NavReqS.id = secondary.projectFunctionalityId;
               NavReqS.name = secondary.title;
@@ -126,6 +130,7 @@ export class kravEditComponent implements OnInit {
 
                   // Does it all again again for the next generation
                   for (const tertiary of secondary.referenceChildProjectFunctionality) {
+                    tertiary.parent = secondary;
                     const NavReqT = new Requirment();
                     NavReqT.id = tertiary.projectFunctionalityId;
                     NavReqT.name = tertiary.title;
@@ -149,8 +154,8 @@ export class kravEditComponent implements OnInit {
                         console.error(error);
                       });
                     }
-                    if (maxID < prime.projectFunctionalityId) {
-                      maxID = prime.projectFunctionalityId;
+                    if (this.maxID < tertiary.projectFunctionalityId) {
+                      this.maxID = tertiary.projectFunctionalityId;
                     }
                   }
                   // If this was the last call exits to next step
@@ -179,8 +184,8 @@ export class kravEditComponent implements OnInit {
                   console.error(error);
                 });
               }
-              if (maxID < secondary.projectFunctionalityId) {
-                maxID = secondary.projectFunctionalityId;
+              if (this.maxID < secondary.projectFunctionalityId) {
+                this.maxID = secondary.projectFunctionalityId;
               }
               NavReqP.children.push(NavReqS);
             }
@@ -210,20 +215,26 @@ export class kravEditComponent implements OnInit {
             console.log(error);
           });
         }
-        if (maxID < prime.projectFunctionalityId) {
-          maxID = prime.projectFunctionalityId;
+        if (this.maxID < prime.projectFunctionalityId) {
+          this.maxID = prime.projectFunctionalityId;
         }
         NavData.push(NavReqP);
       }
       this.dataSource.data = NavData;
-      this.maxID = maxID;
-      console.log(NavData);
     }, error => {
       console.error(error);
     });
   }
 
+  /**
+   * crunchGatheredData
+   *
+   * Is called by fetch mian data the data needs to be treated differently depending on if it was the first time it was loaded
+   * @param newlyLoaded
+   * A booleann that tells the method if this was the first time that the data was fetched or not.
+   */
   crunchGatheredData(newlyLoaded: boolean) {
+    this.loading = false;
     console.log(this.mainData);
     // this.convertLegacyLinks();
     if (newlyLoaded) {
@@ -247,96 +258,6 @@ export class kravEditComponent implements OnInit {
     this.userData.nav = 'Menu';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/Menu']);
-  }
-
-  /*
-  * This method converts the links subsection of elements sent from the server from the old Spring Boot Standard to the new format
-  * This might not be required in newer version so this method might disapear later wich whould be a nice thing
-  */
-  convertLegacyLinks() {
-    const NavData: Requirment[] = [];     // For the sidenav Tree every NavReq is fo this purpose aswell
-    let maxID = 0;
-    for (const prime of this.mainData) {
-      const NavReqP = new Requirment();
-      NavReqP.id = prime.projectFunctionalityId;
-      NavReqP.name = prime.title;
-      NavReqP.children = [];
-
-      // For MaxID
-      if (NavReqP.id > maxID) {
-        maxID = NavReqP.id;
-      }
-
-      for (const secondary of prime.referenceChildProjectFunctionality) {
-        const NavReqS = new Requirment();
-        NavReqS.id = secondary.projectFunctionalityId;
-        NavReqS.name = secondary.title;
-        NavReqS.children = [];
-
-        // For MaxID
-        if (NavReqS.id > maxID) {
-          maxID = NavReqS.id;
-        }
-        if (false) {
-          for (const tertiary of secondary.referenceChildProjectFunctionality) {
-            // @ts-ignore
-            tertiary._links = convertFromLegacy(tertiary.links);
-            // @ts-ignore
-            tertiary.links = null;
-
-            // For the navigation tree
-            const NavReqT = new Requirment();
-            NavReqT.id = tertiary.projectFunctionalityId;
-            NavReqT.name = tertiary.title;
-            NavReqS.children.push(NavReqT);
-
-            // For MaxID
-            if (NavReqT.id > maxID) {
-              maxID = NavReqT.id;
-            }
-          }
-          NavReqP.children.push(NavReqS);
-        }
-        for (const tertiary of secondary.referenceProjectRequirement) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
-
-        }
-        // @ts-ignore
-        secondary._links = convertFromLegacy(secondary.links);
-        // @ts-ignore
-        secondary.links = null;
-      }
-      for (const secondary of prime.referenceProjectRequirement) {
-        /*
-        for (const tertiary of secondary.referenceChildProjectFunctionality) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
-        }
-        for (const tertiary of secondary.referenceProjectRequirement) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
-        }
-        */
-        // @ts-ignore
-        secondary._links = convertFromLegacy(secondary.links);
-        // @ts-ignore
-        secondary.links = null;
-      }
-      // @ts-ignore
-      prime._links = convertFromLegacy(prime.links);
-      // @ts-ignore
-      prime.links = null;
-      NavData.push(NavReqP);
-    }
-    this.dataSource.data = NavData;
-    this.maxID = maxID;
   }
 
   /*
@@ -428,22 +349,21 @@ export class kravEditComponent implements OnInit {
   updateFunctionalityProcessed(functionality: projectFunctionality) {
     functionality.processed = !functionality.processed;
 
-    const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
-      functionality.processed + '"}]';
+    const patchString = '[{ "op": "replace", "path": "/processed", "value": ' +
+      functionality.processed + '}]';
 
     this.sendPatch(patchString, functionality._links.self.href);
 
     // Cheks to se if all children of current parent has been processed unless this is a prime
-    const parent = this.findParentReq(functionality);
-    if (parent !== undefined && parent !== null) {
+    if (functionality.parent !== undefined && functionality.parent !== null) {
       let check = true;
-      for (const child of parent.referenceChildProjectFunctionality) {
+      for (const child of functionality.parent.referenceChildProjectFunctionality) {
         if (!child.processed) {
           check = false;
         }
       }
-      if (check !== parent.processed) {
-        this.updateFunctionalityProcessed(parent);
+      if (check !== functionality.parent.processed) {
+        this.updateFunctionalityProcessed(functionality.parent);
       }
     }
   }
@@ -466,9 +386,12 @@ export class kravEditComponent implements OnInit {
    *
    * @param patchString
    * Inputted patchstring to send
+   *
+   * @param url
+   * Inputted url to send patchstring to
    */
   sendPatch(patchString: string, url: string) {
-    console.log(JSON.parse(patchString));
+    console.log(patchString);
     this.http.patch(url, JSON.parse(patchString), {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -605,41 +528,6 @@ export class kravEditComponent implements OnInit {
   }
 
   /**
-   * findParentReq
-   *
-   * finds a parent of the given child, returns null if none
-   *
-   * @param child of wich the parent should be found
-   */
-  findParentReq(child: projectFunctionality): projectFunctionality {
-    if (child === null) {
-      return null;
-    }
-    // Primary level
-    for (const primary of this.mainData) {
-      if (primary.projectFunctionalityId === child.projectFunctionalityId) {
-        return  null;
-      }
-      if (primary.referenceChildProjectFunctionality.length > 0) {
-        // Secondary level
-        for (const secondary of primary.referenceChildProjectFunctionality) {
-          if (secondary.projectFunctionalityId === child.projectFunctionalityId) {
-            return primary;
-          }
-          if (secondary.referenceChildProjectFunctionality.length > 0) {
-            // Tertiary level
-            for (const tertiary of secondary.referenceChildProjectFunctionality) {
-              if (tertiary.projectFunctionalityId === child.projectFunctionalityId) {
-                return  secondary;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
    * statusBarInfo
    *
    * Provides an array for the statusbar with the previous 5 and next 5 requirments
@@ -659,7 +547,7 @@ export class kravEditComponent implements OnInit {
       const add = this.findNextReq(ret[ret.length - 1].projectFunctionalityId);
       if (add !== null) {
         ret.push(add);
-      } else if (ret.length > Math.max(9, this.maxID - this.mainData[0].projectFunctionalityId)) {
+      } else if (ret.length > 9) {
         ret.unshift(this.findPreviousReq(ret[0].projectFunctionalityId));
         // tslint:disable-next-line:no-shadowed-variable
         const add = {
@@ -668,8 +556,6 @@ export class kravEditComponent implements OnInit {
         };
         // @ts-ignore
         ret.push(add);
-      } else if (add === null) {
-        break;
       } else {
         ret.unshift(this.findPreviousReq(ret[0].projectFunctionalityId));
       }
@@ -717,6 +603,7 @@ export class kravEditComponent implements OnInit {
         numberOfReqs++;
       }
       this.statpageData.progress = Math.round((finished / numberOfReqs) * 100);
+      console.log(this.mainData);
     } else {
       this.statpageData.progress = 100;
     }
