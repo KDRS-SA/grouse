@@ -7,8 +7,6 @@ import no.kdrs.grouse.model.links.LinksProjectFunctionality;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +21,6 @@ import static org.springframework.http.HttpStatus.*;
 @RestController
 @RequestMapping(value = SLASH + PROJECT)
 public class ProjectController {
-
-    private static final Logger logger =
-            LoggerFactory.getLogger(ProjectController.class);
 
     private IProjectService projectService;
     private CommonController commonController;
