@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
   }
 
   getUserData() {
-    console.log(this.userData._links['project-list'].href);
+    console.log(this.userData);
     this.projectsLink = this.userData._links['project-list'].href;
     this.getActiveProjects();
   }

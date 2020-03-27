@@ -26,6 +26,17 @@ import {Links} from '../models/links.model';
 })
 
 export class LoginComponent implements  OnInit {
+
+  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
+    this.login = true;
+    this.http = http;
+    this.router = router;
+    this.userData = new UserData();
+    this.shake = false;
+    this.snackBar = snackBar;
+    translate.addLangs(['no', 'en', 'ny']);
+    translate.setDefaultLang('no');
+  }
   public title = 'Grouse';
   public login: boolean;
 
@@ -43,20 +54,12 @@ export class LoginComponent implements  OnInit {
   email = new FormControl('',
     [Validators.required, Validators.email]);
 
+  @Input()
+  Checked: boolean;
+
   getErrorMessage() {
     return this.email.hasError('required') ? 'Du må skrive inn en E-post adresse' :
       this.email.hasError('email') ? 'Ikke en gyldig E-post Adresse' : '';
-  }
-
-  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
-    this.login = true;
-    this.http = http;
-    this.router = router;
-    this.userData = new UserData();
-    this.shake = false;
-    this.snackBar = snackBar;
-    translate.addLangs(['no', 'en', 'ny']);
-    translate.setDefaultLang('no');
   }
 
   ngOnInit() {
@@ -102,9 +105,6 @@ export class LoginComponent implements  OnInit {
     });
   }
 
-  @Input()
-  Checked: boolean;
-
   // Creates a new user
   registerSubmit() {
     console.log('New user request called with e-mail: ' + this.regUser.email);
@@ -117,7 +117,7 @@ export class LoginComponent implements  OnInit {
         username: this.regUser.email,
         password: this.regUser.password
       };
-      this.http.post(this.userData._links.konto.href, body).subscribe(
+      this.http.post(this.userData._links['create-user'].href, body).subscribe(
         result => {
           // The transmission was a succsess and the server accepted the new user
           console.log('Account creation was a success! Signing in with the new user');
@@ -142,7 +142,7 @@ export class LoginComponent implements  OnInit {
       this.userData.oauthClientSecret = 'secret';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
     }
-    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData.loginAdress);
+    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData._links['login OAuth2'].href);
     this.shake = false; // Resets the shake animation
     // Sends login info to the server
 
@@ -153,7 +153,7 @@ export class LoginComponent implements  OnInit {
     body = body.append('password', this.loginUser.password.toString());
     body = body.append('client_id', this.userData.oauthClientId);
 
-    this.http.post(this.userData.loginAdress, body, {
+    this.http.post(this.userData._links['login OAuth2'].href, body, {
       // Constructs the headers
       headers: new HttpHeaders({
         Authorization: 'Basic ' + btoa(this.userData.oauthClientId + ':' + this.userData.oauthClientSecret),
@@ -207,7 +207,7 @@ export class GDPRContent {
   constructor(public dialogRef: MatDialogRef<GDPRContent>) {
   }
 
-  OnNoClick(){
+  OnNoClick() {
     this.dialogRef.close();
   }
 

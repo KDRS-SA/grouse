@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 import {HttpClient} from '@angular/common/http';
 import {UserData} from './models/UserData.model';
+import {Link} from './models/link.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Links} from './models/links.model';
 
@@ -24,13 +25,14 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.http = http;
     this.userData = new UserData();
+    this.userData._links = new Links();
     this.snackBar = snackBar;
   }
 
 
   ngOnInit() {
     // Uses allready existing variables if the user refreshed the page
-    if (localStorage.getItem('UserData') != null) {
+    if (localStorage.getItem('UserData') !== null) {
       this.userData = JSON.parse(localStorage.getItem('UserData'));
     }
     // Runs the function beneath that fetches API info from the server
@@ -40,8 +42,9 @@ export class AppComponent implements OnInit {
   // Fetches ApiDetails from the server, that is utialized for further communication
   public getApiDetails() {
     this.http.get<IApiFetchResponse>(startUrl).subscribe(result => {
-      console.log(result);
-      this.userData.loginAdress = result._links['login OAuth2'].href.split('?')[0];
+      this.userData._links['login OAuth2'] = new Link();
+      this.userData._links['login OAuth2'].href = result._links['login OAuth2'].href.split('?')[0];
+      this.userData._links['create-user'] = result._links['create-user'];
       localStorage.setItem('UserData', JSON.stringify(this.userData));
       this.loading = false;
       this.navigate();

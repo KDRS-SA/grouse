@@ -3,7 +3,6 @@ import {Links} from './links.model';
 import {Project} from './Project.model';
 
 export class UserData {
-  loginAdress: string;
   userName: string;
   oauthClientId: string;
   oauthClientSecret: string;
@@ -13,7 +12,6 @@ export class UserData {
   currentProject: Project;
 
   constructor() {
-    this.loginAdress = '';
     this.userName = '';
     this.oauthClientId = 'grouse-client';
     this.oauthClientSecret = 'secret';
