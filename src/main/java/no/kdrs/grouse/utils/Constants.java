@@ -136,6 +136,7 @@ public final class Constants {
     public static final String REL_LOGIN_OAUTH = "login OAuth2";
     public static final String REL_LOGOUT_OAUTH = "logout OAuth2";
     public static final String REL_USER = "konto";
+    public static final String REL_CREATE_USER = "create-user";
 
     public static final String ETAG_NAN =
             "ETAG value is not numeric! ETAG must be a number >= 0.";

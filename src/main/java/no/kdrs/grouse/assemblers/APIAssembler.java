@@ -42,6 +42,9 @@ public class APIAssembler
             linksAPIDetail.add(linkTo(methodOn(TokenEndpoint.class)
                     .postAccessToken(null, null))
                     .withRel(REL_LOGIN_OAUTH));
+            linksAPIDetail.add(linkTo(methodOn(UserController.class)
+                    .saveGrouseUser(null))
+                    .withRel(REL_CREATE_USER));
         } catch (HttpRequestMethodNotSupportedException e) {
             logger.error(e.getMessage());
             throw new InternalException(e.getMessage());
