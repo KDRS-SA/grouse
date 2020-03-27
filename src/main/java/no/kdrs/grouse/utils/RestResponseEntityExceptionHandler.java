@@ -16,6 +16,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
 
 import static org.springframework.http.HttpStatus.*;
 /**
@@ -67,7 +68,7 @@ public class RestResponseEntityExceptionHandler
     }
 
     @ExceptionHandler({DataIntegrityViolationException.class,
-            BadRequestException.class})
+            BadRequestException.class, ConstraintViolationException.class})
     public ResponseEntity<Object> handleBadRequest(
             final DataIntegrityViolationException ex,
             final WebRequest request) {
