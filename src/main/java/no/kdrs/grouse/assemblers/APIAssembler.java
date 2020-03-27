@@ -26,7 +26,6 @@ public class APIAssembler
 
     private static final Logger logger =
             LoggerFactory.getLogger(APIAssembler.class);
-
     private RoleValidator role;
 
     public APIAssembler(RoleValidator role) {
@@ -50,6 +49,7 @@ public class APIAssembler
             throw new InternalException(e.getMessage());
         }
 
+        // Print the following if the user is logged in
         String username = getUser();
         if (null != username) {
             linksAPIDetail.add(linkTo(methodOn(UserController.class)
@@ -64,6 +64,7 @@ public class APIAssembler
             linksAPIDetail.add(linkTo(methodOn(OAuthController.class)
                     .logout(null))
                     .withRel(REL_LOGOUT_OAUTH));
+            // Print the following if the user is admin
             if (role.isAdmin()) {
                 linksAPIDetail.add(linkTo(methodOn(ProjectController.class)
                         .getProjects(null))
