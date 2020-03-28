@@ -3,6 +3,7 @@ package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -31,6 +32,7 @@ import static no.kdrs.grouse.utils.Constants.*;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = PROJECT_REQUIREMENT_TABLE_NAME)
 public class ProjectRequirement
     extends RepresentationModel

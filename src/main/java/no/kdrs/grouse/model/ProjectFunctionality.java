@@ -1,6 +1,7 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -25,10 +26,11 @@ import static no.kdrs.grouse.utils.Constants.VERSION;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "project_functionality_areas",
         uniqueConstraints = {
-        @UniqueConstraint(
-                columnNames = {FUNCTIONALITY_NUMBER, "project_number"})
+                @UniqueConstraint(
+                        columnNames = {FUNCTIONALITY_NUMBER, "project_number"})
         }
 )
 @XmlRootElement

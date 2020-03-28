@@ -2,6 +2,7 @@ package no.kdrs.grouse.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import no.kdrs.grouse.model.GrouseUser;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,7 @@ import java.util.List;
 import static no.kdrs.grouse.utils.Constants.*;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = AUTHORITY_TABLE_NAME)
 public class Authority implements Serializable {
 
