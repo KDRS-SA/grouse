@@ -38,6 +38,7 @@ public final class Constants {
 
     public static final String PROJECT_REQUIREMENT = "projectRequirement";
     public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
+    public static final String ACCESS_CONTROL = "accessControl";
     public static final String TEMPLATE_REQUIREMENT = "templateRequirement";
     public static final String TEMPLATE_FUNCTIONALITY = "templateFunctionality";
     public static final String PAGE = "page";
@@ -49,6 +50,7 @@ public final class Constants {
 
     public static final String PROJECT_NUMBER = "projectNumber";
     public static final String TEMPLATE_ID = "templateId";
+    public static final String OBJECT_ID = "objectId";
     public static final String PROJECT_NUMBER_PARAMETER = "{" +
             PROJECT_NUMBER + "}";
     public static final String FUNCTIONALITY_PARAMETER = "{" +
