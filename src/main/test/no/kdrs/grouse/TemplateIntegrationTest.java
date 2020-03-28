@@ -30,6 +30,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.compile;
@@ -68,12 +69,16 @@ public class TemplateIntegrationTest {
     @Autowired
     private AuditConfiguration auditConfiguration;
 
+    private String uuid = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0" +
+            "-9a-fA-F]{4}-[0-9a-fA-F]{12}";
     private Pattern selfRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
             SLASH + "\\d+$");
+    private Pattern selfRelUUIDPattern =
+            compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + uuid);
     private Pattern functionRel = compile(".+" + CONTEXT_PATH + SLASH +
-            TEMPLATE + SLASH + "\\d+" + SLASH + FUNCTIONALITY + "$");
-    private Pattern documentRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
-            SLASH + "\\d+" + SLASH + DOCUMENT + "$");
+            TEMPLATE + SLASH + uuid + SLASH + FUNCTIONALITY + "$");
+    private Pattern documentRel = compile(".+" + CONTEXT_PATH + SLASH +
+            TEMPLATE + SLASH + uuid + SLASH + DOCUMENT + "$");
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext,
@@ -92,6 +97,7 @@ public class TemplateIntegrationTest {
     @Sql({"/db-tests/empty-database.sql"})
     public void testCreateTemplate() throws Exception {
         Template template = new Template();
+        template.setTemplateId(UUID.randomUUID());
         template.setTemplateName(TEST_TEMPLATE_NAME);
         String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH;
 
@@ -103,6 +109,12 @@ public class TemplateIntegrationTest {
                 .content(new Gson().toJson(template))
                 .with(user(grouseUserDetailsService
                         .loadUserByUsername("admin@example.com"))));
+
+        MockHttpServletResponse response = resultActions
+                .andReturn().getResponse();
+        System.out.println(response.getContentAsString());
+        System.out.println("Status: " + response.getStatus());
+        response.getHeaderNames().forEach(System.out::print);
 
         resultActions
                 .andExpect(status().isCreated())
@@ -117,11 +129,9 @@ public class TemplateIntegrationTest {
                 .andExpect(jsonPath("$.templateName")
                         .value(TEST_TEMPLATE_NAME))
                 .andExpect(jsonPath("$._links.self.href",
-                        matchesPattern(selfRel)))
+                        matchesPattern(selfRelUUIDPattern)))
                 .andExpect(jsonPath("$._links.function.href",
-                        matchesPattern(functionRel)))
-                .andExpect(jsonPath("$._links.document.href",
-                        matchesPattern(documentRel))
+                        matchesPattern(functionRel))
                 );
 
         resultActions
@@ -134,8 +144,9 @@ public class TemplateIntegrationTest {
                                         description("Get list of " +
                                                 "functionality"),
                                 linkWithRel
-                                        (DOCUMENT).
-                                        description("Download document"),
+                                        (PROJECT).
+                                        description("Create project from " +
+                                                "template"),
                                 linkWithRel(SELF).
                                         description("Self REL")
                         )
@@ -184,7 +195,7 @@ public class TemplateIntegrationTest {
                         .value(TEST_TEMPLATE_NAME))
                 .andExpect(jsonPath(
                         "$._embedded.templates[0]._links.self.href",
-                        matchesPattern(selfRel)))
+                        matchesPattern(selfRelUUIDPattern)))
                 .andExpect(jsonPath(
                         "$._embedded.templates[0]._links.function.href",
                         matchesPattern(functionRel)))
@@ -220,7 +231,8 @@ public class TemplateIntegrationTest {
 
         // 1 is the only template number defined in single-template.sql
         String url =
-                SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "1" + SLASH +
+                SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH +
+                        "be5c36b7-f256-4244-a601-2181667af6ff" + SLASH +
                         FUNCTIONALITY;
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .post(url)
@@ -282,7 +294,8 @@ public class TemplateIntegrationTest {
     // empty any templates from table and populate new value
     @Sql({"/db-tests/empty-database.sql", "/db-tests/single-template.sql"})
     public void testDeleteTemplate() throws Exception {
-        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "1";
+        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH +
+                "be5c36b7-f256-4244-a601-2181667af6ff";
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .delete(url)
                 .contextPath(SLASH + CONTEXT_PATH));
@@ -306,7 +319,8 @@ public class TemplateIntegrationTest {
     // empty any templates from table and populate new value
     @Sql({"/db-tests/empty-database.sql", "/db-tests/single-template.sql"})
     public void testUpdateTemplate() throws Exception {
-        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "1";
+        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH +
+                "be5c36b7-f256-4244-a601-2181667af6ff";
 
         PatchObject patchObject = new PatchObject();
         patchObject.setPath(SLASH + "templateName");
@@ -337,7 +351,8 @@ public class TemplateIntegrationTest {
     @Test
     @Sql("/db-tests/empty-database.sql")
     public void testDeleteNonExistingTemplate() throws Exception {
-        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + "9999";
+        String url = SLASH + CONTEXT_PATH + SLASH + TEMPLATE + SLASH +
+                "ce9c38b7-a296-4744-a6f1-5161837bf6ca";
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .delete(url)
                 .contextPath(SLASH + CONTEXT_PATH));

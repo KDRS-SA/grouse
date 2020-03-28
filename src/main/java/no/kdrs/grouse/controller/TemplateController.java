@@ -58,10 +58,10 @@ public class TemplateController {
     public ResponseEntity<PagedModel<LinksTemplateFunctionality>>
     getFunctionalityForTemplate(
             Pageable pageable,
-            @PathVariable(TEMPLATE_ID) Long templateId) {
+            @PathVariable(TEMPLATE_ID) UUID templateId) {
         return commonController.addPagedTemplateFunctionalityLinks(
-                templateService.findFunctionalityForTemplateByType(
-                        pageable, templateId, "mainmenu"), OK);
+                templateService.findFunctionalityForTemplate(
+                        pageable, templateId), OK);
     }
 
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + PROJECT)

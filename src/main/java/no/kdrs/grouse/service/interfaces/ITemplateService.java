@@ -12,9 +12,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ITemplateService {
+
     Page<Template> findAll(Pageable page);
 
     Template findById(UUID id);
+
+    Page<TemplateFunctionality> findFunctionalityForTemplate(
+            Pageable pageable, UUID templateId);
 
     Template createTemplate(Template template);
 
@@ -23,9 +27,6 @@ public interface ITemplateService {
     void delete(UUID id);
 
     List<Template> findByOwnedBy(String ownedBy);
-
-    Page<TemplateFunctionality> findFunctionalityForTemplateByType(
-            Pageable pageable, Long templateId, String type);
 
     void createFunctionality(@NotNull final UUID templateId,
                              @NotNull TemplateFunctionality

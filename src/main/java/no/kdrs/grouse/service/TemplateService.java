@@ -69,19 +69,12 @@ public class TemplateService
      * @param templateId Id of the template to retrieve TemplateFunctionality
      * @return list of TemplateFunctionality
      */
-    //@Override
-    public List<TemplateFunctionality> findFunctionalityForTemplateByType(
-            Pageable pageable, UUID templateId, String type) {
-
-
-        /*
-        revisit this!
+    @Override
+    public Page<TemplateFunctionality> findFunctionalityForTemplate(
+            Pageable pageable, UUID templateId) {
         return templateFunctionalityRepository.
-                findByReferenceTemplateAndTypeAndShowMe(
-                        getTemplateOrThrow(templateId), type, true);
-
-         */
-        return null;
+                findByReferenceTemplate(getTemplateOrThrow(templateId),
+                        pageable);
     }
 
     @Override
@@ -103,24 +96,7 @@ public class TemplateService
     public Template findById(@NotNull UUID id) {
         return getTemplateOrThrow(id);
     }
-/*
 
-    /**
-     * findFunctionalityForTemplate
-     * <p>
-     * Get a list of TemplateFunctionality for a give Template
-     *
-     * @param templateId Id of the template to retrieve TemplateFunctionality
-     * @return list of TemplateFunctionality
-     */
-    /*@Override
-    public Page<TemplateFunctionality> findFunctionalityForTemplateByType(
-            Pageable pageable, UUID templateId, String type) {
-        return templateFunctionalityRepository.
-                findByReferenceTemplateAndShowMeAndType(
-                        getTemplateOrThrow(templateId), type, true, pageable);
-    }
-    */
 
     /**
      * Create a new template.
@@ -146,13 +122,6 @@ public class TemplateService
     @Override
     public List<Template> findByOwnedBy(String ownedBy) {
         return templateRepository.findByOwnedBy(ownedBy);
-    }
-
-    @Override
-    public Page<TemplateFunctionality>
-    findFunctionalityForTemplateByType(Pageable pageable, Long templateId,
-                                       String type) {
-        return null;
     }
 
     /**

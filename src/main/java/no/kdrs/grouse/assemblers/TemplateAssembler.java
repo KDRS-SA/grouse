@@ -7,6 +7,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
 import static no.kdrs.grouse.utils.Constants.PROJECT;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -32,9 +33,10 @@ public class TemplateAssembler
 
         linksTemplate.add(linkTo(methodOn(TemplateController.class)
                 .getTemplate(template.getTemplateId())).withSelfRel());
-//        linksTemplate.add(linkTo(methodOn(TemplateController.class)
-//                .getFunctionalityForTemplate(null, template.getTemplateId()))
-//                .withRel(FUNCTIONALITY));
+        linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                .getFunctionalityForTemplate(null,
+                        template.getTemplateId()))
+                .withRel(FUNCTIONALITY));
         linksTemplate.add(linkTo(methodOn(TemplateController.class)
                 .createProjectFromTemplate(template.getTemplateId(), null))
                 .withRel(PROJECT));
