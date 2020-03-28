@@ -85,10 +85,6 @@ public class Template
     private List<TemplateFunctionality> referenceTemplateFunctionality =
             new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "referenceTemplate")
-    private List<TemplateRequirement> referenceTemplateRequirement;
-
     public UUID getTemplateId() {
         return templateId;
     }

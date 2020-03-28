@@ -2,6 +2,7 @@ package no.kdrs.grouse.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -89,8 +90,10 @@ public class ProjectRequirement
     @Column(name = VERSION)
     private Long version;
 
+
+    @CreatedBy
     @NotNull
-    @Column(name = "ownedBy", nullable = false)
+    @Column(name = OWNED_BY, nullable = false)
     private String ownedBy;
 
     @JsonIgnore

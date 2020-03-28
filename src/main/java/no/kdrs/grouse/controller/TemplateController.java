@@ -5,6 +5,7 @@ import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.model.links.LinksTemplate;
+import no.kdrs.grouse.model.links.LinksTemplateFunctionality;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.CommonController;
@@ -51,83 +52,18 @@ public class TemplateController {
         return commonController.addPagedTemplateLinks(
                 templateService.findAll(pageable), OK);
     }
-/*
-    @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
-    public ResponseEntity<PagedModel<TemplateFunctionality>>
+
+    @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH +
+            FUNCTIONALITY)
+    public ResponseEntity<PagedModel<LinksTemplateFunctionality>>
     getFunctionalityForTemplate(
             Pageable pageable,
-            @PathVariable(TEMPLATE_ID) UUID templateId) {
-
-        List<TemplateFunctionality> templateFunctionalities =
-                templateService.findFunctionalityForTemplateByType(templateId,
-                        "mainmenu");
-
-        for (TemplateFunctionality templateFunctionality :
-                templateFunctionalities) {
-
-            for (TemplateFunctionality childTemplateFunctionality :
-                    templateFunctionality
-                            .getReferenceChildTemplateFunctionality()) {
-
-                // Add REL to retrieve all requirements
-                childTemplateFunctionality.add(linkTo(methodOn(
-                        TemplateFunctionalityController.class).
-                        getTemplateFunctionality(templateFunctionality.
-                                getFunctionalityId())).
-                        withRel(REQUIREMENT));
-
-                childTemplateFunctionality.add(linkTo(methodOn
-                        (TemplateFunctionalityController.class).
-                        getTemplateFunctionality(childTemplateFunctionality.
-                                getFunctionalityId())).withSelfRel());
-
-
-                // Add SELF REL to each templateRequirement at this level
-                for (TemplateRequirement templateRequirement :
-                        childTemplateFunctionality
-                                .getReferenceFunctionalityRequirement()) {
-                    templateRequirement.add(linkTo(methodOn(
-                            TemplateRequirementController.class).
-                            getRequirement(templateRequirement.
-                                    getRequirementId())).withSelfRel());
-                }
-
-                for (TemplateFunctionality childChildTemplateFunctionality2 :
-                        childTemplateFunctionality
-                                .getReferenceChildTemplateFunctionality()) {
-
-                    childChildTemplateFunctionality2.add(linkTo(methodOn
-                            (TemplateFunctionalityController.class).
-                            getTemplateFunctionality(childChildTemplateFunctionality2.
-                                    getFunctionalityId())).withSelfRel());
-
-                    for (TemplateRequirement templateRequirement :
-                            childChildTemplateFunctionality2
-                                    .getReferenceFunctionalityRequirement()) {
-                        templateRequirement.add(linkTo(methodOn(
-                                TemplateRequirementController.class).
-                                getRequirement(templateRequirement.
-                                        getRequirementId())).withSelfRel());
-                    }
-                }
-            }
-
-            // Add REL to retrieve all requirements
-            templateFunctionality.add(linkTo(methodOn(
-                    TemplateFunctionalityController.class).
-                    getTemplateFunctionality(templateFunctionality.
-                            getFunctionalityId())).
-                    withRel(REQUIREMENT));
-            templateFunctionality.add(linkTo(methodOn
-                    (TemplateFunctionalityController.class).
-                    getTemplateFunctionality(templateFunctionality.
-                            getFunctionalityId())).withSelfRel());
-        }
-        return ResponseEntity.status(OK)
-                .body(templateFunctionalities);
+            @PathVariable(TEMPLATE_ID) Long templateId) {
+        return commonController.addPagedTemplateFunctionalityLinks(
+                templateService.findFunctionalityForTemplateByType(
+                        pageable, templateId, "mainmenu"), OK);
     }
 
-*/
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + PROJECT)
     public ResponseEntity<LinksProject> createProjectFromTemplate(
             @PathVariable(TEMPLATE_ID) UUID templateId,

@@ -136,7 +136,7 @@ public class AfterStartup {
                         .build();
 
                 templateFunctionality
-                        .setReferenceParentTemplateFunctionality(
+                        .setReferenceParentFunctionality(
                                 rootTemplateFunctionality);
                 templateFunctionality =
                         functionalityRepository.save(templateFunctionality);
@@ -167,7 +167,7 @@ public class AfterStartup {
                     .explanation(section.getExplanation())
                     .showMe(section.getShowMe())
                     .build();
-            templateFunctionality.setReferenceParentTemplateFunctionality(
+            templateFunctionality.setReferenceParentFunctionality(
                     parentFunctionality);
             templateFunctionality =
                     functionalityRepository.save(templateFunctionality);

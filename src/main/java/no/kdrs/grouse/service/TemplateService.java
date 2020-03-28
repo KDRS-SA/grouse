@@ -2,7 +2,6 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
-import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
 import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
@@ -62,15 +61,6 @@ public class TemplateService
         this.templateFunctionalityRepository = templateFunctionalityRepository;
     }
 
-//    @Override
-@SuppressWarnings("unchecked")
-public Page<TemplateRequirement> findByTemplateIdOrderByTemplateName(
-        Pageable page, UUID templateId, String functionalityNumber) {
-
-    return templateRequirementRepository.findByFunctionalityFunctionalityNumber(
-            functionalityNumber, page);
-}
-
     /**
      * findFunctionalityForTemplate
      * <p>
@@ -113,6 +103,24 @@ public Page<TemplateRequirement> findByTemplateIdOrderByTemplateName(
     public Template findById(@NotNull UUID id) {
         return getTemplateOrThrow(id);
     }
+/*
+
+    /**
+     * findFunctionalityForTemplate
+     * <p>
+     * Get a list of TemplateFunctionality for a give Template
+     *
+     * @param templateId Id of the template to retrieve TemplateFunctionality
+     * @return list of TemplateFunctionality
+     */
+    /*@Override
+    public Page<TemplateFunctionality> findFunctionalityForTemplateByType(
+            Pageable pageable, UUID templateId, String type) {
+        return templateFunctionalityRepository.
+                findByReferenceTemplateAndShowMeAndType(
+                        getTemplateOrThrow(templateId), type, true, pageable);
+    }
+    */
 
     /**
      * Create a new template.
@@ -138,6 +146,13 @@ public Page<TemplateRequirement> findByTemplateIdOrderByTemplateName(
     @Override
     public List<Template> findByOwnedBy(String ownedBy) {
         return templateRepository.findByOwnedBy(ownedBy);
+    }
+
+    @Override
+    public Page<TemplateFunctionality>
+    findFunctionalityForTemplateByType(Pageable pageable, Long templateId,
+                                       String type) {
+        return null;
     }
 
     /**

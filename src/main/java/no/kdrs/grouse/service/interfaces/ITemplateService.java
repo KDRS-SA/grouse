@@ -23,14 +23,10 @@ public interface ITemplateService {
     void delete(UUID id);
 
     List<Template> findByOwnedBy(String ownedBy);
-/*
-    List<TemplateRequirement> findByTemplateIdOrderByTemplateName(
-            UUID templateId, String functionalityNumber);
 
-    @SuppressWarnings("unchecked")
-    Page<TemplateRequirement> findByTemplateIdOrderByTemplateName(
-            Pageable page, UUID templateId, String functionalityNumber);
-*/
+    Page<TemplateFunctionality> findFunctionalityForTemplateByType(
+            Pageable pageable, Long templateId, String type);
+
     void createFunctionality(@NotNull final UUID templateId,
                              @NotNull TemplateFunctionality
                                      templateFunctionality);

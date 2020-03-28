@@ -1,10 +1,12 @@
 package no.kdrs.grouse.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,11 +16,8 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 import static no.kdrs.grouse.utils.Constants.*;
 
-/**
- * Created by tsodring on 9/8/17.
- */
-
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = TEMPLATE_REQUIREMENT_TABLE_NAME)
 @XmlRootElement(name = "requirement")
 @XmlAccessorType(FIELD)
@@ -84,16 +83,15 @@ public class TemplateRequirement
     @Column(name = VERSION)
     private Long version;
 
+    @CreatedBy
+    @NotNull
+    @Column(name = OWNED_BY, nullable = false)
+    private String ownedBy;
+
     @ManyToOne
     @JoinColumn(name = FUNCTIONALITY_FK_ID,
             referencedColumnName = FUNCTIONALITY_NUMBER)
     private TemplateFunctionality referenceFunctionality;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = TEMPLATE_FK_ID,
-            referencedColumnName = TEMPLATE_PK_ID)
-    private Template referenceTemplate;
 
     public Long getRequirementId() {
         return requirementId;
@@ -159,12 +157,16 @@ public class TemplateRequirement
         this.requirementType = requirementType;
     }
 
-    public TemplateFunctionality getReferenceTemplateFunctionality() {
-        return referenceFunctionality;
+    public String getOwnedBy() {
+        return ownedBy;
     }
 
-    public void setReferenceTemplate(Template referenceTemplate) {
-        this.referenceTemplate = referenceTemplate;
+    public void setOwnedBy(String ownedBy) {
+        this.ownedBy = ownedBy;
+    }
+
+    public TemplateFunctionality getReferenceTemplateFunctionality() {
+        return referenceFunctionality;
     }
 
     public Long getVersion() {

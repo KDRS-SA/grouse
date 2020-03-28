@@ -38,40 +38,47 @@ public class CommonController {
             pagedProjectFunctionalityResourcesAssembler;
     private PagedResourcesAssembler<ProjectRequirement>
             pagedProjectRequirementResourcesAssembler;
+    private PagedResourcesAssembler<TemplateFunctionality>
+            pagedTemplateFunctionalityResourcesAssembler;
     private ProjectAssembler projectAssembler;
     private TemplateAssembler templateAssembler;
     private UserAssembler userAssembler;
     private TemplateRequirementAssembler templateRequirementAssembler;
     private ProjectFunctionalityAssembler projectFunctionalityAssembler;
     private ProjectRequirementAssembler projectRequirementAssembler;
+    private TemplateFunctionalityAssembler templateFunctionalityAssembler;
 
     public CommonController(
             RoleValidator role,
             PagedResourcesAssembler<GrouseUser> pagedUserResourcesAssembler,
-            PagedResourcesAssembler<Project> pagedProjectResourcesAssembler,
             PagedResourcesAssembler<Template> pagedTemplateResourcesAssembler,
             PagedResourcesAssembler<TemplateRequirement>
                     pagedTemplateRequirementResourcesAssembler,
-            PagedResourcesAssembler<ProjectFunctionality>
-                    pagedProjectFunctionalityResourcesAssembler,
+            PagedResourcesAssembler<TemplateFunctionality>
+                    pagedTemplateFunctionalityResourcesAssembler,
+            PagedResourcesAssembler<Project> pagedProjectResourcesAssembler,
             PagedResourcesAssembler<ProjectRequirement>
                     pagedProjectRequirementResourcesAssembler,
+            PagedResourcesAssembler<ProjectFunctionality>
+                    pagedProjectFunctionalityResourcesAssembler,
             ProjectAssembler projectAssembler,
             TemplateAssembler templateAssembler,
             UserAssembler userAssembler,
+            ProjectRequirementAssembler projectRequirementAssembler,
             TemplateRequirementAssembler templateRequirementAssembler,
-            ProjectFunctionalityAssembler projectFunctionalityAssembler,
-            ProjectRequirementAssembler projectRequirementAssembler) {
+            ProjectFunctionalityAssembler projectFunctionalityAssembler) {
         this.role = role;
         this.pagedUserResourcesAssembler = pagedUserResourcesAssembler;
-        this.pagedProjectResourcesAssembler = pagedProjectResourcesAssembler;
         this.pagedTemplateResourcesAssembler = pagedTemplateResourcesAssembler;
         this.pagedTemplateRequirementResourcesAssembler =
                 pagedTemplateRequirementResourcesAssembler;
-        this.pagedProjectFunctionalityResourcesAssembler =
-                pagedProjectFunctionalityResourcesAssembler;
+        this.pagedTemplateFunctionalityResourcesAssembler =
+                pagedTemplateFunctionalityResourcesAssembler;
+        this.pagedProjectResourcesAssembler = pagedProjectResourcesAssembler;
         this.pagedProjectRequirementResourcesAssembler =
                 pagedProjectRequirementResourcesAssembler;
+        this.pagedProjectFunctionalityResourcesAssembler =
+                pagedProjectFunctionalityResourcesAssembler;
         this.projectAssembler = projectAssembler;
         this.templateAssembler = templateAssembler;
         this.userAssembler = userAssembler;
@@ -127,6 +134,16 @@ public class CommonController {
                         .toModel(projectFunctionality));
     }
 
+    public ResponseEntity<LinksTemplateFunctionality>
+    addTemplateFunctionalityLinks(
+            @NotNull final TemplateFunctionality templateFunctionality,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(templateFunctionality.getVersion().toString())
+                .body(templateFunctionalityAssembler
+                        .toModel(templateFunctionality));
+    }
+
     public ResponseEntity<LinksProjectRequirement>
     addProjectRequirementLinks(
             @NotNull final ProjectRequirement projectRequirement,
@@ -134,6 +151,16 @@ public class CommonController {
         return ResponseEntity.status(status)
                 .eTag(projectRequirement.getVersion().toString())
                 .body(projectRequirementAssembler.toModel(projectRequirement));
+    }
+
+    public ResponseEntity<LinksTemplateRequirement>
+    addTemplateRequirementLinks(
+            @NotNull final TemplateRequirement templateRequirement,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(templateRequirement.getVersion().toString())
+                .body(templateRequirementAssembler
+                        .toModel(templateRequirement));
     }
 
     public ResponseEntity<PagedModel<LinksUser>> addPagedUserLinks(
@@ -198,5 +225,17 @@ public class CommonController {
                                 projectFunctionalityAssembler);
         return ResponseEntity.status(status)
                 .body(projectFunctionalityModels);
+    }
+
+    public ResponseEntity<PagedModel<LinksTemplateFunctionality>>
+    addPagedTemplateFunctionalityLinks(
+            @NotNull final Page<TemplateFunctionality> templateFunctionalitys,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksTemplateFunctionality> templateFunctionalityModels =
+                pagedTemplateFunctionalityResourcesAssembler
+                        .toModel(templateFunctionalitys,
+                                templateFunctionalityAssembler);
+        return ResponseEntity.status(status)
+                .body(templateFunctionalityModels);
     }
 }

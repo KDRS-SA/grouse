@@ -1,6 +1,9 @@
 package no.kdrs.grouse.persistence;
 
+import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,14 +13,17 @@ import java.util.List;
 public interface ITemplateFunctionalityRepository
         extends PagingAndSortingRepository<TemplateFunctionality, Long> {
 
-    @Override
-    List<TemplateFunctionality> findAll();
+    Page<TemplateFunctionality> findByReferenceTemplate(
+            Template template, Pageable pageable);
 
-    //List<TemplateFunctionality> findAllByOrderById();
+    Page<TemplateFunctionality> findByReferenceParentFunctionality(
+            Pageable pageable, TemplateFunctionality templateFunctionality);
+
+    List<TemplateFunctionality> findByReferenceTemplate(Template template);
 
     List<TemplateFunctionality>
-    findByShowMeAndReferenceParentTemplateFunctionality(
-            Boolean menuItem, TemplateFunctionality parent);
+    findByFunctionalityNumber(String functionalityNumber);
 
-    TemplateFunctionality findByFunctionalityNumber(String functionalityNumber);
+    List<TemplateFunctionality> findByFunctionalityNumberAndReferenceTemplate(
+            String functionalityNumber, Template template);
 }

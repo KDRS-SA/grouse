@@ -2,7 +2,7 @@ package no.kdrs.grouse.model.links;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import no.kdrs.grouse.model.ProjectFunctionality;
+import no.kdrs.grouse.model.TemplateFunctionality;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
@@ -13,62 +13,58 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Relation(collectionRelation = "projectFunctionalities",
-        itemRelation = "projectFunctionality")
+@Relation(collectionRelation = "templateFunctionalities",
+        itemRelation = "templateFunctionality")
 @JsonInclude(NON_NULL)
-public class LinksProjectFunctionality
-        extends RepresentationModel<LinksProjectFunctionality> {
+public class LinksTemplateFunctionality
+        extends RepresentationModel<LinksTemplateFunctionality> {
 
-    private Long projectFunctionalityId;
+    private Long templateFunctionalityId;
     private String functionalityNumber;
     private String title;
     private String description;
     private String consequence;
     private String explanation;
     private Boolean showMe;
-    private Boolean processed;
-    private Boolean active;
     private String type;
     private String ownedBy;
     private Long version;
     private Boolean hasRequirements;
     private Boolean hasFunctionality;
 
-    public LinksProjectFunctionality(ProjectFunctionality projectFunctionality) {
-        this.projectFunctionalityId = projectFunctionality
-                .getProjectFunctionalityId();
-        this.functionalityNumber = projectFunctionality
+    public LinksTemplateFunctionality(TemplateFunctionality templateFunctionality) {
+        this.templateFunctionalityId = templateFunctionality
+                .getFunctionalityId();
+        this.functionalityNumber = templateFunctionality
                 .getFunctionalityNumber();
-        this.title = projectFunctionality.getTitle();
-        this.description = projectFunctionality.getDescription();
-        this.consequence = projectFunctionality.getConsequence();
-        this.explanation = projectFunctionality.getExplanation();
-        this.showMe = projectFunctionality.getShowMe();
-        this.processed = projectFunctionality.getProcessed();
-        this.active = projectFunctionality.getActive();
-        this.type = projectFunctionality.getType();
-        this.ownedBy = projectFunctionality.getOwnedBy();
-        this.version = projectFunctionality.getVersion();
+        this.title = templateFunctionality.getTitle();
+        this.description = templateFunctionality.getDescription();
+        this.consequence = templateFunctionality.getConsequence();
+        this.explanation = templateFunctionality.getExplanation();
+        this.showMe = templateFunctionality.getShowMe();
+        this.type = templateFunctionality.getType();
+        this.ownedBy = templateFunctionality.getOwnedBy();
+        this.version = templateFunctionality.getVersion();
         this.hasRequirements = false;
-        if (projectFunctionality
-                .getReferenceProjectRequirement()
+        if (templateFunctionality
+                .getReferenceTemplateRequirement()
                 .size() > 0) {
             this.hasRequirements = true;
         }
         this.hasFunctionality = false;
-        if (projectFunctionality
-                .getReferenceChildProjectFunctionality()
+        if (templateFunctionality
+                .getReferenceChildTemplateFunctionality()
                 .size() > 0) {
             this.hasFunctionality = true;
         }
     }
 
-    public Long getProjectFunctionalityId() {
-        return projectFunctionalityId;
+    public Long getTemplateFunctionalityId() {
+        return templateFunctionalityId;
     }
 
-    public void setProjectFunctionalityId(Long projectFunctionalityId) {
-        this.projectFunctionalityId = projectFunctionalityId;
+    public void setTemplateFunctionalityId(Long templateFunctionalityId) {
+        this.templateFunctionalityId = templateFunctionalityId;
     }
 
     public String getFunctionalityNumber() {
@@ -117,22 +113,6 @@ public class LinksProjectFunctionality
 
     public void setShowMe(Boolean showMe) {
         this.showMe = showMe;
-    }
-
-    public Boolean getProcessed() {
-        return processed;
-    }
-
-    public void setProcessed(Boolean processed) {
-        this.processed = processed;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 
     public String getType() {

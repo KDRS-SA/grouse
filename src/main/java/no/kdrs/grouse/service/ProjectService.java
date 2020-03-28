@@ -188,7 +188,7 @@ public class ProjectService
                     projectFunctionalityRepository.save(projectFunctionality);
             // copy requirements if present
             processRequirements(projectFunctionality, templateFunctionality
-                    .getReferenceFunctionalityRequirement());
+                    .getReferenceTemplateRequirement());
             // Only the top functionality should have a reference to the project
             processFunctionalities(null, projectFunctionality,
                     templateFunctionality
