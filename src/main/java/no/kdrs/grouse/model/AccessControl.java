@@ -144,6 +144,10 @@ public class AccessControl {
         return lastModifiedDate;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
     @Override
     public String toString() {
         return "AccessControl{" +

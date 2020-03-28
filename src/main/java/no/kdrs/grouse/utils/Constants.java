@@ -59,6 +59,7 @@ public final class Constants {
             TEMPLATE_ID + "}";
     public static final String USER_PARAMETER = "{" + USER + "}";
     public static final String REQUIREMENT_PARAMETER = "{" + REQUIREMENT + "}";
+    public static final String ACCESS_CONTROL_PARAMETER = "{" + ACCESS_CONTROL + "}";
 
     // Column names
     public static final String REQUIREMENT_NAME = "requirement_name";

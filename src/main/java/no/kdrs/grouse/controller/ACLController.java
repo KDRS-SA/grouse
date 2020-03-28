@@ -1,17 +1,17 @@
 
 package no.kdrs.grouse.controller;
 
+import no.kdrs.grouse.model.AccessControl;
+import no.kdrs.grouse.model.links.LinksAccessControl;
 import no.kdrs.grouse.service.ACLService;
 import no.kdrs.grouse.utils.CommonController;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -27,24 +27,26 @@ public class ACLController {
         this.commonController = commonController;
     }
 
-    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER)
+    @GetMapping(value = SLASH + ACCESS_CONTROL_PARAMETER)
     public ResponseEntity<LinksAccessControl>
     getACLEntry(@PathVariable(OBJECT_ID) UUID objectId) {
         return commonController.addACLLinks(
                 aclService.getACLEntry(objectId), OK);
     }
 
-    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER)
+    @PostMapping(value = SLASH + ACCESS_CONTROL_PARAMETER)
     public ResponseEntity<LinksAccessControl>
-    createACLEntry(@PathVariable(OBJECT_ID) UUID objectId) {
+    createACLEntry(@PathVariable(OBJECT_ID) UUID objectId,
+                   @RequestBody AccessControl accessControl) {
         return commonController.addACLLinks(
-                aclService.createACLEntry(objectId), OK);
+                aclService.createACLEntry(objectId, accessControl), OK);
     }
 
-    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER)
-    public ResponseEntity<LinksAccessControl>
+    @DeleteMapping(value = SLASH + ACCESS_CONTROL_PARAMETER)
+    public ResponseEntity<Void>
     deleteACLEntry(@PathVariable(OBJECT_ID) UUID objectId) {
-        return commonController.addACLLinks(
-                aclService.deleteACLEntry(objectId), OK);
+        aclService.deleteACLEntry(objectId);
+        return ResponseEntity.status(NO_CONTENT)
+                .body(null);
     }
 }
