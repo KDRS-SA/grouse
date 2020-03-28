@@ -7,8 +7,7 @@ import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static no.kdrs.grouse.utils.Constants.SLASH;
-import static no.kdrs.grouse.utils.Constants.TEMPLATE_REQUIREMENT;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -29,9 +28,9 @@ public class TemplateRequirementController {
         this.templateRequirementService = templateRequirementService;
     }
 
-    @GetMapping(value = "/{krav}")
+    @GetMapping(value = SLASH + REQUIREMENT_PARAMETER)
     public ResponseEntity<TemplateRequirement> getRequirement(
-            @PathVariable("krav") Long requirementNumber) {
+            @PathVariable(REQUIREMENT) Long requirementNumber) {
 
         TemplateRequirement templateRequirement = templateRequirementService.
                 findById(requirementNumber);
@@ -45,9 +44,9 @@ public class TemplateRequirementController {
                 .body(templateRequirement);
     }
 
-    @PatchMapping(value = "/{krav}")
+    @PatchMapping(value = SLASH + REQUIREMENT_PARAMETER)
     public ResponseEntity<TemplateRequirement> patchRequirement(
-            @PathVariable("krav") Long requirementNumber,
+            @PathVariable(REQUIREMENT) Long requirementNumber,
             @RequestBody PatchObjects patchObjects) {
 
         TemplateRequirement templateRequirement = templateRequirementService.
@@ -80,10 +79,10 @@ public class TemplateRequirementController {
                 .body(templateRequirement);
     }
 
-    @DeleteMapping(value = "/{krav}")
+    @DeleteMapping(value = SLASH + REQUIREMENT_PARAMETER)
     public ResponseEntity<String>
     deleteTemplateRequirement(
-            @PathVariable("krav") Long requirementNumber) {
+            @PathVariable(REQUIREMENT) Long requirementNumber) {
         templateRequirementService.delete(requirementNumber);
         return ResponseEntity.status(OK).body("{\"result\":\"OK\"}");
     }

@@ -2,11 +2,16 @@ package no.kdrs.grouse.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
+
+import static no.kdrs.grouse.utils.Constants.*;
 
 /**
  * Created by tsodring on 29/03/18.
@@ -27,7 +32,8 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "project_requirements")
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = PROJECT_REQUIREMENT_TABLE_NAME)
 public class ProjectRequirement
     extends RepresentationModel
         implements Serializable {
@@ -36,21 +42,21 @@ public class ProjectRequirement
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "requirement_id", nullable = false)
-    private Long projectRequirementId;
+    @Column(name = REQUIREMENT_PK_ID, nullable = false)
+    private Long requirementId;
 
     /**
      * order (no:kravtype)
      * Used to identify an order that the requirements have to follow
      * Order == 0, is a 'formål'
      */
-    @Column(name = "show_order")
-    private Integer order;
+    @Column(name = SHOW_ORDER)
+    private Integer showOrder;
 
     /**
      * requirementText (no:tekst)*
      */
-    @Column(name = "requirement_text", length = 4000)
+    @Column(name = REQUIREMENT_TEXT, length = 4000)
     private String requirementText;
 
      /**
@@ -63,19 +69,33 @@ public class ProjectRequirement
      *   1 - Svært viktig for oppdragsgiver
      *   2 - Viktig for oppdragsgiver
      */
-    @Column(name = "priority")
-    private String priority;
+     @Column(name = PRIORITY)
+     private String priority;
 
     /**
      * requirement (no:kravnr)
      * An actual requirement number from the standard
      * e.g 5.2.1
      */
-    @Column(name = "requirement_number")
+    @Column(name = REQUIREMENT_NUMBER)
     private String requirementNumber;
 
+    @XmlElement
+    @Column(name = IS_REQUIREMENT)
+    private Boolean requirement;
+
+    @XmlElement
+    @Column(name = REQUIREMENT_TYPE)
+    private String requirementType;
+
+    @Version
+    @Column(name = VERSION)
+    private Long version;
+
+
+    @CreatedBy
     @NotNull
-    @Column(name = "ownedBy", nullable = false)
+    @Column(name = OWNED_BY, nullable = false)
     private String ownedBy;
 
     @JsonIgnore
@@ -84,26 +104,20 @@ public class ProjectRequirement
             referencedColumnName = "id")
     private ProjectFunctionality referenceFunctionality;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "project_number",
-            referencedColumnName = "project_id")
-    private Project referenceProject;
-
-    public Long getProjectRequirementId() {
-        return projectRequirementId;
+    public Long getRequirementId() {
+        return requirementId;
     }
 
-    public void setProjectRequirementId(Long projectRequirementId) {
-        this.projectRequirementId = projectRequirementId;
+    public void setRequirementId(Long requirementId) {
+        this.requirementId = requirementId;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getShowOrder() {
+        return showOrder;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setShowOrder(Integer showOrder) {
+        this.showOrder = showOrder;
     }
 
     public String getRequirementText() {
@@ -130,6 +144,30 @@ public class ProjectRequirement
         this.requirementNumber = requirementNumber;
     }
 
+    public Boolean getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Boolean requirement) {
+        this.requirement = requirement;
+    }
+
+    public String getRequirementType() {
+        return requirementType;
+    }
+
+    public void setRequirementType(String requirementType) {
+        this.requirementType = requirementType;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
     public String getOwnedBy() {
         return ownedBy;
     }
@@ -146,22 +184,17 @@ public class ProjectRequirement
         this.referenceFunctionality = referenceFunctionality;
     }
 
-    public Project getReferenceProject() {
-        return referenceProject;
-    }
-
-    public void setReferenceProject(Project referenceProject) {
-        this.referenceProject = referenceProject;
-    }
-
     @Override
     public String toString() {
         return "ProjectRequirement{" +
-                "projectRequirementId=" + projectRequirementId +
-                ", order=" + order +
+                "requirementId=" + requirementId +
+                ", showOrder=" + showOrder +
                 ", requirementText='" + requirementText + '\'' +
                 ", priority='" + priority + '\'' +
                 ", requirementNumber='" + requirementNumber + '\'' +
+                ", requirement=" + requirement +
+                ", requirementType='" + requirementType + '\'' +
+                ", version=" + version +
                 ", ownedBy='" + ownedBy + '\'' +
                 '}';
     }

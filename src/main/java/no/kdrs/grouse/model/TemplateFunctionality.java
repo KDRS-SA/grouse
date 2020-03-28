@@ -38,8 +38,7 @@ public class TemplateFunctionality
     @Column(name = FUNCTIONALITY_PK_ID, nullable = false, updatable = false)
     private Long functionalityId;
 
-
-    @Column(name = "functionality_number", nullable = false, updatable = false)
+    @Column(name = FUNCTIONALITY_NUMBER, nullable = false, updatable = false)
     private String functionalityNumber;
 
     /**
@@ -56,7 +55,6 @@ public class TemplateFunctionality
      */
     @Column(name = "description", length = 4000)
     private String description;
-
 
     /**
      * Description of consequence of excluding this functionality
@@ -117,15 +115,15 @@ public class TemplateFunctionality
     // Link to parent TemplateFunctionality
     @ManyToOne
     @JoinColumn(name = "parent")
-    private TemplateFunctionality referenceParentTemplateFunctionality;
+    private TemplateFunctionality referenceParentFunctionality;
 
-    @OneToMany(mappedBy = "referenceParentTemplateFunctionality")
+    @OneToMany(mappedBy = "referenceParentFunctionality")
     private List<TemplateFunctionality> referenceChildTemplateFunctionality =
             new ArrayList<>();
 
     @OneToMany(mappedBy = "referenceFunctionality")
-    @OrderBy("order ASC")
-    private List<TemplateRequirement> referenceFunctionalityRequirement =
+    @OrderBy("functionalityId ASC")
+    private List<TemplateRequirement> referenceTemplateRequirement =
             new ArrayList<>();
 
     public TemplateFunctionality() {
@@ -271,30 +269,29 @@ public class TemplateFunctionality
     }
 
     @JsonIgnore
-    public TemplateFunctionality getReferenceParentTemplateFunctionality() {
-        return referenceParentTemplateFunctionality;
+    public TemplateFunctionality getReferenceParentFunctionality() {
+        return referenceParentFunctionality;
     }
 
     @XmlTransient
-    public void setReferenceParentTemplateFunctionality(
-            TemplateFunctionality referenceParentTemplateFunctionality) {
-        this.referenceParentTemplateFunctionality =
-                referenceParentTemplateFunctionality;
+    public void setReferenceParentFunctionality(
+            TemplateFunctionality referenceParentFunctionality) {
+        this.referenceParentFunctionality = referenceParentFunctionality;
     }
 
-    public List<TemplateRequirement> getReferenceFunctionalityRequirement() {
-        return referenceFunctionalityRequirement;
+    public List<TemplateRequirement> getReferenceTemplateRequirement() {
+        return referenceTemplateRequirement;
     }
 
-    public void setReferenceFunctionalityRequirement(
-            List<TemplateRequirement> referenceFunctionalityRequirement) {
-        this.referenceFunctionalityRequirement =
-                referenceFunctionalityRequirement;
+    public void setReferenceTemplateRequirement(
+            List<TemplateRequirement> referenceTemplateRequirement) {
+        this.referenceTemplateRequirement =
+                referenceTemplateRequirement;
     }
 
-    public void setFunctionalityRequirement(
-            TemplateRequirement functionalityRequirement) {
-        this.referenceFunctionalityRequirement.add(functionalityRequirement);
+    public void setTemplateRequirement(
+            TemplateRequirement templateRequirement) {
+        this.referenceTemplateRequirement.add(templateRequirement);
     }
 
     public static class FunctionalityBuilder {

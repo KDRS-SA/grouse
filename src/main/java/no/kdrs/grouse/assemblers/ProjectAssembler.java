@@ -1,5 +1,6 @@
 package no.kdrs.grouse.assemblers;
 
+import no.kdrs.grouse.controller.DocumentController;
 import no.kdrs.grouse.controller.ProjectController;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.links.LinksProject;
@@ -7,6 +8,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import static no.kdrs.grouse.utils.Constants.DOCUMENT;
 import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -22,18 +24,22 @@ public class ProjectAssembler
     @Override
     public LinksProject toModel(Project project) {
         LinksProject linksProject = instantiateModel(project);
-
         linksProject.setProjectId(project.getProjectId());
         linksProject.setProjectName(project.getProjectName());
         linksProject.setOwnedBy(project.getOwnedBy());
         linksProject.setCreatedDate(project.getCreatedDate());
         linksProject.setLastModifiedDate(project.getLastModifidDate());
-
+        linksProject.setPercentForDocument(project.getPercentForDocument());
         linksProject.add(linkTo(methodOn(ProjectController.class).
-                getProject(project.getProjectId())).withSelfRel());
+                getProject(project.getProjectId()))
+                .withSelfRel());
         linksProject.add(linkTo(methodOn(ProjectController.class).
-                getFunctionalityForProject(project.getProjectId()))
+                getFunctionalityForProject(null,
+                        project.getProjectId()))
                 .withRel(FUNCTIONALITY));
+        linksProject.add(linkTo(methodOn(DocumentController.class)
+                .downloadProjectDocument(project.getProjectId()))
+                .withRel(DOCUMENT));
         return linksProject;
     }
 
@@ -51,8 +57,12 @@ public class ProjectAssembler
             project
                     .add(linkTo(methodOn(ProjectController.class)
                             .getFunctionalityForProject(
-                                    project.getProjectId()))
+                                    null, project.getProjectId()))
                             .withRel(FUNCTIONALITY));
+            project.add(linkTo(methodOn(DocumentController.class)
+                    .downloadProjectDocument(project.getProjectId()))
+                    .withRel(DOCUMENT));
+
         });
         return linksProjects;
     }

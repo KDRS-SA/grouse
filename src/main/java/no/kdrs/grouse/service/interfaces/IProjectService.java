@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -22,6 +23,8 @@ public interface IProjectService {
 
     Project createProject(Project project);
 
+    Project createProjectFromTemplate(Project project, UUID templateId);
+
     Project update(Long id, PatchObjects patchObjects)
             throws EntityNotFoundException;
 
@@ -32,8 +35,8 @@ public interface IProjectService {
     List<ProjectRequirement> findByProjectIdOrderByProjectName(
             Long projectId, String functionalityNumber);
 
-    List<ProjectFunctionality> findFunctionalityForProjectByType(
-            Long projectId, String type);
+    Page<ProjectFunctionality> findFunctionalityForProjectByType(
+            Pageable pageable, Long projectId, String type);
 
     Iterable<Project> findByOwnedBy(String username);
 }

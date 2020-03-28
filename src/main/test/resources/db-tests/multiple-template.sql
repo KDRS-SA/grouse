@@ -1,3 +1,3 @@
-insert into template (template_id, template_name, created_date, changed_date, owned_by, version) values (2, 'Example template', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
-insert into template (template_id, template_name, created_date, changed_date, owned_by, version) values (3, 'Example template', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
-insert into template (template_id, template_name, created_date, changed_date, owned_by, version) values (4, 'Example template', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
+insert into template (template_id, template_name, created_date, changed_date, owned_by, version) values ('8fe213ac-dcb7-4678-8474-baa57acde584', 'Example template', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
+insert into template (template_id, template_name, created_date, changed_date, owned_by, version) values ('a1a6742f-f042-49ff-aa77-20578866d562', 'Example template', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
+insert into template (template_id, template_name, created_date, changed_date, owned_by, version) values ('0c7bb57d-34dc-4cac-b013-e91628ffbf8e', 'Example template', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);

@@ -1,9 +1,12 @@
 package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.model.*;
-import no.kdrs.grouse.persistence.*;
+import no.kdrs.grouse.persistence.IProjectFunctionalityRepository;
+import no.kdrs.grouse.persistence.IProjectRepository;
+import no.kdrs.grouse.persistence.IProjectRequirementRepository;
 import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
+import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +19,8 @@ import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -31,31 +34,28 @@ public class ProjectService
     private EntityManager entityManager;
     private IProjectRequirementService projectRequirementService;
     private IProjectRepository projectRepository;
-    private ITemplateRequirementRepository requirementRepository;
-    private ITemplateFunctionalityRepository functionalityRepository;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
+    private ITemplateService templateService;
 
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
-            new ArrayList<String>(Arrays.asList("projectName",
+            new ArrayList<>(Arrays.asList("projectName",
                     "fileNameInternal", "ownedBy"));
 
     public ProjectService(
             EntityManager entityManager,
             IProjectRequirementService projectRequirementService,
             IProjectRepository projectRepository,
-            ITemplateRequirementRepository requirementRepository,
-            ITemplateFunctionalityRepository functionalityRepository,
             IProjectRequirementRepository projectRequirementRepository,
-            IProjectFunctionalityRepository projectFunctionalityRepository) {
+            IProjectFunctionalityRepository projectFunctionalityRepository,
+            ITemplateService templateService) {
         this.entityManager = entityManager;
         this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
-        this.requirementRepository = requirementRepository;
-        this.functionalityRepository = functionalityRepository;
         this.projectRequirementRepository = projectRequirementRepository;
         this.projectFunctionalityRepository = projectFunctionalityRepository;
+        this.templateService = templateService;
     }
 
     @Override
@@ -83,11 +83,11 @@ public class ProjectService
      * @return list of ProjectFunctionality
      */
     @Override
-    public List<ProjectFunctionality> findFunctionalityForProjectByType(
-            Long projectId, String type) {
+    public Page<ProjectFunctionality> findFunctionalityForProjectByType(
+            Pageable pageable, Long projectId, String type) {
         return projectFunctionalityRepository.
                 findByReferenceProjectAndTypeAndShowMe(
-                        getProjectOrThrow(projectId), type, true);
+                        getProjectOrThrow(projectId), type, true, pageable);
     }
 
     @Override
@@ -98,6 +98,18 @@ public class ProjectService
     @Override
     public Project findById(@NotNull Long id) {
         return getProjectOrThrow(id);
+    }
+
+    /**
+     * Create a new empty project that is not based on a template
+     *
+     * @param project The incoming project object
+     * @return project after it is persisted
+     */
+    public Project createProject(Project project) {
+        project.setOwnedBy(getUser());
+        project.setFileName(project.getProjectName());
+        return projectRepository.save(project);
     }
 
     /**
@@ -117,32 +129,34 @@ public class ProjectService
      * <p>
      * State is stored in the database, not the GUI
      *
-     * @param project The project object to create
-     * @return The persisted object after it was persisted with associated data
+     * @param templateId The id of the template to copy
+     * @return The project after it was copied from a template
      */
     @Override
-    public Project createProject(Project project) {
-        String ownedBy = getUser();
-        project.setDocumentCreated(false);
-
+    public Project createProjectFromTemplate(Project project, UUID templateId) {
+        Template template = templateService.findById(templateId);
+        if (project.getProjectName() == null) {
+            project.setProjectName(template.getTemplateName());
+        }
         project.setFileName(project.getProjectName());
-        project.setOwnedBy(ownedBy);
-        projectRepository.save(project);
+        project.setOwnedBy(getUser());
+        project = projectRepository.save(project);
 
-        ArrayList<TemplateFunctionality> functionalities = (ArrayList<TemplateFunctionality>)
-                functionalityRepository.findAll();
-        //findAllByOrderById();
+        for (TemplateFunctionality templateFunctionality :
+                template.getReferenceTemplateFunctionality()) {
+            processFunctionalities(project, null,
+                    templateFunctionality
+                            .getReferenceChildTemplateFunctionality());
+        }
+        return project;
+    }
 
-        HashMap<String, ProjectFunctionality> parents = new HashMap<>();
+    private void processFunctionalities(
+            Project project,
+            ProjectFunctionality parentProjectFunctionality,
+            List<TemplateFunctionality> functionalities) {
 
         for (TemplateFunctionality templateFunctionality : functionalities) {
-
-            ProjectFunctionality existingProjectFunctionality
-                    = parents.get(templateFunctionality.getFunctionalityNumber());
-
-            if (existingProjectFunctionality != null) {
-                continue;
-            }
 
             ProjectFunctionality projectFunctionality =
                     new ProjectFunctionality();
@@ -161,124 +175,41 @@ public class ProjectService
                     templateFunctionality.getType());
             projectFunctionality.setShowMe(
                     templateFunctionality.getShowMe());
-            projectFunctionality.setOwnedBy(ownedBy);
+            projectFunctionality.setOwnedBy(getUser());
             projectFunctionality.setProcessed(false);
             projectFunctionality.setActive(false);
             projectFunctionality.setReferenceProject(project);
 
-            TemplateFunctionality parentTemplateFunctionality =
-                    templateFunctionality.getReferenceParentTemplateFunctionality();
-
-            parents.put(templateFunctionality.getFunctionalityNumber(),
-                    projectFunctionality);
-
-            // The root contains a null parent, avoids null pointer
-            if (parentTemplateFunctionality != null) {
-
-                // Everything else has a parent,
-                ProjectFunctionality parentProjectFunctionality =
-                        parents.get(templateFunctionality
-                                .getReferenceParentTemplateFunctionality().
-                                        getFunctionalityNumber());
-
-                // This projectFunctionality sets its parent to the
-                // correct / found parent
+            if (parentProjectFunctionality != null) {
                 projectFunctionality.setReferenceParentFunctionality(
                         parentProjectFunctionality);
-
-                // Set the other side of the relationship
-                if (parentProjectFunctionality != null) {
-                    parentProjectFunctionality.
-                            addReferenceChildProjectFunctionality(
-                                    projectFunctionality);
-                }
             }
-            projectFunctionalityRepository.save(projectFunctionality);
-
-            // Check if there are any children that need to be copied
-
-            if (templateFunctionality.getReferenceChildTemplateFunctionality().size() > 0
-                    &&
-                    // Avoid picking the parent, we only want anything at
-                    // level 2
-                    templateFunctionality.getReferenceParentTemplateFunctionality() != null) {
-
-                for (TemplateFunctionality childTemplateFunctionality : templateFunctionality
-                        .getReferenceChildTemplateFunctionality()) {
-
-                    existingProjectFunctionality
-                            = parents.get(templateFunctionality.getFunctionalityNumber());
-
-                    if (existingProjectFunctionality != null) {
-                        continue;
-                    }
-
-                    ProjectFunctionality childProjectFunctionality =
-                            new ProjectFunctionality();
-
-                    childProjectFunctionality.setFunctionalityNumber(
-                            childTemplateFunctionality.getFunctionalityNumber());
-                    childProjectFunctionality.setTitle(
-                            childTemplateFunctionality.getTitle());
-                    childProjectFunctionality.setConsequence(
-                            childTemplateFunctionality.getConsequence());
-                    childProjectFunctionality.setDescription(
-                            childTemplateFunctionality.getDescription());
-                    childProjectFunctionality.setExplanation(
-                            childTemplateFunctionality.getExplanation());
-                    childProjectFunctionality.setType(
-                            childTemplateFunctionality.getType());
-                    childProjectFunctionality.setOwnedBy(ownedBy);
-                    childProjectFunctionality.setShowMe(
-                            childTemplateFunctionality.getShowMe());
-                    childProjectFunctionality.setProcessed(false);
-                    childProjectFunctionality.setActive(false);
-                    projectFunctionality
-                            .addReferenceChildProjectFunctionality(childProjectFunctionality);
-                    childProjectFunctionality.setReferenceParentFunctionality(projectFunctionality);
-
-                    parents.put(templateFunctionality.getFunctionalityNumber(),
-                            childProjectFunctionality);
-
-                    projectFunctionalityRepository.save
-                            (childProjectFunctionality);
-                }
-            }
+            projectFunctionality =
+                    projectFunctionalityRepository.save(projectFunctionality);
+            // copy requirements if present
+            processRequirements(projectFunctionality, templateFunctionality
+                    .getReferenceTemplateRequirement());
+            // Only the top functionality should have a reference to the project
+            processFunctionalities(null, projectFunctionality,
+                    templateFunctionality
+                            .getReferenceChildTemplateFunctionality());
         }
+    }
 
-        ArrayList<TemplateRequirement> templateRequirements =
-                (ArrayList<TemplateRequirement>) requirementRepository.findAll();
+    private void processRequirements(
+            ProjectFunctionality projectFunctionality,
+            List<TemplateRequirement> templateRequirements) {
+
         for (TemplateRequirement templateRequirement : templateRequirements) {
             ProjectRequirement projectRequirement = new ProjectRequirement();
-            projectRequirement.setReferenceProject(project);
-            projectRequirement.setOrder(templateRequirement.getShowOrder());
+            projectRequirement.setShowOrder(templateRequirement.getShowOrder());
             projectRequirement.setPriority(templateRequirement.getPriority());
-            projectRequirement.setOwnedBy(ownedBy);
+            projectRequirement.setOwnedBy(getUser());
             projectRequirement.setRequirementText(
                     templateRequirement.getRequirementText());
-
-            TemplateFunctionality templateFunctionality = templateRequirement.getFunctionality();
-            String functionalityNumber = templateFunctionality
-                    .getFunctionalityNumber();
-
-
-            List<ProjectFunctionality> projectFunctionalityList =
-                    projectFunctionalityRepository.
-                            findByFunctionalityNumberAndReferenceProject(
-                                    functionalityNumber, project);
-
-            ProjectFunctionality projectFunctionality =
-                    projectFunctionalityList.get(0);
-
-            projectRequirement.setReferenceFunctionality(
-                    projectFunctionality);
-
-            projectFunctionality.
-                    addReferenceProjectRequirement(projectRequirement);
-
+            projectRequirement.setReferenceFunctionality(projectFunctionality);
             projectRequirementRepository.save(projectRequirement);
         }
-        return project;
     }
 
     @Override

@@ -3,145 +3,139 @@ package no.kdrs.grouse.service;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
+import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import no.kdrs.grouse.service.interfaces.ITemplateFunctionalityService;
-import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
-import no.kdrs.grouse.utils.exception.PatchMisconfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class TemplateFunctionalityService
+        extends GrouseService
         implements ITemplateFunctionalityService {
 
     private static final Logger logger =
             LoggerFactory.getLogger(TemplateFunctionalityService.class);
 
-    private ITemplateFunctionalityRepository functionalityRepository;
+    private ITemplateRequirementRepository templateRequirementRepository;
+    private ITemplateFunctionalityRepository templateFunctionalityRepository;
 
-    public TemplateFunctionalityService(ITemplateFunctionalityRepository
-                                                functionalityRepository) {
-        this.functionalityRepository = functionalityRepository;
+    // Columns that it is possible to update via a PATCH request
+    private ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("title", "processed", "ownedBy",
+                    "functionalityNumber"));
+
+    public TemplateFunctionalityService(ITemplateRequirementRepository
+                                                templateRequirementRepository,
+                                        ITemplateFunctionalityRepository
+                                                templateFunctionalityRepository) {
+        this.templateRequirementRepository = templateRequirementRepository;
+        this.templateFunctionalityRepository = templateFunctionalityRepository;
     }
 
     @Override
-    public List<TemplateFunctionality> findAll() {
-        return functionalityRepository.findAll();
+    public TemplateFunctionality getTemplateFunctionality(
+            Long templateFunctionalityId) {
+        return getTemplateFunctionalityOrThrow(templateFunctionalityId);
     }
 
     @Override
-    public List<TemplateFunctionality>
-    findByShowMeAndReferenceParentFunctionality(
-            Boolean menuItem, String parent) {
-        TemplateFunctionality templateFunctionality = new TemplateFunctionality.
-                FunctionalityBuilder().functionalityNumber(parent).build();
-        return functionalityRepository.
-                findByShowMeAndReferenceParentTemplateFunctionality(
-                        menuItem, templateFunctionality);
+    public Page<TemplateFunctionality> getChildFunctionality(
+            Pageable pageable, Long templateFunctionalityId) {
+        return templateFunctionalityRepository
+                .findByReferenceParentFunctionality(pageable,
+                        getTemplateFunctionalityOrThrow(templateFunctionalityId));
     }
 
     @Override
-    public TemplateFunctionality findById(Long id) {
-        return getFunctionalityOrThrow(id);
+    public Page<TemplateRequirement> getRequirements(
+            Pageable pageable, Long templateFunctionalityId) {
+        return templateRequirementRepository
+                .findByReferenceFunctionality(
+                        getTemplateFunctionalityOrThrow(templateFunctionalityId),
+                        pageable);
     }
 
     @Override
-    public TemplateFunctionality findByFunctionalityNumber(
-            String functionalityNumber) {
-        TemplateFunctionality templateFunctionality =
-                functionalityRepository.findByFunctionalityNumber
-                        (functionalityNumber);
-        if (templateFunctionality == null) {
-            throw new EntityNotFoundException("No TemplateFunctionality " +
-                    " exists with Id " + functionalityNumber);
+    public TemplateRequirement createTemplateRequirement(
+            Long templateFunctionalityId, TemplateRequirement templateRequirement) {
+
+        Optional<TemplateFunctionality> templateFunctionality =
+                templateFunctionalityRepository.findById(templateFunctionalityId);
+        if (templateFunctionality.isPresent()) {
+            String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
+                    .getName();
+            templateRequirement.setOwnedBy(loggedInUser);
+            templateRequirement.setFunctionality(
+                    templateFunctionality.get());
+        } else {
+            throw new EntityNotFoundException(
+                    "Cannot find TemplateFunctionality [" +
+                            templateFunctionalityId + "]");
         }
-        return templateFunctionality;
 
+        return templateRequirementRepository.save(templateRequirement);
     }
 
-    @Override
-    public TemplateFunctionality save(
-            TemplateFunctionality templateFunctionality) {
-        return functionalityRepository.save(templateFunctionality);
-    }
 
     @Override
-    public TemplateFunctionality updateProjectFunctionality(
+    public TemplateFunctionality updateTemplateFunctionality(
             PatchObjects patchObjects, Long requirementNumber) {
-
-        TemplateFunctionality functionality =
-                getFunctionalityOrThrow(requirementNumber);
-
-        for (PatchObject patchObject : patchObjects.getPatchObjects()) {
-            if ("replace" .equalsIgnoreCase(patchObject.getOp())
-                    && null != patchObject.getPath()
-                    && patchObject.getPath().length() > 2
-                    && null != patchObject.getValue()) {
-                String path = patchObject.getPath();
-                if ("/" .equals(path.substring(0, 1))) {
-                    path = path.substring(1);
-                }
-                String methodName = "set" + path.substring(0, 1)
-                        .toUpperCase() + path.substring(1);
-                try {
-                    Method method = functionality.getClass()
-                            .getMethod(methodName, String.class);
-                    method.invoke(functionality, patchObject.getValue());
-                } catch (SecurityException | NoSuchMethodException |
-                        IllegalArgumentException | IllegalAccessException |
-                        InvocationTargetException e) {
-                    String error = "Cannot find internal method from Patch : " +
-                            patchObject.toString() + " : " + e.getMessage();
-                    logger.error(error);
-                    throw new PatchMisconfigurationException(error);
-                }
-            } else {
-                String error = "Cannot handle this PatchObject : " +
-                        patchObject.toString();
-                logger.error(error);
-                throw new PatchMisconfigurationException(error);
-            }
-        }
-        return functionality;
+        return (TemplateFunctionality)
+                handlePatch(getTemplateFunctionalityOrThrow(requirementNumber),
+                        patchObjects);
     }
 
     @Override
-    public void delete(Long id) {
-        functionalityRepository.deleteById(id);
+    public void delete(Long functionalityID) {
+        templateFunctionalityRepository.deleteById(functionalityID);
     }
 
     @Override
-    public void createTemplateRequirement(
-            Long templateFunctionalityId,
-            TemplateRequirement templateRequirement) {
-
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
     }
 
     /**
      * Internal helper method. Rather than having a find and try catch in
      * multiple methods, we have it here once. If you call this, be aware
-     * that you will only ever get a valid TemplateFunctionality back. If
-     * there is no valid TemplateFunctionality, a EntityNotFoundException
-     * exception is thrown
+     * that you will only ever get a valid Template back. If there is no valid
+     * TemplateRequirement, a EntityNotFoundException exception is thrown
+     * <p>
+     * We also check that you only can access things you own. If you try
+     * to access an object you don't own, then a AccessDeniedException is thrown.
      *
-     * @param id The systemId of the functionality object to retrieve
-     * @return the functionality object
+     * @param id The id  of the TemplateRequirement object to retrieve
+     * @return the TemplateRequirement object
      */
-    private TemplateFunctionality getFunctionalityOrThrow(@NotNull Long id)
-            throws EntityNotFoundException {
-        return functionalityRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException(
-                                "No TemplateFunctionality exists " +
-                                        "with Id " + id));
+    private TemplateFunctionality getTemplateFunctionalityOrThrow(
+            @NotNull Long id)
+            throws EntityNotFoundException, AccessDeniedException {
+        TemplateFunctionality templateFunctionality =
+                templateFunctionalityRepository.findById(id)
+                        .orElseThrow(() ->
+                                new EntityNotFoundException(
+                                        "No TemplateRequirement exists with Id " + id));
+
+        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
+                .getName();
+        if (!templateFunctionality.getOwnedBy().equals(loggedInUser)) {
+            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang" +
+                    " til dette prosjekt funksjonalitet!");
+        }
+        return templateFunctionality;
     }
 }

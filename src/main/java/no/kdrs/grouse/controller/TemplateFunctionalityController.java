@@ -1,103 +1,80 @@
-
 package no.kdrs.grouse.controller;
 
-import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
+import no.kdrs.grouse.model.links.LinksTemplateFunctionality;
+import no.kdrs.grouse.model.links.LinksTemplateRequirement;
 import no.kdrs.grouse.service.interfaces.ITemplateFunctionalityService;
+import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
-/**
- * Created by tsodring on 29/03/18.
- */
 @RestController
 @RequestMapping(value = SLASH + TEMPLATE + SLASH + FUNCTIONALITY)
 public class TemplateFunctionalityController {
 
     private ITemplateFunctionalityService templateFunctionalityService;
+    private CommonController commonController;
 
     public TemplateFunctionalityController(
-            ITemplateFunctionalityService templateFunctionalityService) {
+            ITemplateFunctionalityService templateFunctionalityService,
+            CommonController commonController) {
         this.templateFunctionalityService = templateFunctionalityService;
+        this.commonController = commonController;
     }
 
-    @GetMapping(value = FUNCTIONALITY_PARAMETER)
-    public ResponseEntity<TemplateFunctionality> getTemplateFunctionality(
+    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER)
+    public ResponseEntity<LinksTemplateFunctionality>
+    getTemplateFunctionality(
             @PathVariable(FUNCTIONALITY) Long templateFunctionalityId) {
-
-        TemplateFunctionality templateFunctionality =
-                templateFunctionalityService.findById(templateFunctionalityId);
-
-        List<TemplateRequirement> templateRequirements =
-                templateFunctionality.getReferenceFunctionalityRequirement();
-
-        for (TemplateRequirement templateRequirement : templateRequirements) {
-            templateRequirement.add(
-                    linkTo(
-                            methodOn(TemplateRequirementController.class)
-                                    .getRequirement(templateRequirement
-                                            .getRequirementId())).withSelfRel());
-        }
-        templateFunctionality.add(linkTo(methodOn
-                (TemplateFunctionalityController.class).
-                getTemplateFunctionality(templateFunctionalityId)).withSelfRel());
-
-        templateFunctionality.add(linkTo(methodOn
-                (TemplateFunctionalityController.class).
-                getTemplateFunctionality(templateFunctionalityId)).
-                withRel(TEMPLATE_REQUIREMENT));
-
-        return ResponseEntity.status(OK)
-                .body(templateFunctionality);
+        return commonController.addTemplateFunctionalityLinks(
+                templateFunctionalityService.getTemplateFunctionality(
+                        templateFunctionalityId), OK);
     }
 
-    @PostMapping(value = "/{krav}/" + REQUIREMENT)
-    public ResponseEntity<TemplateRequirement> createTemplateRequirement(
-            @PathVariable("krav") Long templateFunctionalityId,
+    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
+    public ResponseEntity<PagedModel<LinksTemplateFunctionality>>
+    getTemplateChildFunctionality(
+            Pageable pageable,
+            @PathVariable(FUNCTIONALITY) Long templateFunctionalityId) {
+        return commonController.addPagedTemplateFunctionalityLinks(
+                templateFunctionalityService.getChildFunctionality(pageable,
+                        templateFunctionalityId), OK);
+    }
+
+    @GetMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
+    public ResponseEntity<PagedModel<LinksTemplateRequirement>>
+    getTemplateRequirements(
+            Pageable page,
+            @PathVariable(FUNCTIONALITY) Long templateFunctionalityId) {
+        return commonController.addPagedTemplateRequirementLinks(
+                templateFunctionalityService.getRequirements(page,
+                        templateFunctionalityId), OK);
+    }
+
+    @PostMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
+    public ResponseEntity<LinksTemplateRequirement> createTemplateRequirement(
+            @PathVariable(FUNCTIONALITY) Long templateFunctionalityId,
             @RequestBody TemplateRequirement templateRequirement) {
-
-        templateFunctionalityService.
-                createTemplateRequirement(templateFunctionalityId,
-                        templateRequirement);
-
-        templateRequirement.add(linkTo(methodOn
-                (TemplateRequirementController.class).
-                getRequirement(templateRequirement.
-                        getRequirementId())).withSelfRel());
-
-        return ResponseEntity.status(CREATED)
-                .eTag(templateRequirement.getVersion().toString())
-                .body(templateRequirement);
+        return commonController.addTemplateRequirementLinks(
+                templateFunctionalityService.
+                        createTemplateRequirement(templateFunctionalityId,
+                                templateRequirement), CREATED);
     }
 
-
-    @PatchMapping(value = "/{krav}/krav")
-    public ResponseEntity<TemplateFunctionality> patchFunctionality(
-            @PathVariable("krav") Long functionalityNumber,
+    @PatchMapping(value = FUNCTIONALITY_PARAMETER)
+    public ResponseEntity<LinksTemplateFunctionality> patchFunctionality(
+            @PathVariable(FUNCTIONALITY) Long functionalityNumber,
             @RequestBody PatchObjects patchObjects)
             throws Exception {
-
-        TemplateFunctionality templateFunctionality =
-                templateFunctionalityService.updateProjectFunctionality(
-                        patchObjects, functionalityNumber);
-
-        templateFunctionality.add(linkTo(methodOn
-                (TemplateFunctionalityController.class).
-                getTemplateFunctionality(templateFunctionality
-                        .getFunctionalityId())).
-                withSelfRel());
-
-        return ResponseEntity.status(OK)
-                .eTag(templateFunctionality.getVersion().toString())
-                .body(templateFunctionality);
+        return commonController.addTemplateFunctionalityLinks(
+                templateFunctionalityService.updateTemplateFunctionality(
+                        patchObjects, functionalityNumber), OK);
     }
 }

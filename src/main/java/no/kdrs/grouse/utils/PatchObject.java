@@ -13,7 +13,7 @@ public class PatchObject {
 
     private String op;
     private String path;
-    private String value;
+    private Object value;
     private List<String> from = new ArrayList<>();
 
     public PatchObject() {
@@ -35,11 +35,11 @@ public class PatchObject {
         this.path = path;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 

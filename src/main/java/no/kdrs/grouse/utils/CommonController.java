@@ -1,15 +1,8 @@
 package no.kdrs.grouse.utils;
 
-import no.kdrs.grouse.assemblers.ProjectAssembler;
-import no.kdrs.grouse.assemblers.TemplateAssembler;
-import no.kdrs.grouse.assemblers.UserAssembler;
-import no.kdrs.grouse.controller.DocumentController;
-import no.kdrs.grouse.controller.ProjectController;
-import no.kdrs.grouse.model.GrouseUser;
-import no.kdrs.grouse.model.Project;
-import no.kdrs.grouse.model.Template;
-import no.kdrs.grouse.model.links.LinksProject;
-import no.kdrs.grouse.model.links.LinksUser;
+import no.kdrs.grouse.assemblers.*;
+import no.kdrs.grouse.model.*;
+import no.kdrs.grouse.model.links.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,9 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
-import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static no.kdrs.grouse.utils.Constants.NO_ACCESS_OTHER_USER;
 
 /**
  * Utility class that deals with a lot the links stuff added to the response
@@ -41,25 +32,59 @@ public class CommonController {
     private PagedResourcesAssembler<GrouseUser> pagedUserResourcesAssembler;
     private PagedResourcesAssembler<Project> pagedProjectResourcesAssembler;
     private PagedResourcesAssembler<Template> pagedTemplateResourcesAssembler;
+    private PagedResourcesAssembler<TemplateRequirement>
+            pagedTemplateRequirementResourcesAssembler;
+    private PagedResourcesAssembler<ProjectFunctionality>
+            pagedProjectFunctionalityResourcesAssembler;
+    private PagedResourcesAssembler<ProjectRequirement>
+            pagedProjectRequirementResourcesAssembler;
+    private PagedResourcesAssembler<TemplateFunctionality>
+            pagedTemplateFunctionalityResourcesAssembler;
     private ProjectAssembler projectAssembler;
     private TemplateAssembler templateAssembler;
     private UserAssembler userAssembler;
+    private TemplateRequirementAssembler templateRequirementAssembler;
+    private ProjectFunctionalityAssembler projectFunctionalityAssembler;
+    private ProjectRequirementAssembler projectRequirementAssembler;
+    private TemplateFunctionalityAssembler templateFunctionalityAssembler;
 
     public CommonController(
             RoleValidator role,
             PagedResourcesAssembler<GrouseUser> pagedUserResourcesAssembler,
-            PagedResourcesAssembler<Project> pagedProjectResourcesAssembler,
             PagedResourcesAssembler<Template> pagedTemplateResourcesAssembler,
+            PagedResourcesAssembler<TemplateRequirement>
+                    pagedTemplateRequirementResourcesAssembler,
+            PagedResourcesAssembler<TemplateFunctionality>
+                    pagedTemplateFunctionalityResourcesAssembler,
+            PagedResourcesAssembler<Project> pagedProjectResourcesAssembler,
+            PagedResourcesAssembler<ProjectRequirement>
+                    pagedProjectRequirementResourcesAssembler,
+            PagedResourcesAssembler<ProjectFunctionality>
+                    pagedProjectFunctionalityResourcesAssembler,
             ProjectAssembler projectAssembler,
             TemplateAssembler templateAssembler,
-            UserAssembler userAssembler) {
+            UserAssembler userAssembler,
+            ProjectRequirementAssembler projectRequirementAssembler,
+            TemplateRequirementAssembler templateRequirementAssembler,
+            ProjectFunctionalityAssembler projectFunctionalityAssembler) {
         this.role = role;
         this.pagedUserResourcesAssembler = pagedUserResourcesAssembler;
-        this.pagedProjectResourcesAssembler = pagedProjectResourcesAssembler;
         this.pagedTemplateResourcesAssembler = pagedTemplateResourcesAssembler;
+        this.pagedTemplateRequirementResourcesAssembler =
+                pagedTemplateRequirementResourcesAssembler;
+        this.pagedTemplateFunctionalityResourcesAssembler =
+                pagedTemplateFunctionalityResourcesAssembler;
+        this.pagedProjectResourcesAssembler = pagedProjectResourcesAssembler;
+        this.pagedProjectRequirementResourcesAssembler =
+                pagedProjectRequirementResourcesAssembler;
+        this.pagedProjectFunctionalityResourcesAssembler =
+                pagedProjectFunctionalityResourcesAssembler;
         this.projectAssembler = projectAssembler;
         this.templateAssembler = templateAssembler;
         this.userAssembler = userAssembler;
+        this.templateRequirementAssembler = templateRequirementAssembler;
+        this.projectFunctionalityAssembler = projectFunctionalityAssembler;
+        this.projectRequirementAssembler = projectRequirementAssembler;
     }
 
     public void checkAccess(String ownedBy) {
@@ -86,18 +111,9 @@ public class CommonController {
     public ResponseEntity<LinksProject> addProjectLinks(
             @NotNull final Project project,
             @NotNull final HttpStatus status) {
-        LinksProject linksProject = new LinksProject(project);
-        linksProject.add(linkTo(methodOn(ProjectController.class)
-                .getProject(project.getProjectId())).withSelfRel());
-        linksProject.add(linkTo(methodOn(ProjectController.class)
-                .getFunctionalityForProject(project.getProjectId()))
-                .withRel(FUNCTIONALITY));
-        linksProject.add(linkTo(methodOn(DocumentController.class)
-                .downloadProjectDocument(project.getProjectId()))
-                .withRel(DOCUMENT));
         return ResponseEntity.status(status)
                 .eTag(project.getVersion().toString())
-                .body(linksProject);
+                .body(projectAssembler.toModel(project));
     }
 
     public ResponseEntity<LinksUser> addUserLinks(
@@ -108,6 +124,45 @@ public class CommonController {
                 .body(userAssembler.toModel(user));
     }
 
+    public ResponseEntity<LinksProjectFunctionality>
+    addProjectFunctionalityLinks(
+            @NotNull final ProjectFunctionality projectFunctionality,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(projectFunctionality.getVersion().toString())
+                .body(projectFunctionalityAssembler
+                        .toModel(projectFunctionality));
+    }
+
+    public ResponseEntity<LinksTemplateFunctionality>
+    addTemplateFunctionalityLinks(
+            @NotNull final TemplateFunctionality templateFunctionality,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(templateFunctionality.getVersion().toString())
+                .body(templateFunctionalityAssembler
+                        .toModel(templateFunctionality));
+    }
+
+    public ResponseEntity<LinksProjectRequirement>
+    addProjectRequirementLinks(
+            @NotNull final ProjectRequirement projectRequirement,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(projectRequirement.getVersion().toString())
+                .body(projectRequirementAssembler.toModel(projectRequirement));
+    }
+
+    public ResponseEntity<LinksTemplateRequirement>
+    addTemplateRequirementLinks(
+            @NotNull final TemplateRequirement templateRequirement,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(templateRequirement.getVersion().toString())
+                .body(templateRequirementAssembler
+                        .toModel(templateRequirement));
+    }
+
     public ResponseEntity<PagedModel<LinksUser>> addPagedUserLinks(
             @NotNull final Page<GrouseUser> users,
             @NotNull final HttpStatus status) {
@@ -116,5 +171,71 @@ public class CommonController {
                         .toModel(users, userAssembler);
         return ResponseEntity.status(status)
                 .body(UserModels);
+    }
+
+    public ResponseEntity<LinksTemplate> addTemplateLinks(
+            @NotNull final Template template,
+            @NotNull final HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(template.getVersion().toString())
+                .body(templateAssembler.toModel(template));
+    }
+
+    public ResponseEntity<PagedModel<LinksTemplate>> addPagedTemplateLinks(
+            @NotNull final Page<Template> templates,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksTemplate> templateModels =
+                pagedTemplateResourcesAssembler
+                        .toModel(templates, templateAssembler);
+        return ResponseEntity.status(status)
+                .body(templateModels);
+    }
+
+    public ResponseEntity<PagedModel<LinksTemplateRequirement>>
+    addPagedTemplateRequirementLinks(
+            @NotNull final Page<TemplateRequirement> templateRequirements,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksTemplateRequirement> templateRequirementModels =
+                pagedTemplateRequirementResourcesAssembler
+                        .toModel(templateRequirements,
+                                templateRequirementAssembler);
+        return ResponseEntity.status(status)
+                .body(templateRequirementModels);
+    }
+
+    public ResponseEntity<PagedModel<LinksProjectRequirement>>
+    addPagedProjectRequirementLinks(
+            @NotNull final Page<ProjectRequirement> projectRequirements,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksProjectRequirement> projectRequirementModels =
+                pagedProjectRequirementResourcesAssembler
+                        .toModel(projectRequirements,
+                                projectRequirementAssembler);
+        return ResponseEntity.status(status)
+                .body(projectRequirementModels);
+    }
+
+    public ResponseEntity<PagedModel<LinksProjectFunctionality>>
+    addPagedProjectFunctionalityLinks(
+            @NotNull final Page<ProjectFunctionality> projectFunctionalitys,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksProjectFunctionality> projectFunctionalityModels =
+                pagedProjectFunctionalityResourcesAssembler
+                        .toModel(projectFunctionalitys,
+                                projectFunctionalityAssembler);
+        return ResponseEntity.status(status)
+                .body(projectFunctionalityModels);
+    }
+
+    public ResponseEntity<PagedModel<LinksTemplateFunctionality>>
+    addPagedTemplateFunctionalityLinks(
+            @NotNull final Page<TemplateFunctionality> templateFunctionalitys,
+            @NotNull final HttpStatus status) {
+        PagedModel<LinksTemplateFunctionality> templateFunctionalityModels =
+                pagedTemplateFunctionalityResourcesAssembler
+                        .toModel(templateFunctionalitys,
+                                templateFunctionalityAssembler);
+        return ResponseEntity.status(status)
+                .body(templateFunctionalityModels);
     }
 }

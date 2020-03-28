@@ -2,6 +2,7 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.exception.BadRequestException;
 import no.kdrs.grouse.utils.exception.InternalException;
 import no.kdrs.grouse.utils.exception.PatchMisconfigurationException;
 import org.slf4j.Logger;
@@ -50,12 +51,17 @@ public class GrouseService {
                     logger.error(errorMessage);
                     throw new PatchMisconfigurationException(errorMessage);
                 }
-                String methodName = "set" + path.substring(0, 1)
+                String baseMethodName = path.substring(0, 1)
                         .toUpperCase() + path.substring(1);
+                String setMethodName = "set" + baseMethodName;
+                String getMethodName = "get" + baseMethodName;
                 try {
-                    Method method = object.getClass()
-                            .getMethod(methodName, String.class);
-                    method.invoke(object, patchObject.getValue());
+                    Method getMethod =
+                            object.getClass().getMethod(getMethodName);
+                    Method setMethod =
+                            object.getClass().getMethod(setMethodName,
+                                    getMethod.getReturnType());
+                    setMethod.invoke(object, patchObject.getValue());
                 } catch (SecurityException | NoSuchMethodException |
                         IllegalArgumentException | IllegalAccessException |
                         InvocationTargetException e) {
@@ -113,6 +119,6 @@ public class GrouseService {
     protected boolean checkColumnUpdatable(String path) {
         String errorMessage = getServletPath() + " has no checkColumnUpdatable";
         logger.error(errorMessage);
-        throw new InternalException(errorMessage);
+        throw new BadRequestException(errorMessage);
     }
 }

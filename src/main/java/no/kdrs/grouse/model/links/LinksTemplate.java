@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -20,11 +21,12 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class LinksTemplate
         extends RepresentationModel<LinksTemplate> {
 
-    private Long templateId;
+    private UUID templateId;
     private String templateName;
     private OffsetDateTime createdDate;
     private OffsetDateTime lastModifiedDate;
     private String ownedBy;
+    private Integer percentForDocument;
 
     public LinksTemplate(Template template) {
         this.templateId = template.getTemplateId();
@@ -32,13 +34,14 @@ public class LinksTemplate
         this.createdDate = template.getCreatedDate();
         this.lastModifiedDate = template.getLastModifiedDate();
         this.ownedBy = template.getOwnedBy();
+        this.percentForDocument = template.getPercentForDocument();
     }
 
-    public Long getTemplateId() {
+    public UUID getTemplateId() {
         return templateId;
     }
 
-    public void setTemplateId(Long templateId) {
+    public void setTemplateId(UUID templateId) {
         this.templateId = templateId;
     }
 
@@ -72,5 +75,13 @@ public class LinksTemplate
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
+    }
+
+    public Integer getPercentForDocument() {
+        return percentForDocument;
+    }
+
+    public void setPercentForDocument(Integer percentForDocument) {
+        this.percentForDocument = percentForDocument;
     }
 }

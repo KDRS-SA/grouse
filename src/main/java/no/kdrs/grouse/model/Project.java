@@ -13,8 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-import static no.kdrs.grouse.utils.Constants.PROJECT_TABLE_NAME;
-import static no.kdrs.grouse.utils.Constants.VERSION;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 /**
@@ -64,7 +63,7 @@ public class Project
      * Name of the requirements document
      */
     @Column(name = "document_created")
-    private Boolean documentCreated;
+    private Boolean documentCreated = false;
 
     /**
      * Used to identify if all the steps have been
@@ -72,6 +71,14 @@ public class Project
      */
     @Column(name = "project_complete")
     private Boolean projectComplete = false;
+
+
+    /**
+     * Value showing how much 0-100 (%) of requirements that have to
+     * be accepted before the user can download the document
+     */
+    @Column(name = PERCENT_FOR_DOCUMENT)
+    private Integer percentForDocument;
 
     /**
      * The date the project was created
@@ -96,10 +103,6 @@ public class Project
     @Version
     @Column(name = VERSION)
     private Long version;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "referenceProject")
-    private List<ProjectRequirement> referenceProjectRequirement;
 
     @JsonIgnore
     @OneToMany(mappedBy = "referenceProject")
@@ -136,6 +139,14 @@ public class Project
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public Integer getPercentForDocument() {
+        return percentForDocument;
+    }
+
+    public void setPercentForDocument(Integer percentForDocument) {
+        this.percentForDocument = percentForDocument;
     }
 
     public OffsetDateTime getCreatedDate() {
@@ -192,14 +203,6 @@ public class Project
 
     public void setVersion(Long version) {
         this.version = version;
-    }
-
-    public List<ProjectRequirement> getReferenceProjectRequirement() {
-        return referenceProjectRequirement;
-    }
-
-    public void setReferenceProjectRequirement(List<ProjectRequirement> referenceProjectRequirement) {
-        this.referenceProjectRequirement = referenceProjectRequirement;
     }
 
     public List<ProjectFunctionality> getReferenceProjectFunctionality() {

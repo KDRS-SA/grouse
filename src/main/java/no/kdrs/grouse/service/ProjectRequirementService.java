@@ -3,7 +3,6 @@ package no.kdrs.grouse.service;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.persistence.IProjectRequirementRepository;
 import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
-import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,8 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -21,10 +21,16 @@ import javax.validation.constraints.NotNull;
 @Service
 @Transactional
 public class ProjectRequirementService
+        extends GrouseService
         implements IProjectRequirementService {
 
     private EntityManager em;
     private IProjectRequirementRepository projectRequirementRepository;
+
+    // Columns that it is possible to update via a PATCH request
+    private ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("requirementText", "showOrder",
+                    "ownedBy", "priority", "requirementNumber"));
 
     public ProjectRequirementService(
             EntityManager em,
@@ -53,68 +59,36 @@ public class ProjectRequirementService
 
     /**
      * Just testing out how to implement PATCH (RFC 6902)
-     *
+     * <p>
      * [
-     *  { "op": "replace", "path": "/requirementText", "value": "hello"},
+     * { "op": "replace", "path": "/requirementText", "value": "hello"},
      * ]
-     *
+     * <p>
      * For the sake of this application "replace" is the only
      * operation we support. For this application this is acceptable.
-     *
+     * <p>
      * Probably should log no change occurring, or throw an Exception is the
      * entity does not exist in the database
-     *
+     * <p>
      * This approach results in four calls to the database.
-     *  1. Check the entity exists
-     *  2. Update query
-     *    clear context and
-     *  3. Get the updated object and return to caller
-     *
+     * 1. Check the entity exists
+     * 2. Update query
+     * clear context and
+     * 3. Get the updated object and return to caller
+     * <p>
      * This is probably an anti-pattern
      *
-     * @param patchObjects All the pathObjects contained in one object
+     * @param patchObjects      All the pathObjects contained in one object
      * @param requirementNumber The id of row to change
      * @return The newly persisted ProjectRequirement
      * @throws Exception if it can't handle the syntax for some reason
      */
     @Override
     public ProjectRequirement updateProjectRequirement(
-            PatchObjects patchObjects, Long requirementNumber)
-            throws Exception {
-
-        // If the entity does not exist, or we don't own the object throw an Exception
-        getProjectRequirementOrThrow(requirementNumber);
-
-        for (PatchObject patchObject: patchObjects.getPatchObjects()) {
-            if("replace".equalsIgnoreCase(patchObject.getOp())
-                    && null != patchObject.getPath()
-                    && null != patchObject.getValue()) {
-                String path = patchObject.getPath();
-                if ("/".equals(path.substring(0,1))) {
-                    path = path.substring(1);
-                }
-
-                String updateQuery = "update ProjectRequirement set "
-                        + path + " = :value where id = :id";
-                Query query = em.createQuery(updateQuery);
-                query.setParameter("value", patchObject.getValue());
-                query.setParameter("id", requirementNumber);
-                query.executeUpdate();
-            }
-            else {
-                throw new Exception("Cannot handle this PatchObject " +
-                                     patchObject.toString());
-            }
-        }
-        // persist changes to database as there may have been multiple
-        // updates
-        em.flush();
-        // clear the context so we can retrieve the newly persisted object
-        em.clear();
-
-        // reread the projectRequirement as there may have been multiple
-        // changes. Not sure if this is needed or not.
-        return em.find(ProjectRequirement.class, requirementNumber);
+            PatchObjects patchObjects, Long requirementNumber) {
+        return (ProjectRequirement)
+                handlePatch(getProjectRequirementOrThrow(requirementNumber),
+                        patchObjects);
     }
 
     @Override
@@ -123,6 +97,11 @@ public class ProjectRequirementService
             ProjectRequirement projectRequirement) {
 
         return projectRequirementRepository.save(projectRequirement);
+    }
+
+    @Override
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
     }
 
     /**

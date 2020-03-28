@@ -2,6 +2,7 @@ package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import no.kdrs.grouse.utils.exception.ConcurrencyException;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,8 +15,8 @@ import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import static javax.persistence.GenerationType.SEQUENCE;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
@@ -25,12 +26,21 @@ public class Template
         extends RepresentationModel {
 
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
     @Column(name = TEMPLATE_PK_ID, nullable = false, updatable = false)
-    private Long templateId;
+    @Type(type = "uuid-char")
+    private UUID templateId;
 
     @Column(name = TEMPLATE_NAME)
     private String templateName;
+
+    @Column(name = TEMPLATE_DESCRIPTION, length = 10000)
+    private String description;
+
+    @Column(name = TEMPLATE_AREA)
+    private String area;
+
+    @Column(name = TEMPLATE_TYPE)
+    private String type;
 
     /**
      * The date the project was created
@@ -43,8 +53,15 @@ public class Template
     /**
      * Name of the requirements document stored on disk
      */
-    @Column(name = "file_name_internal")
+    @Column(name = TEMPLATE_FILE_NAME_INTERNAL)
     private String fileNameInternal;
+
+    /**
+     * Value showing how much 0-100 (%) of requirements that have to
+     * be accepted before the user can download the document
+     */
+    @Column(name = PERCENT_FOR_DOCUMENT)
+    private Integer percentForDocument;
 
     /**
      * The date the project was accessed
@@ -68,15 +85,11 @@ public class Template
     private List<TemplateFunctionality> referenceTemplateFunctionality =
             new ArrayList<>();
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "referenceTemplate")
-    private List<TemplateRequirement> referenceTemplateRequirement;
-
-    public Long getTemplateId() {
+    public UUID getTemplateId() {
         return templateId;
     }
 
-    public void setTemplateId(Long templateId) {
+    public void setTemplateId(UUID templateId) {
         this.templateId = templateId;
     }
 
@@ -88,12 +101,44 @@ public class Template
         this.templateName = templateName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getFileNameInternal() {
         return fileNameInternal;
     }
 
     public void setFileNameInternal(String fileNameInternal) {
         this.fileNameInternal = fileNameInternal;
+    }
+
+    public Integer getPercentForDocument() {
+        return percentForDocument;
+    }
+
+    public void setPercentForDocument(Integer percentForDocument) {
+        this.percentForDocument = percentForDocument;
     }
 
     public OffsetDateTime getCreatedDate() {

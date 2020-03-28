@@ -2,7 +2,6 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
-import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
 import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
@@ -17,11 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -62,22 +61,6 @@ public class TemplateService
         this.templateFunctionalityRepository = templateFunctionalityRepository;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<TemplateRequirement> findByTemplateIdOrderByTemplateName(
-            Long templateId, String functionalityNumber) {
-        String queryString =
-                "select p from TemplateRequirement as p where " +
-                        "p.referenceTemplate.templateId = :templateId " +
-                        "AND p.referenceFunctionality.functionalityNumber = " +
-                        ":functionalityNumber";
-
-        Query query = entityManager.createQuery(queryString);
-        query.setParameter("templateId", templateId);
-        query.setParameter("functionalityNumber", functionalityNumber);
-        return query.getResultList();
-    }
-
     /**
      * findFunctionalityForTemplate
      * <p>
@@ -87,23 +70,16 @@ public class TemplateService
      * @return list of TemplateFunctionality
      */
     @Override
-    public List<TemplateFunctionality> findFunctionalityForTemplateByType(
-            Long templateId, String type) {
-
-
-        /*
-        revisit this!
+    public Page<TemplateFunctionality> findFunctionalityForTemplate(
+            Pageable pageable, UUID templateId) {
         return templateFunctionalityRepository.
-                findByReferenceTemplateAndTypeAndShowMe(
-                        getTemplateOrThrow(templateId), type, true);
-
-         */
-        return null;
+                findByReferenceTemplate(getTemplateOrThrow(templateId),
+                        pageable);
     }
 
     @Override
     public void createFunctionality(
-            @NotNull final Long templateId,
+            @NotNull final UUID templateId,
             TemplateFunctionality templateFunctionality) {
         Template template = getTemplateOrThrow(templateId);
         template.addTemplateFunctionality(templateFunctionality);
@@ -117,9 +93,10 @@ public class TemplateService
     }
 
     @Override
-    public Template findById(@NotNull Long id) {
+    public Template findById(@NotNull UUID id) {
         return getTemplateOrThrow(id);
     }
+
 
     /**
      * Create a new template.
@@ -137,7 +114,7 @@ public class TemplateService
     }
 
     @Override
-    public Template update(Long id, PatchObjects patchObjects)
+    public Template update(UUID id, PatchObjects patchObjects)
             throws EntityNotFoundException {
         return (Template) handlePatch(getTemplateOrThrow(id), patchObjects);
     }
@@ -155,7 +132,7 @@ public class TemplateService
      * @param id the id of the template ot delete
      */
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         Template template = getTemplateOrThrow(id);
         /* revisit this
         for (TemplateRequirement templateRequirement :
@@ -185,7 +162,7 @@ public class TemplateService
      * @param id The systemId of the template object to retrieve
      * @return the template object
      */
-    private Template getTemplateOrThrow(@NotNull Long id)
+    private Template getTemplateOrThrow(@NotNull UUID id)
             throws EntityNotFoundException {
         return templateRepository.findById(id)
                 .orElseThrow(() ->

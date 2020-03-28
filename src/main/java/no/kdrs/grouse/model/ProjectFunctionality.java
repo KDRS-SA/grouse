@@ -1,6 +1,7 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -9,6 +10,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY_NUMBER;
+import static no.kdrs.grouse.utils.Constants.VERSION;
 
 
 /**
@@ -22,10 +26,11 @@ import java.util.List;
  */
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "project_functionality_areas",
         uniqueConstraints = {
-        @UniqueConstraint(
-                columnNames={"functionality_number", "project_number"})
+                @UniqueConstraint(
+                        columnNames = {FUNCTIONALITY_NUMBER, "project_number"})
         }
 )
 @XmlRootElement
@@ -44,7 +49,7 @@ public class ProjectFunctionality
      * Number of the functional area. e.g 1.2.3
      * This is an internal number that the project themselves decides
      */
-    @Column(name = "functionality_number")
+    @Column(name = FUNCTIONALITY_NUMBER)
     private String functionalityNumber;
 
     /**
@@ -88,6 +93,9 @@ public class ProjectFunctionality
     @Column(name = "processed")
     private Boolean processed;
 
+    @Version
+    @Column(name = VERSION)
+    private Long version;
 
     /**
      * Used by the GUI. Should not really be here, but leaving it here
@@ -118,7 +126,7 @@ public class ProjectFunctionality
             new ArrayList<>();
 
     @OneToMany(mappedBy = "referenceFunctionality")
-    @OrderBy("order ASC")
+    @OrderBy("show_order ASC")
     private List<ProjectRequirement> referenceProjectRequirement =
             new ArrayList<>();
 
@@ -203,6 +211,14 @@ public class ProjectFunctionality
 
     public void setProcessed(Boolean processed) {
         this.processed = processed;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public Boolean getActive() {

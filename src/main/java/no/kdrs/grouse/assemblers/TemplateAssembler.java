@@ -8,6 +8,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
+import static no.kdrs.grouse.utils.Constants.PROJECT;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -28,12 +29,17 @@ public class TemplateAssembler
         linksTemplate.setOwnedBy(template.getOwnedBy());
         linksTemplate.setCreatedDate(template.getCreatedDate());
         linksTemplate.setLastModifiedDate(template.getLastModifiedDate());
+        linksTemplate.setPercentForDocument(template.getPercentForDocument());
 
-        linksTemplate.add(linkTo(methodOn(TemplateController.class).
-                getTemplate(template.getTemplateId())).withSelfRel());
-        linksTemplate.add(linkTo(methodOn(TemplateController.class).
-                getFunctionalityForTemplate(template.getTemplateId()))
+        linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                .getTemplate(template.getTemplateId())).withSelfRel());
+        linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                .getFunctionalityForTemplate(null,
+                        template.getTemplateId()))
                 .withRel(FUNCTIONALITY));
+        linksTemplate.add(linkTo(methodOn(TemplateController.class)
+                .createProjectFromTemplate(template.getTemplateId(), null))
+                .withRel(PROJECT));
         return linksTemplate;
     }
 
@@ -48,11 +54,11 @@ public class TemplateAssembler
                     .add(linkTo(methodOn(TemplateController.class)
                             .getTemplate(template.getTemplateId()))
                             .withSelfRel());
-            template
-                    .add(linkTo(methodOn(TemplateController.class)
-                            .getFunctionalityForTemplate(
-                                    template.getTemplateId()))
-                            .withRel(FUNCTIONALITY));
+//            template
+//                    .add(linkTo(methodOn(TemplateController.class)
+//                            .getFunctionalityForTemplate(null,
+//                                    template.getTemplateId()))
+//                            .withRel(FUNCTIONALITY));
         });
         return linksTemplates;
     }
