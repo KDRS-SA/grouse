@@ -77,6 +77,7 @@ public final class Constants {
     public static final String PERCENT_FOR_DOCUMENT = "procent_for_document";
     public static final String TEMPLATE_DESCRIPTION = "template_description";
     public static final String TEMPLATE_PK_ID = "template_id";
+    public static final String ACL_PK_ID = "access_control_id";
     public static final String TEMPLATE_FK_ID = "fk_template_id";
     public static final String FUNCTIONALITY_FK_ID = "fk_functionality_id";
     public static final String CREATED_DATE = "created_date";
@@ -86,7 +87,11 @@ public final class Constants {
     public static final String AUTHORITY_NAME = "authority_name";
     public static final String AUTHORITIES = "authorities";
     public static final String AUTHORITY = "authority";
-
+    public static final String GROUSE_USER = "grouse_user";
+    public static final String GROUSE_OBJECT = "grouse_object";
+    public static final String READ = "read";
+    public static final String UPDATE = "update";
+    public static final String DELETE = "delete";
 
     public static final String PROJECT_TABLE_NAME = "projects";
 
@@ -97,6 +102,7 @@ public final class Constants {
     public static final String PROJECT_REQUIREMENT_TABLE_NAME =
             "project_requirements";
     public static final String USER_TABLE_NAME = "user";
+    public static final String ACL_TABLE_NAME = "access_control";
     public static final String AUTHORITY_TABLE_NAME = "authority";
 
     // Join tables
