@@ -15,7 +15,7 @@ import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @Entity
-@Table(name = USER_TABLE_NAME)
+@Table(name = ACL_TABLE_NAME)
 @EntityListeners(AuditingEntityListener.class)
 public class AccessControl {
 
@@ -24,7 +24,7 @@ public class AccessControl {
      * rather than integer primary keys.
      */
     @Id
-    @Column(name = ACL_PK_ID, nullable = false, updatable = false)
+    @Column(name = ACL_PK_ID, updatable = false)
     @Type(type = "uuid-char")
     private UUID aclId;
 

@@ -62,7 +62,7 @@ public class DocumentController {
 
     @PostMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + DOCUMENT)
     public ResponseEntity<Project> getRequirement(
-            @PathVariable(PROJECT_NUMBER) Long projectId)
+            @PathVariable(PROJECT_NUMBER) UUID projectId)
             throws Exception {
 
         Project project = projectService.findById(projectId);
@@ -90,7 +90,7 @@ public class DocumentController {
     @GetMapping(SLASH + PROJECT + SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
             DOCUMENT)
     public HttpEntity<byte[]> downloadProjectDocument(
-            @PathVariable(PROJECT_NUMBER) Long projectId) {
+            @PathVariable(PROJECT_NUMBER) UUID projectId) {
         Project project = projectService.findById(projectId);
         if (null != project.getFileNameInternal()) {
             throw new InternalException("Can't download document, no filename" +

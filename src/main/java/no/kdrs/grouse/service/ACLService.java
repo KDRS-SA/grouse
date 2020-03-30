@@ -3,11 +3,15 @@ package no.kdrs.grouse.service;
 import no.kdrs.grouse.model.AccessControl;
 import no.kdrs.grouse.persistence.IACLRepository;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Service
+@Transactional
 public class ACLService
         extends GrouseService {
 

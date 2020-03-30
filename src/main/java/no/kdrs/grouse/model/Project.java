@@ -1,6 +1,7 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
@@ -30,9 +32,9 @@ public class Project
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "project_id", nullable = false, updatable = false)
-    private Long projectId;
+    @Column(name = PROJECT_PK_ID, nullable = false, updatable = false)
+    @Type(type = "uuid-char")
+    private UUID projectId;
 
     /**
      * Assignable descriptive name to the project e.g
@@ -109,12 +111,12 @@ public class Project
     @OrderBy("projectFunctionalityId ASC")
     private List<ProjectFunctionality> referenceProjectFunctionality;
 
-    public void setProjectId(Long projectId) {
-        this.projectId = projectId;
+    public UUID getProjectId() {
+        return projectId;
     }
 
-    public Long getProjectId() {
-        return projectId;
+    public void setProjectId(UUID projectId) {
+        this.projectId = projectId;
     }
 
     public String getProjectName() {
@@ -212,6 +214,11 @@ public class Project
     public void setReferenceProjectFunctionality(
             List<ProjectFunctionality> referenceProjectFunctionality) {
         this.referenceProjectFunctionality = referenceProjectFunctionality;
+    }
+
+    public void addProjectFunctionality(
+            ProjectFunctionality projectFunctionality) {
+        this.referenceProjectFunctionality.add(projectFunctionality);
     }
 
     @Override

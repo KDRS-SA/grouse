@@ -6,6 +6,8 @@ import no.kdrs.grouse.model.ProjectFunctionality;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
+import java.time.OffsetDateTime;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Data
@@ -30,6 +32,8 @@ public class LinksProjectFunctionality
     private Boolean active;
     private String type;
     private String ownedBy;
+    private OffsetDateTime createdDate;
+    private OffsetDateTime lastModifiedDate;
     private Long version;
     private Boolean hasRequirements;
     private Boolean hasFunctionality;
@@ -48,6 +52,8 @@ public class LinksProjectFunctionality
         this.active = projectFunctionality.getActive();
         this.type = projectFunctionality.getType();
         this.ownedBy = projectFunctionality.getOwnedBy();
+        this.createdDate = projectFunctionality.getCreatedDate();
+        this.lastModifiedDate = projectFunctionality.getLastModifiedDate();
         this.version = projectFunctionality.getVersion();
         this.hasRequirements = false;
         if (projectFunctionality
@@ -149,6 +155,22 @@ public class LinksProjectFunctionality
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
+    }
+
+    public OffsetDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(OffsetDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public OffsetDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(OffsetDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Long getVersion() {

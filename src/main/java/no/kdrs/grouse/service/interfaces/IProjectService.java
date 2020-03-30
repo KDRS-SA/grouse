@@ -19,24 +19,28 @@ public interface IProjectService {
 
     Page<Project> findAll(Pageable page);
 
-    Project findById(Long id);
+    Project findById(UUID projectId);
 
     Project createProject(Project project);
 
     Project createProjectFromTemplate(Project project, UUID templateId);
 
-    Project update(Long id, PatchObjects patchObjects)
+    Project update(UUID projectId, PatchObjects patchObjects)
             throws EntityNotFoundException;
 
     Page<Project> findByOwnedBy(String ownedBy, Pageable pageable);
 
-    void delete(Long id);
+    void delete(UUID projectId);
 
     List<ProjectRequirement> findByProjectIdOrderByProjectName(
-            Long projectId, String functionalityNumber);
+            UUID projectId, String functionalityNumber);
 
     Page<ProjectFunctionality> findFunctionalityForProjectByType(
-            Pageable pageable, Long projectId, String type);
+            Pageable pageable, UUID projectId, String type);
 
     Iterable<Project> findByOwnedBy(String username);
+
+    ProjectFunctionality createFunctionality(
+            UUID projectId,
+            ProjectFunctionality projectFunctionality);
 }

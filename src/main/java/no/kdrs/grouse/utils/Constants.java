@@ -80,6 +80,7 @@ public final class Constants {
     public static final String PERCENT_FOR_DOCUMENT = "procent_for_document";
     public static final String TEMPLATE_DESCRIPTION = "template_description";
     public static final String TEMPLATE_PK_ID = "template_id";
+    public static final String PROJECT_PK_ID = "project_id";
     public static final String ACL_PK_ID = "access_control_id";
     public static final String TEMPLATE_FK_ID = "fk_template_id";
     public static final String FUNCTIONALITY_FK_ID = "fk_functionality_id";
@@ -92,9 +93,9 @@ public final class Constants {
     public static final String AUTHORITY = "authority";
     public static final String GROUSE_USER = "grouse_user";
     public static final String GROUSE_OBJECT = "grouse_object";
-    public static final String READ = "read";
-    public static final String UPDATE = "update";
-    public static final String DELETE = "delete";
+    public static final String READ = "can_read";
+    public static final String UPDATE = "can_update";
+    public static final String DELETE = "can_delete";
 
     public static final String PROJECT_TABLE_NAME = "projects";
 

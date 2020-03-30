@@ -7,6 +7,8 @@ import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -63,7 +65,7 @@ public class ProjectRequirementController {
 
     @PostMapping(value = "/{prosjekt}/funksjonalitet/{funksjonalitet}")
     public ResponseEntity<ProjectRequirement> createRequirement(
-            @PathVariable("prosjekt") Long projectId,
+            @PathVariable("prosjekt") UUID projectId,
             @PathVariable("funksjonalitet") String functionality,
             @RequestBody ProjectRequirement projectRequirement) {
 

@@ -78,13 +78,13 @@ public class TemplateService
     }
 
     @Override
-    public void createFunctionality(
+    public TemplateFunctionality createFunctionality(
             @NotNull final UUID templateId,
             TemplateFunctionality templateFunctionality) {
         Template template = getTemplateOrThrow(templateId);
         template.addTemplateFunctionality(templateFunctionality);
         templateFunctionality.setReferenceTemplate(template);
-        templateFunctionalityRepository.save(templateFunctionality);
+        return templateFunctionalityRepository.save(templateFunctionality);
     }
 
     @Override

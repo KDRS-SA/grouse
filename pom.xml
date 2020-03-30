@@ -9,7 +9,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <description>
-    Application to create a Noark 5 templateRequirements document. The application
+    Application to create a requirements specification document. The application
     is implemented as a REST application.
   </description>
 

@@ -68,12 +68,19 @@ public class ProjectIntegrationTest {
     @Autowired
     private AuditConfiguration auditConfiguration;
 
-    private Pattern selfRel = compile(".+" + CONTEXT_PATH + SLASH + PROJECT +
-            SLASH + "\\d+$");
-    private Pattern functionRel = compile(".+" + CONTEXT_PATH + SLASH +
-            PROJECT + SLASH + "\\d+" + SLASH + FUNCTIONALITY + "$");
-    private Pattern documentRel = compile(".+" + CONTEXT_PATH + SLASH + PROJECT +
-            SLASH + "\\d+" + SLASH + DOCUMENT + "$");
+    private final String uuid = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4" +
+            "}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
+    private final Pattern selfRelUUIDPattern =
+            compile(".+" + CONTEXT_PATH + SLASH + PROJECT + SLASH + uuid);
+    private final Pattern selfRelProjectFunctionalityPattern =
+            compile(".+" + CONTEXT_PATH + SLASH + PROJECT_FUNCTIONALITY + SLASH
+                    + "\\d+");
+    private final Pattern functionRelPattern =
+            compile(".+" + CONTEXT_PATH + SLASH + PROJECT + SLASH + uuid +
+                    SLASH + FUNCTIONALITY + "$");
+    private final Pattern documentRelPattern =
+            compile(".+" + CONTEXT_PATH + SLASH + PROJECT + SLASH + uuid +
+                    SLASH + DOCUMENT + "$");
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext,
@@ -121,11 +128,11 @@ public class ProjectIntegrationTest {
                 .andExpect(jsonPath("$.projectName")
                         .value(TEST_PROJECT_NAME))
                 .andExpect(jsonPath("$._links.self.href",
-                        matchesPattern(selfRel)))
+                        matchesPattern(selfRelUUIDPattern)))
                 .andExpect(jsonPath("$._links.function.href",
-                        matchesPattern(functionRel)))
+                        matchesPattern(functionRelPattern)))
                 .andExpect(jsonPath("$._links.document.href",
-                        matchesPattern(documentRel))
+                        matchesPattern(documentRelPattern))
                 );
 
         resultActions
@@ -189,10 +196,10 @@ public class ProjectIntegrationTest {
                         .value(TEST_PROJECT_NAME))
                 .andExpect(jsonPath(
                         "$._embedded.projects[0]._links.self.href",
-                        matchesPattern(selfRel)))
+                        matchesPattern(selfRelUUIDPattern)))
                 .andExpect(jsonPath(
                         "$._embedded.projects[0]._links.function.href",
-                        matchesPattern(functionRel)))
+                        matchesPattern(functionRelPattern)))
                 .andExpect(jsonPath(
                         "$._links.self.href",
                         matchesPattern(selfRelProjectPaged)));
@@ -222,11 +229,11 @@ public class ProjectIntegrationTest {
                         .sectionTitle(TEST_FUNCTIONALITY_TITLE)
                         .sectionOrder(1)
                         .build();
-
-        // 1 is the only project number defined in single-project.sql
         String url =
-                SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH + "1" + SLASH +
+                SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH +
+                        "8b05d4d0-8663-4654-8a0f-65c88f57fc96" + SLASH +
                         FUNCTIONALITY;
+
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .post(url)
                 .contextPath(SLASH + CONTEXT_PATH)
@@ -241,11 +248,9 @@ public class ProjectIntegrationTest {
         System.out.println(response.getContentAsString());
         System.out.println(response.getStatus());
 
-        Pattern pattern = compile(".+" + CONTEXT_PATH + SLASH + PROJECT +
-                SLASH + FUNCTIONALITY + SLASH + "\\d$");
         resultActions
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.functionalityId")
+                .andExpect(jsonPath("$.projectFunctionalityId")
                         .exists())
                 .andExpect(jsonPath("$.functionalityNumber")
                         .value(TEST_FUNCTIONALITY_NUMBER))
@@ -264,7 +269,7 @@ public class ProjectIntegrationTest {
                 .andExpect(jsonPath("$.title")
                         .value(TEST_FUNCTIONALITY_TITLE))
                 .andExpect(jsonPath("$._links.self.href",
-                        matchesPattern(pattern))
+                        matchesPattern(selfRelProjectFunctionalityPattern))
                 );
 
         resultActions
@@ -294,7 +299,8 @@ public class ProjectIntegrationTest {
             "/db-tests/multiple-functionality.sql",
             "/db-tests/multiple-requirements.sql"})
     public void testDeleteProject() throws Exception {
-        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH + "1";
+        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH +
+                "8b05d4d0-8663-4654-8a0f-65c88f57fc96";
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .delete(url)
                 .contextPath(SLASH + CONTEXT_PATH));
@@ -318,7 +324,8 @@ public class ProjectIntegrationTest {
     // empty any projects from table and populate new value
     @Sql({"/db-tests/empty-database.sql", "/db-tests/single-project.sql"})
     public void testUpdateProject() throws Exception {
-        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH + "1";
+        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH +
+                "8b05d4d0-8663-4654-8a0f-65c88f57fc96";
 
         PatchObject patchObject = new PatchObject();
         patchObject.setPath(SLASH + "projectName");
@@ -344,7 +351,8 @@ public class ProjectIntegrationTest {
     @Test
     @Sql("/db-tests/empty-database.sql")
     public void testDeleteNonExistingProject() throws Exception {
-        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH + "9999";
+        String url = SLASH + CONTEXT_PATH + SLASH + PROJECT + SLASH +
+                "9ba5d6d0-a623-f6a4-3a0c-25c83f47fc9f";
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders
                 .delete(url)
                 .contextPath(SLASH + CONTEXT_PATH));

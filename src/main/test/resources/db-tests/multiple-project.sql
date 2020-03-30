@@ -1,3 +1,3 @@
-insert into projects (project_id, project_name, created_date, changed_date, owned_by, version) values (2, 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
-insert into projects (project_id, project_name, created_date, changed_date, owned_by, version) values (3, 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
-insert into projects (project_id, project_name, created_date, changed_date, owned_by, version) values (4, 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42    ', 'admin@example.com', 0);
+insert into projects (project_id, project_name, created_date, changed_date, owned_by, version) values ('8dacd554-8aa5-438f-ad0c-1f17e3f877e6', 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42', 'admin@example.com', 0);
+insert into projects (project_id, project_name, created_date, changed_date, owned_by, version) values ('3b564e93-0f7c-4557-b027-d540cfe67ea7', 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42', 'admin@example.com', 0);
+insert into projects (project_id, project_name, created_date, changed_date, owned_by, version) values ('496f4bcf-0be7-4d8e-8d25-5aff54e087fd', 'Example project', '2020-02-17T09:09:42', '2020-02-17T09:09:42', 'admin@example.com', 0);

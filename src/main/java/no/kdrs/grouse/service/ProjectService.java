@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.UUID.randomUUID;
+
 /**
  * Created by tsodring on 9/25/17.
  */
@@ -61,7 +63,7 @@ public class ProjectService
     @Override
     @SuppressWarnings("unchecked")
     public List<ProjectRequirement> findByProjectIdOrderByProjectName(
-            Long projectId, String functionalityNumber) {
+            UUID projectId, String functionalityNumber) {
         String queryString =
                 "select p from ProjectRequirement as p where " +
                         "p.referenceProject.projectId = :projectId " +
@@ -84,7 +86,7 @@ public class ProjectService
      */
     @Override
     public Page<ProjectFunctionality> findFunctionalityForProjectByType(
-            Pageable pageable, Long projectId, String type) {
+            Pageable pageable, UUID projectId, String type) {
         return projectFunctionalityRepository.
                 findByReferenceProjectAndTypeAndShowMe(
                         getProjectOrThrow(projectId), type, true, pageable);
@@ -96,8 +98,17 @@ public class ProjectService
     }
 
     @Override
-    public Project findById(@NotNull Long id) {
-        return getProjectOrThrow(id);
+    public Project findById(@NotNull UUID projectId) {
+        return getProjectOrThrow(projectId);
+    }
+
+    @Override
+    public ProjectFunctionality createFunctionality(
+            UUID projectId, ProjectFunctionality projectFunctionality) {
+        Project project = getProjectOrThrow(projectId);
+        project.addProjectFunctionality(projectFunctionality);
+        projectFunctionality.setReferenceProject(project);
+        return projectFunctionalityRepository.save(projectFunctionality);
     }
 
     /**
@@ -107,6 +118,7 @@ public class ProjectService
      * @return project after it is persisted
      */
     public Project createProject(Project project) {
+        project.setProjectId(randomUUID());
         project.setOwnedBy(getUser());
         project.setFileName(project.getProjectName());
         return projectRepository.save(project);
@@ -138,6 +150,7 @@ public class ProjectService
         if (project.getProjectName() == null) {
             project.setProjectName(template.getTemplateName());
         }
+        project.setProjectId(randomUUID());
         project.setFileName(project.getProjectName());
         project.setOwnedBy(getUser());
         project = projectRepository.save(project);
@@ -213,9 +226,10 @@ public class ProjectService
     }
 
     @Override
-    public Project update(Long id, PatchObjects patchObjects)
+    public Project update(UUID projectId, PatchObjects patchObjects)
             throws EntityNotFoundException {
-        return (Project) handlePatch(getProjectOrThrow(id), patchObjects);
+        return (Project) handlePatch(getProjectOrThrow(projectId),
+                patchObjects);
     }
 
     @Override
@@ -233,21 +247,41 @@ public class ProjectService
      * the project. These are projectRequirements and projectFunctionality.
      * These are deleted first before the project is deleted
      *
-     * @param id the id of the project ot delete
+     * @param projectId the id of the project ot delete
      */
     @Override
-    public void delete(Long id) {
-        Project project = getProjectOrThrow(id);
+    public void delete(UUID projectId) {
+        Project project = getProjectOrThrow(projectId);
+        deleteFunctionalities(project.getReferenceProjectFunctionality());
+        projectRepository.delete(project);
+    }
+
+    protected void deleteFunctionalities(
+            List<ProjectFunctionality> projectFunctionalities) {
         for (ProjectFunctionality projectFunctionality :
-                project.getReferenceProjectFunctionality()) {
-            for (ProjectRequirement projectRequirement :
-                    projectFunctionality.getReferenceProjectRequirement()) {
-                projectRequirementService
-                        .deleteRequirementByObject(projectRequirement);
+                projectFunctionalities) {
+            if (projectFunctionality
+                    .getReferenceProjectRequirement().size() > 0) {
+                deleteRequirements(projectFunctionality
+                        .getReferenceProjectRequirement());
             }
+            if (projectFunctionality
+                    .getReferenceChildProjectFunctionality().size() > 0) {
+                deleteFunctionalities(projectFunctionality
+                        .getReferenceChildProjectFunctionality());
+            }
+            projectFunctionality.setReferenceParentFunctionality(null);
+            projectFunctionality.setReferenceProject(null);
             projectFunctionalityRepository.delete(projectFunctionality);
         }
-        projectRepository.delete(project);
+    }
+
+    protected void deleteRequirements(
+            List<ProjectRequirement> projectRequirements) {
+        for (ProjectRequirement projectRequirement : projectRequirements) {
+            projectRequirementService
+                    .deleteRequirementByObject(projectRequirement);
+        }
     }
 
     @Override
@@ -261,14 +295,14 @@ public class ProjectService
      * that you will only ever get a valid Project back. If there is no valid
      * Project, a EntityNotFoundException exception is thrown
      *
-     * @param id The systemId of the project object to retrieve
+     * @param projectId The id of the project object to retrieve
      * @return the project object
      */
-    private Project getProjectOrThrow(@NotNull Long id)
+    private Project getProjectOrThrow(@NotNull UUID projectId)
             throws EntityNotFoundException {
-        return projectRepository.findById(id)
+        return projectRepository.findById(projectId)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
-                                "No Project exists with Id " + id));
+                                "No Project exists with Id " + projectId));
     }
 }

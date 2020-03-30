@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -20,7 +21,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class LinksProject
         extends RepresentationModel<LinksProject> {
 
-    private Long projectId;
+    private UUID projectId;
     private String projectName;
     private OffsetDateTime createdDate;
     private OffsetDateTime lastModifiedDate;
@@ -36,11 +37,11 @@ public class LinksProject
         this.percentForDocument = project.getPercentForDocument();
     }
 
-    public Long getProjectId() {
+    public UUID getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(UUID projectId) {
         this.projectId = projectId;
     }
 
