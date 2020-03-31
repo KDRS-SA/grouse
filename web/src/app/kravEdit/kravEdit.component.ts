@@ -11,6 +11,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {statusPageData} from '../models/statusPageData.model';
 import {TranslateService} from '@ngx-translate/core';
 import {isIterable} from 'rxjs/internal-compatibility';
+import {ProjectRequirment} from '../models/ProjectRequirment.model';
 
 @Component({
   selector: 'app-root',
@@ -73,7 +74,8 @@ export class kravEditComponent implements OnInit {
   /**
    * fetchMainData
    *
-   * A Monster method that calls all required links to fetech the entire project form the server
+   * A Monster method that calls all required links to fetch the entire project form the server,
+   * also generates the tree that builds up the sidenav
    */
   fetchMainData() {
     this.loading = true;
@@ -146,7 +148,7 @@ export class kravEditComponent implements OnInit {
                       }).subscribe(result => {
                         calls--;
                         // @ts-ignore
-                        tertiary.referenceProjectRequirement = result._embedded.projectRequirements;
+                        tertiary.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
                         if (calls === 0) {
                           this.crunchGatheredData(newlyLoaded);
                         }
@@ -176,7 +178,7 @@ export class kravEditComponent implements OnInit {
                 }).subscribe(result => {
                   calls--;
                   // @ts-ignore
-                  secondary.referenceProjectRequirement = result._embedded.projectRequirements;
+                  secondary.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
                   if (calls === 0) {
                     this.crunchGatheredData(newlyLoaded);
                   }
@@ -207,7 +209,7 @@ export class kravEditComponent implements OnInit {
           }).subscribe(result => {
             calls--;
             // @ts-ignore
-            prime.referenceProjectRequirement = result._embedded.projectRequirements;
+            prime.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
             if (calls === 0) {
               this.crunchGatheredData(newlyLoaded);
             }
@@ -224,6 +226,40 @@ export class kravEditComponent implements OnInit {
     }, error => {
       console.error(error);
     });
+  }
+
+  /**
+   * fixRequirmentText
+   * Fixes the formating of requirments for the gui, this will most likely be removed at a later date
+   *
+   * @param requirments
+   * An array of requirments to fix
+   */
+  fixRequirmentsText(requirments: ProjectRequirment[]): ProjectRequirment[] {
+    const ret: ProjectRequirment[] = [];
+    for (const req of requirments) {
+      let text = '';
+      for (const line of req.requirementText.split('\n')) {
+        let newline = ' ';
+        let passed = false; // When the space is "driven-past" cahnges to true
+        for (const character of line.split('')) {
+          if (character !== ' ') {
+            passed = true;
+          }
+          if (passed) {
+            newline += character;
+          }
+        }
+        text += newline;
+      }
+      if (text.split('')[0] === ' ') {
+        text = text.substring(1);
+      }
+      const newreq: ProjectRequirment = req;
+      newreq.requirementText = text;
+      ret.push(newreq);
+    }
+    return ret;
   }
 
   /**
@@ -251,19 +287,23 @@ export class kravEditComponent implements OnInit {
     this.statusBarInfo();
   }
 
-  /*
-  * This method sends the user to the main menu when called
-  */
+  /**
+   * goToMainMenu
+   *
+   * This method sends the user to the main menu when called
+   */
   goToMainMenu() {
     this.userData.nav = 'Menu';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/Menu']);
   }
 
-  /*
-  *This method both sends a call to the server to invalidate the current auth-token and sends the user to the login page
-  * As this method is duplicated it will proabobly be moved later
-  */
+  /**
+   * logout
+   *
+   * This method both sends a call to the server to invalidate the current auth-token and sends the user to the login page
+   * As this method is duplicated it will proabobly be moved later
+   */
   logout() {
     localStorage.clear();
     this.http.get(this.userData._links['logout OAuth2'].href, {
@@ -278,8 +318,13 @@ export class kravEditComponent implements OnInit {
     location.reload();
   }
 
-  /*
-  * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
+  /**
+   * changeReq
+   *
+   * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
+   *
+   * @param id
+   * Wich id to change to
    */
   changeReq(id: number) {
     if (id === 0) { // Loads the statuspage
@@ -344,7 +389,10 @@ export class kravEditComponent implements OnInit {
   /**
    * updateFunctionalityProcessed
    *
-   * handles a change in requirement text.
+   * Toggles the proccesed boolean flag og a projectfuntionality
+   *
+   * @param functionality
+   * The functionalioty to update.
    */
   updateFunctionalityProcessed(functionality: projectFunctionality) {
     functionality.processed = !functionality.processed;
@@ -372,6 +420,12 @@ export class kravEditComponent implements OnInit {
    * updateRequirementPriority
    *
    * handles a change in requirement priority.
+   *
+   * @param index
+   * Wich index of the requirment array within the projectFunctionality that should be updated.
+   *
+   * @param priority
+   * The priority to assign the requirment
    */
   updateRequirementPriority(index: number, priority: string) {
     const patchString = '[{ "op": "replace", "path": "/priority", "value": "' +
@@ -379,6 +433,7 @@ export class kravEditComponent implements OnInit {
 
     this.sendPatch(patchString, this.currentReq.referenceProjectRequirement[index]._links.self.href);
   }
+
   /**
    * sendPatch
    *
@@ -403,6 +458,11 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * addRequirment
+   *
+   * Adds a requirment to the project on the currently selected projectFuncionality
+   */
   addRequirment() {
     const textfield = document.getElementById('NyttKrav');
 
@@ -424,6 +484,14 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * removeRequirment
+   *
+   * Removes a requirment from the project
+   *
+   * @param index
+   * Wich index of the requirment array withtin the currently selected projectFunctionality to delete
+   */
   removeRequirment(index: number) {
     const dialogref = this.dialog.open(DeleteRequirmentDialog, {
       width: '300px'
@@ -447,6 +515,14 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * newReqPriorityChange
+   *
+   * Updates the newReqPriority datafield wich is used to determine what new requirments prioriteis are.
+   *
+   * @param priority
+   * What to update the priority to
+   */
   newReqPriorityChange(priority: string) {
     this.newReqPriority = priority;
   }
@@ -454,7 +530,7 @@ export class kravEditComponent implements OnInit {
   /**
    * nextReq
    *
-   * Switches to the next rquirment
+   * Switches to the next requirment
    */
   nextReq() {
     const switchto = this.findNextReq(this.currentReq.projectFunctionalityId);
@@ -610,36 +686,6 @@ export class kravEditComponent implements OnInit {
     this.statpageData.loaded = true;
   }
 
-  /**
-   * isPrime (Unused)
-   * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
-   * @param inn
-   * The projectfunctionality to check
-   */
-  isPrime(inn: projectFunctionality): boolean {
-    for (const prime of this.mainData) {
-      if (prime === inn) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * isPrime (Unused)
-   * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
-   * @param inn
-   * ID of the projectfunctionality to check
-   */
-  isPrimeID(ID: number): boolean {
-    for (const prime of this.mainData) {
-      if (prime.projectFunctionalityId === ID) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
 }
 
@@ -650,41 +696,7 @@ export class Requirment {
   children?: Requirment[];
 }
 
-const TREE_DATA: Requirment[] = [
-  {
-    name: 'Generelle krav',
-    id: 0,
-    children: [
-      {name: '1.1 Krav om pølser', id: 0},
-      {name: '1.2 Krav i henhold til nasjonale lover for saltmengde i kjøttprodukter', id: 0},
-      {name: '1.3 Krav i forhold til utnyttelse av lovhull for å ungå krav 1.2', id: 0}
-    ]
-  },
-  {
-    name: 'Avanserte krav',
-    id: 0,
-    children: [
-      {
-        name: '1',
-        id: 0,
-        children: [
-          { name: '1.1 Krav i forhold til salting', id: 0},
-          { name: '1.2 Krav om fri på mandager', id: 0},
-          { id: 0, name: '1.3 Krav om sene kvelder'}
-        ]
-      },
-      {
-        name: '2',
-        id: 0,
-        children: [
-          { name: '2.1 Krav om bruk av toaletter', id: 0},
-          { name: '2.2 Krav om kråker og andre irriterende skapninger', id: 0},
-          { name: '2.3 Krav ved valg av ny Dungeon Master for kontorets søndagskvelder', id: 0}
-        ]
-      }
-    ]
-  }
-];
+const TREE_DATA: Requirment[] = [];
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'DeleteRequirment.Dialog',
