@@ -5,7 +5,7 @@ export class Links {
   project: Link;
   function: Link;
   krav: Link;
-  dokument: Link;
+  document: Link;
   ['login OAuth2']: Link;
   ['project-list']: Link;
   ['template-list']: Link;

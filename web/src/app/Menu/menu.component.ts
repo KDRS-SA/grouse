@@ -220,8 +220,6 @@ export class NewProjectDialog {
   selector: 'DeleteProject.Dialog',
   templateUrl: '../Modals/RemoveProject.Dialog.html'
 })
-
-// tslint:disable-next-line:component-class-suffix
 export class DeleteProjectDialog {
   constructor(public dialogRef: MatDialogRef<DeleteProjectDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
     this.data = true;

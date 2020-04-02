@@ -34,9 +34,10 @@ export class LoginComponent implements  OnInit {
     this.userData = new UserData();
     this.shake = false;
     this.snackBar = snackBar;
-    translate.addLangs(['no', 'en', 'ny']);
-    translate.setDefaultLang('no');
+    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmål');
   }
+
   public title = 'Grouse';
   public login: boolean;
 
@@ -61,17 +62,6 @@ export class LoginComponent implements  OnInit {
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
     return this.email.hasError('required') ? this.translate.get('ErrorsAndWarns.MustEnterEmail').value : this.email.hasError('email') ? this.translate.get('ErrorsAndWarns.InnvalidEmail').value : '';
-  }
-
-  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
-    this.login = true;
-    this.http = http;
-    this.router = router;
-    this.userData = new UserData();
-    this.shake = false;
-    this.snackBar = snackBar;
-    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
-    translate.setDefaultLang('Bokmål');
   }
 
   ngOnInit() {

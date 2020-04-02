@@ -159,6 +159,7 @@ export class kravEditComponent implements OnInit {
                         if (calls === 0) {
                           this.crunchGatheredData(newlyLoaded);
                         }
+                        // tslint:disable-next-line:no-shadowed-variable
                       }, error => {
                         console.error(error);
                       });
@@ -171,6 +172,7 @@ export class kravEditComponent implements OnInit {
                   if (calls === 0) {
                     this.crunchGatheredData(newlyLoaded);
                   }
+                  // tslint:disable-next-line:no-shadowed-variable
                 }, error => {
                   console.error(error);
                 });
@@ -189,6 +191,7 @@ export class kravEditComponent implements OnInit {
                   if (calls === 0) {
                     this.crunchGatheredData(newlyLoaded);
                   }
+                  // tslint:disable-next-line:no-shadowed-variable
                 }, error => {
                   console.error(error);
                 });
@@ -202,6 +205,7 @@ export class kravEditComponent implements OnInit {
             if (calls === 0) {
               this.crunchGatheredData(newlyLoaded);
             }
+            // tslint:disable-next-line:no-shadowed-variable
           }, error => {
             console.error(error);
           });
@@ -220,6 +224,7 @@ export class kravEditComponent implements OnInit {
             if (calls === 0) {
               this.crunchGatheredData(newlyLoaded);
             }
+            // tslint:disable-next-line:no-shadowed-variable
           }, error => {
             console.log(error);
           });
@@ -230,6 +235,7 @@ export class kravEditComponent implements OnInit {
         NavData.push(NavReqP);
       }
       this.dataSource.data = NavData;
+      // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.error(error);
     });
@@ -237,7 +243,7 @@ export class kravEditComponent implements OnInit {
 
   downloadDocument() {
     console.log(this.userData.currentProject);
-    this.http.get(this.userData.currentProject._links.dokument.href, {
+    this.http.get(this.userData.currentProject._links.document.href, {
       headers: new HttpHeaders({
           Authorization: 'Bearer' + this.userData.oauthClientSecret
         }
@@ -254,15 +260,7 @@ export class kravEditComponent implements OnInit {
       return url;
     });
   }
-  goToMainMenu() {
-  /*
-  * This method sends the user to the main menu when called
-  */
-    this.userData.nav = 'Menu';
-    localStorage.setItem('UserData', JSON.stringify(this.userData));
-    this.router.navigate(['/Menu']);
-  }
-  
+
   /**
    * fixRequirmentText
    * Fixes the formating of requirments for the gui, this will most likely be removed at a later date
@@ -346,6 +344,7 @@ export class kravEditComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
+      // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.log(error);
     });
@@ -489,6 +488,7 @@ export class kravEditComponent implements OnInit {
       })
     }).subscribe(result => {
       // console.log(result);
+      // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.error(error);
     });
@@ -515,6 +515,7 @@ export class kravEditComponent implements OnInit {
       // @ts-ignore
       textfield.value = null;
       this.fetchMainData();
+      // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.error(error);
     });
@@ -547,6 +548,7 @@ export class kravEditComponent implements OnInit {
           // tslint:disable-next-line:no-shadowed-variable
             result => {
               this.fetchMainData();
+              // tslint:disable-next-line:no-shadowed-variable
             }, error => console.error(error));
       }
     });
@@ -722,17 +724,20 @@ export class kravEditComponent implements OnInit {
       this.statpageData.progress = 100;
 
       // Calls a post to generate document if download is finnished
+      /*
       this.statpageData.generatingDocument = true;
-      this.http.post(this.userData.currentProject._links.dokument.href, {}, {
+      this.http.post(this.userData.currentProject._links.document.href, {}, {
         headers: new HttpHeaders({
             Authorization: 'Bearer ' + this.userData.oauthClientSecret
           }
         )
       }).subscribe(result => {
         this.statpageData.generatingDocument = false;
+        // tslint:disable-next-line:no-shadowed-variable
       }, error => {
         alert(error);
       });
+      */
     }
     this.statpageData.loaded = true;
   }
