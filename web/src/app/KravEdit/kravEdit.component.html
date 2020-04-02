@@ -32,7 +32,7 @@
     </div>
   </div>
 </mat-toolbar>
-<mat-sidenav-container class="sidebar" hasBackdrop="true">
+<mat-sidenav-container *ngIf="!loading" class="sidebar" hasBackdrop="true">
   <mat-sidenav mode="over" [opened]="sideBarOpen" class="sidenav">
 
     <!-- Tree DONT TOUCH IT FOR THE LOVE OF EVERYTHING HOLY-->
@@ -77,7 +77,7 @@
       </i>
     </button>
     <!--The centre column where you edit stuff-->
-    <div *ngIf="!statusPage" class="edit-column">
+    <div *ngIf="!statusPage && currentReq !== undefined" class="edit-column">
       <mat-card class="Krav-card-edit">
         <!--Edit part (with the tabs and the text fields)-->
         <mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="selectedTab = $event">

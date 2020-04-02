@@ -147,6 +147,10 @@ body{
   height: 80%;
 }
 
+.color-lightgray{
+  background-color: rgb(220, 220, 220);
+}
+
 .rounded{
   border-radius: 10px;
 }

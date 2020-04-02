@@ -10,6 +10,8 @@ import {MatTreeNestedDataSource} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {statusPageData} from '../models/statusPageData.model';
 import {TranslateService} from '@ngx-translate/core';
+import {isIterable} from 'rxjs/internal-compatibility';
+import {ProjectRequirment} from '../models/ProjectRequirment.model';
 import {error} from 'util';
 
 @Component({
@@ -43,8 +45,10 @@ export class kravEditComponent implements OnInit {
   private statusbarData: projectFunctionality[];
   private nav: Requirment[];
   private dialog: MatDialog;
+  private loading: boolean;
 
   constructor(http: HttpClient, router: Router, dialog: MatDialog, public translate: TranslateService) {
+    this.loading = true;
     this.http = http;
     this.router = router;
     this.projectLink = '';
@@ -65,18 +69,23 @@ export class kravEditComponent implements OnInit {
 
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
-    this.projectLink = this.userData.currentProject._links.funksjon.href;
+    this.projectLink = this.userData.currentProject._links.function.href;
     this.fetchMainData();
-
     this.treeControl = new NestedTreeControl<Requirment>(
       node => node.children
     );
-
     this.dataSource = new MatTreeNestedDataSource<Requirment>();
     this.dataSource.data = TREE_DATA;
   }
 
+  /**
+   * fetchMainData
+   *
+   * A Monster method that calls all required links to fetch the entire project form the server,
+   * also generates the tree that builds up the sidenav
+   */
   fetchMainData() {
+    this.loading = true;
     this.http.get(this.projectLink, {
       headers: new HttpHeaders({
           Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -85,16 +94,142 @@ export class kravEditComponent implements OnInit {
     }).subscribe(result => {
       const newlyLoaded = (this.mainData === undefined);
       // @ts-ignore
-      this.mainData = result;
-      this.convertLegacyLinks();
-      if (newlyLoaded) {
-        this.currentReq = this.mainData[0].referenceChildProjectFunctionality[0];
-        this.selectedTab = 0;
-      } else {
-        this.changeReq(this.currentReq.projectFunctionalityId);
+      this.mainData = result._embedded.projectFunctionalities;
+      // Calls all children, but makes sure that it is finnished before it proceeds
+      let calls = 0;
+      this.maxID = 0;
+      const NavData: Requirment[] = [];
+      for (const prime of this.mainData) {
+        const NavReqP = new Requirment();
+        NavReqP.id = prime.projectFunctionalityId;
+        NavReqP.name = prime.title;
+        NavReqP.children = [];
+        if (prime._links.function !== undefined) {
+          calls++;
+          this.http.get(prime._links.function.href, {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + this.userData.oauthClientSecret
+              }
+            )
+            // tslint:disable-next-line:no-shadowed-variable
+          }).subscribe(result => {
+            calls--;
+            // @ts-ignore
+            prime.referenceChildProjectFunctionality = result._embedded.projectFunctionalities;
+
+            // Does it all again if there are more levels of children
+            for (const secondary of prime.referenceChildProjectFunctionality) {
+              secondary.parent = prime;
+              const NavReqS = new Requirment();
+              NavReqS.id = secondary.projectFunctionalityId;
+              NavReqS.name = secondary.title;
+              NavReqS.children = [];
+              if (secondary._links.function !== undefined) {
+                calls++;
+                this.http.get(secondary._links.function.href, {
+                  headers: new HttpHeaders({
+                      Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                    }
+                  )
+                  // tslint:disable-next-line:no-shadowed-variable
+                }).subscribe(result => {
+                  calls--;
+                  // @ts-ignore
+                  secondary.referenceChildProjectFunctionality = result._embedded.projectFunctionalities;
+
+                  // Does it all again again for the next generation
+                  for (const tertiary of secondary.referenceChildProjectFunctionality) {
+                    tertiary.parent = secondary;
+                    const NavReqT = new Requirment();
+                    NavReqT.id = tertiary.projectFunctionalityId;
+                    NavReqT.name = tertiary.title;
+                    NavReqS.children.push(NavReqT);
+                    if (tertiary._links.requirement !== undefined) {
+                      calls++;
+                      this.http.get(tertiary._links.requirement.href, {
+                        headers: new HttpHeaders({
+                            Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                          }
+                        )
+                        // tslint:disable-next-line:no-shadowed-variable
+                      }).subscribe(result => {
+                        calls--;
+                        // @ts-ignore
+                        tertiary.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
+                        if (calls === 0) {
+                          this.crunchGatheredData(newlyLoaded);
+                        }
+                      }, error => {
+                        console.error(error);
+                      });
+                    }
+                    if (this.maxID < tertiary.projectFunctionalityId) {
+                      this.maxID = tertiary.projectFunctionalityId;
+                    }
+                  }
+                  // If this was the last call exits to next step
+                  if (calls === 0) {
+                    this.crunchGatheredData(newlyLoaded);
+                  }
+                }, error => {
+                  console.error(error);
+                });
+              } else if (secondary._links.requirement !== undefined) {
+                calls++;
+                this.http.get(secondary._links.requirement.href, {
+                  headers: new HttpHeaders({
+                      Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                    }
+                  )
+                  // tslint:disable-next-line:no-shadowed-variable
+                }).subscribe(result => {
+                  calls--;
+                  // @ts-ignore
+                  secondary.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
+                  if (calls === 0) {
+                    this.crunchGatheredData(newlyLoaded);
+                  }
+                }, error => {
+                  console.error(error);
+                });
+              }
+              if (this.maxID < secondary.projectFunctionalityId) {
+                this.maxID = secondary.projectFunctionalityId;
+              }
+              NavReqP.children.push(NavReqS);
+            }
+            // If this was the last call exits to next step
+            if (calls === 0) {
+              this.crunchGatheredData(newlyLoaded);
+            }
+          }, error => {
+            console.error(error);
+          });
+        } else if (prime._links.requirement !== undefined) {
+          calls++;
+          this.http.get(prime._links.requirement.href, {
+            headers: new HttpHeaders({
+                Authorization: 'Bearer ' + this.userData.oauthClientSecret
+              }
+            )
+            // tslint:disable-next-line:no-shadowed-variable
+          }).subscribe(result => {
+            calls--;
+            // @ts-ignore
+            prime.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
+            if (calls === 0) {
+              this.crunchGatheredData(newlyLoaded);
+            }
+          }, error => {
+            console.log(error);
+          });
+        }
+        if (this.maxID < prime.projectFunctionalityId) {
+          this.maxID = prime.projectFunctionalityId;
+        }
+        NavData.push(NavReqP);
       }
-      this.statusBarInfo();
-      console.log(this.mainData);
+      this.dataSource.data = NavData;
     }, error => {
       console.error(error);
     });
@@ -112,119 +247,101 @@ export class kravEditComponent implements OnInit {
       const url = window.URL.createObjectURL(result);
       const a = document.createElement('a');
       a.setAttribute('style', 'display:none;');
-      document.body.appendChild(a);
       a.href = url;
+      document.body.appendChild(a);
       a.download = this.userData.currentProject.projectName + '.docx';
       a.click();
       return url;
     });
   }
-
+  goToMainMenu() {
   /*
   * This method sends the user to the main menu when called
   */
+    this.userData.nav = 'Menu';
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
+    this.router.navigate(['/Menu']);
+  }
+  
+  /**
+   * fixRequirmentText
+   * Fixes the formating of requirments for the gui, this will most likely be removed at a later date
+   *
+   * @param requirments
+   * An array of requirments to fix
+   */
+  fixRequirmentsText(requirments: ProjectRequirment[]): ProjectRequirment[] {
+    const ret: ProjectRequirment[] = [];
+    for (const req of requirments) {
+      let text = '';
+      for (const line of req.requirementText.split('\n')) {
+        let newline = ' ';
+        let passed = false; // When the space is "driven-past" cahnges to true
+        for (const character of line.split('')) {
+          if (character !== ' ') {
+            passed = true;
+          }
+          if (passed) {
+            newline += character;
+          }
+        }
+        text += newline;
+      }
+      if (text.split('')[0] === ' ') {
+        text = text.substring(1);
+      }
+      const newreq: ProjectRequirment = req;
+      newreq.requirementText = text;
+      ret.push(newreq);
+    }
+    return ret;
+  }
+
+  /**
+   * crunchGatheredData
+   *
+   * Is called by fetch mian data the data needs to be treated differently depending on if it was the first time it was loaded
+   * @param newlyLoaded
+   * A booleann that tells the method if this was the first time that the data was fetched or not.
+   */
+  crunchGatheredData(newlyLoaded: boolean) {
+    this.loading = false;
+    console.log(this.mainData);
+    // this.convertLegacyLinks();
+    if (newlyLoaded) {
+      const first = this.mainData[0];
+      if (first.referenceProjectRequirement === undefined) {
+        this.currentReq = first.referenceChildProjectFunctionality[0];
+      } else {
+        this.currentReq = first;
+      }
+      this.selectedTab = 0;
+    } else {
+      this.changeReq(this.currentReq.projectFunctionalityId);
+    }
+    this.statusBarInfo();
+  }
+
+  /**
+   * goToMainMenu
+   *
+   * This method sends the user to the main menu when called
+   */
   goToMainMenu() {
     this.userData.nav = 'Menu';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/Menu']);
   }
 
-  /*
-  * This method converts the links subsection of elements sent from the server from the old Spring Boot Standard to the new format
-  * This might not be required in newer version so this method might disapear later wich whould be a nice thing
-  */
-  convertLegacyLinks() {
-    const NavData: Requirment[] = [];     // For the sidenav Tree every NavReq is fo this purpose aswell
-    let maxID = 0;
-    for (const prime of this.mainData) {
-      const NavReqP = new Requirment();
-      NavReqP.id = prime.projectFunctionalityId;
-      NavReqP.name = prime.title;
-      NavReqP.children = [];
-
-      // For MaxID
-      if (NavReqP.id > maxID) {
-        maxID = NavReqP.id;
-      }
-
-      for (const secondary of prime.referenceChildProjectFunctionality) {
-        const NavReqS = new Requirment();
-        NavReqS.id = secondary.projectFunctionalityId;
-        NavReqS.name = secondary.title;
-        NavReqS.children = [];
-
-        // For MaxID
-        if (NavReqS.id > maxID) {
-          maxID = NavReqS.id;
-        }
-
-        for (const tertiary of secondary.referenceChildProjectFunctionality) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
-
-          // For the navigation tree
-          const NavReqT = new Requirment();
-          NavReqT.id = tertiary.projectFunctionalityId;
-          NavReqT.name = tertiary.title;
-          NavReqS.children.push(NavReqT);
-
-          // For MaxID
-          if (NavReqT.id > maxID) {
-            maxID = NavReqT.id;
-          }
-        }
-        NavReqP.children.push(NavReqS);
-        for (const tertiary of secondary.referenceProjectRequirement) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
-
-        }
-        // @ts-ignore
-        secondary._links = convertFromLegacy(secondary.links);
-        // @ts-ignore
-        secondary.links = null;
-      }
-      for (const secondary of prime.referenceProjectRequirement) {
-        /*
-        for (const tertiary of secondary.referenceChildProjectFunctionality) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
-        }
-        for (const tertiary of secondary.referenceProjectRequirement) {
-          // @ts-ignore
-          tertiary._links = convertFromLegacy(tertiary.links);
-          // @ts-ignore
-          tertiary.links = null;
-        }
-        */
-        // @ts-ignore
-        secondary._links = convertFromLegacy(secondary.links);
-        // @ts-ignore
-        secondary.links = null;
-      }
-      // @ts-ignore
-      prime._links = convertFromLegacy(prime.links);
-      // @ts-ignore
-      prime.links = null;
-      NavData.push(NavReqP);
-    }
-    this.dataSource.data = NavData;
-    this.maxID = maxID;
-  }
-
-  /*
-  *This method both sends a call to the server to invalidate the current auth-token and sends the user to the login page
-  * As this method is duplicated it will proabobly be moved later
-  */
+  /**
+   * logout
+   *
+   * This method both sends a call to the server to invalidate the current auth-token and sends the user to the login page
+   * As this method is duplicated it will proabobly be moved later
+   */
   logout() {
     localStorage.clear();
-    this.http.get(this.userData.logoutAdress, {
+    this.http.get(this.userData._links['logout OAuth2'].href, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
@@ -236,8 +353,13 @@ export class kravEditComponent implements OnInit {
     location.reload();
   }
 
-  /*
-  * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
+  /**
+   * changeReq
+   *
+   * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
+   *
+   * @param id
+   * Wich id to change to
    */
   changeReq(id: number) {
     if (id === 0) { // Loads the statuspage
@@ -265,7 +387,7 @@ export class kravEditComponent implements OnInit {
       if (primary.referenceChildProjectFunctionality.length > 0) {
         // Secondary level
         for (const secondary of primary.referenceChildProjectFunctionality) {
-          if (secondary.referenceChildProjectFunctionality.length > 0) {
+          if (secondary.referenceChildProjectFunctionality !== undefined) {
             // Tertiary level
             for (const tertiary of secondary.referenceChildProjectFunctionality) {
               if (tertiary.projectFunctionalityId === id) {
@@ -303,27 +425,29 @@ export class kravEditComponent implements OnInit {
   /**
    * updateFunctionalityProcessed
    *
-   * handles a change in requirement text.
+   * Toggles the proccesed boolean flag og a projectfuntionality
+   *
+   * @param functionality
+   * The functionalioty to update.
    */
   updateFunctionalityProcessed(functionality: projectFunctionality) {
     functionality.processed = !functionality.processed;
 
-    const patchString = '[{ "op": "replace", "path": "/processed", "value": "' +
-      functionality.processed + '"}]';
+    const patchString = '[{ "op": "replace", "path": "/processed", "value": ' +
+      functionality.processed + '}]';
 
     this.sendPatch(patchString, functionality._links.self.href);
 
     // Cheks to se if all children of current parent has been processed unless this is a prime
-    const parent = this.findParentReq(functionality);
-    if (parent !== undefined && parent !== null) {
+    if (functionality.parent !== undefined && functionality.parent !== null) {
       let check = true;
-      for (const child of parent.referenceChildProjectFunctionality) {
+      for (const child of functionality.parent.referenceChildProjectFunctionality) {
         if (!child.processed) {
           check = false;
         }
       }
-      if (check !== parent.processed) {
-        this.updateFunctionalityProcessed(parent);
+      if (check !== functionality.parent.processed) {
+        this.updateFunctionalityProcessed(functionality.parent);
       }
     }
   }
@@ -332,6 +456,12 @@ export class kravEditComponent implements OnInit {
    * updateRequirementPriority
    *
    * handles a change in requirement priority.
+   *
+   * @param index
+   * Wich index of the requirment array within the projectFunctionality that should be updated.
+   *
+   * @param priority
+   * The priority to assign the requirment
    */
   updateRequirementPriority(index: number, priority: string) {
     const patchString = '[{ "op": "replace", "path": "/priority", "value": "' +
@@ -339,6 +469,7 @@ export class kravEditComponent implements OnInit {
 
     this.sendPatch(patchString, this.currentReq.referenceProjectRequirement[index]._links.self.href);
   }
+
   /**
    * sendPatch
    *
@@ -346,8 +477,12 @@ export class kravEditComponent implements OnInit {
    *
    * @param patchString
    * Inputted patchstring to send
+   *
+   * @param url
+   * Inputted url to send patchstring to
    */
   sendPatch(patchString: string, url: string) {
+    console.log(patchString);
     this.http.patch(url, JSON.parse(patchString), {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -359,15 +494,19 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * addRequirment
+   *
+   * Adds a requirment to the project on the currently selected projectFuncionality
+   */
   addRequirment() {
     const textfield = document.getElementById('NyttKrav');
 
     this.http.post(
-      this.currentReq._links.self.href,
+      this.currentReq._links.requirement.href,
       {
         // @ts-ignore
-        requirementText: textfield.value,
-        priority: this.newReqPriority
+        requirementText: textfield.value
       }, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -381,6 +520,14 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * removeRequirment
+   *
+   * Removes a requirment from the project
+   *
+   * @param index
+   * Wich index of the requirment array withtin the currently selected projectFunctionality to delete
+   */
   removeRequirment(index: number) {
     console.log(this.currentReq.referenceProjectRequirement[index]);
     const dialogref = this.dialog.open(DeleteRequirmentDialog, {
@@ -388,6 +535,7 @@ export class kravEditComponent implements OnInit {
     });
 
     dialogref.afterClosed().subscribe(result => {
+      console.log(this.currentReq.referenceProjectRequirement[index]._links.self.href);
       if (result) {
         this.http.delete(
           this.currentReq.referenceProjectRequirement[index]._links.self.href,
@@ -404,6 +552,14 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * newReqPriorityChange
+   *
+   * Updates the newReqPriority datafield wich is used to determine what new requirments prioriteis are.
+   *
+   * @param priority
+   * What to update the priority to
+   */
   newReqPriorityChange(priority: string) {
     this.newReqPriority = priority;
   }
@@ -411,7 +567,7 @@ export class kravEditComponent implements OnInit {
   /**
    * nextReq
    *
-   * Switches to the next rquirment
+   * Switches to the next requirment
    */
   nextReq() {
     const switchto = this.findNextReq(this.currentReq.projectFunctionalityId);
@@ -419,6 +575,7 @@ export class kravEditComponent implements OnInit {
       this.currentReq = switchto;
       this.newReqPriority = 'O';
       this.selectedTab = 0;
+      // this.loadRequirment();
     } else {
       this.statusPage = !this.statusPage;
       this.statPageLoad();
@@ -481,41 +638,6 @@ export class kravEditComponent implements OnInit {
       id--;
     }
     return switchto;
-  }
-
-  /**
-   * findParentReq
-   *
-   * finds a parent of the given child, returns null if none
-   *
-   * @param child of wich the parent should be found
-   */
-  findParentReq(child: projectFunctionality): projectFunctionality {
-    if (child === null) {
-      return null;
-    }
-    // Primary level
-    for (const primary of this.mainData) {
-      if (primary.projectFunctionalityId === child.projectFunctionalityId) {
-        return  null;
-      }
-      if (primary.referenceChildProjectFunctionality.length > 0) {
-        // Secondary level
-        for (const secondary of primary.referenceChildProjectFunctionality) {
-          if (secondary.projectFunctionalityId === child.projectFunctionalityId) {
-            return primary;
-          }
-          if (secondary.referenceChildProjectFunctionality.length > 0) {
-            // Tertiary level
-            for (const tertiary of secondary.referenceChildProjectFunctionality) {
-              if (tertiary.projectFunctionalityId === child.projectFunctionalityId) {
-                return  secondary;
-              }
-            }
-          }
-        }
-      }
-    }
   }
 
   /**
@@ -595,6 +717,7 @@ export class kravEditComponent implements OnInit {
         numberOfReqs++;
       }
       this.statpageData.progress = Math.round((finished / numberOfReqs) * 100);
+      console.log(this.mainData);
     } else {
       this.statpageData.progress = 100;
 
@@ -614,36 +737,6 @@ export class kravEditComponent implements OnInit {
     this.statpageData.loaded = true;
   }
 
-  /**
-   * isPrime
-   * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
-   * @param inn
-   * The projectfunctionality to check
-   */
-  isPrime(inn: projectFunctionality): boolean {
-    for (const prime of this.mainData) {
-      if (prime === inn) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * isPrime
-   * Checks wheter or not the given project functionality is from the primary array i.o.w is not a child of anyone
-   * @param inn
-   * ID of the projectfunctionality to check
-   */
-  isPrimeID(ID: number): boolean {
-    for (const prime of this.mainData) {
-      if (prime.projectFunctionalityId === ID) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
 }
 
@@ -654,41 +747,7 @@ export class Requirment {
   children?: Requirment[];
 }
 
-const TREE_DATA: Requirment[] = [
-  {
-    name: 'Generelle krav',
-    id: 0,
-    children: [
-      {name: '1.1 Krav om pølser', id: 0},
-      {name: '1.2 Krav i henhold til nasjonale lover for saltmengde i kjøttprodukter', id: 0},
-      {name: '1.3 Krav i forhold til utnyttelse av lovhull for å ungå krav 1.2', id: 0}
-    ]
-  },
-  {
-    name: 'Avanserte krav',
-    id: 0,
-    children: [
-      {
-        name: '1',
-        id: 0,
-        children: [
-          { name: '1.1 Krav i forhold til salting', id: 0},
-          { name: '1.2 Krav om fri på mandager', id: 0},
-          { id: 0, name: '1.3 Krav om sene kvelder'}
-        ]
-      },
-      {
-        name: '2',
-        id: 0,
-        children: [
-          { name: '2.1 Krav om bruk av toaletter', id: 0},
-          { name: '2.2 Krav om kråker og andre irriterende skapninger', id: 0},
-          { name: '2.3 Krav ved valg av ny Dungeon Master for kontorets søndagskvelder', id: 0}
-        ]
-      }
-    ]
-  }
-];
+const TREE_DATA: Requirment[] = [];
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'DeleteRequirment.Dialog',

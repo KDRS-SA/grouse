@@ -9,6 +9,8 @@ import {UserData} from '../models/UserData.model';
 import {MatSnackBar} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from "@ngx-translate/core";
+import {startUrl} from '../common';
+import {Links} from '../models/links.model';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,17 @@ import {TranslateService} from "@ngx-translate/core";
 })
 
 export class LoginComponent implements  OnInit {
+
+  constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
+    this.login = true;
+    this.http = http;
+    this.router = router;
+    this.userData = new UserData();
+    this.shake = false;
+    this.snackBar = snackBar;
+    translate.addLangs(['no', 'en', 'ny']);
+    translate.setDefaultLang('no');
+  }
   public title = 'Grouse';
   public login: boolean;
 
@@ -41,13 +54,15 @@ export class LoginComponent implements  OnInit {
   email = new FormControl('',
     [Validators.required, Validators.email]);
 
+  @Input()
+  Checked: boolean;
+
   getErrorMessage() {
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
     return this.email.hasError('required') ? this.translate.get('ErrorsAndWarns.MustEnterEmail').value : this.email.hasError('email') ? this.translate.get('ErrorsAndWarns.InnvalidEmail').value : '';
   }
 
-  // tslint:disable-next-line:max-line-length
   constructor(http: HttpClient, private formBuilder: FormBuilder, router: Router, snackBar: MatSnackBar, public dialog: MatDialog, public translate: TranslateService) {
     this.login = true;
     this.http = http;
@@ -90,20 +105,17 @@ export class LoginComponent implements  OnInit {
       ]]
     });
     this.userData = JSON.parse(localStorage.getItem('UserData'));
+    console.log(this.userData);
   }
 
   ReadGDPR() {
-    console.log('Read GDPR TEST')
+    console.log('Read GDPR TEST');
     const dialogRef = this.dialog.open(GDPRContent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-
-  @Input()
-  Checked: boolean;
-
 
   // Creates a new user
   registerSubmit() {
@@ -117,7 +129,7 @@ export class LoginComponent implements  OnInit {
         username: this.regUser.email,
         password: this.regUser.password
       };
-      this.http.post(this.userData.userAdress, body).subscribe(
+      this.http.post(this.userData._links['create-user'].href, body).subscribe(
         result => {
           // The transmission was a succsess and the server accepted the new user
           console.log('Account creation was a success! Signing in with the new user');
@@ -140,11 +152,11 @@ export class LoginComponent implements  OnInit {
 
   loginSubmit() {
     // Resolves an error where refreshed user might have gotten an error due to unwanted data retention
-    if(this.userData.oauthClientSecret !== 'secret') {
+    if (this.userData.oauthClientSecret !== 'secret') {
       this.userData.oauthClientSecret = 'secret';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
     }
-    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData.loginAdress);
+    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData._links['login OAuth2'].href);
     this.shake = false; // Resets the shake animation
     // Sends login info to the server
 
@@ -155,7 +167,7 @@ export class LoginComponent implements  OnInit {
     body = body.append('password', this.loginUser.password.toString());
     body = body.append('client_id', this.userData.oauthClientId);
 
-    this.http.post(this.userData.loginAdress, body, {
+    this.http.post(this.userData._links['login OAuth2'].href, body, {
       // Constructs the headers
       headers: new HttpHeaders({
         Authorization: 'Basic ' + btoa(this.userData.oauthClientId + ':' + this.userData.oauthClientSecret),
@@ -163,12 +175,10 @@ export class LoginComponent implements  OnInit {
       })
     }).subscribe(
       result => {
+        console.log(result);
         // @ts-ignore
         this.userData.oauthClientSecret = result.access_token;
-        this.userData.userName = this.loginUser.email;
-        this.userData.nav = 'Menu';
-        localStorage.setItem('UserData', JSON.stringify(this.userData));
-        this.router.navigate(['/Menu']);
+        this.getFurtherApiDetails();
       }, error => {
         if (error.error.error_description === 'Bad credentials') {
           this.shake = true; // Shakes the main card to illustrate that there was en error
@@ -181,6 +191,23 @@ export class LoginComponent implements  OnInit {
         }
       }
     );
+  }
+
+  getFurtherApiDetails() {
+    this.http.get<IAPIResponse>(startUrl, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      console.log(result);
+      this.userData.userName = this.loginUser.email;
+      this.userData._links = result._links;
+      this.userData.nav = 'Menu';
+      localStorage.setItem('UserData', JSON.stringify(this.userData));
+      this.router.navigate(['/Menu']);
+    }, error => {
+      console.error(error);
+    });
   }
 
   public changeMode() {
@@ -196,7 +223,7 @@ export class GDPRContent {
   constructor(public dialogRef: MatDialogRef<GDPRContent>) {
   }
 
-  OnNoClick(){
+  OnNoClick() {
     this.dialogRef.close();
   }
 
@@ -205,4 +232,8 @@ export class GDPRContent {
 interface INewUser {
   username: string;
   password: string;
+}
+
+interface IAPIResponse {
+  _links: Links;
 }

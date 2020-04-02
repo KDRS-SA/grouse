@@ -63,7 +63,7 @@ export class userEditComponent implements  OnInit {
 
   logout() {
     localStorage.clear();
-    this.http.get(this.userData.logoutAdress, {
+    this.http.get(this.userData._links['logout OAuth2'].href, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })

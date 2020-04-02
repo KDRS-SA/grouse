@@ -12,6 +12,7 @@ export class projectFunctionality{
   type: string;
   referenceChildProjectFunctionality: projectFunctionality[];
   referenceProjectRequirement: ProjectRequirment[];
+  parent: projectFunctionality;
   _links: Links;
 
   constructor() {}

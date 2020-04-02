@@ -2,16 +2,19 @@ import {Link} from './link.model';
 
 export class Links {
   self: Link;
-  prosjekt: Link;
-  funksjon: Link;
+  project: Link;
+  function: Link;
   krav: Link;
   dokument: Link;
+  ['login OAuth2']: Link;
+  ['project-list']: Link;
+  ['template-list']: Link;
+  ['logout OAuth2']: Link;
+  ['project-list-all']: Link;
+  ['template-list-all']: Link;
+  requirement: Link;
+  ['create-user']: Link;
 
   constructor() {
-    this.self = new Link();
-    this.prosjekt = new Link();
-    this.funksjon = new Link();
-    this. krav = new Link();
-    this.dokument = new Link();
   }
 }

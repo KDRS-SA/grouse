@@ -1,0 +1,11 @@
+.delete-button{
+  height: 70px;
+  width: 100px;
+  position: fixed;
+  bottom: 0px;
+}
+
+.mal-button{
+  height: 100px;
+  width: 175px;
+}
