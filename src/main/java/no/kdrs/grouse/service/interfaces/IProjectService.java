@@ -43,4 +43,6 @@ public interface IProjectService {
     ProjectFunctionality createFunctionality(
             UUID projectId,
             ProjectFunctionality projectFunctionality);
+
+    Project updateProjectFinalised(UUID projectId);
 }

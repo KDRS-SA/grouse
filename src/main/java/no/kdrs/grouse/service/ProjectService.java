@@ -111,6 +111,14 @@ public class ProjectService
         return projectFunctionalityRepository.save(projectFunctionality);
     }
 
+    @Override
+    public Project updateProjectFinalised(UUID projectId) {
+        Project project = getProjectOrThrow(projectId);
+        project.setDocumentCreated(true);
+        project.setProjectComplete(true);
+        return project;
+    }
+
     /**
      * Create a new empty project that is not based on a template
      *

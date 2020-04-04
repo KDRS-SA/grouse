@@ -27,6 +27,8 @@ public class LinksProject
     private OffsetDateTime lastModifiedDate;
     private String ownedBy;
     private Integer percentForDocument;
+    private Boolean projectComplete;
+    private Boolean documentCreated;
 
     public LinksProject(Project project) {
         this.projectId = project.getProjectId();
@@ -35,6 +37,8 @@ public class LinksProject
         this.lastModifiedDate = project.getLastModifidDate();
         this.ownedBy = project.getOwnedBy();
         this.percentForDocument = project.getPercentForDocument();
+        this.projectComplete = project.getProjectComplete();
+        this.documentCreated = project.getDocumentCreated();
     }
 
     public UUID getProjectId() {
@@ -83,5 +87,21 @@ public class LinksProject
 
     public void setPercentForDocument(Integer percentForDocument) {
         this.percentForDocument = percentForDocument;
+    }
+
+    public Boolean getProjectComplete() {
+        return projectComplete;
+    }
+
+    public void setProjectComplete(Boolean projectComplete) {
+        this.projectComplete = projectComplete;
+    }
+
+    public Boolean getDocumentCreated() {
+        return documentCreated;
+    }
+
+    public void setDocumentCreated(Boolean documentCreated) {
+        this.documentCreated = documentCreated;
     }
 }

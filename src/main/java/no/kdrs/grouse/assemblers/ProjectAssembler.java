@@ -29,6 +29,8 @@ public class ProjectAssembler
         linksProject.setOwnedBy(project.getOwnedBy());
         linksProject.setCreatedDate(project.getCreatedDate());
         linksProject.setLastModifiedDate(project.getLastModifidDate());
+        linksProject.setDocumentCreated(project.getDocumentCreated());
+        linksProject.setProjectComplete(project.getProjectComplete());
         linksProject.setPercentForDocument(project.getPercentForDocument());
         linksProject.add(linkTo(methodOn(ProjectController.class).
                 getProject(project.getProjectId()))
