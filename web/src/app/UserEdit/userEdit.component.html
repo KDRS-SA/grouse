@@ -40,31 +40,19 @@
           <p>Utilgjengelig</p>
         </div>
       </mat-card-content>
+      <div class="flex-column-end user-info-bottom">
+        <div class="flex-row flex-center">
+          <button mat-raised-button color="warn" (click)="deleteUser()">Slett Bruker</button>
+        </div>
+      </div>
     </mat-card>
 
     <!-- Password and e-mail options-->
-    <!--Email-->
     <mat-card class="cards no-p">
       <mat-card-header class="no-p flex-center">
         <h4>{{'UserEdit.Administration' | translate}}</h4>
       </mat-card-header>
       <mat-card-content class="p-10">
-        <mat-card>
-          <form [formGroup]="emailForm" (ngSubmit)="emailForm.valid && newEmailSubmit()" novalidate>
-            <mat-card-content class="no-m">
-              <mat-form-field style="width: 100%" appearance="legacy">
-                <mat-label>{{'UserEdit.Email-new' | translate}}</mat-label>
-                <input matInput id="email" formControlName="email" [(ngModel)]="newEmail" required placeholder="{{this.userData.userName}}">
-                <mat-icon matSuffix>mail</mat-icon>
-                <mat-error *ngIf="emailForm.invalid">{{'UserEdit.Email-Invalid' | translate}}</mat-error>
-              </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions class="flex-row-right no-p">
-              <button mat-raised-button type="submit" color="primary" class="no-m" [disabled]="emailForm.invalid">{{'UserEdit.Email-Change' | translate}}</button>
-            </mat-card-actions>
-          </form>
-        </mat-card>
-
         <!--Password-->
         <mat-card class="m-t-10">
           <form [formGroup]="passwordForm" (ngSubmit)="passwordForm && newPasswordSubmit()" novalidate>

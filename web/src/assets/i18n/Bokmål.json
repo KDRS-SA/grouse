@@ -67,7 +67,19 @@
     "Password-New-Placeholder": "Skriv inn nytt passord",
     "Password-New-rep": "Repeter nytt passord",
     "Password-New-rep-Placeholder": "Repeter det nye passordet",
-    "Password-Change": "Endre passord"
+    "Password-Change": "Endre passord",
+    "ConfirmedPasswordChangeDialogTitle" : "Passord endret",
+    "ConfirmedPasswordChangeDialogText" : "Passordet ditt er oppdatert! \n Husk å bruk det nye passordet ditt neste gang du logger inn. Du trenger ikke å foreta deg noe mer nå.",
+    "ConfirmDeleteUserButton" : "Ja slett brukeren min",
+    "DeleteUserUH1" : "Advarsel: ",
+    "DeleteUserText1" : "Dette er en handling som ikke kan angres, selv med hjelp fra en administrator.",
+    "DeleteUserText2" : "Vi tar vårt ansvar med dine data veldig alvorlig, derfor er denne slettefunksjonen veldig destruktiv. Din e-post, passord og prosjekter vil fjernes for alltid og etter dette er det ingen måte å få de tilbake igjen.",
+    "DeleteUserUH2" : "Merk, følgende vil ikke bli slettet: ",
+    "DeleteUserText3" : "Prosjekter du har bidrat med men ikke eier vil ikke på noen måte endres, dvs at eventuelle bidrag du har gjort til disse prosjektene vil forbli. Eventuelle prosjekter som er opprettet med maler som du har laget vil ikke fjernes, malen i seg selv vil bli fjernet, men prosjekter som allerede er opprettet med malen vil fobli.",
+    "DeleteUserCheckDesc" : "Jeg har forstått hva som blir slettet og ikke slettet: ",
+    "DeleteUserTitle" : "Slette bruker: ",
+    "DeleteUserError" : "Det skjedde en feil under sletting av bruker",
+    "DeleteUserContact" : "Venligst kontakt en administrator og gi dem teksten under."
     },
   "KravEdit": {
     "Logout": "Logg ut",
@@ -97,7 +109,9 @@
     "Unexpected" : "En uventet feil har oppstått, prøv igjen. Eller se konsol, for flere detaljer",
     "UserAlreadyExists" : "En bruker med denne e-posten eksisterer allerede, har du glemt passordet ditt?",
     "MustEnterEmail" : "Du må skrive inn en e-post",
-    "InnvalidEmail" : "E-post er angitt på feil format!"
+    "InnvalidEmail" : "E-post er angitt på feil format!",
+    "PasswordsDontMatch" : "Passordet er forskjellig i feltene, de må være like",
+    "WrongOldPass" : "Det gamle passordet er galt!"
   },
   "Language": {
     "Language": "Bokmål"

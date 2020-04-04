@@ -61,7 +61,9 @@
     "Password-New-Placeholder": "Skriv inn nytt passord",
     "Password-New-rep": "Repeter nytt passord",
     "Password-New-rep-Placeholder": "Repeter det nye passordet",
-    "Password-Change": "Endre passord"
+    "Password-Change": "Endre passord",
+    "ConfirmedPasswordChangeDialogTitle" : "Passord endra",
+    "ConfirmedPasswordChangeDialogText" : "Passordet ditt er oppdatert! \n Husk å bruk det nye passordet ditt neste gong du loggar inn. Du treng ikkje å gjera noko meir no."
   },
   "KravEdit": {
     "Logout": "Logg ut",
@@ -91,7 +93,9 @@
     "Unexpected" : "Ein uventa feil har oppstått, prøv igjen. Eller sjå konsol, for fleire detaljar",
     "UserAlreadyExists" : "Ein brukar med denne e-posten eksisterer allereie, har du gløymt passordet ditt?",
     "MustEnterEmail" : "Du må skriva inn ein e-post",
-    "InnvalidEmail" : "E-post er angitt på feil format!"
+    "InnvalidEmail" : "E-post er angitt på feil format!",
+    "PasswordsDontMatch" : "Passordet er ulikt i felta, dei må vera like",
+    "WrongOldPass" : "Det gamle passordet er gale!"
   },
   "Language": {
     "Language": "Nynorsk"

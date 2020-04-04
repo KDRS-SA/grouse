@@ -1,12 +1,16 @@
 .main-container{
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   margin-top: 10px;
 }
 
 .cards{
   width: 300px;
-  height: 505px;
+  height: 370px;
   margin: 10px;
+}
+
+.user-info-bottom{
+  height: 40% !important;
 }

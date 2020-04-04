@@ -1,0 +1,49 @@
+<div class="flex-row-between no-p no-m">
+  <h1 mat-dialog-title>{{'UserEdit.DeleteUserTitle' | translate}} {{this.userData.userName}}</h1>
+  <button mat-button class="no-p no-m h-80" color="warn" (click)="onNoClick()" *ngIf="!loading && !deleted">X</button>
+  <button mat-button class="no-p no-m h-80" color="warn" (click)="logout()" *ngIf="!loading && deleted">X</button>
+</div>
+<div mat-dialog-content>
+  <!--Information about deletion-->
+  <div *ngIf="!loading && !deleted && (error === null)">
+    <h3>{{'UserEdit.DeleteUserUH1' | translate}}</h3>
+    <h4>{{'UserEdit.DeleteUserText1' | translate}}</h4>
+    <mat-divider></mat-divider>
+    <p>{{'UserEdit.DeleteUserText2' | translate}}</p>
+    <mat-divider></mat-divider>
+    <h3>{{'UserEdit.DeleteUserUH2' | translate}}</h3>
+    <p>{{'UserEdit.DeleteUserText3' | translate}}</p>
+    <mat-divider></mat-divider>
+    <div class="flex-row-left">
+      <p class="m-lr-10">{{'UserEdit.DeleteUserCheckDesc' | translate}}</p>
+      <mat-checkbox class="m-t-14 m-t-10" [(ngModel)]="checked"></mat-checkbox>
+    </div>
+  </div>
+  <!--Loading Spinner-->
+  <div *ngIf="loading" class="flex-center w-100" style="height: 150px">
+    <mat-spinner color="warn"></mat-spinner>
+  </div>
+  <!--The user was deleted corectly-->
+  <div *ngIf="!loading && deleted">
+  </div>
+  <!--There was an error whilst deleting the user-->
+  <div *ngIf="!loading && !deleted && (error !== null)">
+    <h3>{{'UserEdit.DeleteUserError' | translate}}</h3>
+    <p>{{'UserEdit.DeleteUserContact' | translate}}</p>
+    <div class="m-lr-10 color-lightgray" style="font-family: 'Courier New'">
+      <p>status: {{error.status}}</p>
+      <p>statusText: {{error.statusText}}</p>
+      <p>url: {{error.url}}</p>
+      <p>ok: {{error.ok}}</p>
+      <p>name: {{error.name}}</p>
+      <p>message: {{error.message}}</p>
+      <p>error:  {{error.error}}</p>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="flex-row-between w-100" *ngIf="!loading && !deleted">
+    <button mat-raised-button (click)="onNoClick()">{{'New.Cancel' | translate}}</button>
+    <button mat-raised-button *ngIf="error === null" [disabled]="!checked" (click)="confirm()">{{'UserEdit.ConfirmDeleteUserButton' | translate}}</button>
+  </div>
+</div>

@@ -165,7 +165,6 @@ export class LoginComponent implements  OnInit {
       })
     }).subscribe(
       result => {
-        console.log(result);
         // @ts-ignore
         this.userData.oauthClientSecret = result.access_token;
         this.getFurtherApiDetails();
@@ -189,9 +188,9 @@ export class LoginComponent implements  OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
-      console.log(result);
       this.userData.userName = this.loginUser.email;
       this.userData._links = result._links;
+      this.userData._links['login OAuth2'].href = this.userData._links['login OAuth2'].href.split('?')[0];
       this.userData.nav = 'Menu';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
       this.router.navigate(['/Menu']);

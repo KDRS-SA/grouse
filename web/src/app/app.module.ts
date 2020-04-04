@@ -30,7 +30,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {DeleteRequirmentDialog, kravEditComponent} from './KravEdit/kravEdit.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
-import {userEditComponent} from './UserEdit/userEdit.component';
+import {DeleteUserDialog, PasswordChangeConfirmedDialog, userEditComponent} from './UserEdit/userEdit.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -49,7 +49,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     GDPRContent,
     userEditComponent,
     DeleteRequirmentDialog,
-    DeleteProjectDialog
+    DeleteProjectDialog,
+    PasswordChangeConfirmedDialog,
+    DeleteUserDialog
   ],
     imports: [
         BrowserModule,
@@ -94,13 +96,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     NewProjectDialog,
     GDPRContent,
     DeleteRequirmentDialog,
-    DeleteProjectDialog
+    DeleteProjectDialog,
+    PasswordChangeConfirmedDialog,
+    DeleteUserDialog
   ],
   entryComponents: [
     NewProjectDialog,
     GDPRContent,
     DeleteRequirmentDialog,
-    DeleteProjectDialog
+    DeleteProjectDialog,
+    PasswordChangeConfirmedDialog,
+    DeleteUserDialog
   ]
 })
 export class AppModule { }

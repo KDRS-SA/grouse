@@ -14,6 +14,7 @@ export class Links {
   ['template-list-all']: Link;
   requirement: Link;
   ['create-user']: Link;
+  konto: Link;
 
   constructor() {
   }

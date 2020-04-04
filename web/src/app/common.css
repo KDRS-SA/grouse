@@ -26,6 +26,13 @@
   height: 100%;
 }
 
+.flex-column-end{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  height: 100%;
+}
+
 .flex-column-squish{
   display: flex;
   justify-content: space-around;
@@ -153,4 +160,7 @@ body{
 
 .rounded{
   border-radius: 10px;
+}
+
+.dialog-corner-close-button{
 }

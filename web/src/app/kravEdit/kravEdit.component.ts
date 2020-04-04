@@ -724,9 +724,8 @@ export class kravEditComponent implements OnInit {
       this.statpageData.progress = 100;
 
       // Calls a post to generate document if download is finnished
-      /*
       this.statpageData.generatingDocument = true;
-      this.http.post(this.userData.currentProject._links.document.href, {}, {
+      this.http.post(this.userData.currentProject._links.document.href, null, {
         headers: new HttpHeaders({
             Authorization: 'Bearer ' + this.userData.oauthClientSecret
           }
@@ -735,9 +734,9 @@ export class kravEditComponent implements OnInit {
         this.statpageData.generatingDocument = false;
         // tslint:disable-next-line:no-shadowed-variable
       }, error => {
+        console.log(error);
         alert(error);
       });
-      */
     }
     this.statpageData.loaded = true;
   }
