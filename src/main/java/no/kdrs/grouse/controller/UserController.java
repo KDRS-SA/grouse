@@ -7,6 +7,7 @@ import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.CommonController;
+import no.kdrs.grouse.utils.PatchObjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +15,6 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.EntityNotFoundException;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.MediaTypes.HAL_JSON_VALUE;
@@ -77,13 +76,13 @@ public class UserController {
                 CREATED);
     }
 
-    @PutMapping(value = SLASH + USER_PARAMETER)
+    @PatchMapping(value = SLASH + USER_PARAMETER)
     public ResponseEntity<GrouseUser> updateGrouseUser(
             @PathVariable(USER) String username,
-            @RequestBody GrouseUser user) throws EntityNotFoundException {
+            @RequestBody PatchObjects patchObjects) {
         commonController.checkAccess(username);
         return ResponseEntity.status(OK)
-                .body(grouseUserService.update(username, user));
+                .body(grouseUserService.update(username, patchObjects));
     }
 
     @DeleteMapping(value = USER_PARAMETER)

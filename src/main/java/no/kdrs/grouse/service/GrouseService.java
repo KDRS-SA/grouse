@@ -7,8 +7,10 @@ import no.kdrs.grouse.utils.exception.InternalException;
 import no.kdrs.grouse.utils.exception.PatchMisconfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -16,12 +18,14 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static no.kdrs.grouse.utils.Constants.ETAG_NAN;
-import static no.kdrs.grouse.utils.Constants.ETAG_VALUE_LESS_0;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.http.HttpHeaders.ETAG;
 
 @Service
 public class GrouseService {
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     private static final Logger logger =
             LoggerFactory.getLogger(GrouseService.class);
@@ -61,7 +65,15 @@ public class GrouseService {
                     Method setMethod =
                             object.getClass().getMethod(setMethodName,
                                     getMethod.getReturnType());
-                    setMethod.invoke(object, patchObject.getValue());
+                    // If the variable (path) you are trying to update is a
+                    // password then you have to encode the new password
+                    if (PASSWORD.equalsIgnoreCase(path)) {
+                        setMethod.invoke(object,
+                                encoder.encode(patchObject.getValue()
+                                        .toString()));
+                    } else {
+                        setMethod.invoke(object, patchObject.getValue());
+                    }
                 } catch (SecurityException | NoSuchMethodException |
                         IllegalArgumentException | IllegalAccessException |
                         InvocationTargetException e) {

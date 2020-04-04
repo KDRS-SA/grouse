@@ -3,6 +3,7 @@ package no.kdrs.grouse.service;
 import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.persistence.IGrouseUserRepository;
 import no.kdrs.grouse.service.interfaces.IGrouseUserService;
+import no.kdrs.grouse.utils.PatchObjects;
 import no.kdrs.grouse.utils.exception.UserAlreadyExistsException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -20,10 +23,14 @@ import java.util.Optional;
 @Service
 @Transactional
 public class GrouseUserService
+        extends GrouseService
         implements IGrouseUserService {
 
     private IGrouseUserRepository userRepository;
     private PasswordEncoder encoder;
+    // Columns that it is possible to update via a PATCH request
+    private ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("password"));
 
     public GrouseUserService(IGrouseUserRepository userRepository,
                              PasswordEncoder encoder) {
@@ -52,13 +59,12 @@ public class GrouseUserService
     }
 
     @Override
-    public GrouseUser update(String id, GrouseUser user)
-            throws EntityNotFoundException {
-        GrouseUser originalGrouseUser = getGrouseUserOrThrow(id);
-
+    public GrouseUser update(String username, PatchObjects patchObjects) {
+        GrouseUser originalGrouseUser = getGrouseUserOrThrow(username);
+        return (GrouseUser) handlePatch(getGrouseUserOrThrow(username),
+                patchObjects);
         //originalGrouseUser.setPassword(encoder.encode(user.getPassword()));
 
-        return originalGrouseUser;
     }
 
     @Override
@@ -81,6 +87,11 @@ public class GrouseUserService
                 .orElseThrow(() ->
                         new EntityNotFoundException(
                                 "No GrouseUser exists with Id " + id));
+    }
+
+    @Override
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
     }
 
     /**

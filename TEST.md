@@ -13,7 +13,7 @@ First get a OAuth2 token
 This should give you the following
 
     {
-      "access_token": "52cbc177-c6ed-4716-9ceb-3e796f3b51b4",
+      "access_token": "def80a60-6ecf-4ebe-bcb4-ef76b8d6b471",
       "token_type": "bearer",
       "refresh_token": "a2fcebd3-9bb4-4379-8373-c1cac4916a06",
       "expires_in": 30674,
@@ -22,7 +22,7 @@ This should give you the following
 
 Once you have a token you can call root of the application to see what you can do:
 
-    curl -v -X GET http://localhost:9294/grouse/ -H 'Accept: application/hal+json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'  
+    curl -v -X GET http://localhost:9294/grouse/ -H 'Accept: application/hal+json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'  
 
 
 You should get the following payload back:
@@ -50,7 +50,7 @@ You should get the following payload back:
 
 The **project-list** REL can be use to get a list of projects, while the **template-list** REL can give a list of templates you can use to create a project. First get a list of templates:
 
-    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'  
+    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'  
   
 You will get something like the following:    
     
@@ -91,7 +91,7 @@ You will get something like the following:
 
 The first step to do anything useful in grouse is to retrieve a list of templates. 
 
-    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
+    curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
 
 This will return the following payload:
 
@@ -138,7 +138,7 @@ Make a note of the *href* corresponding to the "project" *rel*. You can use this
 
 Use the following example to create (POST)  a project from a template. Note. Currently you have to provide a Project object (--data ) to give the project a name 
 
-     curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
+     curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
 
 This gives the following result:
 
@@ -169,7 +169,7 @@ Make a note of the *href* corresponding to the "function" *rel*. You can use thi
 
 ## Retrieve top level functionality descriptions 
 
-    curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
+    curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
 
 This will return the following:
 
@@ -253,7 +253,7 @@ This will return the following:
 
 Make a note of the *rel*/*href* for each projectFunctionality object. As there is only a "function" *rel*, this means that there are project functionalities to be retrieved from following the *href* associated with the "function" *rel*. The children functionality belonging to project functionality 1338 can be retrieved using: 
 
-    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1338/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
+    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1338/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
  
 This results in the following:
 
@@ -392,7 +392,7 @@ This results in the following:
 
 Retrieving a list of requirements using the following:
 
-    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/980/requirement -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
+    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/980/requirement -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
 
 
 results in the following payload:
@@ -537,7 +537,7 @@ results in the following payload:
 ## Get en individual requirement
 
 
-    curl -v -X GET http://localhost:9294/grouse/projectRequirement/990 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'
+    curl -v -X GET http://localhost:9294/grouse/projectRequirement/990 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
 
 This generates the following payload:
 
@@ -562,7 +562,7 @@ Make a note of the ETAG value in the header, or use the value in version when cr
 
 To update an allowable field, issue a PATCH request to the href corresponding to the self rel. A Patch object must be used for this:
 
-    curl -v -X PATCH http://localhost:9294/grouse/projectRequirement/990 -H 'ETAG: ""0""' -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4' --data '[{ "op": "replace", "path": "/requirementText", "value": "Oppdatert kravtekst."}]' 
+    curl -v -X PATCH http://localhost:9294/grouse/projectRequirement/990 -H 'ETAG: ""0""' -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471' --data '[{ "op": "replace", "path": "/requirementText", "value": "Oppdatert kravtekst."}]' 
 
 The updated object looks like this:
 
@@ -589,7 +589,7 @@ Note the change in version number. A further update will require this value or t
 
 If we go back to the list of functionalities over, we can retrieve a single functionality and change it with PATCH. To get a particular functionality, look for its self rel e.g.: 
 
-    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1372 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4' 
+    curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1372 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471' 
     
 This will show the individual functionality object:
 
@@ -620,7 +620,7 @@ This will show the individual functionality object:
 
 The self rel can be used to update the object with a PATCH request. Note. Only the following attributes can be changed: _title_, _ownedBy_, _processed_ and _functionalityNumber_.
 
-    curl -v -X PATCH http://localhost:9294/grouse/projectFunctionality/1372 -H 'ETAG: ""0""' -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4' --data '[{ "op": "replace", "path": "/processed", "value": true}]' 
+    curl -v -X PATCH http://localhost:9294/grouse/projectFunctionality/1372 -H 'ETAG: ""0""' -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471' --data '[{ "op": "replace", "path": "/processed", "value": true}]' 
 
 The following payload shows how the _processed_ value is now set to true:
 
@@ -653,7 +653,7 @@ Note the  eTag uses double quotes around the value. That is why the header is `-
 
 ## Get a list of projects
 
-    curl -v -X GET http://localhost:9294/grouse/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 52cbc177-c6ed-4716-9ceb-3e796f3b51b4'    
+    curl -v -X GET http://localhost:9294/grouse/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'    
     
 To get an individual project:
     
@@ -800,3 +800,43 @@ You will then get a paged list of users. The default setup of grouse returns thr
           }
         }
     
+## Change a users password
+
+A users password can be changed using a Patch request. First retrieve the user account to check that it exists:
+
+    curl -v -X GET http://localhost:9294/grouse/user/user@example.com -H 'Accept: application/hal+json' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
+
+    {
+      "username": "user@example.com",
+      "accountNonExpired": true,
+      "credentialsNonExpired": true,
+      "accountNonLocked": true,
+      "enabled": true,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/user/user@example.com"
+        },
+        "project": {
+          "href": "http://localhost:9294/grouse/project"
+        },
+        "template": {
+          "href": "http://localhost:9294/grouse/template"
+        },
+        "logout OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/revoke-token"
+        }
+      }
+    }
+
+Then 
+
+    curl -v -X PATCH http://localhost:9294/grouse/user/user@example.com -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '[{ "op": "replace", "path": "/password", "value": "updatedPassword"}]' -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471'
+    
+    
+Next. Log the user out of grouse. 
+
+    curl -X GET -H 'Authorization: Bearer def80a60-6ecf-4ebe-bcb4-ef76b8d6b471' http://localhost:9294/grouse/oauth/revoke-token
+
+Try logging in with the updated password:
+
+    curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=updatedPassword

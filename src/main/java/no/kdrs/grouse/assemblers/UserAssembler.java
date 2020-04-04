@@ -1,5 +1,6 @@
 package no.kdrs.grouse.assemblers;
 
+import no.kdrs.grouse.controller.OAuthController;
 import no.kdrs.grouse.controller.ProjectController;
 import no.kdrs.grouse.controller.TemplateController;
 import no.kdrs.grouse.controller.UserController;
@@ -58,6 +59,9 @@ public class UserAssembler
                     .getGrouseUsers(null))
                     .withRel(USER));
         }
+        linksUser.add(linkTo(methodOn(OAuthController.class)
+                .logout(null))
+                .withRel(REL_LOGOUT_OAUTH));
         return linksUser;
     }
 
