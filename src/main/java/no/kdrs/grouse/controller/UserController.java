@@ -85,9 +85,9 @@ public class UserController {
                 .body(grouseUserService.update(username, patchObjects));
     }
 
-    @DeleteMapping(value = USER_PARAMETER)
+    @DeleteMapping(value = SLASH + USER_PARAMETER)
     public ResponseEntity<String> deleteGrouseUser(
-            @PathVariable String username) {
+            @PathVariable(USER) String username) {
         commonController.checkAccess(username);
         projectService.findByOwnedBy(username)
                 .forEach(p -> projectService.delete(p.getProjectId()));
