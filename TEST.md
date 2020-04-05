@@ -939,7 +939,7 @@ Make a note of updated value in _documentCreated_.
       }
     }
     
-The document can be downloaded by issuing a GET agasint the href corresponding to the rel "document".
+The document can be downloaded by issuing a GET against the href corresponding to the rel "document".
 
     curl --output doc.docx -X GET http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document -H 'Authorization: Bearer a4dbf18a-d8db-4e39-9e39-dc43ae8e5190'
 
