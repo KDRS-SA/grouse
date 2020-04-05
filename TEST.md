@@ -885,3 +885,62 @@ You will see this generated a project. Next delete the user account:
 This should produce the following result:
 
     {"status": "GrouseUser with username user1@example.com was deleted"}
+
+## Create the requirements document
+
+It is possible to create the requirements document. I think we need to decide if it is possible at any stage or only when a percentage is achieved. I think they should be able to generate at any stage. Find your project.
+
+ 
+    {
+            "projectId": "f939bae4-60b8-4bcd-a043-e81f011a6102",
+            "projectName": "Requirements project",
+            "createdDate": "2020-04-05T08:28:42+02:00",
+            "lastModifiedDate": "2020-04-05T08:28:42+02:00",
+            "ownedBy": "user@example.com",
+            "projectComplete": false,
+            "documentCreated": false,
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102"
+              },
+              "function": {
+                "href": "http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/function"
+              },
+              "document": {
+                "href": "http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document"
+              }
+            }
+          }
+Make a note of the href corresponding the "document" rel. Issue a POST request against this.
+    
+    curl -X POST http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document -H 'Authorization: Bearer a4dbf18a-d8db-4e39-9e39-dc43ae8e5190'
+    
+    
+Make a note of updated value in _documentCreated_.
+
+    {
+      "projectId": "f939bae4-60b8-4bcd-a043-e81f011a6102",
+      "projectName": "Requirements project",
+      "createdDate": "2020-04-05T08:28:42+02:00",
+      "lastModifiedDate": "2020-04-05T08:35:02+02:00",
+      "ownedBy": "user@example.com",
+      "projectComplete": true,
+      "documentCreated": true,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/function"
+        },
+        "document": {
+          "href": "http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document"
+        }
+      }
+    }
+    
+The document can be downloaded by issuing a GET agasint the href corresponding to the rel "document".
+
+    curl --output doc.docx -X GET http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document -H 'Authorization: Bearer a4dbf18a-d8db-4e39-9e39-dc43ae8e5190'
+
+This should produce the requirements document in the same directory.
