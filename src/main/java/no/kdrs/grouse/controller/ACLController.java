@@ -43,10 +43,11 @@ public class ACLController {
     }
 
     @DeleteMapping(value = SLASH + ACCESS_CONTROL_PARAMETER)
-    public ResponseEntity<Void>
+    public ResponseEntity<String>
     deleteACLEntry(@PathVariable(OBJECT_ID) UUID objectId) {
         aclService.deleteACLEntry(objectId);
         return ResponseEntity.status(NO_CONTENT)
-                .body(null);
+                .body("{\"status\" : \" ACL " + objectId + " was " +
+                        "deleted\"}");
     }
 }

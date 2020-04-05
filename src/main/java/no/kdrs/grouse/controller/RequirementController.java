@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
+
 /**
  * Created by tsodring on 9/25/17.
  */
@@ -60,7 +60,8 @@ public class RequirementController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deleteRequirement(@PathVariable Long id) {
         requirementService.delete(id);
-        return ResponseEntity.status(OK)
-                .body("TemplateRequirement with id " + id + " was deleted");
+        return ResponseEntity.status(NO_CONTENT)
+                .body("{\"status\" : \"TemplateRequirement " + id +
+                        " was deleted\"}");
     }
 }

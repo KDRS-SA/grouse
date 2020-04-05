@@ -12,8 +12,7 @@ import java.util.UUID;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Created by tsodring on 29/03/18.
@@ -89,7 +88,9 @@ public class ProjectRequirementController {
             @PathVariable(REQUIREMENT) Long requirementNumber) {
         projectRequirementService.
                 deleteProjectRequirement(requirementNumber);
-        return ResponseEntity.status(OK).body("{\"result\":\"OK\" " +
-                "}");
+        return ResponseEntity
+                .status(NO_CONTENT)
+                .body("{\"status\" : \"Requirement " + requirementNumber
+                        + " was deleted\"}");
     }
 }

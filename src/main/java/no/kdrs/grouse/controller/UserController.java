@@ -18,8 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.MediaTypes.HAL_JSON_VALUE;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 /**
  * Created by tsodring on 28/03/18.
@@ -92,8 +91,8 @@ public class UserController {
         projectService.findByOwnedBy(username)
                 .forEach(p -> projectService.delete(p.getProjectId()));
         grouseUserService.delete(username);
-        return ResponseEntity.status(OK)
-                .body("GrouseUser with username " + username +
-                        " was deleted");
+        return ResponseEntity.status(NO_CONTENT)
+                .body("{\"status\" : \"GrouseUser " + username +
+                        " was deleted\"}");
     }
 }

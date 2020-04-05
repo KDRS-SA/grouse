@@ -840,3 +840,48 @@ Next. Log the user out of grouse.
 Try logging in with the updated password:
 
     curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=updatedPassword
+    
+    
+## Delete a user 
+
+When you delete a user, all their projects are deleted. The user account is deleted and the session is invalidated.  Currently the documents are not deleted from the document store, but this will be added. Should the deletion of the users account be logged?
+
+First create a user. This can be done of the application root.
+
+    curl http://localhost:9294/grouse/ 
+
+This shows the following:
+
+    {
+      "_links": {
+        "login OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/token?parameters={parameters}",
+          "templated": true
+        },
+        "create-user": {
+          "href": "http://localhost:9294/grouse/user"
+        }
+      }
+    }
+
+Issue a POST request to the href corresponding the "create-user" rel
+
+          curl -X POST http://localhost:9294/grouse/user -H 'Content-type: application/json'  --data '{ "username": "user1@example.com", "password": "mypassword"}'
+      
+Accounts need to activated by an email or can be activated by an administrator. \[TODO: INSERT DESCRIPTION OF VALIDATING AN ACCOUNT AS ADMINISTRATOR \] 
+
+Login as the new user. 
+
+    curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user1@example.com -d password=mypassword
+    
+Use the generated password (example 4d79d0ef-2588-4b8a-a57a-17be2644564c). Next create a project from a template.
+
+    curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 4d79d0ef-2588-4b8a-a57a-17be2644564c'
+        
+You will see this generated a project. Next delete the user account:
+
+    curl -v -X DELETE http://localhost:9294/grouse/user/user1@example.com  -H 'Authorization: Bearer 4d79d0ef-2588-4b8a-a57a-17be2644564c' 
+
+This should produce the following result:
+
+    {"status": "GrouseUser with username user1@example.com was deleted"}

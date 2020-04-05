@@ -95,10 +95,11 @@ public class TemplateController {
     }
 
     @DeleteMapping(SLASH + TEMPLATE_ID_PARAMETER)
-    public ResponseEntity<Void> deleteTemplate(
+    public ResponseEntity<String> deleteTemplate(
             @PathVariable(TEMPLATE_ID) UUID templateId) {
         templateService.delete(templateId);
         return ResponseEntity.status(NO_CONTENT)
-                .body(null);
+                .body("{\"status\" : \"Template " + templateId + " was " +
+                        "deleted\"}");
     }
 }

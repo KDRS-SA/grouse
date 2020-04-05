@@ -84,10 +84,11 @@ public class ProjectController {
     }
 
     @DeleteMapping(SLASH + PROJECT_NUMBER_PARAMETER)
-    public ResponseEntity<Void> deleteProject(
+    public ResponseEntity<String> deleteProject(
             @PathVariable(PROJECT_NUMBER) UUID projectId) {
         projectService.delete(projectId);
         return ResponseEntity.status(NO_CONTENT)
-                .body(null);
+                .body("{\"status\" : \"Project " + projectId + " was " +
+                        "deleted\"}");
     }
 }
