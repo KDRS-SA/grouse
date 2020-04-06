@@ -56,7 +56,7 @@ public class APIAssembler
                     .getGrouseUser(username))
                     .withRel(REL_USER));
             linksAPIDetail.add(linkTo(methodOn(ProjectController.class)
-                    .getProjects(null))
+                    .getProjectsForUser(null))
                     .withRel(REL_PROJECT_LIST));
             linksAPIDetail.add(linkTo(methodOn(TemplateController.class)
                     .getTemplates(null))
