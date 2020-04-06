@@ -233,7 +233,11 @@ export class DeleteUserDialog {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
-      console.log(result);
+      if (result === null) {
+        this.deleted = true;
+        this.dialogRef.disableClose = false;
+        this.loading = false;
+      }
     }, error => {
       this.loading = false;
       this.error = error;
@@ -243,13 +247,10 @@ export class DeleteUserDialog {
 
   onNoClick() {
     if (this.deleted) {
-      this.logout();
+      localStorage.clear();
+      window.location.reload();
     } else {
       this.dialogRef.close();
     }
-  }
-
-  logout() {
-    window.location.reload();
   }
 }

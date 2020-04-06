@@ -25,6 +25,18 @@
   </div>
   <!--The user was deleted corectly-->
   <div *ngIf="!loading && deleted">
+    <div class="flex-center w-100">
+      <div class="flex-column-squish">
+        <div>
+          <h2>{{'UserEdit.DeleteConfirmedH' | translate}}</h2>
+          <p>{{'UserEdit.DeleteConfirmed' | translate}}</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="m-t-14 flex-center">
+          <button mat-raised-button color="warn" (click)="onNoClick()">{{'ErrorsAndWarns.Close' | translate}}</button>
+        </div>
+      </div>
+    </div>
   </div>
   <!--There was an error whilst deleting the user-->
   <div *ngIf="!loading && !deleted && (error !== null)">

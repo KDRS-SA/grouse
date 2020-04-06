@@ -79,7 +79,9 @@
     "DeleteUserCheckDesc" : "Jeg har forstått hva som blir slettet og ikke slettet: ",
     "DeleteUserTitle" : "Slette bruker: ",
     "DeleteUserError" : "Det skjedde en feil under sletting av bruker",
-    "DeleteUserContact" : "Venligst kontakt en administrator og gi dem teksten under."
+    "DeleteUserContact" : "Venligst kontakt en administrator og gi dem teksten under.",
+    "DeleteConfirmedH" : "Din brukerkonto er slettet",
+    "DeleteConfirmed" : "Når du lukker denne dialogboksen vil du bli sendt til login siden, du kan ikke lenger foreta deg noe mer med denne brukeren."
     },
   "KravEdit": {
     "Logout": "Logg ut",

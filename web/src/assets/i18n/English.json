@@ -63,7 +63,19 @@
     "Password-New-rep-Placeholder": "Repeat the new password",
     "Password-Change": "Change Password",
     "ConfirmedPasswordChangeDialogTitle" : "Password updated",
-    "ConfirmedPasswordChangeDialogText" : "Your password has been successfully updated! \nRemember to use your new password next time you sign in. No further action required now"
+    "ConfirmedPasswordChangeDialogText" : "Your password has been successfully updated! \nRemember to use your new password next time you sign in. No further action required now",
+    "ConfirmDeleteUserButton" : "Yes delete my user",
+    "DeleteUserUH1" : "Warning: ",
+    "DeleteUserText1" : "This is a non-reversible action, even if you get help from an administrator!",
+    "DeleteUserText2" : "We value your privacy, that's why this is a very destructive action. Your Email, Password and Projects will be lost forever, and there is no way to get them back",
+    "DeleteUserUH2" : "Please note that the following will not be deleted: ",
+    "DeleteUserText3" : "Projects that you have contributed to but do not own will in no way change, this means that changes and additions that you have made will stay. Projects that utilize your templates will also stay as they were. The template itself will be gone but projects already created with it will stay",
+    "DeleteUserCheckDesc" : "I understand what will and will not be deleted: ",
+    "DeleteUserTitle" : "Delete user: ",
+    "DeleteUserError" : "There was an error during the deletion process",
+    "DeleteUserContact" : "Please contact an administrator and show them the following text: ",
+    "DeleteConfirmedH" : "Your account has been deleted",
+    "DeleteConfirmed" : "Once you close this dialoguebox you will be sent to the sign-in page. There are no further actions you may perform with this account."
   },
   "KravEdit": {
     "Logout": "Logout",

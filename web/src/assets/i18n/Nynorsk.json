@@ -63,7 +63,19 @@
     "Password-New-rep-Placeholder": "Repeter det nye passordet",
     "Password-Change": "Endre passord",
     "ConfirmedPasswordChangeDialogTitle" : "Passord endra",
-    "ConfirmedPasswordChangeDialogText" : "Passordet ditt er oppdatert! \n Husk å bruk det nye passordet ditt neste gong du loggar inn. Du treng ikkje å gjera noko meir no."
+    "ConfirmedPasswordChangeDialogText" : "Passordet ditt er oppdatert! \n Husk å bruk det nye passordet ditt neste gong du loggar inn. Du treng ikkje å gjera noko meir no.",
+    "ConfirmDeleteUserButton" : "Ja slett brukaren min",
+    "DeleteUserUH1" : "Åtvaring: ",
+    "DeleteUserText1" : "Dette er ei handling som ikkje kan angrast, sjølv med hjelp frå ein administrator.",
+    "DeleteUserText2" : "Vi tar ansvaret vårt med dataa dine veldig alvorleg, derfor er denne slettefunksjonen veldig destruktiv. E-posten din, passord og prosjekt vil fjernast for alltid og etter dette er det ingen måte å få dei tilbake igjen.",
+    "DeleteUserUH2" : "Merk, følgjande vil ikkje bli sletta: ",
+    "DeleteUserText3" : "Prosjekter du har bidrat med men ikkje eigar vil ikkje på nokon måte endrast, dvs at eventuelle bidrag du har gjort til desse prosjekta vil bli verande. Eventuelle prosjekt som er oppretta med malar som du har laga vil ikkje fjernast, malen i seg sjølv vil bli fjerna, men prosjekt som allereie er oppretta med malen vil fobli.",
+    "DeleteUserCheckDesc" : "Eg har forstått kva som blir sletta og ikkje sletta: ",
+    "DeleteUserTitle" : "Slette brukar: ",
+    "DeleteUserError" : "Det skjedde ein feil under sletting av brukar",
+    "DeleteUserContact" : "Venligst kontakt ein administrator og gi dei teksten under.",
+    "DeleteConfirmedH" : "Brukarkontoen din er sletta",
+    "DeleteConfirmed" : "Når du lukkar denne dialogboksen vil du bli send til login sidan, du kan ikkje lenger gjera deg noko meir med denne brukaren."
   },
   "KravEdit": {
     "Logout": "Logg ut",
