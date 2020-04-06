@@ -11,7 +11,7 @@
   </button>
   <div class="flex-row-right">
     <div class="flex-row-between">
-      <button mat-raised-button  color="warn" (click)="deleteToggle()">Slett</button>
+      <button mat-button class="enter-delete-mode" (click)="deleteToggle()">Slett</button>
       <div class="lang-test m-t-14">
         <button mat-button [matMenuTriggerFor]="langselect">{{'Language.Language' | translate}}</button>
         <mat-menu #langselect="matMenu" xPosition="after">
@@ -57,7 +57,7 @@
 <div *ngIf="deleteMode" class="flex-row-left mal-container">
   <button
     mat-raised-button class="mal-card"
-    *ngFor="let project of projects; let i = index"
+    *ngFor="let project of getMyProjects(); let i = index"
     (click)="removeProject(project);"
     (mouseover)="shaking = i+1"
     (mouseleave)="shaking = 0"

@@ -15,7 +15,7 @@
   </div>
   <div class="flex-row-right">
     <div class="flex-row-between">
-      <button mat-button matTooltip="{{'KravEdit.ShareProjectTooltip' | translate}}" (click)="openShareMenu()">
+      <button *ngIf="userData.currentProject.ownedBy === userData.userName" mat-button matTooltip="{{'KravEdit.ShareProjectTooltip' | translate}}" (click)="openShareMenu()">
         <span class="material-icons">share</span>
       </button>
       <button mat-button (click)="enterUserEdit()">

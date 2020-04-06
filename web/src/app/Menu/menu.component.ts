@@ -193,6 +193,15 @@ export class MenuComponent implements OnInit {
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/userEdit']);
   }
+
+  /**
+   * getMyProjects
+   *
+   * Returns an arry with projects only owned by you
+   */
+  getMyProjects(): Project[] {
+    return this.projects.filter(project => project.ownedBy === this.userData.userName);
+  }
 }
 
 export interface INewProject {
