@@ -17,6 +17,8 @@ public final class Constants {
     public static final String SELF = "self";
     public static final String USER = "user";
     public static final String DOCUMENT = "document";
+    public static final String SHARE = "share";
+    public static final String ACCESS = "access";
     public static final String PROJECT = "project";
     public static final String TEMPLATE = "template";
     public static final String REQUIREMENT = "requirement";
@@ -38,6 +40,7 @@ public final class Constants {
 
     public static final String PROJECT_REQUIREMENT = "projectRequirement";
     public static final String PROJECT_FUNCTIONALITY = "projectFunctionality";
+    public static final String ACCESS_CONTROL = "accessControl";
     public static final String TEMPLATE_REQUIREMENT = "templateRequirement";
     public static final String TEMPLATE_FUNCTIONALITY = "templateFunctionality";
     public static final String PAGE = "page";
@@ -49,6 +52,7 @@ public final class Constants {
 
     public static final String PROJECT_NUMBER = "projectNumber";
     public static final String TEMPLATE_ID = "templateId";
+    public static final String OBJECT_ID = "objectId";
     public static final String PROJECT_NUMBER_PARAMETER = "{" +
             PROJECT_NUMBER + "}";
     public static final String FUNCTIONALITY_PARAMETER = "{" +
@@ -57,6 +61,7 @@ public final class Constants {
             TEMPLATE_ID + "}";
     public static final String USER_PARAMETER = "{" + USER + "}";
     public static final String REQUIREMENT_PARAMETER = "{" + REQUIREMENT + "}";
+    public static final String ACCESS_CONTROL_PARAMETER = "{" + ACCESS_CONTROL + "}";
 
     // Column names
     public static final String REQUIREMENT_NAME = "requirement_name";
@@ -77,6 +82,8 @@ public final class Constants {
     public static final String PERCENT_FOR_DOCUMENT = "procent_for_document";
     public static final String TEMPLATE_DESCRIPTION = "template_description";
     public static final String TEMPLATE_PK_ID = "template_id";
+    public static final String PROJECT_PK_ID = "project_id";
+    public static final String ACL_PK_ID = "access_control_id";
     public static final String TEMPLATE_FK_ID = "fk_template_id";
     public static final String FUNCTIONALITY_FK_ID = "fk_functionality_id";
     public static final String CREATED_DATE = "created_date";
@@ -86,7 +93,12 @@ public final class Constants {
     public static final String AUTHORITY_NAME = "authority_name";
     public static final String AUTHORITIES = "authorities";
     public static final String AUTHORITY = "authority";
-
+    public static final String GROUSE_USER = "grouse_user";
+    public static final String GROUSE_OBJECT = "grouse_object";
+    public static final String OBJECT_TYPE = "object_type";
+    public static final String READ = "can_read";
+    public static final String UPDATE = "can_update";
+    public static final String DELETE = "can_delete";
 
     public static final String PROJECT_TABLE_NAME = "projects";
 
@@ -97,6 +109,7 @@ public final class Constants {
     public static final String PROJECT_REQUIREMENT_TABLE_NAME =
             "project_requirements";
     public static final String USER_TABLE_NAME = "user";
+    public static final String ACL_TABLE_NAME = "access_control";
     public static final String AUTHORITY_TABLE_NAME = "authority";
 
     // Join tables
@@ -144,6 +157,8 @@ public final class Constants {
             "ETAG value is missing! Patch request requires an ETAG!";
     public static final String ETAG_VALUE_LESS_0 =
             "ETAG value is < 0! ETAG values start at 0!";
+    public static final String NO_ACCESS_OBJECT =
+            "Attempt to access an object without permission.";
     public static final String NO_ACCESS_OTHER_USER =
             "Attempt to access a user without permission. Admin role is " +
                     "required to see other users";

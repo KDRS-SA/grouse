@@ -1,9 +1,7 @@
 package no.kdrs.grouse.service.interfaces;
 
 
-import no.kdrs.grouse.model.Project;
-import no.kdrs.grouse.model.ProjectFunctionality;
-import no.kdrs.grouse.model.ProjectRequirement;
+import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,24 +17,36 @@ public interface IProjectService {
 
     Page<Project> findAll(Pageable page);
 
-    Project findById(Long id);
+    Project findById(UUID projectId);
 
     Project createProject(Project project);
 
     Project createProjectFromTemplate(Project project, UUID templateId);
 
-    Project update(Long id, PatchObjects patchObjects)
+    Project update(UUID projectId, PatchObjects patchObjects)
             throws EntityNotFoundException;
 
     Page<Project> findByOwnedBy(String ownedBy, Pageable pageable);
 
-    void delete(Long id);
+    void delete(UUID projectId);
 
     List<ProjectRequirement> findByProjectIdOrderByProjectName(
-            Long projectId, String functionalityNumber);
+            UUID projectId, String functionalityNumber);
 
     Page<ProjectFunctionality> findFunctionalityForProjectByType(
-            Pageable pageable, Long projectId, String type);
+            Pageable pageable, UUID projectId, String type);
 
     Iterable<Project> findByOwnedBy(String username);
+
+    ProjectFunctionality createFunctionality(
+            UUID projectId,
+            ProjectFunctionality projectFunctionality);
+
+    Project updateProjectFinalised(UUID projectId);
+
+    AccessControl shareProject(UUID projectId, String username);
+
+    Page<GrouseUser> getProjectUsers(UUID projectId, Pageable pageable);
+
+    void deleteProjectShare(UUID projectId, String username);
 }

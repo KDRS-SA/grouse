@@ -71,14 +71,10 @@ public class TemplateIntegrationTest {
 
     private String uuid = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0" +
             "-9a-fA-F]{4}-[0-9a-fA-F]{12}";
-    private Pattern selfRel = compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE +
-            SLASH + "\\d+$");
     private Pattern selfRelUUIDPattern =
             compile(".+" + CONTEXT_PATH + SLASH + TEMPLATE + SLASH + uuid);
     private Pattern functionRel = compile(".+" + CONTEXT_PATH + SLASH +
             TEMPLATE + SLASH + uuid + SLASH + FUNCTIONALITY + "$");
-    private Pattern documentRel = compile(".+" + CONTEXT_PATH + SLASH +
-            TEMPLATE + SLASH + uuid + SLASH + DOCUMENT + "$");
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext,

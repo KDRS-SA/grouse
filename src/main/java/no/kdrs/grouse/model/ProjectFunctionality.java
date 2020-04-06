@@ -1,18 +1,24 @@
 package no.kdrs.grouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY_NUMBER;
-import static no.kdrs.grouse.utils.Constants.VERSION;
+import static javax.persistence.FetchType.LAZY;
+import static no.kdrs.grouse.utils.Constants.*;
+import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 
 /**
@@ -110,13 +116,30 @@ public class ProjectFunctionality
     @Column(name = "type")
     private String type;
 
+    @CreatedBy
     @NotNull
-    @Column(name = "ownedBy", nullable = false)
+    @Column(name = "ownedBy")
     private String ownedBy;
+
+    /**
+     * The date the project functionality was created
+     */
+    @CreatedDate
+    @Column(name = CREATED_DATE)
+    @DateTimeFormat(iso = DATE_TIME)
+    private OffsetDateTime createdDate;
+
+    /**
+     * The date the project was changed
+     */
+    @LastModifiedDate
+    @Column(name = CHANGED_DATE)
+    @DateTimeFormat(iso = DATE_TIME)
+    private OffsetDateTime lastModifiedDate;
 
     // Link to parent ProjectFunctionality
     @JsonIgnore
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "parent")
     private ProjectFunctionality referenceParentFunctionality;
 
@@ -131,7 +154,7 @@ public class ProjectFunctionality
             new ArrayList<>();
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "project_number",
             referencedColumnName = "project_id")
     private Project referenceProject;
@@ -243,6 +266,22 @@ public class ProjectFunctionality
 
     public void setOwnedBy(String ownedBy) {
         this.ownedBy = ownedBy;
+    }
+
+    public OffsetDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(OffsetDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public OffsetDateTime getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(OffsetDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public ProjectFunctionality getReferenceParentFunctionality() {

@@ -1,6 +1,9 @@
 package no.kdrs.grouse.service;
 
+import no.kdrs.grouse.listeners.GrouseCreationEvent;
+import no.kdrs.grouse.listeners.GrouseEvent;
 import no.kdrs.grouse.model.*;
+import no.kdrs.grouse.persistence.IGrouseUserRepository;
 import no.kdrs.grouse.persistence.IProjectFunctionalityRepository;
 import no.kdrs.grouse.persistence.IProjectRepository;
 import no.kdrs.grouse.persistence.IProjectRequirementRepository;
@@ -8,6 +11,7 @@ import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import static java.util.UUID.randomUUID;
+import static no.kdrs.grouse.utils.Constants.PROJECT;
+
 /**
  * Created by tsodring on 9/25/17.
  */
@@ -34,10 +41,12 @@ public class ProjectService
     private EntityManager entityManager;
     private IProjectRequirementService projectRequirementService;
     private IProjectRepository projectRepository;
+    private IGrouseUserRepository userRepository;
+    private ACLService aclService;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
     private ITemplateService templateService;
-
+    private ApplicationEventPublisher applicationEventPublisher;
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
             new ArrayList<>(Arrays.asList("projectName",
@@ -47,21 +56,27 @@ public class ProjectService
             EntityManager entityManager,
             IProjectRequirementService projectRequirementService,
             IProjectRepository projectRepository,
+            IGrouseUserRepository userRepository,
+            ACLService aclService,
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository,
-            ITemplateService templateService) {
+            ITemplateService templateService,
+            ApplicationEventPublisher applicationEventPublisher) {
         this.entityManager = entityManager;
         this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+        this.aclService = aclService;
         this.projectRequirementRepository = projectRequirementRepository;
         this.projectFunctionalityRepository = projectFunctionalityRepository;
         this.templateService = templateService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<ProjectRequirement> findByProjectIdOrderByProjectName(
-            Long projectId, String functionalityNumber) {
+            UUID projectId, String functionalityNumber) {
         String queryString =
                 "select p from ProjectRequirement as p where " +
                         "p.referenceProject.projectId = :projectId " +
@@ -84,7 +99,7 @@ public class ProjectService
      */
     @Override
     public Page<ProjectFunctionality> findFunctionalityForProjectByType(
-            Pageable pageable, Long projectId, String type) {
+            Pageable pageable, UUID projectId, String type) {
         return projectFunctionalityRepository.
                 findByReferenceProjectAndTypeAndShowMe(
                         getProjectOrThrow(projectId), type, true, pageable);
@@ -92,12 +107,30 @@ public class ProjectService
 
     @Override
     public Page<Project> findAll(Pageable page) {
-        return projectRepository.findAll(page);
+        List<UUID> projecIdList = aclService.getListUUIDs(getUser(), PROJECT);
+        return projectRepository.findByProjectIdIn(projecIdList, page);
     }
 
     @Override
-    public Project findById(@NotNull Long id) {
-        return getProjectOrThrow(id);
+    public Project findById(@NotNull UUID projectId) {
+        return getProjectOrThrow(projectId);
+    }
+
+    @Override
+    public ProjectFunctionality createFunctionality(
+            UUID projectId, ProjectFunctionality projectFunctionality) {
+        Project project = getProjectOrThrow(projectId);
+        project.addProjectFunctionality(projectFunctionality);
+        projectFunctionality.setReferenceProject(project);
+        return projectFunctionalityRepository.save(projectFunctionality);
+    }
+
+    @Override
+    public Project updateProjectFinalised(UUID projectId) {
+        Project project = getProjectOrThrow(projectId);
+        project.setDocumentCreated(true);
+        project.setProjectComplete(true);
+        return project;
     }
 
     /**
@@ -107,9 +140,12 @@ public class ProjectService
      * @return project after it is persisted
      */
     public Project createProject(Project project) {
+        project.setProjectId(randomUUID());
         project.setOwnedBy(getUser());
         project.setFileName(project.getProjectName());
-        return projectRepository.save(project);
+        project = projectRepository.save(project);
+        applicationEventPublisher.publishEvent(new GrouseEvent(this, project));
+        return project;
     }
 
     /**
@@ -138,6 +174,7 @@ public class ProjectService
         if (project.getProjectName() == null) {
             project.setProjectName(template.getTemplateName());
         }
+        project.setProjectId(randomUUID());
         project.setFileName(project.getProjectName());
         project.setOwnedBy(getUser());
         project = projectRepository.save(project);
@@ -148,6 +185,7 @@ public class ProjectService
                     templateFunctionality
                             .getReferenceChildTemplateFunctionality());
         }
+        applicationEventPublisher.publishEvent(new GrouseCreationEvent(this, project));
         return project;
     }
 
@@ -213,9 +251,12 @@ public class ProjectService
     }
 
     @Override
-    public Project update(Long id, PatchObjects patchObjects)
+    public Project update(UUID projectId, PatchObjects patchObjects)
             throws EntityNotFoundException {
-        return (Project) handlePatch(getProjectOrThrow(id), patchObjects);
+        Project project = getProjectOrThrow(projectId);
+        checkAccess(project.getProjectId());
+        return (Project) handlePatch(getProjectOrThrow(projectId),
+                patchObjects);
     }
 
     @Override
@@ -233,26 +274,73 @@ public class ProjectService
      * the project. These are projectRequirements and projectFunctionality.
      * These are deleted first before the project is deleted
      *
-     * @param id the id of the project ot delete
+     * @param projectId the id of the project ot delete
      */
     @Override
-    public void delete(Long id) {
-        Project project = getProjectOrThrow(id);
+    public void delete(UUID projectId) {
+        Project project = getProjectOrThrow(projectId);
+        checkOwner(project.getOwnedBy(), PROJECT);
+        deleteFunctionalities(project.getReferenceProjectFunctionality());
+        projectRepository.delete(project);
+    }
+
+    protected void deleteFunctionalities(
+            List<ProjectFunctionality> projectFunctionalities) {
         for (ProjectFunctionality projectFunctionality :
-                project.getReferenceProjectFunctionality()) {
-            for (ProjectRequirement projectRequirement :
-                    projectFunctionality.getReferenceProjectRequirement()) {
-                projectRequirementService
-                        .deleteRequirementByObject(projectRequirement);
+                projectFunctionalities) {
+            if (projectFunctionality
+                    .getReferenceProjectRequirement().size() > 0) {
+                deleteRequirements(projectFunctionality
+                        .getReferenceProjectRequirement());
             }
+            if (projectFunctionality
+                    .getReferenceChildProjectFunctionality().size() > 0) {
+                deleteFunctionalities(projectFunctionality
+                        .getReferenceChildProjectFunctionality());
+            }
+            projectFunctionality.setReferenceParentFunctionality(null);
+            projectFunctionality.setReferenceProject(null);
             projectFunctionalityRepository.delete(projectFunctionality);
         }
-        projectRepository.delete(project);
+    }
+
+    protected void deleteRequirements(
+            List<ProjectRequirement> projectRequirements) {
+        for (ProjectRequirement projectRequirement : projectRequirements) {
+            projectRequirementService
+                    .deleteRequirementByObject(projectRequirement);
+        }
     }
 
     @Override
     protected boolean checkColumnUpdatable(String path) {
         return allowableColumns.contains(path);
+    }
+
+    @Override
+    public AccessControl shareProject(UUID projectId, String username) {
+
+        Project project = getProjectOrThrow(projectId);
+        checkOwner(project.getOwnedBy(), PROJECT);
+        AccessControl accessControl = new AccessControl();
+        accessControl.setAclId(randomUUID());
+        accessControl.setObjectType(PROJECT);
+        accessControl.setGrouseObject(project.getProjectId());
+        accessControl.setGrouseUser(username);
+        return aclService.createACLEntry(project.getProjectId(), accessControl);
+    }
+
+    @Override
+    public void deleteProjectShare(UUID projectId, String username) {
+        Project project = getProjectOrThrow(projectId);
+        checkOwner(project.getOwnedBy(), PROJECT);
+        aclService.deleteACLEntry(project.getProjectId(), username);
+    }
+
+    @Override
+    public Page<GrouseUser> getProjectUsers(UUID projectId, Pageable pageable) {
+        List<String> userList = aclService.getListUsers(projectId);
+        return userRepository.findByUsernameIn(userList, pageable);
     }
 
     /**
@@ -261,14 +349,14 @@ public class ProjectService
      * that you will only ever get a valid Project back. If there is no valid
      * Project, a EntityNotFoundException exception is thrown
      *
-     * @param id The systemId of the project object to retrieve
+     * @param projectId The id of the project object to retrieve
      * @return the project object
      */
-    private Project getProjectOrThrow(@NotNull Long id)
+    private Project getProjectOrThrow(@NotNull UUID projectId)
             throws EntityNotFoundException {
-        return projectRepository.findById(id)
+        return projectRepository.findById(projectId)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
-                                "No Project exists with Id " + id));
+                                "No Project exists with Id " + projectId));
     }
 }

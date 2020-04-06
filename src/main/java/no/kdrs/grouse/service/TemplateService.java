@@ -2,6 +2,7 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
+import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
 import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
@@ -78,13 +79,13 @@ public class TemplateService
     }
 
     @Override
-    public void createFunctionality(
+    public TemplateFunctionality createFunctionality(
             @NotNull final UUID templateId,
             TemplateFunctionality templateFunctionality) {
         Template template = getTemplateOrThrow(templateId);
         template.addTemplateFunctionality(templateFunctionality);
         templateFunctionality.setReferenceTemplate(template);
-        templateFunctionalityRepository.save(templateFunctionality);
+        return templateFunctionalityRepository.save(templateFunctionality);
     }
 
     @Override
@@ -134,18 +135,35 @@ public class TemplateService
     @Override
     public void delete(UUID id) {
         Template template = getTemplateOrThrow(id);
-        /* revisit this
-        for (TemplateRequirement templateRequirement :
-                template.getReferenceTemplateRequiremnt()) {
-            templateRequirementRepository.delete(templateRequirement);
-        }
+        deleteFunctionalities(template.getReferenceTemplateFunctionality());
+        templateRepository.delete(template);
+    }
 
-         */
+    protected void deleteFunctionalities(
+            List<TemplateFunctionality> templateFunctionalities) {
         for (TemplateFunctionality templateFunctionality :
-                template.getReferenceTemplateFunctionality()) {
+                templateFunctionalities) {
+            if (templateFunctionality
+                    .getReferenceTemplateRequirement().size() > 0) {
+                deleteRequirements(templateFunctionality
+                        .getReferenceTemplateRequirement());
+            }
+            if (templateFunctionality
+                    .getReferenceChildTemplateFunctionality().size() > 0) {
+                deleteFunctionalities(templateFunctionality
+                        .getReferenceChildTemplateFunctionality());
+            }
+            templateFunctionality.setReferenceParentFunctionality(null);
+            templateFunctionality.setReferenceTemplate(null);
             templateFunctionalityRepository.delete(templateFunctionality);
         }
-        templateRepository.delete(template);
+    }
+
+    protected void deleteRequirements(
+            List<TemplateRequirement> templateRequirements) {
+        for (TemplateRequirement templateRequirement : templateRequirements) {
+            templateRequirementRepository.delete(templateRequirement);
+        }
     }
 
     @Override

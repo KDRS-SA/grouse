@@ -112,6 +112,10 @@ public class ProjectFunctionalityAssembler
         linksProjectFunctionality.setActive(projectFunctionality.getActive());
         linksProjectFunctionality.setType(projectFunctionality.getType());
         linksProjectFunctionality.setOwnedBy(projectFunctionality.getOwnedBy());
+        linksProjectFunctionality.setCreatedDate(
+                projectFunctionality.getCreatedDate());
+        linksProjectFunctionality.setLastModifiedDate(
+                projectFunctionality.getLastModifiedDate());
         linksProjectFunctionality.setVersion(projectFunctionality.getVersion());
     }
 }

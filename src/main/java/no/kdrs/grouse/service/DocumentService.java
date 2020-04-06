@@ -31,7 +31,7 @@ public class DocumentService
     public void createDocument(Project project) throws IOException {
 
         String filename = storageLocation + File.separator +
-                GROUSE  + "-" + project.getProjectId().toString() + ".docx";
+                GROUSE + "-" + project.getProjectId().toString() + ".docx";
         project.setFileNameInternal(filename);
         FileOutputStream file = new FileOutputStream(filename);
         Document document = new Document(file);
@@ -47,47 +47,59 @@ public class DocumentService
      * Populate the requirements document with details from the database
      *
      * @param document The Word document
-     * @param project An instance of the relevant Project object
+     * @param project  An instance of the relevant Project object
      */
-    @Override
-    @SuppressWarnings("unchecked")
     public void processRequirements(Document document, Project project) {
 
         List<ProjectFunctionality> projectFunctionalities =
                 project.getReferenceProjectFunctionality();
+        processFunctionalities(document, project, projectFunctionalities);
+    }
 
-        for (ProjectFunctionality functionality : projectFunctionalities) {
+    protected void processFunctionalities(
+            Document document, Project project,
+            List<ProjectFunctionality> projectFunctionalities) {
 
-            // Ignore the root of the document.
-            // It's a string for some reason....
-            if (!functionality.getFunctionalityNumber().equals("0")) {
-                List<ProjectRequirement> projectRequirements =
-                        functionality.getReferenceProjectRequirement();
+        for (ProjectFunctionality projectFunctionality :
+                projectFunctionalities) {
 
-                String title = functionality.getTitle();
+            String title = projectFunctionality.getTitle();
 
-                if (null != title && title.length() == 1) {
-                    document.addHeading1(title);
-                } else if (null != title && title.length() > 1) {
-                    document.addHeading2(title);
-                }
+            if (null != title && title.length() == 1) {
+                document.addHeading1(title);
+            } else if (null != title && title.length() > 1) {
+                document.addHeading2(title);
+            }
 
-                String description = functionality.getDescription();
-                if (!functionality.getShowMe() && description != null) {
-                    if (project.getOrganisationName() != null) {
-                        description = description.replace("ORG_NAVN", project.getOrganisationName());
-                        document.addText(description);
-                    }
-                }
-
-                if (projectRequirements.size() > 0) {
-                    document.createTable(projectRequirements.size(), functionality);
-                    for (ProjectRequirement projectRequirement :
-                            projectRequirements) {
-                        document.addRow(projectRequirement);
-                    }
+            String description = projectFunctionality.getDescription();
+            if (!projectFunctionality.getShowMe() && description != null) {
+                if (project.getOrganisationName() != null) {
+                    description = description.replace("ORG_NAVN",
+                            project.getOrganisationName());
+                    document.addText(description);
                 }
             }
+            if (projectFunctionality
+                    .getReferenceProjectRequirement().size() > 0) {
+                processRequirements(document, projectFunctionality
+                                .getReferenceProjectRequirement(),
+                        projectFunctionality);
+            }
+            if (projectFunctionality
+                    .getReferenceChildProjectFunctionality().size() > 0) {
+                processFunctionalities(document, project, projectFunctionality
+                        .getReferenceChildProjectFunctionality());
+            }
+        }
+    }
+
+    protected void processRequirements(
+            Document document,
+            List<ProjectRequirement> projectRequirements,
+            ProjectFunctionality projectFunctionality) {
+        document.createTable(projectRequirements.size(), projectFunctionality);
+        for (ProjectRequirement projectRequirement : projectRequirements) {
+            document.addRow(projectRequirement);
         }
     }
 }

@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
@@ -81,18 +79,11 @@ public class TemplateController {
     }
 
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + FUNCTIONALITY)
-    public ResponseEntity<TemplateFunctionality> createFunctionality(
+    public ResponseEntity<LinksTemplateFunctionality> createFunctionality(
             @PathVariable(TEMPLATE_ID) UUID templateId,
             @RequestBody TemplateFunctionality templateFunctionality) {
-
-        templateService.createFunctionality(templateId, templateFunctionality);
-
-        templateFunctionality.add(linkTo(methodOn
-                (TemplateFunctionalityController.class)
-                .getTemplateFunctionality(templateFunctionality
-                        .getFunctionalityId()))
-                .withSelfRel());
-        return ResponseEntity.status(CREATED).body(templateFunctionality);
+        return commonController.addTemplateFunctionalityLinks(templateService
+                .createFunctionality(templateId, templateFunctionality), CREATED);
     }
 
     @PatchMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
@@ -104,10 +95,11 @@ public class TemplateController {
     }
 
     @DeleteMapping(SLASH + TEMPLATE_ID_PARAMETER)
-    public ResponseEntity<Void> deleteTemplate(
+    public ResponseEntity<String> deleteTemplate(
             @PathVariable(TEMPLATE_ID) UUID templateId) {
         templateService.delete(templateId);
         return ResponseEntity.status(NO_CONTENT)
-                .body(null);
+                .body("{\"status\" : \"Template " + templateId + " was " +
+                        "deleted\"}");
     }
 }

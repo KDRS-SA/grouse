@@ -42,6 +42,7 @@ public class CommonController {
             pagedTemplateFunctionalityResourcesAssembler;
     private ProjectAssembler projectAssembler;
     private TemplateAssembler templateAssembler;
+    private ACLAssembler aclAssembler;
     private UserAssembler userAssembler;
     private TemplateRequirementAssembler templateRequirementAssembler;
     private ProjectFunctionalityAssembler projectFunctionalityAssembler;
@@ -63,6 +64,7 @@ public class CommonController {
                     pagedProjectFunctionalityResourcesAssembler,
             ProjectAssembler projectAssembler,
             TemplateAssembler templateAssembler,
+            ACLAssembler aclAssembler,
             UserAssembler userAssembler,
             ProjectRequirementAssembler projectRequirementAssembler,
             TemplateRequirementAssembler templateRequirementAssembler,
@@ -81,6 +83,7 @@ public class CommonController {
                 pagedProjectFunctionalityResourcesAssembler;
         this.projectAssembler = projectAssembler;
         this.templateAssembler = templateAssembler;
+        this.aclAssembler = aclAssembler;
         this.userAssembler = userAssembler;
         this.templateRequirementAssembler = templateRequirementAssembler;
         this.projectFunctionalityAssembler = projectFunctionalityAssembler;
@@ -238,4 +241,12 @@ public class CommonController {
         return ResponseEntity.status(status)
                 .body(templateFunctionalityModels);
     }
+
+    public ResponseEntity<LinksAccessControl>
+    addACLLinks(AccessControl aclEntry, HttpStatus status) {
+        return ResponseEntity.status(status)
+                .eTag(aclEntry.getVersion().toString())
+                .body(aclAssembler.toModel(aclEntry));
+    }
+
 }

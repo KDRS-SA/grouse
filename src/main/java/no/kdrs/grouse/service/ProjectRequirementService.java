@@ -14,6 +14,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -93,7 +94,7 @@ public class ProjectRequirementService
 
     @Override
     public ProjectRequirement createProjectRequirement(
-            Long projectId, String functionality,
+            UUID projectId, String functionality,
             ProjectRequirement projectRequirement) {
 
         return projectRequirementRepository.save(projectRequirement);

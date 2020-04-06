@@ -3,9 +3,11 @@ package no.kdrs.grouse.controller;
 
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.Template;
+import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
+import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.exception.InternalException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -14,10 +16,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,13 +26,12 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
+import static org.springframework.http.HttpStatus.CREATED;
 
 /**
- * Created by tsodring on 9/25/17.
+ * DocumentController that has two tasks.
  * <p>
- * Controller that has two tasks.
- * <p>
- * 1. Call for the creation of a requirements document
+ * 1. Allow for the creation of a requirements document
  * 2. Download the requirements document
  */
 @RestController
@@ -45,54 +44,36 @@ public class DocumentController {
     private IDocumentService documentService;
     private IProjectService projectService;
     private ITemplateService templateService;
+    private CommonController commonController;
 
     public DocumentController(IDocumentService documentService,
                               IProjectService projectService,
-                              ITemplateService templateService) {
+                              ITemplateService templateService,
+                              CommonController commonController) {
         this.documentService = documentService;
         this.projectService = projectService;
         this.templateService = templateService;
+        this.commonController = commonController;
     }
 
-    /*
-    I'm not sure what the point of this endpoint / code is. It seems to allow
-    the client to POST a project number from the root of the application
-    followed by /document and it creates the document. We should probably
-    revisit this.
-
-    @PostMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + DOCUMENT)
-    public ResponseEntity<Project> getRequirement(
-            @PathVariable(PROJECT_NUMBER) Long projectId)
+    @PostMapping(value = SLASH + PROJECT + SLASH + PROJECT_NUMBER_PARAMETER +
+            SLASH + DOCUMENT)
+    public ResponseEntity<LinksProject> createRequirementsDocument(
+            @PathVariable(PROJECT_NUMBER) UUID projectId)
             throws Exception {
-
-        Project project = projectService.findById(projectId);
+        Project project = projectService.updateProjectFinalised(projectId);
+        // We should revisit this in case there is a need to undo setting the
+        // document to finalised if the document cannot be created.
         documentService.createDocument(project);
-        project.setDocumentCreated(true);
-        project.setProjectComplete(true);
-        projectService.update(projectId, project);
-
-        project.add(linkTo(methodOn(ProjectController.class).
-                getProject(projectId)).withSelfRel());
-
-        project.add(linkTo(methodOn(ProjectController.class).
-                getFunctionalityForProject(projectId))
-                .withRel(FUNCTIONALITY));
-
-        project.add(linkTo(DocumentController.class, DocumentController.class.
-                getMethod("downloadDocumentProject", Long.class), projectId).
-                withRel(DOCUMENT));
-
-        return ResponseEntity.status(CREATED)
-                .body(project);
+        return commonController.addProjectLinks(project, CREATED);
     }
-*/
 
     @GetMapping(SLASH + PROJECT + SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
             DOCUMENT)
     public HttpEntity<byte[]> downloadProjectDocument(
-            @PathVariable(PROJECT_NUMBER) Long projectId) {
+            @PathVariable(PROJECT_NUMBER) UUID projectId) {
         Project project = projectService.findById(projectId);
-        if (null != project.getFileNameInternal()) {
+        if (null == project.getFileNameInternal()) {
             throw new InternalException("Can't download document, no filename" +
                     "for project " + projectId);
         }

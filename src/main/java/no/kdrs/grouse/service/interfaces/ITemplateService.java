@@ -28,7 +28,7 @@ public interface ITemplateService {
 
     List<Template> findByOwnedBy(String ownedBy);
 
-    void createFunctionality(@NotNull final UUID templateId,
-                             @NotNull TemplateFunctionality
-                                     templateFunctionality);
+    TemplateFunctionality createFunctionality(@NotNull final UUID templateId,
+                                              @NotNull TemplateFunctionality
+                                                      templateFunctionality);
 }

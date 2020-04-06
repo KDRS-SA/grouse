@@ -122,7 +122,7 @@ public class TemplateFunctionality
             new ArrayList<>();
 
     @OneToMany(mappedBy = "referenceFunctionality")
-    @OrderBy("functionalityId ASC")
+    @OrderBy("requirementId  ASC")
     private List<TemplateRequirement> referenceTemplateRequirement =
             new ArrayList<>();
 

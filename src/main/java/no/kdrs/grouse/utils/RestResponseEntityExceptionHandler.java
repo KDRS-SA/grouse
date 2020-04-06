@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -75,6 +76,15 @@ public class RestResponseEntityExceptionHandler
         return handleExceptionInternal(ex,
                 message(BAD_REQUEST, ex, request), new HttpHeaders(),
                 BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleNotAutorised(
+            final RuntimeException ex,
+            final WebRequest request) {
+        return handleExceptionInternal(ex,
+                message(UNAUTHORIZED, ex, request), new HttpHeaders(),
+                UNAUTHORIZED, request);
     }
 
     // 500

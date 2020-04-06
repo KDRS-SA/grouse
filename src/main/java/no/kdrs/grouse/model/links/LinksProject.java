@@ -7,6 +7,7 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
@@ -20,12 +21,14 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class LinksProject
         extends RepresentationModel<LinksProject> {
 
-    private Long projectId;
+    private UUID projectId;
     private String projectName;
     private OffsetDateTime createdDate;
     private OffsetDateTime lastModifiedDate;
     private String ownedBy;
     private Integer percentForDocument;
+    private Boolean projectComplete;
+    private Boolean documentCreated;
 
     public LinksProject(Project project) {
         this.projectId = project.getProjectId();
@@ -34,13 +37,15 @@ public class LinksProject
         this.lastModifiedDate = project.getLastModifidDate();
         this.ownedBy = project.getOwnedBy();
         this.percentForDocument = project.getPercentForDocument();
+        this.projectComplete = project.getProjectComplete();
+        this.documentCreated = project.getDocumentCreated();
     }
 
-    public Long getProjectId() {
+    public UUID getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Long projectId) {
+    public void setProjectId(UUID projectId) {
         this.projectId = projectId;
     }
 
@@ -82,5 +87,21 @@ public class LinksProject
 
     public void setPercentForDocument(Integer percentForDocument) {
         this.percentForDocument = percentForDocument;
+    }
+
+    public Boolean getProjectComplete() {
+        return projectComplete;
+    }
+
+    public void setProjectComplete(Boolean projectComplete) {
+        this.projectComplete = projectComplete;
+    }
+
+    public Boolean getDocumentCreated() {
+        return documentCreated;
+    }
+
+    public void setDocumentCreated(Boolean documentCreated) {
+        this.documentCreated = documentCreated;
     }
 }
