@@ -50,6 +50,13 @@ public class ProjectController {
                 .findAll(pageable), OK);
     }
 
+    @GetMapping
+    public ResponseEntity<PagedModel<LinksProject>>
+    getProjectsForUser(Pageable pageable) {
+        return commonController.addPagedProjectLinks(projectService
+                .findAllForUser(pageable), OK);
+    }
+
     @GetMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
             FUNCTIONALITY)
     public ResponseEntity<PagedModel<LinksProjectFunctionality>>
