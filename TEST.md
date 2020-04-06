@@ -842,9 +842,7 @@ Try logging in with the updated password:
     curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=updatedPassword
     
     
-## Delete a user 
-
-When you delete a user, all their projects are deleted. The user account is deleted and the session is invalidated.  Currently the documents are not deleted from the document store, but this will be added. Should the deletion of the users account be logged?
+## Create a user 
 
 First create a user. This can be done of the application root.
 
@@ -878,7 +876,10 @@ Use the generated password (example 4d79d0ef-2588-4b8a-a57a-17be2644564c). Next 
 
     curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 4d79d0ef-2588-4b8a-a57a-17be2644564c'
         
-You will see this generated a project. Next delete the user account:
+## Delete a user
+When you delete a user, all their projects are deleted. The user account is deleted and the session is invalidated.  Currently the documents are not deleted from the document store, but this will be added. Should the deletion of the users account be logged? Using the user account created in the previous section.         
+
+To delete a user account:
 
     curl -v -X DELETE http://localhost:9294/grouse/user/user1@example.com  -H 'Authorization: Bearer 4d79d0ef-2588-4b8a-a57a-17be2644564c' 
 
@@ -913,7 +914,7 @@ It is possible to create the requirements document. I think we need to decide if
           }
 Make a note of the href corresponding the "document" rel. Issue a POST request against this.
     
-    curl -X POST http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document -H 'Authorization: Bearer a4dbf18a-d8db-4e39-9e39-dc43ae8e5190'
+    curl -X POST http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document -H 'Authorization: Bearer 39150c16-c311-4da3-8148-074964cb4609'
     
     
 Make a note of updated value in _documentCreated_.
@@ -941,6 +942,229 @@ Make a note of updated value in _documentCreated_.
     
 The document can be downloaded by issuing a GET against the href corresponding to the rel "document".
 
-    curl --output doc.docx -X GET http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document -H 'Authorization: Bearer a4dbf18a-d8db-4e39-9e39-dc43ae8e5190'
+    curl --output doc.docx -X GET http://localhost:9294/grouse/project/f939bae4-60b8-4bcd-a043-e81f011a6102/document -H 'Authorization: Bearer 39150c16-c311-4da3-8148-074964cb4609'
 
 This should produce the requirements document in the same directory.
+
+
+## Sharing of a project
+
+Make sure there are two users. There is already a user@example.com user, so create  a new user (See section "Create a user"). In this scenario here we have created a uses called _user1@example.com_ :
+
+    curl -X POST http://localhost:9294/grouse/user -H 'Content-type: application/json'  --data '{ "username": "user1@example.com", "password": "mypassword"}'
+
+Next. Create a project for user@example.com
+
+    curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "Requirements project"}' -H 'Authorization: Bearer 39150c16-c311-4da3-8148-074964cb4609'
+
+
+This creates a project, that can be shared:
+    
+    {
+      "projectId": "7d4407f0-3e19-4652-a357-26840a08f300",
+      "projectName": "Requirements project",
+      "createdDate": "2020-04-06T07:53:00.11141+02:00",
+      "lastModifiedDate": "2020-04-06T07:53:00.11141+02:00",
+      "ownedBy": "user@example.com",
+      "projectComplete": false,
+      "documentCreated": false,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/function"
+        },
+        "document": {
+          "href": "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/document"
+        },
+        "share": {
+          "href": "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/share/user_email_address"
+        },
+        "access": {
+          "href": "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/access"
+        }
+      }
+    }
+    
+Make a note of the href corresponding to the rel "share".
+
+    "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/share/user_email_address"
+
+The client must swap out the _"user_email_address"_ portion of the URL with the email address of the user that has 
+access to the project. Note only a project owner can give project access to other users. An attempt to insert a value 
+that is not an email address or if the default value is sent back to grouse will result in a *400 Bad request*. In the 
+scenario here we give access to user1@example.com so the URL looks like the following:
+
+    "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/share/user1@example.com"
+
+To assign a share to user1@example.com for project *7d4407f0-3e19-4652-a357-26840a08f300* issue a POST request to:
+
+    curl -v -X POST http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/share/user1@example.com -H 'Authorization: Bearer cef420d9-10ba-446f-888a-7507a6046a8d'
+
+This generates the following result:
+
+    {
+      "aclId": "4a4f3e87-34cc-4186-8a86-6d4f32b65018",
+      "grouseObject": "7d4407f0-3e19-4652-a357-26840a08f300",
+      "grouseUser": "user1@example.com",
+      "createdDate": "2020-04-06T08:00:32.379595+02:00",
+      "lastModifiedDate": "2020-04-06T08:00:32.379595+02:00",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/accessControl/4a4f3e87-34cc-4186-8a86-6d4f32b65018",
+          "templated": true
+        }
+      }
+    }
+     
+The project can be shared with any email address. Whether the user has an account or not. 
+
+The list of users that have access to the project can be retrieved using the href corresponding 
+to "access" rel. To check which user has access to your project, issue a GET to the following: 
+
+    curl -v -X GET http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/access -H 'Authorization: Bearer cef420d9-10ba-446f-888a-7507a6046a8d'
+    
+This produces a list of users that have access to project *"7d4407f0-3e19-4652-a357-26840a08f300"*, issues a
+GET request to the href associated with the "share" rel: 
+    
+    {
+      "_embedded": {
+        "users": [
+          {
+            "username": "user1@example.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "enabled": true,
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/user/user1@example.com"
+              },
+              "project": {
+                "href": "http://localhost:9294/grouse/project"
+              },
+              "template": {
+                "href": "http://localhost:9294/grouse/template"
+              },
+              "logout OAuth2": {
+                "href": "http://localhost:9294/grouse/oauth/revoke-token"
+              }
+            }
+          },
+          {
+            "username": "user@example.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "enabled": true,
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/user/user@example.com"
+              },
+              "project": {
+                "href": "http://localhost:9294/grouse/project"
+              },
+              "template": {
+                "href": "http://localhost:9294/grouse/template"
+              },
+              "logout OAuth2": {
+                "href": "http://localhost:9294/grouse/oauth/revoke-token"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/access?page=0&size=10"
+        }
+      },
+      "page": {
+        "size": 10,
+        "totalElements": 2,
+        "totalPages": 1,
+        "number": 0
+      }
+    }
+
+### Delete share of a project
+
+An assigned share can be deleted either by issuing a DELETE request the the href associated with the "share" rel or by 
+using the href associated with the self rel of ACL object.
+
+    curl -v -X DELETE http://localhost:9294/grouse/project/7d4407f0-3e19-4652-a357-26840a08f300/share/user1@example.com -H 'Authorization: Bearer cef420d9-10ba-446f-888a-7507a6046a8d'
+    
+Attempt to delete a share that does not exist will return a 404. A user that has been assigned a share can delete that share, but cannot delete shares belonging to other users.  
+
+### Attempt to delete a project not owned by user
+
+A third user is added to grouse (user2@example.com). This user logs into grouse and attempts to delete a project they 
+do not have access to. The access token after logging in is *(user2@example.com, "975d926f-a01a-4e56-878e-938bd97a7480")*
+
+    curl -v -X DELETE http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d -H 'Authorization: Bearer 975d926f-a01a-4e56-878e-938bd97a7480'
+
+This will result in the following reply:
+
+    {
+      "status": 401,
+      "message": "Attempt to access an object without permission. project",
+      "developerMessage": "org.springframework.security.access.AccessDeniedException: Attempt to access an object without permission. project",
+      "stackTrace": "org.springframework.security.access.AccessDeniedException: Attempt to access an object without permission. project",
+      "request": "/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d"
+    }
+
+Note. Even if you have access to a project, only the owner of the project can delete it. 
+
+### Attempt to update a project where user has no access
+
+To update the project name, issue a PATCH request with the access token of *user2@example.com*:
+
+    curl -v -X PATCH http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d" -H 'ETAG: ""0""' -H 'Content-type: application/json' -H 'Authorization: Bearer 975d926f-a01a-4e56-878e-938bd97a7480' --data '[{ "op": "replace", "path": "/projectName", "value": "Updated project"}]'
+
+This will result in the following:
+
+    {
+      "status": 401,
+      "message": "No access to ObjectId 914890e7-38db-4d33-81fd-d3a608cff00d",
+      "developerMessage": "org.springframework.security.access.AccessDeniedException: No access to ObjectId 914890e7-38db-4d33-81fd-d3a608cff00d",
+      "stackTrace": "org.springframework.security.access.AccessDeniedException: No access to ObjectId 914890e7-38db-4d33-81fd-d3a608cff00d",
+      "request": "/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d"
+    }
+    
+
+### Attempt to update a project where user has access
+
+To update the project name, issue a PATCH request with the access token of *user1@example.com*:975d926f-a01a-4e56-878e-938bd97a7480
+
+    curl -v -X PATCH http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d -H 'ETAG: ""0""' -H 'Content-type: application/json' -H 'Authorization: Bearer 975d926f-a01a-4e56-878e-938bd97a7480' --data '[{ "op": "replace", "path": "/projectName", "value": "Updated project"}]'
+    
+    
+This returns the following:
+
+    {
+      "projectId": "914890e7-38db-4d33-81fd-d3a608cff00d",
+      "projectName": "Updated project",
+      "createdDate": "2020-04-06T12:17:08+02:00",
+      "lastModifiedDate": "2020-04-06T12:26:32.963074+02:00",
+      "ownedBy": "user@example.com",
+      "projectComplete": false,
+      "documentCreated": false,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d/function"
+        },
+        "document": {
+          "href": "http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d/document"
+        },
+        "share": {
+          "href": "http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d/share/user_email_address"
+        },
+        "access": {
+          "href": "http://localhost:9294/grouse/project/914890e7-38db-4d33-81fd-d3a608cff00d/access"
+        }
+      }
+    }

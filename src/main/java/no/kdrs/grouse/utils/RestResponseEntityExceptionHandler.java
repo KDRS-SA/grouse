@@ -80,7 +80,7 @@ public class RestResponseEntityExceptionHandler
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Object> handleNotAutorised(
-            final DataIntegrityViolationException ex,
+            final RuntimeException ex,
             final WebRequest request) {
         return handleExceptionInternal(ex,
                 message(UNAUTHORIZED, ex, request), new HttpHeaders(),

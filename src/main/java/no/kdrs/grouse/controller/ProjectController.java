@@ -2,8 +2,10 @@ package no.kdrs.grouse.controller;
 
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
+import no.kdrs.grouse.model.links.LinksAccessControl;
 import no.kdrs.grouse.model.links.LinksProject;
 import no.kdrs.grouse.model.links.LinksProjectFunctionality;
+import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
@@ -90,5 +92,33 @@ public class ProjectController {
         return ResponseEntity.status(NO_CONTENT)
                 .body("{\"status\" : \"Project " + projectId + " was " +
                         "deleted\"}");
+    }
+
+    @GetMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH + ACCESS)
+    public ResponseEntity<PagedModel<LinksUser>> getProjectUsers(
+            @PathVariable(PROJECT_NUMBER) UUID projectId,
+            Pageable pageable) {
+        return commonController.addPagedUserLinks(projectService
+                .getProjectUsers(projectId, pageable), OK);
+    }
+
+    @PostMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH + SHARE +
+            SLASH + USER_PARAMETER)
+    public ResponseEntity<LinksAccessControl> shareProject(
+            @PathVariable(PROJECT_NUMBER) UUID projectId,
+            @PathVariable(USER) String username) {
+        return commonController.addACLLinks(projectService
+                .shareProject(projectId, username), OK);
+    }
+
+    @DeleteMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH + SHARE +
+            SLASH + USER_PARAMETER)
+    public ResponseEntity<String> deleteProjectShare(
+            @PathVariable(PROJECT_NUMBER) UUID projectId,
+            @PathVariable(USER) String username) {
+        projectService.deleteProjectShare(projectId, username);
+        return ResponseEntity.status(NO_CONTENT)
+                .body("{\"status\" : \"Share on " + projectId + " for user " +
+                        username + " was deleted\"}");
     }
 }

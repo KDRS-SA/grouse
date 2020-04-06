@@ -64,6 +64,7 @@ public class CommonController {
                     pagedProjectFunctionalityResourcesAssembler,
             ProjectAssembler projectAssembler,
             TemplateAssembler templateAssembler,
+            ACLAssembler aclAssembler,
             UserAssembler userAssembler,
             ProjectRequirementAssembler projectRequirementAssembler,
             TemplateRequirementAssembler templateRequirementAssembler,
@@ -82,6 +83,7 @@ public class CommonController {
                 pagedProjectFunctionalityResourcesAssembler;
         this.projectAssembler = projectAssembler;
         this.templateAssembler = templateAssembler;
+        this.aclAssembler = aclAssembler;
         this.userAssembler = userAssembler;
         this.templateRequirementAssembler = templateRequirementAssembler;
         this.projectFunctionalityAssembler = projectFunctionalityAssembler;

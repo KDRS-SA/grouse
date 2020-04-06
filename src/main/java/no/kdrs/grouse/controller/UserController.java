@@ -8,8 +8,6 @@ import no.kdrs.grouse.service.interfaces.IGrouseUserService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +24,6 @@ import static org.springframework.http.HttpStatus.*;
 @RestController
 @RequestMapping(value = SLASH + USER, produces = HAL_JSON_VALUE)
 public class UserController {
-
-    private static final Logger logger =
-            LoggerFactory.getLogger(UserController.class);
 
     private IGrouseUserService grouseUserService;
     private IProjectService projectService;

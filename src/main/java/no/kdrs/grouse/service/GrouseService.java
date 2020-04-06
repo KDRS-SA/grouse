@@ -8,6 +8,7 @@ import no.kdrs.grouse.utils.exception.PatchMisconfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,12 +18,16 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.http.HttpHeaders.ETAG;
 
 @Service
 public class GrouseService {
+
+    @Autowired
+    ACLService aclService;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -132,5 +137,18 @@ public class GrouseService {
         String errorMessage = getServletPath() + " has no checkColumnUpdatable";
         logger.error(errorMessage);
         throw new BadRequestException(errorMessage);
+    }
+
+    public void checkOwner(String ownedBy, String objectType) {
+        if (!getUser().equals(ownedBy)) {
+            String error = NO_ACCESS_OBJECT + objectType;
+            logger.error(error);
+            throw new AccessDeniedException(error);
+        }
+    }
+
+    public void checkAccess(UUID objectId) {
+        aclService.getAccessControlByObjectIdAndGrouseUserOrThrow(
+                objectId, getUser());
     }
 }

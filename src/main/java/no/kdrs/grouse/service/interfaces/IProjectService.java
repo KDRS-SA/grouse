@@ -1,9 +1,7 @@
 package no.kdrs.grouse.service.interfaces;
 
 
-import no.kdrs.grouse.model.Project;
-import no.kdrs.grouse.model.ProjectFunctionality;
-import no.kdrs.grouse.model.ProjectRequirement;
+import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,4 +43,10 @@ public interface IProjectService {
             ProjectFunctionality projectFunctionality);
 
     Project updateProjectFinalised(UUID projectId);
+
+    AccessControl shareProject(UUID projectId, String username);
+
+    Page<GrouseUser> getProjectUsers(UUID projectId, Pageable pageable);
+
+    void deleteProjectShare(UUID projectId, String username);
 }

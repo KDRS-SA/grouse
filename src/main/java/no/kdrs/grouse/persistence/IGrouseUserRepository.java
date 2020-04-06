@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by tsodring 28/03/2018
  * <p>
@@ -15,4 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface IGrouseUserRepository
         extends PagingAndSortingRepository<GrouseUser, String> {
     Page<GrouseUser> findAll(Pageable pageable);
+
+    Page<GrouseUser> findByUsernameIn(List<String> listUsers,
+                                      Pageable pageable);
 }

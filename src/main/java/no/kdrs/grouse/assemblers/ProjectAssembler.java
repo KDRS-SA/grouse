@@ -8,8 +8,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static no.kdrs.grouse.utils.Constants.DOCUMENT;
-import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -42,6 +41,13 @@ public class ProjectAssembler
         linksProject.add(linkTo(methodOn(DocumentController.class)
                 .downloadProjectDocument(project.getProjectId()))
                 .withRel(DOCUMENT));
+        linksProject.add(linkTo(methodOn(ProjectController.class)
+                .shareProject(project.getProjectId(),
+                        "user_email_address"))
+                .withRel(SHARE));
+        linksProject.add(linkTo(methodOn(ProjectController.class)
+                .getProjectUsers(project.getProjectId(), null))
+                .withRel(ACCESS));
         return linksProject;
     }
 
@@ -64,7 +70,13 @@ public class ProjectAssembler
             project.add(linkTo(methodOn(DocumentController.class)
                     .downloadProjectDocument(project.getProjectId()))
                     .withRel(DOCUMENT));
-
+            project.add(linkTo(methodOn(ProjectController.class)
+                    .shareProject(project.getProjectId(),
+                            "{user email address}"))
+                    .withRel(SHARE));
+            project.add(linkTo(methodOn(ProjectController.class)
+                    .getProjectUsers(project.getProjectId(), null))
+                    .withRel(ACCESS));
         });
         return linksProjects;
     }

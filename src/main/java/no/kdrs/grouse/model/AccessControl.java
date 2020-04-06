@@ -1,12 +1,14 @@
 package no.kdrs.grouse.model;
 
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
@@ -41,32 +43,8 @@ public class AccessControl {
     @Column(name = GROUSE_USER)
     private String grouseUser;
 
-    /**
-     * The user identified by grouseUser can read the object with the id set
-     * in grouseObject
-     * Note: The code is added here, but the functionality is not implemented.
-     * It is expected this will be switched on later.
-     */
-    @Column(name = READ)
-    private Boolean read;
-
-    /**
-     * The user identified by grouseUser can update the object with the id set
-     * in grouseObject
-     * Note: The code is added here, but the functionality is not implemented.
-     * It is expected this will be switched on later.
-     */
-    @Column(name = UPDATE)
-    private Boolean update;
-
-    /**
-     * The user identified by grouseUser can delete the object with the id set
-     * in grouseObject
-     * Note: The code is added here, but the functionality is not implemented.
-     * It is expected this will be switched on later.
-     */
-    @Column(name = DELETE)
-    private Boolean delete;
+    @Column(name = OBJECT_TYPE)
+    private String objectType;
 
     /**
      * The date the entry was created
@@ -83,6 +61,11 @@ public class AccessControl {
     @Column(name = CHANGED_DATE)
     @DateTimeFormat(iso = DATE_TIME)
     private OffsetDateTime lastModifiedDate;
+
+    @CreatedBy
+    @NotNull
+    @Column(name = "ownedBy")
+    private String ownedBy;
 
     @Version
     @Column(name = VERSION)
@@ -112,29 +95,18 @@ public class AccessControl {
         this.grouseUser = grouseUser;
     }
 
-    public Boolean canRead() {
-        return read;
+    public String getObjectType() {
+        return objectType;
     }
 
-    public void setRead(Boolean read) {
-        this.read = read;
+    public void setObjectType(String objectType) {
+        this.objectType = objectType;
     }
 
-    public Boolean canUpdate() {
-        return update;
+    public String getOwnedBy() {
+        return ownedBy;
     }
 
-    public void setUpdate(Boolean update) {
-        this.update = update;
-    }
-
-    public Boolean canDelete() {
-        return delete;
-    }
-
-    public void setDelete(Boolean delete) {
-        this.delete = delete;
-    }
 
     public OffsetDateTime getCreatedDate() {
         return createdDate;
@@ -154,9 +126,6 @@ public class AccessControl {
                 "aclId=" + aclId +
                 ", grouseObject=" + grouseObject +
                 ", grouseUser='" + grouseUser + '\'' +
-                ", read=" + read +
-                ", update=" + update +
-                ", delete=" + delete +
                 ", createdDate=" + createdDate +
                 ", lastModifiedDate=" + lastModifiedDate +
                 ", version=" + version +
@@ -189,9 +158,6 @@ public class AccessControl {
             accessControl.setGrouseObject(grouseObject);
             accessControl.setGrouseUser(grouseUser);
             accessControl.setAclId(randomUUID());
-            accessControl.setDelete(true);
-            accessControl.setRead(true);
-            accessControl.setUpdate(true);
             return accessControl;
         }
     }

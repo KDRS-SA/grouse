@@ -17,6 +17,8 @@ public final class Constants {
     public static final String SELF = "self";
     public static final String USER = "user";
     public static final String DOCUMENT = "document";
+    public static final String SHARE = "share";
+    public static final String ACCESS = "access";
     public static final String PROJECT = "project";
     public static final String TEMPLATE = "template";
     public static final String REQUIREMENT = "requirement";
@@ -93,6 +95,7 @@ public final class Constants {
     public static final String AUTHORITY = "authority";
     public static final String GROUSE_USER = "grouse_user";
     public static final String GROUSE_OBJECT = "grouse_object";
+    public static final String OBJECT_TYPE = "object_type";
     public static final String READ = "can_read";
     public static final String UPDATE = "can_update";
     public static final String DELETE = "can_delete";
@@ -154,6 +157,8 @@ public final class Constants {
             "ETAG value is missing! Patch request requires an ETAG!";
     public static final String ETAG_VALUE_LESS_0 =
             "ETAG value is < 0! ETAG values start at 0!";
+    public static final String NO_ACCESS_OBJECT =
+            "Attempt to access an object without permission.";
     public static final String NO_ACCESS_OTHER_USER =
             "Attempt to access a user without permission. Admin role is " +
                     "required to see other users";

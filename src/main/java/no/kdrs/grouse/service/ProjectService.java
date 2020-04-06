@@ -1,6 +1,9 @@
 package no.kdrs.grouse.service;
 
+import no.kdrs.grouse.listeners.GrouseCreationEvent;
+import no.kdrs.grouse.listeners.GrouseEvent;
 import no.kdrs.grouse.model.*;
+import no.kdrs.grouse.persistence.IGrouseUserRepository;
 import no.kdrs.grouse.persistence.IProjectFunctionalityRepository;
 import no.kdrs.grouse.persistence.IProjectRepository;
 import no.kdrs.grouse.persistence.IProjectRequirementRepository;
@@ -8,6 +11,7 @@ import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
+import static no.kdrs.grouse.utils.Constants.PROJECT;
 
 /**
  * Created by tsodring on 9/25/17.
@@ -36,10 +41,12 @@ public class ProjectService
     private EntityManager entityManager;
     private IProjectRequirementService projectRequirementService;
     private IProjectRepository projectRepository;
+    private IGrouseUserRepository userRepository;
+    private ACLService aclService;
     private IProjectRequirementRepository projectRequirementRepository;
     private IProjectFunctionalityRepository projectFunctionalityRepository;
     private ITemplateService templateService;
-
+    private ApplicationEventPublisher applicationEventPublisher;
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
             new ArrayList<>(Arrays.asList("projectName",
@@ -49,15 +56,21 @@ public class ProjectService
             EntityManager entityManager,
             IProjectRequirementService projectRequirementService,
             IProjectRepository projectRepository,
+            IGrouseUserRepository userRepository,
+            ACLService aclService,
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository,
-            ITemplateService templateService) {
+            ITemplateService templateService,
+            ApplicationEventPublisher applicationEventPublisher) {
         this.entityManager = entityManager;
         this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+        this.aclService = aclService;
         this.projectRequirementRepository = projectRequirementRepository;
         this.projectFunctionalityRepository = projectFunctionalityRepository;
         this.templateService = templateService;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -94,7 +107,8 @@ public class ProjectService
 
     @Override
     public Page<Project> findAll(Pageable page) {
-        return projectRepository.findAll(page);
+        List<UUID> projecIdList = aclService.getListUUIDs(getUser(), PROJECT);
+        return projectRepository.findByProjectIdIn(projecIdList, page);
     }
 
     @Override
@@ -129,7 +143,9 @@ public class ProjectService
         project.setProjectId(randomUUID());
         project.setOwnedBy(getUser());
         project.setFileName(project.getProjectName());
-        return projectRepository.save(project);
+        project = projectRepository.save(project);
+        applicationEventPublisher.publishEvent(new GrouseEvent(this, project));
+        return project;
     }
 
     /**
@@ -169,6 +185,7 @@ public class ProjectService
                     templateFunctionality
                             .getReferenceChildTemplateFunctionality());
         }
+        applicationEventPublisher.publishEvent(new GrouseCreationEvent(this, project));
         return project;
     }
 
@@ -236,6 +253,8 @@ public class ProjectService
     @Override
     public Project update(UUID projectId, PatchObjects patchObjects)
             throws EntityNotFoundException {
+        Project project = getProjectOrThrow(projectId);
+        checkAccess(project.getProjectId());
         return (Project) handlePatch(getProjectOrThrow(projectId),
                 patchObjects);
     }
@@ -260,6 +279,7 @@ public class ProjectService
     @Override
     public void delete(UUID projectId) {
         Project project = getProjectOrThrow(projectId);
+        checkOwner(project.getOwnedBy(), PROJECT);
         deleteFunctionalities(project.getReferenceProjectFunctionality());
         projectRepository.delete(project);
     }
@@ -295,6 +315,32 @@ public class ProjectService
     @Override
     protected boolean checkColumnUpdatable(String path) {
         return allowableColumns.contains(path);
+    }
+
+    @Override
+    public AccessControl shareProject(UUID projectId, String username) {
+
+        Project project = getProjectOrThrow(projectId);
+        checkOwner(project.getOwnedBy(), PROJECT);
+        AccessControl accessControl = new AccessControl();
+        accessControl.setAclId(randomUUID());
+        accessControl.setObjectType(PROJECT);
+        accessControl.setGrouseObject(project.getProjectId());
+        accessControl.setGrouseUser(username);
+        return aclService.createACLEntry(project.getProjectId(), accessControl);
+    }
+
+    @Override
+    public void deleteProjectShare(UUID projectId, String username) {
+        Project project = getProjectOrThrow(projectId);
+        checkOwner(project.getOwnedBy(), PROJECT);
+        aclService.deleteACLEntry(project.getProjectId(), username);
+    }
+
+    @Override
+    public Page<GrouseUser> getProjectUsers(UUID projectId, Pageable pageable) {
+        List<String> userList = aclService.getListUsers(projectId);
+        return userRepository.findByUsernameIn(userList, pageable);
     }
 
     /**

@@ -24,9 +24,6 @@ public class LinksAccessControl
     private UUID aclId;
     private UUID grouseObject;
     private String grouseUser;
-    private Boolean read;
-    private Boolean update;
-    private Boolean delete;
     private OffsetDateTime createdDate;
     private OffsetDateTime lastModifiedDate;
     private Long version;
@@ -35,9 +32,6 @@ public class LinksAccessControl
         this.aclId = accessControl.getAclId();
         this.grouseObject = accessControl.getGrouseObject();
         this.grouseUser = accessControl.getGrouseUser();
-        this.read = accessControl.canRead();
-        this.update = accessControl.canUpdate();
-        this.delete = accessControl.canDelete();
         this.createdDate = accessControl.getCreatedDate();
         this.lastModifiedDate = accessControl.getLastModifiedDate();
         this.version = accessControl.getVersion();
@@ -65,30 +59,6 @@ public class LinksAccessControl
 
     public void setGrouseUser(String grouseUser) {
         this.grouseUser = grouseUser;
-    }
-
-    public Boolean getRead() {
-        return read;
-    }
-
-    public void setRead(Boolean read) {
-        this.read = read;
-    }
-
-    public Boolean getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(Boolean update) {
-        this.update = update;
-    }
-
-    public Boolean getDelete() {
-        return delete;
-    }
-
-    public void setDelete(Boolean delete) {
-        this.delete = delete;
     }
 
     public OffsetDateTime getCreatedDate() {

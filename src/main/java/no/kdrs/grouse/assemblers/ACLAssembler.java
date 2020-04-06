@@ -25,9 +25,6 @@ public class ACLAssembler
         linksAccessControl.setAclId(accessControl.getAclId());
         linksAccessControl.setGrouseObject(accessControl.getGrouseObject());
         linksAccessControl.setGrouseUser(accessControl.getGrouseUser());
-        linksAccessControl.setRead(accessControl.canRead());
-        linksAccessControl.setUpdate(accessControl.canUpdate());
-        linksAccessControl.setDelete(accessControl.canDelete());
         linksAccessControl.setCreatedDate(accessControl.getCreatedDate());
         linksAccessControl.setLastModifiedDate(
                 accessControl.getLastModifiedDate());
