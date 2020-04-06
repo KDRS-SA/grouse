@@ -27,7 +27,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
-import {DeleteRequirmentDialog, kravEditComponent} from './KravEdit/kravEdit.component';
+import {DeleteRequirmentDialog, kravEditComponent, ShareMenu} from './KravEdit/kravEdit.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
 import {DeleteUserDialog, PasswordChangeConfirmedDialog, userEditComponent} from './UserEdit/userEdit.component';
@@ -51,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteRequirmentDialog,
     DeleteProjectDialog,
     PasswordChangeConfirmedDialog,
-    DeleteUserDialog
+    DeleteUserDialog,
+    ShareMenu
   ],
     imports: [
         BrowserModule,
@@ -98,7 +99,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteRequirmentDialog,
     DeleteProjectDialog,
     PasswordChangeConfirmedDialog,
-    DeleteUserDialog
+    DeleteUserDialog,
+    ShareMenu
   ],
   entryComponents: [
     NewProjectDialog,
@@ -106,7 +108,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteRequirmentDialog,
     DeleteProjectDialog,
     PasswordChangeConfirmedDialog,
-    DeleteUserDialog
+    DeleteUserDialog,
+    ShareMenu
   ]
 })
 export class AppModule { }

@@ -15,6 +15,8 @@ export class Links {
   requirement: Link;
   ['create-user']: Link;
   konto: Link;
+  share: Link;
+  access: Link;
 
   constructor() {
   }

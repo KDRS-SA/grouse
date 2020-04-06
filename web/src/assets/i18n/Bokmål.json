@@ -103,7 +103,8 @@
     "Next-req": "Neste krav",
     "Document": "Dokument",
     "NotReady": "Documentet er ikke klar til nedlasting før alle punkter er godkjent",
-    "GeneratingDoc": "Dokumentet genereres venligst vent"
+    "GeneratingDoc": "Dokumentet genereres venligst vent",
+    "ShareProjectTooltip" : "Del dette prosjektet med andre brukere"
   },
   "ErrorsAndWarns": {
     "Wrong-Password" : "Feil e-post eller passord!",

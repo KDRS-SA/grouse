@@ -22,7 +22,7 @@
       the animation happens in this div-->
         <div class="login" [@toggleSlide]="login ? 'login' : 'register'">
           <!--Login Div, contains the text-fields and buttons that are used to sign in-->
-          <form  class="flex-column"[formGroup]="loginForm" (ngSubmit)="loginSubmit()" novalidate>
+          <form  class="flex-column" [formGroup]="loginForm" (ngSubmit)="loginSubmit()" novalidate>
             <mat-card-content class="flex-center flex-column">
               <div style="width: 80%">
                 <mat-form-field style="width: 100%" appearance="legacy">

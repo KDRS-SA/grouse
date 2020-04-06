@@ -1,18 +1,16 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserData} from '../models/UserData.model';
-// @ts-ignore
-import {convertFromLegacy, REL_FUNCTIONALITY, REL_PROJECT} from '../common';
 import {projectFunctionality} from '../models/projectFunctionality.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {statusPageData} from '../models/statusPageData.model';
 import {TranslateService} from '@ngx-translate/core';
-import {isIterable} from 'rxjs/internal-compatibility';
 import {ProjectRequirment} from '../models/ProjectRequirment.model';
-import {error} from 'util';
+import {User} from '../models/User';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -70,6 +68,7 @@ export class kravEditComponent implements OnInit {
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
     this.projectLink = this.userData.currentProject._links.function.href;
+    console.log(this.userData.currentProject._links.function.href);
     this.fetchMainData();
     this.treeControl = new NestedTreeControl<Requirment>(
       node => node.children
@@ -92,6 +91,7 @@ export class kravEditComponent implements OnInit {
         }
       )
     }).subscribe(result => {
+      console.log(result);
       const newlyLoaded = (this.mainData === undefined);
       // @ts-ignore
       this.mainData = result._embedded.projectFunctionalities;
@@ -741,6 +741,13 @@ export class kravEditComponent implements OnInit {
     this.statpageData.loaded = true;
   }
 
+  openShareMenu() {
+    this.dialog.open(ShareMenu, {
+      data: this.userData,
+      width: '500px'
+    });
+  }
+
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
 }
 
@@ -761,6 +768,81 @@ const TREE_DATA: Requirment[] = [];
 export class DeleteRequirmentDialog {
   constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
     this.data = true;
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'ShareMenu.Dialog',
+  templateUrl: '../Modals/ShareMenu.Dialog.html',
+  styleUrls: [
+    './kravEdit.component.css',
+    '../common.css'
+  ]
+})
+// tslint:disable-next-line:component-class-suffix
+export class ShareMenu {
+  private http: HttpClient;
+  private userData: UserData;
+  private shares: User[];
+  private formgroup: FormGroup;
+  private newShare: string;
+
+  constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: UserData, http: HttpClient, private formBuilder: FormBuilder) {
+    this.userData = data;
+    this.http = http;
+    this.shares = [];
+    this.getActiveShares();
+
+    this.formgroup = formBuilder.group({
+      email: [this.newShare, [
+        Validators.required,
+        Validators.email
+      ]],
+    });
+  }
+
+  getActiveShares() {
+    this.http.get(this.userData.currentProject._links.access.href, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      // @ts-ignore
+      this.shares = result._embedded.users;
+      console.log(result);
+      // tslint:disable-next-line:no-shadowed-variable
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  addShare() {
+    this.http.post(this.userData.currentProject._links.share.href.replace('user_email_address', this.newShare), {}, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      this.getActiveShares();
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  revokeShare(user: string) {
+    this.http.delete(this.userData.currentProject._links.share.href.replace('user_email_address', user), {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      this.getActiveShares();
+    }, error => {
+      console.error(error);
+    });
   }
 
   onNoClick() {

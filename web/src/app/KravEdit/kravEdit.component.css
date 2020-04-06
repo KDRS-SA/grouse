@@ -151,3 +151,23 @@
 ::ng-deep.mat-card-header-text{
   margin: 0 !important;
 }
+
+.share-menu-list-box{
+  height: 250px;
+  box-shadow: 2px 2px 5px lightgrey;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow-y: scroll;
+}
+
+.you-marker{
+  height: 30px;
+  width: 100px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px lightgrey;
+}
