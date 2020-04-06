@@ -12,6 +12,7 @@ import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -44,6 +45,7 @@ public class ProjectController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<PagedModel<LinksProject>>
     getProjects(Pageable pageable) {
         return commonController.addPagedProjectLinks(projectService
