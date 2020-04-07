@@ -121,6 +121,12 @@ public class ProjectService
     }
 
     @Override
+    public Page<Project> findAllForUser(String username, Pageable page) {
+        List<UUID> projectIdList = aclService.getListUUIDs(username, PROJECT);
+        return projectRepository.findByProjectIdIn(projectIdList, page);
+    }
+
+    @Override
     public Project findById(@NotNull UUID projectId) {
         Project project = getProjectOrThrow(projectId);
         checkAccess(projectId);
@@ -236,16 +242,17 @@ public class ProjectService
             projectFunctionality =
                     projectFunctionalityRepository.save(projectFunctionality);
             // copy requirements if present
-            processRequirements(projectFunctionality, templateFunctionality
-                    .getReferenceTemplateRequirement());
+            processRequirements(project, projectFunctionality,
+                    templateFunctionality.getReferenceTemplateRequirement());
             // Only the top functionality should have a reference to the project
-            processFunctionalities(null, projectFunctionality,
+            processFunctionalities(project, projectFunctionality,
                     templateFunctionality
                             .getReferenceChildTemplateFunctionality());
         }
     }
 
     private void processRequirements(
+            Project project,
             ProjectFunctionality projectFunctionality,
             List<TemplateRequirement> templateRequirements) {
 
@@ -257,6 +264,7 @@ public class ProjectService
             projectRequirement.setRequirementText(
                     templateRequirement.getRequirementText());
             projectRequirement.setReferenceFunctionality(projectFunctionality);
+            projectRequirement.setReferenceProject(project);
             projectRequirementRepository.save(projectRequirement);
         }
     }

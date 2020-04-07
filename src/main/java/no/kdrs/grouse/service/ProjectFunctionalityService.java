@@ -125,7 +125,9 @@ public class ProjectFunctionalityService
                 projectFunctionalityRepository.findById(id)
                         .orElseThrow(() ->
                                 new EntityNotFoundException(
-                                        "No ProjectRequirement exists with Id " + id));
+                                        "No ProjectRequirement exists with Id "
+                                                + id));
+        checkAccess(projectFunctionality.getReferenceProject().getProjectId());
         return projectFunctionality;
     }
 }

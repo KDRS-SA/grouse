@@ -29,7 +29,7 @@ public class ACLController {
 
     @GetMapping(value = SLASH + ACCESS_CONTROL_PARAMETER)
     public ResponseEntity<LinksAccessControl>
-    getACLEntry(@PathVariable(OBJECT_ID) UUID objectId) {
+    getACLEntry(@PathVariable(ACCESS_CONTROL) UUID objectId) {
         return commonController.addACLLinks(
                 aclService.getACLEntry(objectId), OK);
     }

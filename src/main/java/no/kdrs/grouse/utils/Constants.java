@@ -17,12 +17,14 @@ public final class Constants {
     public static final String SELF = "self";
     public static final String USER = "user";
     public static final String DOCUMENT = "document";
+    public static final String USER_EMAIL_ADDRESS = "user_email_address";
     public static final String SHARE = "share";
     public static final String ACCESS = "access";
     public static final String PROJECT = "project";
     public static final String TEMPLATE = "template";
     public static final String REQUIREMENT = "requirement";
     public static final String REL_PROJECT_LIST = "project-list";
+    public static final String REL_PROJECT_USER_LIST = "project-user-list";
     public static final String REL_TEMPLATE_LIST = "template-list";
     public static final String REL_PROJECT_LIST_ALL = "project-list-all";
     public static final String REL_TEMPLATE_LIST_ALL = "template-list-all";

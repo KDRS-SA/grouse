@@ -19,6 +19,8 @@ public interface IProjectService {
 
     Page<Project> findAllForUser(Pageable page);
 
+    Page<Project> findAllForUser(String username, Pageable page);
+
     Project findById(UUID projectId);
 
     Project createProject(Project project);

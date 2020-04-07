@@ -120,6 +120,7 @@ public class ProjectRequirementService
                 .orElseThrow(() ->
                         new EntityNotFoundException(
                                 "No Project exists with Id " + id));
+        checkAccess(projectRequirement.getReferenceProject().getProjectId());
         return projectRequirement;
     }
 }

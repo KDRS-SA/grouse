@@ -81,7 +81,6 @@ public class ProjectRequirementController {
                 .body(projectRequirement);
     }
 
-
     @DeleteMapping(value = SLASH + REQUIREMENT_PARAMETER)
     public ResponseEntity<String>
     deleteProjectRequirement(

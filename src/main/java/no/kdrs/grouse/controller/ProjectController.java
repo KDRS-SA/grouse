@@ -9,6 +9,7 @@ import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.exception.BadRequestException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
@@ -116,6 +117,10 @@ public class ProjectController {
     public ResponseEntity<LinksAccessControl> shareProject(
             @PathVariable(PROJECT_NUMBER) UUID projectId,
             @PathVariable(USER) String username) {
+        if (USER_EMAIL_ADDRESS.equalsIgnoreCase(username)) {
+            throw new BadRequestException("Cannot reuse user_email_address " +
+                    "template");
+        }
         return commonController.addACLLinks(projectService
                 .shareProject(projectId, username), OK);
     }

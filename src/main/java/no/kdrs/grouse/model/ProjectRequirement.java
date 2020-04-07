@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
+import static javax.persistence.FetchType.LAZY;
 import static no.kdrs.grouse.utils.Constants.*;
 
 /**
@@ -100,10 +101,14 @@ public class ProjectRequirement
     private String ownedBy;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "functionality",
             referencedColumnName = "id")
     private ProjectFunctionality referenceFunctionality;
+
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
+    private Project referenceProject;
 
     public Long getRequirementId() {
         return requirementId;
@@ -187,6 +192,14 @@ public class ProjectRequirement
 
     public void setReferenceFunctionality(ProjectFunctionality referenceFunctionality) {
         this.referenceFunctionality = referenceFunctionality;
+    }
+
+    public Project getReferenceProject() {
+        return referenceProject;
+    }
+
+    public void setReferenceProject(Project referenceProject) {
+        this.referenceProject = referenceProject;
     }
 
     @Override
