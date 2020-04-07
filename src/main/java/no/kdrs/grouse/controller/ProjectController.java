@@ -9,9 +9,11 @@ import no.kdrs.grouse.model.links.LinksUser;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.exception.BadRequestException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -43,11 +45,19 @@ public class ProjectController {
                 .findById(projectId), OK);
     }
 
-    @GetMapping
+    @GetMapping(value = SLASH + REL_PROJECT_LIST_ALL)
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<PagedModel<LinksProject>>
     getProjects(Pageable pageable) {
         return commonController.addPagedProjectLinks(projectService
                 .findAll(pageable), OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<PagedModel<LinksProject>>
+    getProjectsForUser(Pageable pageable) {
+        return commonController.addPagedProjectLinks(projectService
+                .findAllForUser(pageable), OK);
     }
 
     @GetMapping(value = SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
@@ -107,6 +117,10 @@ public class ProjectController {
     public ResponseEntity<LinksAccessControl> shareProject(
             @PathVariable(PROJECT_NUMBER) UUID projectId,
             @PathVariable(USER) String username) {
+        if (USER_EMAIL_ADDRESS.equalsIgnoreCase(username)) {
+            throw new BadRequestException("Cannot reuse user_email_address " +
+                    "template");
+        }
         return commonController.addACLLinks(projectService
                 .shareProject(projectId, username), OK);
     }

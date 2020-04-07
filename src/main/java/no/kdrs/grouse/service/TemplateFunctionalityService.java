@@ -128,14 +128,8 @@ public class TemplateFunctionalityService
                 templateFunctionalityRepository.findById(id)
                         .orElseThrow(() ->
                                 new EntityNotFoundException(
-                                        "No TemplateRequirement exists with Id " + id));
-
-        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
-                .getName();
-        if (!templateFunctionality.getOwnedBy().equals(loggedInUser)) {
-            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang" +
-                    " til dette prosjekt funksjonalitet!");
-        }
+                                        "No TemplateRequirement exists with Id "
+                                                + id));
         return templateFunctionality;
     }
 }

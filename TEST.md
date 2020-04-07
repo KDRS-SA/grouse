@@ -1168,3 +1168,341 @@ This returns the following:
         }
       }
     }
+
+
+## Admin has access to all projects
+
+When a user logs in as admin, they see an additional rel/href that a normal user does not see. 
+
+    curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=admin@example.com -d password=password 
+
+the access token is *"dd9d29fa-08e1-4d7d-bf8a-13ced5c985ec"*.
+
+    curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=password 
+
+the access token is *"0d2f9949-1e27-4a61-b9a7-3917903b7e2e"*.
+
+First take a look at what admin can see:
+
+    curl -v -X GET http://localhost:9294/grouse/ -H 'Authorization: Bearer dd9d29fa-08e1-4d7d-bf8a-13ced5c985ec' 
+    
+Make a note of the project-list-all rel/href:
+
+    {
+      "_links": {
+        "login OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/token?parameters={parameters}",
+          "templated": true
+        },
+        "create-user": {
+          "href": "http://localhost:9294/grouse/user"
+        },
+        "konto": {
+          "href": "http://localhost:9294/grouse/user/admin@example.com"
+        },
+        "project-list": {
+          "href": "http://localhost:9294/grouse/project"
+        },
+        "template-list": {
+          "href": "http://localhost:9294/grouse/template"
+        },
+        "logout OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/revoke-token"
+        },
+        "project-list-all": {
+          "href": "http://localhost:9294/grouse/project/project-list-all"
+        },
+        "template-list-all": {
+          "href": "http://localhost:9294/grouse/template"
+        }
+      }
+    }
+    
+Next take a look at what admin can see:
+
+    curl -v -X GET http://localhost:9294/grouse/ -H 'Authorization: Bearer 0d2f9949-1e27-4a61-b9a7-3917903b7e2e' 
+
+
+There is no "project-list-all" rel:
+
+    {
+      "_links": {
+        "login OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/token?parameters={parameters}",
+          "templated": true
+        },
+        "create-user": {
+          "href": "http://localhost:9294/grouse/user"
+        },
+        "konto": {
+          "href": "http://localhost:9294/grouse/user/user@example.com"
+        },
+        "project-list": {
+          "href": "http://localhost:9294/grouse/project"
+        },
+        "template-list": {
+          "href": "http://localhost:9294/grouse/template"
+        },
+        "logout OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/revoke-token"
+        }
+      }
+    }
+
+Next, take a look at all the projects that admin can see:
+
+    curl -v -X GET http://localhost:9294/grouse/project/project-list-all -H 'Authorization: Bearer dd9d29fa-08e1-4d7d-bf8a-13ced5c985ec'
+    
+Here you can see that admin can see a project belonging to user@example.com
+    
+    {
+      "_embedded": {
+        "projects": [
+          {
+            "projectId": "2869bdd7-1356-409a-8d38-148612d08314",
+            "projectName": "Requirements project",
+            "createdDate": "2020-04-07T08:47:11+02:00",
+            "lastModifiedDate": "2020-04-07T08:47:11+02:00",
+            "ownedBy": "user@example.com",
+            "projectComplete": false,
+            "documentCreated": false,
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314"
+              },
+              "function": {
+                "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/function"
+              },
+              "document": {
+                "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/document"
+              },
+              "share": {
+                "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/share/user_email_address"
+              },
+              "access": {
+                "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/access"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/project-list-all?page=0&size=10"
+        }
+      },
+      "page": {
+        "size": 10,
+        "totalElements": 1,
+        "totalPages": 1,
+        "number": 0
+      }
+    }
+The admin can also access the above project:    
+    
+       curl -v -X GET http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314 -H 'Authorization: Bearer dd9d29fa-08e1-4d7d-bf8a-13ced5c985ec'
+       
+The result is as follows:       
+       
+       {
+         "projectId": "2869bdd7-1356-409a-8d38-148612d08314",
+         "projectName": "Requirements project",
+         "createdDate": "2020-04-07T08:47:11+02:00",
+         "lastModifiedDate": "2020-04-07T08:47:11+02:00",
+         "ownedBy": "user@example.com",
+         "projectComplete": false,
+         "documentCreated": false,
+         "_links": {
+           "self": {
+             "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314"
+           },
+           "function": {
+             "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/function"
+           },
+           "document": {
+             "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/document"
+           },
+           "share": {
+             "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/share/user_email_address"
+           },
+           "access": {
+             "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/access"
+           }
+         }
+       }
+       
+The admin can also change values:
+
+    curl -v -X PATCH http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/ -H 'ETAG: ""0""' -H 'Content-type: application/json' -H 'Authorization: Bearer dd9d29fa-08e1-4d7d-bf8a-13ced5c985ec' --data '[{ "op": "replace", "path": "/projectName", "value": "Updated name."}]' 
+
+The admin can not share a project. Only the owner can share the project. 
+
+       curl -v -X POST http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/share/user2@example.com -H 'Authorization: Bearer dd9d29fa-08e1-4d7d-bf8a-13ced5c985ec'
+       
+       
+## Testing ETAGs
+
+user@example.com logs in to Grouse:
+
+    curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=password 
+
+the access token is *"4ec75da8-2653-4605-bf2c-3561a7d91d4e"*.
+
+user@example.com logs in to Grouse:
+
+    curl -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user1@example.com -d password=password 
+
+the access token is *"9536be09-7851-40fc-879f-6333256071a5"*.
+
+
+user@example.com shares project 2869bdd7-1356-409a-8d38-148612d08314 with user1@example.com.
+
+       curl -v -X POST http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/share/user1@example.com -H 'Authorization: Bearer 4ec75da8-2653-4605-bf2c-3561a7d91d4e'
+
+This results in the following:
+
+    {
+      "aclId": "7a276c52-279b-43ff-8db0-f61344f8c66d",
+      "grouseObject": "2869bdd7-1356-409a-8d38-148612d08314",
+      "grouseUser": "user1@example.com",
+      "createdDate": "2020-04-07T11:18:30+02:00",
+      "lastModifiedDate": "2020-04-07T11:18:30+02:00",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/accessControl/{accessControl}",
+          "templated": true
+        }
+      }
+    }
+
+Check that user1@example.com has access to the project:
+
+       curl -v -X GET http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314 -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5'
+
+This shows that user1@example.com has access.
+
+    {
+      "projectId": "2869bdd7-1356-409a-8d38-148612d08314",
+      "projectName": "Updated name.",
+      "createdDate": "2020-04-07T08:47:11+02:00",
+      "lastModifiedDate": "2020-04-07T08:53:04+02:00",
+      "ownedBy": "user@example.com",
+      "projectComplete": false,
+      "documentCreated": false,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/function"
+        },
+        "document": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/document"
+        },
+        "share": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/share/user_email_address"
+        },
+        "access": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/access"
+        }
+      }
+    }
+
+Make a note of the ETAG from curl request:
+
+    ETAG: ""0""
+    
+    
+user@example.com changes the project name:
+
+     curl -v -X PATCH http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314 -H 'ETAG: ""0""' -H 'Content-type: application/json' -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5' --data '[{ "op": "replace", "path": "/projectName", "value": "Updated project name 2"}]'
+
+This produces the following output:
+
+    {
+      "projectId": "2869bdd7-1356-409a-8d38-148612d08314",
+      "projectName": "Updated project name 2",
+      "createdDate": "2020-04-07T08:47:11+02:00",
+      "lastModifiedDate": "2020-04-07T11:27:24+02:00",
+      "ownedBy": "user@example.com",
+      "projectComplete": false,
+      "documentCreated": false,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/function"
+        },
+        "document": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/document"
+        },
+        "share": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/share/user_email_address"
+        },
+        "access": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/access"
+        }
+      }
+    }
+
+     
+user@example.com changes the project name:
+
+     curl -v -X PATCH http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314 -H 'ETAG: ""0""' -H 'Content-type: application/json' -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5' --data '[{ "op": "replace", "path": "/projectName", "value": "Updated project name 2"}]'
+     
+Make a note of the ETAG from curl request:
+
+    ETAG: ""1""
+     
+     
+Next user1@example.com changes the project name, but uses the original ETAG value ""0"":
+
+     curl -v -X PATCH http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314 -H 'ETAG: ""0""' -H 'Content-type: application/json' -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5' --data '[{ "op": "replace", "path": "/projectName", "value": "Updated project name 3"}]'
+
+This results in the following 409 response
+     
+     {
+       "status": 409,
+       "message": "Concurrency Exception. Old version [1], new version [0]",
+       "developerMessage": "no.kdrs.grouse.utils.exception.ConcurrencyException: Concurrency Exception. Old version [1], new version [0]",
+       "stackTrace": "no.kdrs.grouse.utils.exception.ConcurrencyException: Concurrency Exception. Old version [1], new version [0]",
+       "request": "/grouse/project/2869bdd7-1356-409a-8d38-148612d08314"
+     }
+     
+So now the client knows that they were working on *stale* information and should inform the user
+that the data had been changed. user1@example.com should pull down an updated copy of project and make
+a note of the ETAG header and attempt to update:
+
+
+     curl -v -X PATCH http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314 -H 'ETAG: ""1""' -H 'Content-type: application/json' -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5' --data '[{ "op": "replace", "path": "/projectName", "value": "Updated project name 3"}]'
+
+
+This results in the following payload:
+
+    {
+      "projectId": "2869bdd7-1356-409a-8d38-148612d08314",
+      "projectName": "Updated project name 3",
+      "createdDate": "2020-04-07T08:47:11+02:00",
+      "lastModifiedDate": "2020-04-07T12:25:17.977307+02:00",
+      "ownedBy": "user@example.com",
+      "projectComplete": false,
+      "documentCreated": false,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/function"
+        },
+        "document": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/document"
+        },
+        "share": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/share/user_email_address"
+        },
+        "access": {
+          "href": "http://localhost:9294/grouse/project/2869bdd7-1356-409a-8d38-148612d08314/access"
+        }
+      }
+    }

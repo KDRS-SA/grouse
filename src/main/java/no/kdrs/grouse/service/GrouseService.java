@@ -2,7 +2,9 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.RoleValidator;
 import no.kdrs.grouse.utils.exception.BadRequestException;
+import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import no.kdrs.grouse.utils.exception.InternalException;
 import no.kdrs.grouse.utils.exception.PatchMisconfigurationException;
 import org.slf4j.Logger;
@@ -30,7 +32,11 @@ public class GrouseService {
     ACLService aclService;
 
     @Autowired
+    RoleValidator roleValidator;
+
+    @Autowired
     private PasswordEncoder encoder;
+
 
     private static final Logger logger =
             LoggerFactory.getLogger(GrouseService.class);
@@ -70,6 +76,9 @@ public class GrouseService {
                     Method setMethod =
                             object.getClass().getMethod(setMethodName,
                                     getMethod.getReturnType());
+                    Method versionMethod =
+                            object.getClass().getMethod("setVersion",
+                                    Long.class);
                     // If the variable (path) you are trying to update is a
                     // password then you have to encode the new password
                     if (PASSWORD.equalsIgnoreCase(path)) {
@@ -78,10 +87,17 @@ public class GrouseService {
                                         .toString()));
                     } else {
                         setMethod.invoke(object, patchObject.getValue());
+                        versionMethod.invoke(object, getETag());
                     }
                 } catch (SecurityException | NoSuchMethodException |
                         IllegalArgumentException | IllegalAccessException |
                         InvocationTargetException e) {
+                    // Avoid concurrency exception from being swallowed as an
+                    // InvocationTargetException
+                    if (e.getCause() instanceof ConcurrencyException) {
+                        throw (ConcurrencyException) e.getCause();
+                    }
+
                     String error = "Cannot find internal method from Patch : " +
                             patchObject.toString() + " : " + e.getMessage();
                     logger.error(error);
@@ -103,8 +119,12 @@ public class GrouseService {
     }
 
     protected Long getETag() {
-        return parseETAG(((ServletRequestAttributes) RequestContextHolder.
-                getRequestAttributes()).getRequest().getHeader(ETAG));
+        String etagValue = ((ServletRequestAttributes) RequestContextHolder.
+                getRequestAttributes()).getRequest().getHeader(ETAG);
+        if (etagValue == null) {
+            throw new BadRequestException("ETAG missing in PATCH request");
+        }
+        return parseETAG(etagValue);
     }
 
     /**
@@ -119,7 +139,7 @@ public class GrouseService {
         if (quotedETAG != null) {
             try {
                 etagVal = Long.parseLong(
-                        quotedETAG.replaceAll("^\"|\"$", ""));
+                        quotedETAG.replaceAll("\"", ""));
             } catch (NumberFormatException nfe) {
                 throw new PatchMisconfigurationException(ETAG_NAN);
             }
@@ -140,6 +160,9 @@ public class GrouseService {
     }
 
     public void checkOwner(String ownedBy, String objectType) {
+        if (roleValidator.isAdmin()) {
+            return;
+        }
         if (!getUser().equals(ownedBy)) {
             String error = NO_ACCESS_OBJECT + objectType;
             logger.error(error);
@@ -147,7 +170,15 @@ public class GrouseService {
         }
     }
 
+    /**
+     * A user with administrator role has access to any object
+     *
+     * @param objectId UUID of the object to check
+     */
     public void checkAccess(UUID objectId) {
+        if (roleValidator.isAdmin()) {
+            return;
+        }
         aclService.getAccessControlByObjectIdAndGrouseUserOrThrow(
                 objectId, getUser());
     }

@@ -121,17 +121,13 @@ public class ProjectFunctionalityService
      */
     private ProjectFunctionality getProjectFunctionalityOrThrow(@NotNull Long id)
             throws EntityNotFoundException, AccessDeniedException {
-        ProjectFunctionality projectFunctionality = projectFunctionalityRepository.findById(id)
-                .orElseThrow(() ->
-                        new EntityNotFoundException(
-                                "No ProjectRequirement exists with Id " + id));
-
-        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
-                .getName();
-        if (!projectFunctionality.getOwnedBy().equals(loggedInUser)) {
-            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang" +
-                    " til dette prosjekt funksjonalitet!");
-        }
+        ProjectFunctionality projectFunctionality =
+                projectFunctionalityRepository.findById(id)
+                        .orElseThrow(() ->
+                                new EntityNotFoundException(
+                                        "No ProjectRequirement exists with Id "
+                                                + id));
+        checkAccess(projectFunctionality.getReferenceProject().getProjectId());
         return projectFunctionality;
     }
 }

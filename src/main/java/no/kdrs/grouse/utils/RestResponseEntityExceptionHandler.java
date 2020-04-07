@@ -1,6 +1,7 @@
 package no.kdrs.grouse.utils;
 
 import no.kdrs.grouse.utils.exception.BadRequestException;
+import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -71,11 +72,20 @@ public class RestResponseEntityExceptionHandler
     @ExceptionHandler({DataIntegrityViolationException.class,
             BadRequestException.class, ConstraintViolationException.class})
     public ResponseEntity<Object> handleBadRequest(
-            final DataIntegrityViolationException ex,
+            final RuntimeException ex,
             final WebRequest request) {
         return handleExceptionInternal(ex,
                 message(BAD_REQUEST, ex, request), new HttpHeaders(),
                 BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(ConcurrencyException.class)
+    public ResponseEntity<Object> handleConcurrency(
+            final RuntimeException ex,
+            final WebRequest request) {
+        return handleExceptionInternal(ex,
+                message(CONFLICT, ex, request), new HttpHeaders(),
+                CONFLICT, request);
     }
 
     @ExceptionHandler(AccessDeniedException.class)

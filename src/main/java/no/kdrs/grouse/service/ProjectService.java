@@ -11,6 +11,7 @@ import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.RoleValidator;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +48,7 @@ public class ProjectService
     private IProjectFunctionalityRepository projectFunctionalityRepository;
     private ITemplateService templateService;
     private ApplicationEventPublisher applicationEventPublisher;
+    private RoleValidator roleValidator;
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
             new ArrayList<>(Arrays.asList("projectName",
@@ -61,7 +63,8 @@ public class ProjectService
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository,
             ITemplateService templateService,
-            ApplicationEventPublisher applicationEventPublisher) {
+            ApplicationEventPublisher applicationEventPublisher,
+            RoleValidator roleValidator) {
         this.entityManager = entityManager;
         this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
@@ -71,6 +74,7 @@ public class ProjectService
         this.projectFunctionalityRepository = projectFunctionalityRepository;
         this.templateService = templateService;
         this.applicationEventPublisher = applicationEventPublisher;
+        this.roleValidator = roleValidator;
     }
 
     @Override
@@ -107,13 +111,26 @@ public class ProjectService
 
     @Override
     public Page<Project> findAll(Pageable page) {
-        List<UUID> projecIdList = aclService.getListUUIDs(getUser(), PROJECT);
-        return projectRepository.findByProjectIdIn(projecIdList, page);
+        return projectRepository.findAll(page);
+    }
+
+    @Override
+    public Page<Project> findAllForUser(Pageable page) {
+        List<UUID> projectIdList = aclService.getListUUIDs(getUser(), PROJECT);
+        return projectRepository.findByProjectIdIn(projectIdList, page);
+    }
+
+    @Override
+    public Page<Project> findAllForUser(String username, Pageable page) {
+        List<UUID> projectIdList = aclService.getListUUIDs(username, PROJECT);
+        return projectRepository.findByProjectIdIn(projectIdList, page);
     }
 
     @Override
     public Project findById(@NotNull UUID projectId) {
-        return getProjectOrThrow(projectId);
+        Project project = getProjectOrThrow(projectId);
+        checkAccess(projectId);
+        return project;
     }
 
     @Override
@@ -225,16 +242,17 @@ public class ProjectService
             projectFunctionality =
                     projectFunctionalityRepository.save(projectFunctionality);
             // copy requirements if present
-            processRequirements(projectFunctionality, templateFunctionality
-                    .getReferenceTemplateRequirement());
+            processRequirements(project, projectFunctionality,
+                    templateFunctionality.getReferenceTemplateRequirement());
             // Only the top functionality should have a reference to the project
-            processFunctionalities(null, projectFunctionality,
+            processFunctionalities(project, projectFunctionality,
                     templateFunctionality
                             .getReferenceChildTemplateFunctionality());
         }
     }
 
     private void processRequirements(
+            Project project,
             ProjectFunctionality projectFunctionality,
             List<TemplateRequirement> templateRequirements) {
 
@@ -246,6 +264,7 @@ public class ProjectService
             projectRequirement.setRequirementText(
                     templateRequirement.getRequirementText());
             projectRequirement.setReferenceFunctionality(projectFunctionality);
+            projectRequirement.setReferenceProject(project);
             projectRequirementRepository.save(projectRequirement);
         }
     }

@@ -43,7 +43,7 @@ public class ProjectAssembler
                 .withRel(DOCUMENT));
         linksProject.add(linkTo(methodOn(ProjectController.class)
                 .shareProject(project.getProjectId(),
-                        "user_email_address"))
+                        USER_EMAIL_ADDRESS))
                 .withRel(SHARE));
         linksProject.add(linkTo(methodOn(ProjectController.class)
                 .getProjectUsers(project.getProjectId(), null))

@@ -2,6 +2,7 @@ package no.kdrs.grouse.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import java.io.Serializable;
 
+import static javax.persistence.FetchType.LAZY;
 import static no.kdrs.grouse.utils.Constants.*;
 
 /**
@@ -99,10 +101,14 @@ public class ProjectRequirement
     private String ownedBy;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "functionality",
             referencedColumnName = "id")
     private ProjectFunctionality referenceFunctionality;
+
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
+    private Project referenceProject;
 
     public Long getRequirementId() {
         return requirementId;
@@ -165,7 +171,11 @@ public class ProjectRequirement
     }
 
     public void setVersion(Long version) {
-        this.version = version;
+        if (!this.version.equals(version)) {
+            throw new ConcurrencyException(
+                    "Concurrency Exception. Old version [" + this.version +
+                            "], new version [" + version + "]");
+        }
     }
 
     public String getOwnedBy() {
@@ -182,6 +192,14 @@ public class ProjectRequirement
 
     public void setReferenceFunctionality(ProjectFunctionality referenceFunctionality) {
         this.referenceFunctionality = referenceFunctionality;
+    }
+
+    public Project getReferenceProject() {
+        return referenceProject;
+    }
+
+    public void setReferenceProject(Project referenceProject) {
+        this.referenceProject = referenceProject;
     }
 
     @Override
