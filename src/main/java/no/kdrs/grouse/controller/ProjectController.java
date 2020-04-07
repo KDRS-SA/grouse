@@ -52,7 +52,7 @@ public class ProjectController {
                 .findAll(pageable), OK);
     }
 
-    @GetMapping
+    @GetMapping(value = SLASH + REL_PROJECT_LIST_ALL)
     public ResponseEntity<PagedModel<LinksProject>>
     getProjectsForUser(Pageable pageable) {
         return commonController.addPagedProjectLinks(projectService

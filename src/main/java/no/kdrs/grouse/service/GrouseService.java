@@ -2,6 +2,7 @@ package no.kdrs.grouse.service;
 
 import no.kdrs.grouse.utils.PatchObject;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.RoleValidator;
 import no.kdrs.grouse.utils.exception.BadRequestException;
 import no.kdrs.grouse.utils.exception.InternalException;
 import no.kdrs.grouse.utils.exception.PatchMisconfigurationException;
@@ -30,7 +31,11 @@ public class GrouseService {
     ACLService aclService;
 
     @Autowired
+    RoleValidator roleValidator;
+
+    @Autowired
     private PasswordEncoder encoder;
+
 
     private static final Logger logger =
             LoggerFactory.getLogger(GrouseService.class);
@@ -147,7 +152,15 @@ public class GrouseService {
         }
     }
 
+    /**
+     * A user with administrator role has access to any object
+     *
+     * @param objectId UUID of the object to check
+     */
     public void checkAccess(UUID objectId) {
+        if (roleValidator.isAdmin()) {
+            return;
+        }
         aclService.getAccessControlByObjectIdAndGrouseUserOrThrow(
                 objectId, getUser());
     }

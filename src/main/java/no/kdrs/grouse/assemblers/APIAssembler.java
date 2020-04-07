@@ -67,7 +67,8 @@ public class APIAssembler
             // Print the following if the user is admin
             if (role.isAdmin()) {
                 linksAPIDetail.add(linkTo(methodOn(ProjectController.class)
-                        .getProjects(null))
+                        .getProjects(null) + SLASH +
+                        REL_PROJECT_LIST_ALL)
                         .withRel(REL_PROJECT_LIST_ALL));
                 linksAPIDetail.add(linkTo(methodOn(TemplateController.class)
                         .getTemplates(null))
