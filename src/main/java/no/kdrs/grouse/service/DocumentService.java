@@ -1,10 +1,11 @@
 package no.kdrs.grouse.service;
 
-import no.kdrs.grouse.document.Document;
+import no.kdrs.grouse.document.AsciiDoc;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
+import org.asciidoctor.Asciidoctor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.GROUSE;
+import static org.asciidoctor.Asciidoctor.Factory.create;
 
 /**
  * Created by tsodring on 10/28/17.
@@ -31,13 +33,16 @@ public class DocumentService
     @Override
     public void createDocument(Project project) throws IOException {
         checkAccess(project.getProjectId());
+
+        Asciidoctor asciidoctor = create();
         String filename = storageLocation + File.separator +
-                GROUSE + "-" + project.getProjectId().toString() + ".docx";
+                GROUSE + "-" + project.getProjectId().toString() + ".adoc";
+
         project.setFileNameInternal(filename);
         FileOutputStream file = new FileOutputStream(filename);
-        Document document = new Document(file);
-        processRequirements(document, project);
-        document.close();
+        AsciiDoc asciiDoc = new AsciiDoc(file);
+        processRequirements(asciiDoc, project);
+        asciiDoc.close();
         file.flush();
         file.close();
         // TODO: Temp disabled so we can call multiple times
@@ -45,20 +50,20 @@ public class DocumentService
     }
 
     /**
-     * Populate the requirements document with details from the database
+     * Populate the requirements asciiDoc with details from the database
      *
-     * @param document The Word document
+     * @param asciiDoc The Word asciiDoc
      * @param project  An instance of the relevant Project object
      */
-    public void processRequirements(Document document, Project project) {
+    public void processRequirements(AsciiDoc asciiDoc, Project project) {
 
         List<ProjectFunctionality> projectFunctionalities =
                 project.getReferenceProjectFunctionality();
-        processFunctionalities(document, project, projectFunctionalities);
+        processFunctionalities(asciiDoc, project, projectFunctionalities);
     }
 
     protected void processFunctionalities(
-            Document document, Project project,
+            AsciiDoc asciiDoc, Project project,
             List<ProjectFunctionality> projectFunctionalities) {
 
         for (ProjectFunctionality projectFunctionality :
@@ -67,9 +72,9 @@ public class DocumentService
             String title = projectFunctionality.getTitle();
 
             if (null != title && title.length() == 1) {
-                document.addHeading1(title);
+                asciiDoc.addHeading1(title);
             } else if (null != title && title.length() > 1) {
-                document.addHeading2(title);
+                asciiDoc.addHeading2(title);
             }
 
             String description = projectFunctionality.getDescription();
@@ -77,30 +82,30 @@ public class DocumentService
                 if (project.getOrganisationName() != null) {
                     description = description.replace("ORG_NAVN",
                             project.getOrganisationName());
-                    document.addText(description);
+                    asciiDoc.addText(description);
                 }
             }
             if (projectFunctionality
                     .getReferenceProjectRequirement().size() > 0) {
-                processRequirements(document, projectFunctionality
+                processRequirements(asciiDoc, projectFunctionality
                                 .getReferenceProjectRequirement(),
                         projectFunctionality);
             }
             if (projectFunctionality
                     .getReferenceChildProjectFunctionality().size() > 0) {
-                processFunctionalities(document, project, projectFunctionality
+                processFunctionalities(asciiDoc, project, projectFunctionality
                         .getReferenceChildProjectFunctionality());
             }
         }
     }
 
     protected void processRequirements(
-            Document document,
+            AsciiDoc asciiDoc,
             List<ProjectRequirement> projectRequirements,
             ProjectFunctionality projectFunctionality) {
-        document.createTable(projectRequirements.size(), projectFunctionality);
+        asciiDoc.createTable(projectRequirements.size(), projectFunctionality);
         for (ProjectRequirement projectRequirement : projectRequirements) {
-            document.addRow(projectRequirement);
+            asciiDoc.addRow(projectRequirement);
         }
     }
 }

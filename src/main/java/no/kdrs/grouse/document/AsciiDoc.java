@@ -15,7 +15,7 @@ import static no.kdrs.grouse.utils.Constants.*;
 /**
  * Created by tsodring on 10/28/17.
  */
-public class Document {
+public class AsciiDoc {
 
     private OutputStream out;
     private XWPFDocument document;
@@ -33,9 +33,7 @@ public class Document {
     private int rowNumber = 1;
 
 
-
-
-    public Document(OutputStream out) {
+    public AsciiDoc(OutputStream out) {
         this.out = out;
         this.document = new XWPFDocument();
         XWPFStyles styles = document.createStyles();
