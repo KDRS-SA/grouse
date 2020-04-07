@@ -4,8 +4,6 @@ import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.persistence.IProjectRequirementRepository;
 import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -117,18 +115,11 @@ public class ProjectRequirementService
      */
     private ProjectRequirement getProjectRequirementOrThrow(@NotNull Long id)
             throws EntityNotFoundException {
-        ProjectRequirement projectRequirement = projectRequirementRepository.findById(id)
+        ProjectRequirement projectRequirement = projectRequirementRepository
+                .findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
                                 "No Project exists with Id " + id));
-
-        String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
-                .getName();
-        if (!projectRequirement.getOwnedBy().equals(loggedInUser)) {
-            throw new AccessDeniedException("Du er pålogget med en bruker som ikke har tilgang" +
-                    " til dette prosjekt kravet!");
-        }
-
         return projectRequirement;
     }
 }
