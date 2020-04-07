@@ -2,6 +2,7 @@ package no.kdrs.grouse.utils;
 
 import no.kdrs.grouse.utils.exception.BadRequestException;
 import no.kdrs.grouse.utils.exception.ConcurrencyException;
+import no.kdrs.grouse.utils.exception.InternalException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -99,7 +100,8 @@ public class RestResponseEntityExceptionHandler
 
     // 500
     @ExceptionHandler({NullPointerException.class, NoSuchMethodException.class,
-            IllegalArgumentException.class, IllegalStateException.class})
+            IllegalArgumentException.class, IllegalStateException.class,
+            InternalException.class})
     public ResponseEntity<Object> handleInternal(final RuntimeException ex,
                                                  final WebRequest request) {
         logger.error("500 Status Code: " + ex.getMessage());
