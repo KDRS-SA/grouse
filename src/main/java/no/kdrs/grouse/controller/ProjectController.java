@@ -44,7 +44,7 @@ public class ProjectController {
                 .findById(projectId), OK);
     }
 
-    @GetMapping
+    @GetMapping(value = SLASH + REL_PROJECT_LIST_ALL)
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<PagedModel<LinksProject>>
     getProjects(Pageable pageable) {
@@ -52,7 +52,7 @@ public class ProjectController {
                 .findAll(pageable), OK);
     }
 
-    @GetMapping(value = SLASH + REL_PROJECT_LIST_ALL)
+    @GetMapping
     public ResponseEntity<PagedModel<LinksProject>>
     getProjectsForUser(Pageable pageable) {
         return commonController.addPagedProjectLinks(projectService
