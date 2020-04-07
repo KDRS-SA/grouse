@@ -145,6 +145,9 @@ public class GrouseService {
     }
 
     public void checkOwner(String ownedBy, String objectType) {
+        if (roleValidator.isAdmin()) {
+            return;
+        }
         if (!getUser().equals(ownedBy)) {
             String error = NO_ACCESS_OBJECT + objectType;
             logger.error(error);
