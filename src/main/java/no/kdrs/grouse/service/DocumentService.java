@@ -22,6 +22,7 @@ import static no.kdrs.grouse.utils.Constants.GROUSE;
 @Component
 @Transactional
 public class DocumentService
+    extends GrouseService
         implements IDocumentService {
 
     @Value("${storage.location}")
@@ -29,7 +30,7 @@ public class DocumentService
 
     @Override
     public void createDocument(Project project) throws IOException {
-
+        checkAccess(project.getProjectId());
         String filename = storageLocation + File.separator +
                 GROUSE + "-" + project.getProjectId().toString() + ".docx";
         project.setFileNameInternal(filename);
