@@ -54,13 +54,14 @@ public class UserController {
                 grouseUserService.findById(username), OK);
     }
 
-    @GetMapping(value = SLASH + USER_PARAMETER + SLASH + PROJECT)
-    public ResponseEntity<PagedModel<LinksProject>> getGrouseUserProjects(
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping(value = SLASH + USER_PARAMETER + SLASH + REL_PROJECT_USER_LIST)
+    public ResponseEntity<PagedModel<LinksProject>>
+    getGrouseUserProjectsForAdmin(
             Pageable pageable,
             @PathVariable(USER) String username) {
-        commonController.checkAccess(username);
         return commonController.addPagedProjectLinks(
-                projectService.findByOwnedBy(username, pageable), OK);
+                projectService.findAllForUser(username, pageable), OK);
     }
 
     @PostMapping
@@ -77,6 +78,17 @@ public class UserController {
         commonController.checkAccess(username);
         return ResponseEntity.status(OK)
                 .body(grouseUserService.update(username, patchObjects));
+    }
+
+    @GetMapping(value = SLASH + USER_PARAMETER + SLASH + PROJECT)
+    public ResponseEntity<String> getGrouseUserProjects(
+            @PathVariable(USER) String username) {
+        commonController.checkAccess(username);
+        projectService.findByOwnedBy(username)
+                .forEach(p -> projectService.delete(p.getProjectId()));
+        return ResponseEntity.status(NO_CONTENT)
+                .body("{\"status\" : \"GrouseUser " + username +
+                        " was deleted\"}");
     }
 
     @DeleteMapping(value = SLASH + USER_PARAMETER)

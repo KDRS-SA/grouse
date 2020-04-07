@@ -43,13 +43,8 @@ public class UserAssembler
                 .withSelfRel());
         if (role.isUser()) {
             linksUser.add(linkTo(methodOn(ProjectController.class)
-                    .getProjects(null))
+                    .getProjectsForUser(null))
                     .withRel(PROJECT));
-            linksUser.add(linkTo(methodOn(TemplateController.class)
-                    .getTemplates(null))
-                    .withRel(TEMPLATE));
-        }
-        if (role.isTemplate()) {
             linksUser.add(linkTo(methodOn(TemplateController.class)
                     .createTemplate(null))
                     .withRel(TEMPLATE));
@@ -58,6 +53,9 @@ public class UserAssembler
             linksUser.add(linkTo(methodOn(UserController.class)
                     .getGrouseUsers(null))
                     .withRel(USER));
+            linksUser.add(linkTo(methodOn(UserController.class)
+                    .getGrouseUserProjectsForAdmin(null, user.getUsername()))
+                    .withRel(REL_PROJECT_USER_LIST));
         }
         linksUser.add(linkTo(methodOn(OAuthController.class)
                 .logout(null))
@@ -77,21 +75,19 @@ public class UserAssembler
                     .withSelfRel());
             if (role.isUser()) {
                 user.add(linkTo(methodOn(ProjectController.class)
-                        .getProjects(null))
+                        .getProjectsForUser(null))
                         .withRel(PROJECT));
                 user.add(linkTo(methodOn(TemplateController.class)
                         .getTemplates(null))
-                        .withRel(TEMPLATE));
-            }
-            if (role.isTemplate()) {
-                user.add(linkTo(methodOn(TemplateController.class)
-                        .createTemplate(null))
                         .withRel(TEMPLATE));
             }
             if (role.isAdmin()) {
                 user.add(linkTo(methodOn(UserController.class)
                         .getGrouseUsers(null))
                         .withRel(USER));
+                user.add(linkTo(methodOn(UserController.class)
+                        .getGrouseUserProjects(user.getUsername()))
+                        .withRel(REL_PROJECT_USER_LIST));
             }
         });
         return linksUsers;
