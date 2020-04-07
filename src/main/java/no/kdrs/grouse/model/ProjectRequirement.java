@@ -2,6 +2,7 @@ package no.kdrs.grouse.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.hateoas.RepresentationModel;
@@ -165,7 +166,11 @@ public class ProjectRequirement
     }
 
     public void setVersion(Long version) {
-        this.version = version;
+        if (!this.version.equals(version)) {
+            throw new ConcurrencyException(
+                    "Concurrency Exception. Old version [" + this.version +
+                            "], new version [" + version + "]");
+        }
     }
 
     public String getOwnedBy() {
