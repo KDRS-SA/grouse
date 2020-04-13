@@ -75,7 +75,7 @@
             <section>
                 <sectionOrder>2</sectionOrder>
                 <sectionTitle>Krav til oppfyllelse av NOARK5-krav O og B</sectionTitle>
-                <description>Kravene i dette kapittelet sikrer at alle obligatoriske (O) og betingede obligatoriske (B) Noark5-krav oppfylles.<description>
+                <description>Kravene i dette kapittelet sikrer at alle obligatoriske (O) og betingede obligatoriske (B) Noark5-krav oppfylles.</description>
                 <explanation>Noark-standarden består av obligatoriske, betinget obligatoriske og valgfrie krav. Obligatoriske og betinget obligatoriske krav må være oppfylt for at løsningen skal anses å være Noark5-godkjent. Dette er en forutsetning for å kunne ivareta kravene stilt i den generelle lovgivningen som berører offentlig forvaltning.Det anbefales at det settes krav til at leverandøren om at korrekt og fullstendig uttrekk skal kunne produseres uten betydelig kostnad for kommunen. Uttrekket skal kunne godkjennes av kommunens arkivdepot.</explanation>
                 <consequence>Ved manglende kravstilling omkring disse spørsmålene kan det være mulig at den leverte løsningen ikke tilfredsstiller de lovpålagte kravene til denne type arkivløsning.</consequence>
                 <type>submenu</type>
