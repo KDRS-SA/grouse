@@ -1,17 +1,22 @@
 package no.kdrs.grouse.service;
 
+import no.kdrs.grouse.assemblers.APIAssembler;
 import no.kdrs.grouse.document.AsciiDoc;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
+import org.asciidoctor.Asciidoctor;
+
+import static org.asciidoctor.Asciidoctor.Factory.create;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.GROUSE;
@@ -22,26 +27,52 @@ public class DocumentService
         extends GrouseService
         implements IDocumentService {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(DocumentService.class);
+
     @Value("${storage.location}")
     private String storageLocation;
 
     @Override
-    public void createAsciiDocument(Project project) throws IOException {
+    public void createAsciiDocument(Project project, String extension)
+            throws IOException {
         checkAccess(project.getProjectId());
-        //Asciidoctor asciidoctor = create();
         String filename = storageLocation + File.separator +
-                GROUSE + "-" + project.getProjectId().toString() + ".adoc";
+                GROUSE + "-" + project.getProjectId().toString();
         // TODO: Remove filename internal. As filename is based on project,
         //  based on UUID. It is settable automatically
-        project.setFileNameInternal(filename);
+        project.setFileNameInternal(filename + ".adoc");
 
-        File file = new File(filename);
+        File file = new File(filename + ".adoc");
         FileWriter fileWriter = new FileWriter(file);
         AsciiDoc asciiDoc = new AsciiDoc(fileWriter);
         asciiDoc.addSectionHeader(project.getProjectName(), 1);
-        asciiDoc.addToc();
+        asciiDoc.addHeader();
         processAllRequirements(asciiDoc, project);
         asciiDoc.close();
+
+        String convertCommand = "asciidoctor --backend docbook --out-file - ";
+        convertCommand += filename + ".adoc";
+        convertCommand += " | pandoc --from docbook --to ";
+        convertCommand += extension;
+        convertCommand += " --output " + filename + "." + extension;
+
+        // Approach taken from
+        // https://stackoverflow.com/questions/5928225/how-to-make-pipes-work-with-runtime-exec
+        String[] cmd = {
+                "/bin/sh",
+                "-c",
+                convertCommand
+        };
+
+        try {
+            Process p = Runtime.getRuntime().exec(cmd);
+            p.waitFor();
+        } catch (RuntimeException | InterruptedException e) {
+            logger.error("Error converting " + filename + " from adoc format " +
+                    "to " + extension);
+            logger.error(e.toString());
+        }
     }
 
     /**

@@ -5,5 +5,6 @@ import no.kdrs.grouse.model.Project;
 import java.io.IOException;
 
 public interface IDocumentService {
-    void createAsciiDocument(Project project) throws IOException;
+    void createAsciiDocument(Project project, String extension)
+            throws IOException;
 }

@@ -64,7 +64,7 @@ public class DocumentController {
         Project project = projectService.updateProjectFinalised(projectId);
         // We should revisit this in case there is a need to undo setting the
         // document to finalised if the document cannot be created.
-        documentService.createAsciiDocument(project);
+        documentService.createAsciiDocument(project, "docx");
         return commonController.addProjectLinks(project, CREATED);
     }
 

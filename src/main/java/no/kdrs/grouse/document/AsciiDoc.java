@@ -27,7 +27,6 @@ public class AsciiDoc {
         String section = "=".repeat(max(0, level)) + " ";
         asciiDoc.write(section + title);
         asciiDoc.newLine();
-        asciiDoc.newLine();
     }
 
     public void addText(String text) throws IOException {
@@ -77,7 +76,8 @@ public class AsciiDoc {
         asciiDoc.newLine();
     }
 
-    public void addToc() throws IOException {
+    public void addHeader() throws IOException {
+        asciiDoc.write(":sectnums: ");
         asciiDoc.newLine();
         asciiDoc.write(":toc:");
         asciiDoc.newLine();
