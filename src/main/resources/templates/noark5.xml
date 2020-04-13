@@ -12,14 +12,12 @@
             <section>
                 <sectionTitle>Dokumentets struktur</sectionTitle>
                 <sectionOrder>1</sectionOrder>
-                <description>
-                    ORG_NAVN skal ha et elektronisk sak-/arkivsystem som er godkjent etter
-                    NOARK5-standarden. I dette ligger at kommunen forutsetter at alle obligatoriske krav etter
-                    NOARK5-standarden er oppfylt i det/de systemene som tilbys. Obligatoriske krav i henhold
-                    til NOARK5-standarden vil derfor ikke beskrives nærmere i dette dokumentet.
-                    Tilbyder plikter å gjøre spesifikt oppmerksom på eventuelle obligatoriske krav som ikke
-                    er oppfylt etter standarden, samt å beskrive hvilke løsninger som eventuelt erstatter
-                    uoppfylte krav.
+                <description>ORG_NAVN skal ha et elektronisk sak-/arkivsystem som er godkjent etter NOARK5-standarden. I
+                    dette ligger at kommunen forutsetter at alle obligatoriske krav etter NOARK5-standarden er oppfylt i
+                    det/de systemene som tilbys. Obligatoriske krav i henhold til NOARK5-standarden vil derfor ikke
+                    beskrives nærmere i dette dokumentet. Tilbyder plikter å gjøre spesifikt oppmerksom på eventuelle
+                    obligatoriske krav som ikke er oppfylt etter standarden, samt å beskrive hvilke løsninger som
+                    eventuelt erstatter uoppfylte krav.
                 </description>
                 <showMe>false</showMe>
             </section>
@@ -31,9 +29,8 @@
             <section>
                 <sectionTitle>Innledning</sectionTitle>
                 <sectionOrder>1</sectionOrder>
-                <description>
-                    Dette kapittelet gir en overordnet beskrivelse av ønsket løsning. De konkrete kravene til løsningen
-                    finnes i de følgende kapitlene. Enkelte krav vil fremstå mer detaljert enn andre. Krav til
+                <description>Dette kapittelet gir en overordnet beskrivelse av ønsket løsning. De konkrete kravene til
+                    løsningen finnes i de følgende kapitlene. Enkelte krav vil fremstå mer detaljert enn andre. Krav til
                     funksjonalitet for å løse oppgaver beskrives som hovedregel uten føringer for hvordan oppgavene
                     eventuelt kan ha sammenheng eller løses ved felles funksjoner. Løsningen skal oppfylle de krav som
                     er angitt. Hvordan krav til funksjonalitet løses i detalj, spesifiseres nærmere i samråd med
@@ -45,37 +42,30 @@
             <section>
                 <sectionTitle>Sentrale hensyn</sectionTitle>
                 <sectionOrder>2</sectionOrder>
-                <description>
-                    For ORG_NAVN er det svært viktig at den løsningen som velges har en funksjonalitet som
-                    støtter opp om kommunens kommende arbeidsprosesser, og at brukergrensesnittet er utformet
-                    på en måte som fremmer bruk av systemet i tråd med lovpålagte krav og kommunens egne
-                    regler og rutiner.
-                    Det er et overordnet mål at all saksbehandling i ORG_NAVN skal kunne foregå
-                    fullelektronisk.
-                    Ny sak- og arkivløsning skal håndtere all saksbehandling fullelektronisk slik at man ikke blir
-                    tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen.
-                    Jf. forskrift om offentlege arkiv § 2-9 om elektronisk journalføring gjelder følgende « For
-                    elektronisk journalføring skal offentlege organ normalt nytte eit arkivsystem som følgjer
-                    krava i Noark-standarden. Nye system skal vere godkjende av Riksarkivaren før dei blir tekne
-                    i bruk.»
-                    Ny systemløsning må være i henhold til NOARK5-standarden, og skal ha endelig
-                    godkjenning av Riksarkivaren.
-                    ORG_NAVN vil gjennom anskaffelse av nytt sak- og arkivsystem også tilstrebe
-                    at så høy andel som mulig av den arkivverdige dokumentproduksjonen fanges opp og
-                    arkiveres i sak- og arkivsystemet. Leverandøren må derfor tilby et produkt hvor løsninger og
-                    brukergrensesnittet mot den alminnelige saksbehandler er på et slikt nivå at lojalitet til valgt
-                    løsning blir best mulig. Fullverdig og komplett integrasjon mot e-postklient som muliggjør
-                    direkte saksbehandling og arkivering er en forutsetning.
-                    I tillegg til disse momentene vil det være særdeles viktig for Kunden hvordan system-
-                    løsningen tilrettelegger for integrasjon med fagsystemer og andre eksterne systemer. Siden
-                    ORG_NAVN er under etablering vil organisjonens IKT-portefølje være under utvikling.
-                    Leverandør må derfor ta høyde for forventninger om integrasjonsmuligheter for fagsystemer
-                    som pr dato ikke er valgt.
-                    Valgt systemløsning skal ved driftssetting ha integrasjon mot sentrale løsninger som e-post,
-                    tekstbehandler, internettportal, kartløsning etc. Valgt løsning skal legge til rette for at
-                    organisjonens nye fagsystemer så enkelt som mulig kan integreres med denne, og at man
-                    oppnår elektronisk kommunikasjon mellom sak- og arkivløsning og fagsystem som sikrer at
-                    dokumentasjon fra fagsystemene kan arkiveres og gjenfinnes i NOARK5-kjernen.
+                <description>For ORG_NAVN er det svært viktig at den løsningen som velges har en funksjonalitet som
+                    støtter opp om kommunens kommende arbeidsprosesser, og at brukergrensesnittet er utformet på en måte
+                    som fremmer bruk av systemet i tråd med lovpålagte krav og kommunens egne regler og rutiner. Det er
+                    et overordnet mål at all saksbehandling i ORG_NAVN skal kunne foregå fullelektronisk. Ny sak- og
+                    arkivløsning skal håndtere all saksbehandling fullelektronisk slik at man ikke blir tvunget til å
+                    opprettholde papirarkiv pga. begrensninger i løsningen. Jf. forskrift om offentlege arkiv § 2-9 om
+                    elektronisk journalføring gjelder følgende « For elektronisk journalføring skal offentlege organ
+                    normalt nytte eit arkivsystem som følgjer krava i Noark-standarden. Nye system skal vere godkjende
+                    av Riksarkivaren før dei blir tekne i bruk.» Ny systemløsning må være i henhold til
+                    NOARK5-standarden, og skal ha endelig godkjenning av Riksarkivaren. ORG_NAVN vil gjennom anskaffelse
+                    av nytt sak- og arkivsystem også tilstrebe at så høy andel som mulig av den arkivverdige
+                    dokumentproduksjonen fanges opp og arkiveres i sak- og arkivsystemet. Leverandøren må derfor tilby
+                    et produkt hvor løsninger og brukergrensesnittet mot den alminnelige saksbehandler er på et slikt
+                    nivå at lojalitet til valgt løsning blir best mulig. Fullverdig og komplett integrasjon mot
+                    e-postklient som muliggjør direkte saksbehandling og arkivering er en forutsetning. I tillegg til
+                    disse momentene vil det være særdeles viktig for Kunden hvordan system- løsningen tilrettelegger for
+                    integrasjon med fagsystemer og andre eksterne systemer. Siden ORG_NAVN er under etablering vil
+                    organisjonens IKT-portefølje være under utvikling. Leverandør må derfor ta høyde for forventninger
+                    om integrasjonsmuligheter for fagsystemer som pr dato ikke er valgt. Valgt systemløsning skal ved
+                    driftssetting ha integrasjon mot sentrale løsninger som e-post, tekstbehandler, internettportal,
+                    kartløsning etc. Valgt løsning skal legge til rette for at organisjonens nye fagsystemer så enkelt
+                    som mulig kan integreres med denne, og at man oppnår elektronisk kommunikasjon mellom sak- og
+                    arkivløsning og fagsystem som sikrer at dokumentasjon fra fagsystemene kan arkiveres og gjenfinnes i
+                    NOARK5-kjernen.
                 </description>
                 <showMe>false</showMe>
             </section>
@@ -87,47 +77,32 @@
             <section>
                 <sectionTitle>Innledning</sectionTitle>
                 <sectionOrder>1</sectionOrder>
-                <description>
-                </description>
+                <description></description>
                 <showMe>false</showMe>
             </section>
             <section>
                 <sectionTitle>Om utfylling av tabellene</sectionTitle>
                 <sectionOrder>2</sectionOrder>
-                <description>
-                    Nedenfor er en kort beskrivelse av hensikten med kolonnene i tabellene, og hvordan kravtabellene
-                    skal fylles ut.
-                    Kolonnen «Pri» (prioritet): Angir Kunden sin prioritering av kravene.
-                    O= Obligatorisk, 1 = Svært viktig for oppdragsgiver, 2= Viktig for oppdragsgiver
-
-                    Obligatoriske krav skal tilfredsstilles. Manglende tilfredsstillelse av disse eller forbehold
-                    knyttet til disse vil kunne regnes som vesentlige forbehold/vesentlig avvik og kan medføre
-                    avvisning av tilbudet.
-
-                    Krav merket med 1 eller 2 er viktige og det forventes at disse tilfredsstilles. Hvis kravet ikke kan
-                    tilfredsstilles slik det er beskrevet, bes leverandøren kommentere hvordan dette behovet
-                    kan ivaretas i løsningen på andre måter.
-
-                    I tillegg er det i denne kolonnen noen krav som er markert med (i). Dette betyr at leverandøren bes
-                    gi utfyllende informasjon/beskrive. Denne informasjonen inngår som del av vurderingen av
-                    leverandørens oppfyllelse av kundens krav og formål med anskaffelsen. Kolonnen «Svar»: Her skal
-                    tilbyder svare i henhold til oppsettet nedenfor.
-
-                    OBS SETT INN TABELL HER!!!
-
-                    NB! Kategorier J-C og J-D
-                    Dersom ikke annet er angitt forplikter leverandøren seg til at tilpasning/utvikling inngår i
-                    standard-produktet. Kolonnen «Ref» (referanse): Her skal det refereres til det punkt i
-                    løsningsbeskrivelsen hvor svaret utdypes. Løsningsbeskrivelsen vil være sentral når det gjelder å
-                    sammenligne tilbud der det er svart «Ja» på at leverandør kan tilfredsstille kravet.
-
+                <description>Nedenfor er en kort beskrivelse av hensikten med kolonnene i tabellene, og hvordan
+                    kravtabellene skal fylles ut. Kolonnen «Pri» (prioritet): Angir Kunden sin prioritering av kravene.
+                    O= Obligatorisk, 1 = Svært viktig for oppdragsgiver, 2= Viktig for oppdragsgiver Obligatoriske krav
+                    skal tilfredsstilles. Manglende tilfredsstillelse av disse eller forbehold knyttet til disse vil
+                    kunne regnes som vesentlige forbehold/vesentlig avvik og kan medføre avvisning av tilbudet. Krav
+                    merket med 1 eller 2 er viktige og det forventes at disse tilfredsstilles. Hvis kravet ikke kan
+                    tilfredsstilles slik det er beskrevet, bes leverandøren kommentere hvordan dette behovet kan
+                    ivaretas i løsningen på andre måter. I tillegg er det i denne kolonnen noen krav som er markert med
+                    (i). Dette betyr at leverandøren bes gi utfyllende informasjon/beskrive. Denne informasjonen inngår
+                    som del av vurderingen av leverandørens oppfyllelse av kundens krav og formål med anskaffelsen.
+                    Kolonnen «Svar»: Her skal tilbyder svare i henhold til oppsettet nedenfor. OBS SETT INN TABELL
+                    HER!!! NB! Kategorier J-C og J-D Dersom ikke annet er angitt forplikter leverandøren seg til at
+                    tilpasning/utvikling inngår i standard-produktet. Kolonnen «Ref» (referanse): Her skal det refereres
+                    til det punkt i løsningsbeskrivelsen hvor svaret utdypes. Løsningsbeskrivelsen vil være sentral når
+                    det gjelder å sammenligne tilbud der det er svart «Ja» på at leverandør kan tilfredsstille kravet.
                     Til en del av tabellene er det også tatt inn en formålsbeskrivelse. Disse gir viktige føringer for
                     løsning på/håndtering av tilhørende krav, og leverandørens svar vil bli vurdert opp imot disse.
                     Leverandøren skal til hver av tabellene også vurdere om basisløsningen de tilbyr inneholder annen
                     funksjonalitet som støtter opp under formålet, men som ikke eksplisitt er stilt opp som et krav.
-                    Dette kommenteres særskilt.
-
-                    OBS SETT INN TABELL HER!!!
+                    Dette kommenteres særskilt. OBS SETT INN TABELL HER!!!
                 </description>
                 <showMe>false</showMe>
             </section>
@@ -166,8 +141,7 @@
                 <sectionOrder>2</sectionOrder>
                 <sectionTitle>Krav til oppfyllelse av NOARK5-krav O og B</sectionTitle>
                 <description>Kravene i dette kapittelet sikrer at alle obligatoriske (O) og betingede obligatoriske (B)
-                    Noark5-krav oppfylles.
-                </description>
+                Noark5-krav oppfylles.
                 <explanation>Noark-standarden består av obligatoriske, betinget obligatoriske og valgfrie krav.
                     Obligatoriske og betinget obligatoriske krav må være oppfylt for at løsningen skal anses å være
                     Noark5-godkjent. Dette er en forutsetning for å kunne ivareta kravene stilt i den generelle
@@ -246,9 +220,9 @@
                     underlagt ulike lover og forskrifter.
                 </description>
                 <explanation>Elektronisk saksbehandling er underlagt lovbestemte krav for elektronisk signatur. Kravene
-                    skal også sikre integritet, konfidensialitet, autentisitet.
-                    For å sikre at organisasjonen etterlever disse bestemmelsene, må kravene i dette kapittelet
-                    oppfylles, og det anbefales at kravene stilles som obligatoriske.
+                    skal også sikre integritet, konfidensialitet, autentisitet. For å sikre at organisasjonen etterlever
+                    disse bestemmelsene, må kravene i dette kapittelet oppfylles, og det anbefales at kravene stilles
+                    som obligatoriske.
                 </explanation>
                 <consequence>Ved manglende kravoppfyllelse innenfor disse områdene vil det være store svakheter og
                     mangler med den tilbudte løsningen.
@@ -393,9 +367,8 @@
                     <explanation>Her beskrives kravene som få strukturere arkivet i logiske deler og hjelpefunksjoner
                         for å kunne gjennomføre operasjoner på logiske strukturer på en effektiv måte. Det er viktig at
                         denne type funksjoner er rettighetsstyrt slik at kun brukere med tillatelse til å benytte disse
-                        har tilgang.
-                        Ikke alle løsninger trenger underarkiv. Hvis underakriv er noe som passers deres organisatorsik
-                        arkivinndeling, anbefales kravet å ansees som obligatorisk.
+                        har tilgang. Ikke alle løsninger trenger underarkiv. Hvis underakriv er noe som passers deres
+                        organisatorsik arkivinndeling, anbefales kravet å ansees som obligatorisk.
                     </explanation>
                     <consequence>Dersom løsningen ikke støtter disse kravene vil det være potensielt kostnadskrevende å
                         generere uttrekk.
@@ -611,8 +584,7 @@
                             <noarkRequirement>true</noarkRequirement>
                             <showOrder>2</showOrder>
                             <requirementText>NOARK 5.7.2 (V): En Basismappe skal kunne ha registrert ingen, ett eller
-                                flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere
-                                Basismapper
+                                flere Nøkkelord og et Nøkkelord skal kunne inngå i ingen, ett eller flere Basismapper
                             </requirementText>
                             <priority>1</priority>
                         </requirement>
@@ -1055,7 +1027,7 @@
                         </requirement>
                     </requirements>
                 </section>
-                <!-- Start ... check these  -->
+                <!-- Start ... check these -->
                 <section>
                     <sectionOrder>7</sectionOrder>
                     <sectionTitle>Krav til frysing av metadata for mappe</sectionTitle>
@@ -1158,10 +1130,9 @@
                                 bildet/opptaket» (fritekst), «Stedsnavn for opptaket/sted bilde ble tatt (tekst)»,
                                 «Geolokalisering av stedet hvor bildet/opptaket ble tatt / gjort med koordinater fra
                                 f.eks. kamera og smarttelefon». Dersom slike koordinater ikke finnes bør systemet kunne
-                                hente
-                                koordinater fra en kartløsning via Geointegrasjon.
-                                Gitt at krav i kap 10.2, Krav til integrasjon mot kartsystem, oppfylles skal informasjon
-                                om geolokalisering kunne hentes fra disse systemene.
+                                hente koordinater fra en kartløsning via Geointegrasjon. Gitt at krav i kap 10.2, Krav
+                                til integrasjon mot kartsystem, oppfylles skal informasjon om geolokalisering kunne
+                                hentes fra disse systemene.
                             </requirementText>
                             <priority>1</priority>
                         </requirement>
@@ -1186,8 +1157,7 @@
                         </requirement>
                     </requirements>
                 </section>
-                <!-- End ... check these  -->
-
+                <!-- End ... check these -->
                 <section>
                     <sectionOrder>10</sectionOrder>
                     <sectionTitle>Krav til oppsplitting og sammenslåing av mapper, flytting av registreringer
@@ -1710,9 +1680,9 @@
                             <noarkRequirement>false</noarkRequirement>
                             <showOrder>2</showOrder>
                             <requirementText>Det skal i tillegg til automatisk fortløpende konvertering være mulig for
-                                brukeren å konvertere filer til godkjent arkivformat både
-                                manuelt for en og en fil og samlet for et definert sett av filer som av en eller annen
-                                årsak ikke har blitt konvertert
+                                brukeren å konvertere filer til godkjent arkivformat både manuelt for en og en fil og
+                                samlet for et definert sett av filer som av en eller annen årsak ikke har blitt
+                                konvertert
                             </requirementText>
                             <priority>1</priority>
                         </requirement>
@@ -3751,8 +3721,8 @@
                         <requirement>
                             <noarkRequirement>true</noarkRequirement>
                             <showOrder>2</showOrder>
-                            <requirementText>NOARK 9.4.2 (V): Det skal være mulig å innordne et
-                                beslutningsorgan i organisasjonsstrukturen.
+                            <requirementText>NOARK 9.4.2 (V): Det skal være mulig å innordne et beslutningsorgan i
+                                organisasjonsstrukturen.
                             </requirementText>
                             <priority>O</priority>
                         </requirement>
@@ -4736,11 +4706,9 @@
                     </requirements>
                 </section>
             </section>
-
             <section>
                 <sectionOrder>11</sectionOrder>
                 <sectionTitle>Krav til administrasjon av løsningen</sectionTitle>
-
                 <type>submenu</type>
                 <showMe>true</showMe>
                 <section>
@@ -5125,7 +5093,6 @@
                 <sectionTitle>Krav til sikkerhet, sporbarhet og kontroll</sectionTitle>
                 <type>submenu</type>
                 <showMe>true</showMe>
-
                 <section>
                     <sectionOrder>1</sectionOrder>
                     <sectionTitle>Overordnede krav til sikkerhet</sectionTitle>
@@ -5251,7 +5218,6 @@
                         </requirement>
                     </requirements>
                 </section>
-
                 <section>
                     <sectionOrder>3</sectionOrder>
                     <sectionTitle>Krav til autorisasjon og autentisering</sectionTitle>
@@ -5723,8 +5689,8 @@
                             gjøre tilgjengelig for brukere av ulike eksterne fagsystemer som bruker samme arkiv, for
                             eksempel: 1) Lagring av ny eller endret informasjon i mapper, registreringer,
                             dokumentbeskrivelser, klassifiseringsskjemaer og arkivstruktur, 2) Informasjon om
-                            konvertering av dokumenters filformat, lagring av nye
-                            varianter eller versjoner av dokumenter
+                            konvertering av dokumenters filformat, lagring av nye varianter eller versjoner av
+                            dokumenter
                         </showOrder>
                         <requirementText>1</requirementText>
                         <priority>1</priority>
@@ -5758,8 +5724,8 @@
                             det bare skal registreres at en endring har funnet sted, eller om også gammel verdi/ny verdi
                             skal registreres 3) Angi om lesing av objekter skal logges 4) Angi om søketilslag skal
                             logges 5) Angi om bruk av funksjoner for utskrift skal logges 6) Angi om bruk av funksjoner
-                            for lagring eller eksport av dokument eller metadata
-                            til filområde eller annet program utenfor Noark 5 kjernen skal logges
+                            for lagring eller eksport av dokument eller metadata til filområde eller annet program
+                            utenfor Noark 5 kjernen skal logges
                         </requirementText>
                         <priority>1</priority>
                     </requirement>
@@ -5772,10 +5738,9 @@
                             arkivet 2) Dato og tidspunkt for innskanning eller ankomst til elektronisk mottaksenhet
                             (altså normalt før saksbehandler har begynt behandlingen) 3) Hvem: Løsning, organisatorisk
                             enhet, evt. bruker eller rolle, som har utført lagringen 4) Dokumentformat (filtype,
-                            ekstensjon, mime vedleggstype eller lignende) 5)
-                            Eventuelt nytt dokumentformat dersom dokumentet er konvertert ved mottak 6) Lesbart = j/n,
-                            resultat av kontroll om program for å lese, fremføre eller redigere dokumentformatet var
-                            tilgjenglig ved opprettelsestidspunktet
+                            ekstensjon, mime vedleggstype eller lignende) 5) Eventuelt nytt dokumentformat dersom
+                            dokumentet er konvertert ved mottak 6) Lesbart = j/n, resultat av kontroll om program for å
+                            lese, fremføre eller redigere dokumentformatet var tilgjenglig ved opprettelsestidspunktet
                         </requirementText>
                         <priority>1</priority>
                     </requirement>
@@ -5856,10 +5821,7 @@
                     </requirementText>
                     <priority>1</priority>
                 </requirement>
-                <requirements>
-
-                </requirements>
-
+                <requirements></requirements>
             </section>
         </chapter>
         <chapter>
@@ -5913,7 +5875,6 @@
                     </requirement>
                 </requirements>
             </section>
-
             <section>
                 <sectionOrder>2</sectionOrder>
                 <sectionTitle>Tekniske krav</sectionTitle>
@@ -6196,7 +6157,6 @@
                     </requirement>
                 </requirements>
             </section>
-
         </chapter>
         <chapter>
             <chapterTitle>Krav til integrasjoner i ønsket løsning</chapterTitle>
@@ -6633,7 +6593,6 @@
                     </requirement>
                 </requirements>
             </section>
-
         </chapter>
         <chapter>
             <chapterTitle>Krav til konvertering</chapterTitle>
@@ -6706,3 +6665,4 @@
         </chapter>
     </chapters>
 </template>
+ 
