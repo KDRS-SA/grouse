@@ -1,14 +1,10 @@
 package no.kdrs.grouse.service;
 
-import no.kdrs.grouse.assemblers.APIAssembler;
 import no.kdrs.grouse.document.AsciiDoc;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
-import org.asciidoctor.Asciidoctor;
-
-import static org.asciidoctor.Asciidoctor.Factory.create;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
