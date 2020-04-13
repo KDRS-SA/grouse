@@ -29,7 +29,31 @@
             <section>
                 <sectionTitle>Sentrale hensyn</sectionTitle>
                 <sectionOrder>2</sectionOrder>
-                <description> For ORG_NAVN er det svært viktig at den løsningen som velges har en funksjonalitet som støtter opp om kommunens kommende arbeidsprosesser, og at brukergrensesnittet er utformet på en måte som fremmer bruk av systemet i tråd med lovpålagte krav og kommunens egne regler og rutiner. Det er et overordnet mål at all saksbehandling i ORG_NAVN skal kunne foregå fullelektronisk. Ny sak- og arkivløsning skal håndtere all saksbehandling fullelektronisk slik at man ikke blir tvunget til å opprettholde papirarkiv pga. begrensninger i løsningen. Jf. forskrift om offentlege arkiv § 2-9 om elektronisk journalføring gjelder følgende « For elektronisk journalføring skal offentlege organ normalt nytte eit arkivsystem som følgjer krava i Noark-standarden. Nye system skal vere godkjende av Riksarkivaren før dei blir tekne i bruk.» Ny systemløsning må være i henhold til NOARK5-standarden, og skal ha endelig godkjenning av Riksarkivaren. ORG_NAVN vil gjennom anskaffelse av nytt sak- og arkivsystem også tilstrebe at så høy andel som mulig av den arkivverdige dokumentproduksjonen fanges opp og arkiveres i sak- og arkivsystemet. Leverandøren må derfor tilby et produkt hvor løsninger og brukergrensesnittet mot den alminnelige saksbehandler er på et slikt nivå at lojalitet til valgt løsning blir best mulig. Fullverdig og komplett integrasjon mot e-postklient som muliggjør direkte saksbehandling og arkivering er en forutsetning. I tillegg til disse momentene vil det være særdeles viktig for Kunden hvordan system- løsningen tilrettelegger for integrasjon med fagsystemer og andre eksterne systemer. Siden ORG_NAVN er under etablering vil organisjonens IKT-portefølje være under utvikling. Leverandør må derfor ta høyde for forventninger om integrasjonsmuligheter for fagsystemer som pr dato ikke er valgt. Valgt systemløsning skal ved driftssetting ha integrasjon mot sentrale løsninger som e-post, tekstbehandler, internettportal, kartløsning etc. Valgt løsning skal legge til rette for at organisjonens nye fagsystemer så enkelt som mulig kan integreres med denne, og at man oppnår elektronisk kommunikasjon mellom sak- og arkivløsning og fagsystem som sikrer at dokumentasjon fra fagsystemene kan arkiveres og gjenfinnes i NOARK5-kjernen. </description>
+                <description>For ORG_NAVN er det svært viktig at den løsningen som velges har en funksjonalitet som
+                    støtter opp om kommunens kommende arbeidsprosesser, og at brukergrensesnittet er utformet på en måte
+                    som fremmer bruk av systemet i tråd med lovpålagte krav og kommunens egne regler og rutiner. Det er
+                    et overordnet mål at all saksbehandling i ORG_NAVN skal kunne foregå fullelektronisk. Ny sak- og
+                    arkivløsning skal håndtere all saksbehandling fullelektronisk slik at man ikke blir tvunget til å
+                    opprettholde papirarkiv pga. begrensninger i løsningen. Jf. forskrift om offentlege arkiv § 2-9 om
+                    elektronisk journalføring gjelder følgende « For elektronisk journalføring skal offentlege organ
+                    normalt nytte eit arkivsystem som følgjer krava i Noark-standarden. Nye system skal vere godkjende
+                    av Riksarkivaren før dei blir tekne i bruk.» Ny systemløsning må være i henhold til
+                    NOARK5-standarden, og skal ha endelig godkjenning av Riksarkivaren. ORG_NAVN vil gjennom anskaffelse
+                    av nytt sak- og arkivsystem også tilstrebe at så høy andel som mulig av den arkivverdige
+                    dokumentproduksjonen fanges opp og arkiveres i sak- og arkivsystemet. Leverandøren må derfor tilby
+                    et produkt hvor løsninger og brukergrensesnittet mot den alminnelige saksbehandler er på et slikt
+                    nivå at lojalitet til valgt løsning blir best mulig. Fullverdig og komplett integrasjon mot
+                    e-postklient som muliggjør direkte saksbehandling og arkivering er en forutsetning. I tillegg til
+                    disse momentene vil det være særdeles viktig for Kunden hvordan system- løsningen tilrettelegger for
+                    integrasjon med fagsystemer og andre eksterne systemer. Siden ORG_NAVN er under etablering vil
+                    organisjonens IKT-portefølje være under utvikling. Leverandør må derfor ta høyde for forventninger
+                    om integrasjonsmuligheter for fagsystemer som pr dato ikke er valgt. Valgt systemløsning skal ved
+                    driftssetting ha integrasjon mot sentrale løsninger som e-post, tekstbehandler, internettportal,
+                    kartløsning etc. Valgt løsning skal legge til rette for at organisjonens nye fagsystemer så enkelt
+                    som mulig kan integreres med denne, og at man oppnår elektronisk kommunikasjon mellom sak- og
+                    arkivløsning og fagsystem som sikrer at dokumentasjon fra fagsystemene kan arkiveres og gjenfinnes i
+                    NOARK5-kjernen.
+                </description>
                 <showMe>false</showMe>
             </section>
         </chapter>
@@ -46,7 +70,27 @@
             <section>
                 <sectionTitle>Om utfylling av tabellene</sectionTitle>
                 <sectionOrder>2</sectionOrder>
-                <description> Nedenfor er en kort beskrivelse av hensikten med kolonnene i tabellene, og hvordan kravtabellene skal fylles ut. Kolonnen «Pri» (prioritet): Angir Kunden sin prioritering av kravene. O= Obligatorisk, 1 = Svært viktig for oppdragsgiver, 2= Viktig for oppdragsgiver Obligatoriske krav skal tilfredsstilles. Manglende tilfredsstillelse av disse eller forbehold knyttet til disse vil kunne regnes som vesentlige forbehold/vesentlig avvik og kan medføre avvisning av tilbudet. Krav merket med 1 eller 2 er viktige og det forventes at disse tilfredsstilles. Hvis kravet ikke kan tilfredsstilles slik det er beskrevet, bes leverandøren kommentere hvordan dette behovet kan ivaretas i løsningen på andre måter. I tillegg er det i denne kolonnen noen krav som er markert med (i). Dette betyr at leverandøren bes gi utfyllende informasjon/beskrive. Denne informasjonen inngår som del av vurderingen av leverandørens oppfyllelse av kundens krav og formål med anskaffelsen. Kolonnen «Svar»: Her skal tilbyder svare i henhold til oppsettet nedenfor. OBS SETT INN TABELL HER!!! NB! Kategorier J-C og J-D Dersom ikke annet er angitt forplikter leverandøren seg til at tilpasning/utvikling inngår i standard-produktet. Kolonnen «Ref» (referanse): Her skal det refereres til det punkt i løsningsbeskrivelsen hvor svaret utdypes. Løsningsbeskrivelsen vil være sentral når det gjelder å sammenligne tilbud der det er svart «Ja» på at leverandør kan tilfredsstille kravet. Til en del av tabellene er det også tatt inn en formålsbeskrivelse. Disse gir viktige føringer for løsning på/håndtering av tilhørende krav, og leverandørens svar vil bli vurdert opp imot disse. Leverandøren skal til hver av tabellene også vurdere om basisløsningen de tilbyr inneholder annen funksjonalitet som støtter opp under formålet, men som ikke eksplisitt er stilt opp som et krav. Dette kommenteres særskilt. OBS SETT INN TABELL HER!!! </description>
+                <description>Nedenfor er en kort beskrivelse av hensikten med kolonnene i tabellene, og hvordan
+                    kravtabellene skal fylles ut. Kolonnen «Pri» (prioritet): Angir Kunden sin prioritering av kravene.
+                    O= Obligatorisk, 1 = Svært viktig for oppdragsgiver, 2= Viktig for oppdragsgiver Obligatoriske krav
+                    skal tilfredsstilles. Manglende tilfredsstillelse av disse eller forbehold knyttet til disse vil
+                    kunne regnes som vesentlige forbehold/vesentlig avvik og kan medføre avvisning av tilbudet. Krav
+                    merket med 1 eller 2 er viktige og det forventes at disse tilfredsstilles. Hvis kravet ikke kan
+                    tilfredsstilles slik det er beskrevet, bes leverandøren kommentere hvordan dette behovet kan
+                    ivaretas i løsningen på andre måter. I tillegg er det i denne kolonnen noen krav som er markert med
+                    (i). Dette betyr at leverandøren bes gi utfyllende informasjon/beskrive. Denne informasjonen inngår
+                    som del av vurderingen av leverandørens oppfyllelse av kundens krav og formål med anskaffelsen.
+                    Kolonnen «Svar»: Her skal tilbyder svare i henhold til oppsettet nedenfor. OBS SETT INN TABELL
+                    HER!!! NB! Kategorier J-C og J-D Dersom ikke annet er angitt forplikter leverandøren seg til at
+                    tilpasning/utvikling inngår i standard-produktet. Kolonnen «Ref» (referanse): Her skal det refereres
+                    til det punkt i løsningsbeskrivelsen hvor svaret utdypes. Løsningsbeskrivelsen vil være sentral når
+                    det gjelder å sammenligne tilbud der det er svart «Ja» på at leverandør kan tilfredsstille kravet.
+                    Til en del av tabellene er det også tatt inn en formålsbeskrivelse. Disse gir viktige føringer for
+                    løsning på/håndtering av tilhørende krav, og leverandørens svar vil bli vurdert opp imot disse.
+                    Leverandøren skal til hver av tabellene også vurdere om basisløsningen de tilbyr inneholder annen
+                    funksjonalitet som støtter opp under formålet, men som ikke eksplisitt er stilt opp som et krav.
+                    Dette kommenteres særskilt. OBS SETT INN TABELL HER!!!
+                </description>
                 <showMe>false</showMe>
             </section>
         </chapter>
