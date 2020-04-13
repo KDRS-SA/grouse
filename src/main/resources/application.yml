@@ -18,7 +18,7 @@ spring:
         default-page-size: 10 # Better for GUI
         max-page-size: 50 # Arbitrarily set
   datasource:
-    url: jdbc:mysql://localhost:3306/kravspec
+    url: jdbc:mysql://localhost:3306/kravspec?serverTimezone=Europe/Oslo
     username: INSERT-USERNAME-HERE
     password: INSERT-PASSWORD-HERE
     driver-class-name: com.mysql.jdbc.Driver

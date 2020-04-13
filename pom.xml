@@ -26,7 +26,8 @@
     <java.version>11</java.version>
     <spring-security-oauth2.version>2.3.6.RELEASE</spring-security-oauth2.version>
     <lombok.version>1.18.12</lombok.version>
-    <asciidoc.version>1.5.5</asciidoc.version>
+    <asciidoc.version>1.6.0</asciidoc.version>
+    <spring-boot-configuration-processor.version>2.2.6.RELEASE</spring-boot-configuration-processor.version>
     <!-- commons and utils -->
     <commons-lang3.version>3.4</commons-lang3.version>
     <jquery.version>3.2.1</jquery.version>
@@ -217,6 +218,13 @@
       <groupId>org.asciidoctor</groupId>
       <artifactId>asciidoctorj</artifactId>
       <version>${asciidoc.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <version>${spring-boot-configuration-processor.version}</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 

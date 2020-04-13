@@ -166,6 +166,8 @@ public final class Constants {
                     "required to see other users";
     public static final String NO_LOGIN_ENDPOINT_METHOD =
             "Endpoint problem for login method ";
+    public static final String NO_COLUMN_ASCIIDOC =
+            "Missing column data for asciidoc. Column number ";
 
     public static final String RESOURCE_TEMPLATES =
             "classpath:templates" + File.separator + "*.xml";

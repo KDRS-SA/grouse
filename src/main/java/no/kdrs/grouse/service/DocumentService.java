@@ -5,107 +5,102 @@ import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
-import org.asciidoctor.Asciidoctor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
 import static no.kdrs.grouse.utils.Constants.GROUSE;
-import static org.asciidoctor.Asciidoctor.Factory.create;
 
-/**
- * Created by tsodring on 10/28/17.
- */
 @Component
 @Transactional
 public class DocumentService
-    extends GrouseService
+        extends GrouseService
         implements IDocumentService {
 
     @Value("${storage.location}")
     private String storageLocation;
 
     @Override
-    public void createDocument(Project project) throws IOException {
+    public void createAsciiDocument(Project project) throws IOException {
         checkAccess(project.getProjectId());
-
-        Asciidoctor asciidoctor = create();
+        //Asciidoctor asciidoctor = create();
         String filename = storageLocation + File.separator +
                 GROUSE + "-" + project.getProjectId().toString() + ".adoc";
-
+        // TODO: Remove filename internal. As filename is based on project,
+        //  based on UUID. It is settable automatically
         project.setFileNameInternal(filename);
-        FileOutputStream file = new FileOutputStream(filename);
-        AsciiDoc asciiDoc = new AsciiDoc(file);
-        processRequirements(asciiDoc, project);
+
+        File file = new File(filename);
+        FileWriter fileWriter = new FileWriter(file);
+        AsciiDoc asciiDoc = new AsciiDoc(fileWriter);
+        asciiDoc.addSectionHeader(project.getProjectName(), 1);
+        asciiDoc.addToc();
+        processAllRequirements(asciiDoc, project);
         asciiDoc.close();
-        file.flush();
-        file.close();
-        // TODO: Temp disabled so we can call multiple times
-        //project.setDocumentCreated(true);
     }
 
     /**
      * Populate the requirements asciiDoc with details from the database
      *
-     * @param asciiDoc The Word asciiDoc
+     * @param asciiDoc The asciiDoc
      * @param project  An instance of the relevant Project object
      */
-    public void processRequirements(AsciiDoc asciiDoc, Project project) {
-
-        List<ProjectFunctionality> projectFunctionalities =
-                project.getReferenceProjectFunctionality();
-        processFunctionalities(asciiDoc, project, projectFunctionalities);
+    public void processAllRequirements(AsciiDoc asciiDoc, Project project)
+            throws IOException {
+        Integer requirementNumber = 1;
+        processFunctionalities(asciiDoc, project,
+                requirementNumber,
+                project.getReferenceProjectFunctionality());
     }
 
     protected void processFunctionalities(
             AsciiDoc asciiDoc, Project project,
-            List<ProjectFunctionality> projectFunctionalities) {
+            Integer level, List<ProjectFunctionality> projectFunctionalities)
+            throws IOException {
+
+        level++;
 
         for (ProjectFunctionality projectFunctionality :
                 projectFunctionalities) {
-
             String title = projectFunctionality.getTitle();
-
-            if (null != title && title.length() == 1) {
-                asciiDoc.addHeading1(title);
-            } else if (null != title && title.length() > 1) {
-                asciiDoc.addHeading2(title);
-            }
-
+            asciiDoc.addSectionHeader(title, level);
             String description = projectFunctionality.getDescription();
             if (!projectFunctionality.getShowMe() && description != null) {
                 if (project.getOrganisationName() != null) {
                     description = description.replace("ORG_NAVN",
                             project.getOrganisationName());
-                    asciiDoc.addText(description);
                 }
+                asciiDoc.addText(description);
             }
             if (projectFunctionality
                     .getReferenceProjectRequirement().size() > 0) {
-                processRequirements(asciiDoc, projectFunctionality
-                                .getReferenceProjectRequirement(),
-                        projectFunctionality);
+                processRequirements(asciiDoc, projectFunctionality);
             }
             if (projectFunctionality
                     .getReferenceChildProjectFunctionality().size() > 0) {
-                processFunctionalities(asciiDoc, project, projectFunctionality
-                        .getReferenceChildProjectFunctionality());
+                processFunctionalities(asciiDoc, project, level,
+                        projectFunctionality
+                                .getReferenceChildProjectFunctionality());
             }
+            asciiDoc.addPageBreak();
         }
     }
 
     protected void processRequirements(
-            AsciiDoc asciiDoc,
-            List<ProjectRequirement> projectRequirements,
-            ProjectFunctionality projectFunctionality) {
-        asciiDoc.createTable(projectRequirements.size(), projectFunctionality);
-        for (ProjectRequirement projectRequirement : projectRequirements) {
-            asciiDoc.addRow(projectRequirement);
+            AsciiDoc asciiDoc, ProjectFunctionality projectFunctionality)
+            throws IOException {
+        List<ProjectRequirement> projectRequirements = projectFunctionality
+                .getReferenceProjectRequirement();
+        asciiDoc.createTable(projectFunctionality.getTitle());
+        for (int i = 0; i < projectRequirements.size(); i++) {
+            asciiDoc.addRow(projectRequirements.get(i),
+                    projectFunctionality.getFunctionalityNumber(), i + 1);
         }
+        asciiDoc.endTable();
     }
 }
