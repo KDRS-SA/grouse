@@ -1,4 +1,4 @@
-package no.kdrs.grouse;
+package no.kdrs.grouse.listeners;
 
 import no.kdrs.grouse.listeners.GrouseCreationEvent;
 import no.kdrs.grouse.model.AccessControl;
