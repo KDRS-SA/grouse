@@ -17,6 +17,7 @@ public final class Constants {
     public static final String SELF = "self";
     public static final String USER = "user";
     public static final String DOCUMENT = "document";
+    public static final String SUPPORTED_FORMATS = "supported-formats";
     public static final String USER_EMAIL_ADDRESS = "user_email_address";
     public static final String SHARE = "share";
     public static final String ACCESS = "access";

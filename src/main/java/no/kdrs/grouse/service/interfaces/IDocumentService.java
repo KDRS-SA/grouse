@@ -1,10 +1,10 @@
 package no.kdrs.grouse.service.interfaces;
 
-import no.kdrs.grouse.model.Project;
-
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.UUID;
 
 public interface IDocumentService {
-    void createAsciiDocument(Project project, String extension)
+    Path createAsciiDocument(UUID projectId, String extension)
             throws IOException;
 }

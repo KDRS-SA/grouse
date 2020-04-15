@@ -39,7 +39,7 @@ public class ProjectAssembler
                         project.getProjectId()))
                 .withRel(FUNCTIONALITY));
         linksProject.add(linkTo(methodOn(DocumentController.class)
-                .downloadProjectDocument(project.getProjectId()))
+                .downloadProjectDocument(null, project.getProjectId()))
                 .withRel(DOCUMENT));
         linksProject.add(linkTo(methodOn(ProjectController.class)
                 .shareProject(project.getProjectId(),
@@ -68,7 +68,7 @@ public class ProjectAssembler
                                     null, project.getProjectId()))
                             .withRel(FUNCTIONALITY));
             project.add(linkTo(methodOn(DocumentController.class)
-                    .downloadProjectDocument(project.getProjectId()))
+                    .downloadProjectDocument(null, project.getProjectId()))
                     .withRel(DOCUMENT));
             project.add(linkTo(methodOn(ProjectController.class)
                     .shareProject(project.getProjectId(),

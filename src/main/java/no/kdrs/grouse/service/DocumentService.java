@@ -6,6 +6,7 @@ import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
 
+import no.kdrs.grouse.service.interfaces.IProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.GROUSE;
 
@@ -26,13 +30,19 @@ public class DocumentService
     private static final Logger logger =
             LoggerFactory.getLogger(DocumentService.class);
 
+    private IProjectService projectService;
     @Value("${storage.location}")
     private String storageLocation;
 
+    public DocumentService(IProjectService projectService) {
+        this.projectService = projectService;
+    }
+
     @Override
-    public void createAsciiDocument(Project project, String extension)
+    public Path createAsciiDocument(UUID projectId, String extension)
             throws IOException {
-        checkAccess(project.getProjectId());
+        checkAccess(projectId);
+        Project project = projectService.findById(projectId);
         String filename = storageLocation + File.separator +
                 GROUSE + "-" + project.getProjectId().toString();
         // TODO: Remove filename internal. As filename is based on project,
@@ -69,6 +79,7 @@ public class DocumentService
                     "to " + extension);
             logger.error(e.toString());
         }
+        return Paths.get(filename+ "." + extension);
     }
 
     /**
