@@ -49,3 +49,8 @@ security:
 
 storage:
   location: /tmp
+# To add an additional format, make sure pandoc can convert from docbook to that format.
+# Grouse uses the following command to convert to odt
+# asciidoctor --backend docbook --out-file - file.adoc | pandoc --from docbook --to odt --output file.odt
+supported:
+  formats: "{ 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'docx', 'application/vnd.oasis.opendocument.text': 'odt', 'text/html': 'html', 'application/pdf': 'pdf', 'application/rtf': 'rtf', 'text/asciidoc': 'adoc', 'text/markdown': 'md' }"
