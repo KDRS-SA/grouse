@@ -171,10 +171,13 @@ export class userEditComponent implements  OnInit {
    * the request is also handled from within the dialog
    */
   deleteUser() {
-    this.dialogBox.open(DeleteUserDialog, {
+    const ref = this.dialogBox.open(DeleteUserDialog, {
       width: '80%',
       maxWidth: '600px',
       data: this.http
+    });
+    ref.afterClosed().subscribe(result => {
+      this.userData = JSON.parse(localStorage.getItem('UserData'));
     });
   }
 }
@@ -215,14 +218,25 @@ export class DeleteUserDialog {
   private checked: boolean;
   private loading: boolean;
   private deleted: boolean;
+  // too many states of authorization wanted to illustrate them all graphically {0 = un-authorized, 1 = checking with server, -1 = wrong password, 2 = authorized}
+  private authorized: number;
   private error;
+  private formGroup: FormGroup;
+  private pass: string;
 
-  constructor(public dialogRef: MatDialogRef<DeleteUserDialog>, @Inject(MAT_DIALOG_DATA) public data: HttpClient) {
+  constructor(public dialogRef: MatDialogRef<DeleteUserDialog>, @Inject(MAT_DIALOG_DATA) public data: HttpClient, formBuilder: FormBuilder) {
     this.checked = false;
     this.loading = false;
     this.deleted = false;
     this.error = null;
+    this.authorized = 0;
+    this.pass = '';
     this.userData = JSON.parse(localStorage.getItem('UserData'));
+    this.formGroup = formBuilder.group({
+      Pass: [ this.pass, [
+        Validators.required
+      ]]
+    });
   }
 
   confirm() {
@@ -245,10 +259,44 @@ export class DeleteUserDialog {
     });
   }
 
+  checkPass() {
+    this.authorized = 1;
+    this.dialogRef.disableClose = true;
+    // Checks if the old password is valid (Note that this only occurs clientside and is very easely bypassed)
+    let body = new HttpParams();
+    body = body.set('grant_type', 'password');
+    body = body.append('username', this.userData.userName);
+    body = body.append('password', this.pass);
+
+    this.data.post(this.userData._links['login OAuth2'].href, body, {
+      // Constructs the headers
+      headers: new HttpHeaders({
+        Authorization: 'Basic ' + btoa(this.userData.oauthClientId + ':' + 'secret'),
+        'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
+      })
+    }).subscribe(
+      result => {
+        // @ts-ignore
+        this.userData.oauthClientSecret = result.access_token;
+        this.authorized = 2;
+      }, error => {
+        if (error.error.error_description === 'Bad credentials') {
+          // @ts-ignore
+          this.authorized = -1;
+        } else {
+          console.error(error);
+        }
+      });
+  }
+
   onNoClick() {
     if (this.deleted) {
       localStorage.clear();
       window.location.reload();
+    } else if (this.authorized) {
+      // If the token has been altered by checking for the correct password it must be updated
+      localStorage.setItem('UserData', JSON.stringify(this.userData));
+      this.dialogRef.close();
     } else {
       this.dialogRef.close();
     }

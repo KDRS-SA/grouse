@@ -3,7 +3,7 @@
   <button mat-button class="no-p no-m h-80" color="warn" (click)="onNoClick()" *ngIf="!loading && !deleted">X</button>
   <button mat-button class="no-p no-m h-80" color="warn" (click)="logout()" *ngIf="!loading && deleted">X</button>
 </div>
-<div mat-dialog-content>
+<div mat-dialog-content class="w-100" style="overflow-y: hidden">
   <!--Information about deletion-->
   <div *ngIf="!loading && !deleted && (error === null)">
     <h3>{{'UserEdit.DeleteUserUH1' | translate}}</h3>
@@ -14,13 +14,33 @@
     <h3>{{'UserEdit.DeleteUserUH2' | translate}}</h3>
     <p>{{'UserEdit.DeleteUserText3' | translate}}</p>
     <mat-divider></mat-divider>
-    <div class="flex-row-left">
-      <p class="m-lr-10">{{'UserEdit.DeleteUserCheckDesc' | translate}}</p>
-      <mat-checkbox class="m-t-14 m-t-10" [(ngModel)]="checked"></mat-checkbox>
-    </div>
+    <mat-expansion-panel [expanded]="checked" [hideToggle]="true" [disabled]="true" class="m-t-10 m-b-20 pass-panel">
+      <mat-expansion-panel-header>
+        <div class="flex-row-left">
+          <p class="m-lr-10 text-force-black">{{'UserEdit.DeleteUserCheckDesc' | translate}}</p>
+          <mat-checkbox class="m-t-14 m-t-10" [(ngModel)]="checked"></mat-checkbox>
+        </div>
+      </mat-expansion-panel-header>
+      <div class="flex-row-between no-p no-m">
+        <div class="w-70">
+          <form [formGroup]="formGroup">
+            <mat-form-field class="w-100">
+              <mat-label>{{"Login.password" | translate}}</mat-label>
+              <input matInput formControlName="Pass" [(ngModel)]="pass" [type]="'password'" (change)="checkPass()" placeholder="{{'Login.placeholder-pass' | translate}}">
+            </mat-form-field>
+          </form>
+        </div>
+        <div *ngIf="authorized === 1" class="h-80">
+          <mat-spinner diameter="50" color="accent"></mat-spinner>
+        </div>
+        <div *ngIf="authorized === -1">
+          <mat-error>{{"ErrorsAndWarns.Wrong-Pass" | translate }}</mat-error>
+        </div>
+      </div>
+    </mat-expansion-panel>
   </div>
   <!--Loading Spinner-->
-  <div *ngIf="loading" class="flex-center w-100" style="height: 150px">
+  <div *ngIf="loading && authorized" class="flex-center w-100" style="height: 150px">
     <mat-spinner color="warn"></mat-spinner>
   </div>
   <!--The user was deleted corectly-->
@@ -56,6 +76,6 @@
 <div mat-dialog-actions>
   <div class="flex-row-between w-100" *ngIf="!loading && !deleted">
     <button mat-raised-button (click)="onNoClick()">{{'New.Cancel' | translate}}</button>
-    <button mat-raised-button *ngIf="error === null" [disabled]="!checked" (click)="confirm()">{{'UserEdit.ConfirmDeleteUserButton' | translate}}</button>
+    <button mat-raised-button *ngIf="error === null" [disabled]="authorized !== 2" (click)="confirm()">{{'UserEdit.ConfirmDeleteUserButton' | translate}}</button>
   </div>
 </div>

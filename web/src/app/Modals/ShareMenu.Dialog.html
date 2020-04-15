@@ -9,8 +9,8 @@
       <mat-list-item *ngFor="let share of shares">
         <div class="flex-row-between w-100">
           <p>{{share.username}}</p>
-          <button mat-raised-button color="warn" class="h-80 m-t-10" *ngIf="share.username !== userData.userName" (click)="revokeShare(share.username)">Revoke share</button>
-          <div class="color-success you-marker" *ngIf="share.username === userData.userName">You</div>
+          <button mat-raised-button color="warn" class="h-80 m-t-10 w-120px" *ngIf="share.username !== userData.userName" (click)="revokeShare(share.username)">{{"KravEdit.RevokeShare" | translate}}</button>
+          <div class="color-success you-marker" *ngIf="share.username === userData.userName">{{"KravEdit.You" | translate}}</div>
         </div>
         <mat-divider></mat-divider>
       </mat-list-item>
@@ -22,12 +22,12 @@
   <form [formGroup]="formgroup" (ngSubmit)="addShare()">
     <div class="flex-row-evenlyer p-10">
       <mat-form-field class="w-100">
-        <mat-label>E-post til ny deling: </mat-label>
+        <mat-label>{{"KravEdit.EmailLabel" | translate}}</mat-label>
         <input id="email" matInput formControlName="email" [(ngModel)]="newShare" required placeholder="{{'Login.placeholder-email' |translate}}">
         <mat-icon matSuffix>mail</mat-icon>
         <mat-error *ngIf="formgroup.invalid">{{formgroup.errors}}</mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit" [disabled]="formgroup.invalid" class="h-80  m-t-10">Del</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="formgroup.invalid" class="h-80  m-t-10">{{"KravEdit.Share" | translate}}</button>
     </div>
   </form>
 </div>

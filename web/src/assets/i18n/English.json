@@ -97,7 +97,12 @@
     "Next-req": "Next Requirements",
     "Document": "Document",
     "NotReady": "The document will not be ready before all the requirements are accepted",
-    "GeneratingDoc": "Generating document, please wait"
+    "GeneratingDoc": "Generating document, please wait",
+    "ShareProjectTooltip" : "Share this project with other users",
+    "RevokeShare" :  "Revoke share",
+    "EmailLabel" : "Email for new share: ",
+    "You" : "You",
+    "Share" : "Share"
   },
   "ErrorsAndWarns": {
     "Wrong-Password" : "Wrong Email or password entered!",

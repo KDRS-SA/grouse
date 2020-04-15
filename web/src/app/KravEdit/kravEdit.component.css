@@ -171,3 +171,7 @@
   border-radius: 5px;
   box-shadow: 2px 2px 5px lightgrey;
 }
+
+.w-120px{
+  width: 120px;
+}

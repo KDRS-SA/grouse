@@ -97,7 +97,12 @@
     "Next-req": "Neste krav",
     "Document": "Dokument",
     "NotReady": "Documentet er ikkje klar til nedlasting før alle punkt er godkjente",
-    "GeneratingDoc": "Documentet blir generert venligst vent"
+    "GeneratingDoc": "Documentet blir generert venligst vent",
+    "ShareProjectTooltip" : "Del dette prosjektet med andre brukarar",
+    "RevokeShare" :  "Fjern Deling",
+    "EmailLabel" : "E-post til ny deling: ",
+    "You" : "Deg",
+    "Share" : "Del"
   },
   "ErrorsAndWarns": {
     "Wrong-Password" : "Feil e-post eller passord!",

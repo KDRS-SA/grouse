@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 // tslint:disable-next-line:max-line-length
 import {
-    MatCardModule, MatProgressBarModule,
+    MatCardModule, MatExpansionModule, MatProgressBarModule,
     MatProgressSpinnerModule, MatSelectModule,
     MatSliderModule,
     MatSnackBarModule,
@@ -89,7 +89,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                 }
             }
         ),
-        MatSelectModule
+        MatSelectModule,
+        MatExpansionModule
     ],
   providers: [],
   bootstrap: [AppComponent],

@@ -104,7 +104,11 @@
     "Document": "Dokument",
     "NotReady": "Documentet er ikke klar til nedlasting før alle punkter er godkjent",
     "GeneratingDoc": "Dokumentet genereres venligst vent",
-    "ShareProjectTooltip" : "Del dette prosjektet med andre brukere"
+    "ShareProjectTooltip" : "Del dette prosjektet med andre brukere",
+    "RevokeShare" :  "Fjern Deling",
+    "EmailLabel" : "Epost til ny deling: ",
+    "You" : "Deg",
+    "Share" : "Del"
   },
   "ErrorsAndWarns": {
     "Wrong-Password" : "Feil e-post eller passord!",
@@ -114,7 +118,8 @@
     "MustEnterEmail" : "Du må skrive inn en e-post",
     "InnvalidEmail" : "E-post er angitt på feil format!",
     "PasswordsDontMatch" : "Passordet er forskjellig i feltene, de må være like",
-    "WrongOldPass" : "Det gamle passordet er galt!"
+    "WrongOldPass" : "Det gamle passordet er galt!",
+    "Wrong-Pass" : "Passordet er feil!"
   },
   "Language": {
     "Language": "Bokmål"

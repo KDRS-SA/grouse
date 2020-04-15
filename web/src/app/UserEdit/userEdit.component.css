@@ -14,3 +14,11 @@
 .user-info-bottom{
   height: 40% !important;
 }
+
+.text-force-black{
+  color: black !important;
+}
+
+.pass-panel{
+  box-shadow: none;
+}
