@@ -5,7 +5,6 @@ import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
-
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -57,10 +58,12 @@ public class DocumentService
         processAllRequirements(asciiDoc, project);
         asciiDoc.close();
 
+        String formatTo = getFormatTo(extension);
+
         String convertCommand = "asciidoctor --backend docbook --out-file - ";
         convertCommand += filename + ".adoc";
         convertCommand += " | pandoc --from docbook --to ";
-        convertCommand += extension;
+        convertCommand += formatTo;
         convertCommand += " --output " + filename + "." + extension;
 
         // Approach taken from
@@ -79,7 +82,7 @@ public class DocumentService
                     "to " + extension);
             logger.error(e.toString());
         }
-        return Paths.get(filename+ "." + extension);
+        return Paths.get(filename + "." + extension);
     }
 
     /**
@@ -140,5 +143,19 @@ public class DocumentService
                     projectFunctionality.getFunctionalityNumber(), i + 1);
         }
         asciiDoc.endTable();
+    }
+
+    /**
+     * In some cases pandoc uses a word instead of file extension to determine
+     * the to file type. md -> markdown is an example of this
+     *
+     * @param extension The file extension
+     * @return the convert to command if the extension is not enough
+     */
+    private String getFormatTo(String extension) {
+        if (extension.equalsIgnoreCase("md")) {
+            return "markdown";
+        } else
+            return extension;
     }
 }

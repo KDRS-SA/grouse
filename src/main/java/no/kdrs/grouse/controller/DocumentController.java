@@ -17,18 +17,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.*;
+import static org.springframework.http.HttpHeaders.ACCEPT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -84,26 +87,33 @@ public class DocumentController {
     @GetMapping(SLASH + PROJECT + SLASH + PROJECT_NUMBER_PARAMETER + SLASH +
             DOCUMENT)
     public HttpEntity<byte[]> downloadProjectDocument(
-            HttpRequest request,
+            HttpServletRequest request,
             @PathVariable(PROJECT_NUMBER) UUID projectId) {
 
-        List<MediaType> accepts = request.getHeaders().getAccept();
+        String accept = request.getHeader(ACCEPT);
         String errorMessage = "Problem getting file for project (" +
                 projectId + ")";
 
-        for (MediaType mediaType : accepts) {
-            String extension = supportedFormats.get(mediaType.toString());
-            if (null != extension) {
-                try {
-                    return getDocument(
-                            documentService.createAsciiDocument(projectId,
-                                    extension), extension);
-                } catch (IOException e) {
-                    logger.error(errorMessage);
-                    throw new InternalException(errorMessage);
-                }
+        if (null == accept) {
+            accept = "application/vnd.oasis.opendocument.text";
+        }
+        if (accept.equalsIgnoreCase("*/*")) {
+            accept = "application/vnd.oasis.opendocument.text";
+        }
+
+        String extension = supportedFormats.get(accept);
+        if (null != extension) {
+            try {
+                return getDocument(
+                        documentService.createAsciiDocument(projectId,
+                                extension), accept);
+            } catch (IOException e) {
+                errorMessage += ". " + e.getMessage();
+                logger.error(errorMessage);
+                throw new InternalException(errorMessage);
             }
         }
+        errorMessage += ". " + accept + " is not an acceptable file format";
         logger.error(errorMessage);
         throw new InternalException(errorMessage);
     }
@@ -122,7 +132,7 @@ public class DocumentController {
         return getDocument(file, template.getTemplateName());
     }
 
-    private HttpEntity<byte[]> getDocument(Path file,  String contentType)
+    private HttpEntity<byte[]> getDocument(Path file, String contentType)
             throws IOException {
         Resource resource = new UrlResource(file.toUri());
         HttpHeaders responseHeaders = new HttpHeaders();
