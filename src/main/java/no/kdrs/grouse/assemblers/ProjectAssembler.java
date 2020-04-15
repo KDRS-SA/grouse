@@ -41,6 +41,9 @@ public class ProjectAssembler
         linksProject.add(linkTo(methodOn(DocumentController.class)
                 .downloadProjectDocument(null, project.getProjectId()))
                 .withRel(DOCUMENT));
+        linksProject.add(linkTo(methodOn(DocumentController.class)
+                .getSupportedFileFormats())
+                .withRel(SUPPORTED_FORMATS));
         linksProject.add(linkTo(methodOn(ProjectController.class)
                 .shareProject(project.getProjectId(),
                         USER_EMAIL_ADDRESS))
@@ -70,6 +73,9 @@ public class ProjectAssembler
             project.add(linkTo(methodOn(DocumentController.class)
                     .downloadProjectDocument(null, project.getProjectId()))
                     .withRel(DOCUMENT));
+            project.add(linkTo(methodOn(DocumentController.class)
+                    .getSupportedFileFormats())
+                    .withRel(SUPPORTED_FORMATS));
             project.add(linkTo(methodOn(ProjectController.class)
                     .shareProject(project.getProjectId(),
                             "{user email address}"))

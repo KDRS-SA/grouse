@@ -58,6 +58,9 @@ public class APIAssembler
             linksAPIDetail.add(linkTo(methodOn(ProjectController.class)
                     .getProjectsForUser(null))
                     .withRel(REL_PROJECT_LIST));
+            linksAPIDetail.add(linkTo(methodOn(DocumentController.class)
+                    .getSupportedFileFormats())
+                    .withRel(SUPPORTED_FORMATS));
             linksAPIDetail.add(linkTo(methodOn(TemplateController.class)
                     .getTemplates(null))
                     .withRel(REL_TEMPLATE_LIST));
