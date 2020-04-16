@@ -1506,3 +1506,43 @@ This results in the following payload:
         }
       }
     }
+
+
+## Downloading a document
+
+### Identifying supported formats
+
+Grouse can render the requirements document in various formats. The formats that grouse has tested it can render can be found by looking for a  supported-formats rel/href pair. This can be found either of the application root:
+
+    curl -X GET http://localhost:9294/grouse/ -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5'
+
+or when getting a project: 
+    
+    curl -X GET http://localhost:9294/grouse/project/e2e9643c-1a30-4eb5-b8e5-ba1dd0245397 -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5'
+    
+This will produce the following JSON:    
+     
+    {
+      "supportedFormats": {
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+        "application/vnd.oasis.opendocument.text": "odt",
+        "text/html": "html",
+        "application/pdf": "pdf",
+        "application/rtf": "rtf",
+        "text/asciidoc": "adoc",
+        "text/markdown": "md"
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/document/supported-formats"
+        }
+      }
+    }
+
+Other file formats can be added or removed using the _supported.formats_ property in _application.yml_.
+
+Grouse generates the requirements document at the same time the document is downloaded. To download the requirements document in a given format use the following command:
+
+    curl --output file.docx -v -H 'Accept: application/vnd.openxmlformats-officedocument.wordprocessingml.document' -X GET http://localhost:9294/grouse/project/37d6ea88-348f-4dea-a75e-e83a6bd3cc05/document -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5'  
+
+For the basic Noark template it takes about 3 seconds to generate and download the requirements document in each of the supported formats.
