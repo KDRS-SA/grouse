@@ -1,11 +1,10 @@
 # Grouse
 Grouse consists of both a REST-api and a web-based GUI.
 
-
 Grouse is a Java application so you need both maven and Java.
 Depending on which route you pick you might also need to install other
 dependencies.  The project is developed on a Linux machine with Apache Maven
-3.2.1 and Java 1.8. Please make sure both of these are installed before you
+3.6.0 and Java 11. Please make sure both of these are installed before you
 attempt to run the project. You can verify your versions with:
 
     mvn --version
@@ -51,6 +50,13 @@ successful
  	
  	Started GrouseApplication in 15.489 seconds (JVM running for 19.948)
 
+## Third party requirements
+
+Grouse requires the availability of the asciidoc and pandoc programs to generate the
+requirements document. The command grouse uses to generate the requirements document is:
+
+    asciidoctor --backend docbook --out-file - requirements.adoc |pandoc --from docbook --to odt  --output requirements.odt
+     
 ## API
 
 You should be able to see which REST calls are available from the logging 

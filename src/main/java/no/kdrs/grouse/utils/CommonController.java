@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
+import java.util.Map;
+
 import static no.kdrs.grouse.utils.Constants.NO_ACCESS_OTHER_USER;
 
 /**
@@ -48,6 +50,7 @@ public class CommonController {
     private ProjectFunctionalityAssembler projectFunctionalityAssembler;
     private ProjectRequirementAssembler projectRequirementAssembler;
     private TemplateFunctionalityAssembler templateFunctionalityAssembler;
+    private SupportedFormatAssembler supportedFormatAssembler;
 
     public CommonController(
             RoleValidator role,
@@ -68,7 +71,8 @@ public class CommonController {
             UserAssembler userAssembler,
             ProjectRequirementAssembler projectRequirementAssembler,
             TemplateRequirementAssembler templateRequirementAssembler,
-            ProjectFunctionalityAssembler projectFunctionalityAssembler) {
+            ProjectFunctionalityAssembler projectFunctionalityAssembler,
+            SupportedFormatAssembler supportedFormatAssembler) {
         this.role = role;
         this.pagedUserResourcesAssembler = pagedUserResourcesAssembler;
         this.pagedTemplateResourcesAssembler = pagedTemplateResourcesAssembler;
@@ -88,6 +92,7 @@ public class CommonController {
         this.templateRequirementAssembler = templateRequirementAssembler;
         this.projectFunctionalityAssembler = projectFunctionalityAssembler;
         this.projectRequirementAssembler = projectRequirementAssembler;
+        this.supportedFormatAssembler = supportedFormatAssembler;
     }
 
     public void checkAccess(String ownedBy) {
@@ -249,4 +254,10 @@ public class CommonController {
                 .body(aclAssembler.toModel(aclEntry));
     }
 
+    public ResponseEntity<LinksSupportedFormats>
+    addSupportedFormatsLinks(SupportedFormats supportedFormats,
+                             HttpStatus status) {
+        return ResponseEntity.status(status)
+                .body(supportedFormatAssembler.toModel(supportedFormats));
+    }
 }

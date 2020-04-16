@@ -1,105 +1,161 @@
 package no.kdrs.grouse.service;
 
-import no.kdrs.grouse.document.Document;
+import no.kdrs.grouse.document.AsciiDoc;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IDocumentService;
+import no.kdrs.grouse.service.interfaces.IProjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 import static no.kdrs.grouse.utils.Constants.GROUSE;
 
-/**
- * Created by tsodring on 10/28/17.
- */
 @Component
 @Transactional
 public class DocumentService
+        extends GrouseService
         implements IDocumentService {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(DocumentService.class);
+
+    private IProjectService projectService;
     @Value("${storage.location}")
     private String storageLocation;
 
-    @Override
-    public void createDocument(Project project) throws IOException {
+    public DocumentService(IProjectService projectService) {
+        this.projectService = projectService;
+    }
 
+    @Override
+    public Path createAsciiDocument(UUID projectId, String extension)
+            throws IOException {
+        checkAccess(projectId);
+        Project project = projectService.findById(projectId);
         String filename = storageLocation + File.separator +
-                GROUSE + "-" + project.getProjectId().toString() + ".docx";
-        project.setFileNameInternal(filename);
-        FileOutputStream file = new FileOutputStream(filename);
-        Document document = new Document(file);
-        processRequirements(document, project);
-        document.close();
-        file.flush();
-        file.close();
-        // TODO: Temp disabled so we can call multiple times
-        //project.setDocumentCreated(true);
+                GROUSE + "-" + project.getProjectId().toString();
+        // TODO: Remove filename internal. As filename is based on project,
+        //  based on UUID. It is settable automatically
+        project.setFileNameInternal(filename + ".adoc");
+
+        File file = new File(filename + ".adoc");
+        FileWriter fileWriter = new FileWriter(file);
+        AsciiDoc asciiDoc = new AsciiDoc(fileWriter);
+        asciiDoc.addSectionHeader(project.getProjectName(), 1);
+        asciiDoc.addHeader();
+        processAllRequirements(asciiDoc, project);
+        asciiDoc.close();
+
+        String formatTo = getFormatTo(extension);
+
+        String convertCommand = "asciidoctor --backend docbook --out-file - ";
+        convertCommand += filename + ".adoc";
+        convertCommand += " | pandoc --from docbook --to ";
+        convertCommand += formatTo;
+        convertCommand += " --output " + filename + "." + extension;
+
+        // Approach taken from
+        // https://stackoverflow.com/questions/5928225/how-to-make-pipes-work-with-runtime-exec
+        String[] cmd = {
+                "/bin/sh",
+                "-c",
+                convertCommand
+        };
+
+        try {
+            Process p = Runtime.getRuntime().exec(cmd);
+            p.waitFor();
+        } catch (RuntimeException | InterruptedException e) {
+            logger.error("Error converting " + filename + " from adoc format " +
+                    "to " + extension);
+            logger.error(e.toString());
+        }
+        return Paths.get(filename + "." + extension);
     }
 
     /**
-     * Populate the requirements document with details from the database
+     * Populate the requirements asciiDoc with details from the database
      *
-     * @param document The Word document
+     * @param asciiDoc The asciiDoc
      * @param project  An instance of the relevant Project object
      */
-    public void processRequirements(Document document, Project project) {
-
-        List<ProjectFunctionality> projectFunctionalities =
-                project.getReferenceProjectFunctionality();
-        processFunctionalities(document, project, projectFunctionalities);
+    public void processAllRequirements(AsciiDoc asciiDoc, Project project)
+            throws IOException {
+        Integer requirementNumber = 1;
+        processFunctionalities(asciiDoc, project,
+                requirementNumber,
+                project.getReferenceProjectFunctionality());
     }
 
     protected void processFunctionalities(
-            Document document, Project project,
-            List<ProjectFunctionality> projectFunctionalities) {
+            AsciiDoc asciiDoc, Project project,
+            Integer level, List<ProjectFunctionality> projectFunctionalities)
+            throws IOException {
+
+        level++;
 
         for (ProjectFunctionality projectFunctionality :
                 projectFunctionalities) {
-
             String title = projectFunctionality.getTitle();
-
-            if (null != title && title.length() == 1) {
-                document.addHeading1(title);
-            } else if (null != title && title.length() > 1) {
-                document.addHeading2(title);
-            }
-
+            asciiDoc.addSectionHeader(title, level);
             String description = projectFunctionality.getDescription();
             if (!projectFunctionality.getShowMe() && description != null) {
                 if (project.getOrganisationName() != null) {
                     description = description.replace("ORG_NAVN",
                             project.getOrganisationName());
-                    document.addText(description);
                 }
+                asciiDoc.addText(description);
             }
             if (projectFunctionality
                     .getReferenceProjectRequirement().size() > 0) {
-                processRequirements(document, projectFunctionality
-                                .getReferenceProjectRequirement(),
-                        projectFunctionality);
+                processRequirements(asciiDoc, projectFunctionality);
             }
             if (projectFunctionality
                     .getReferenceChildProjectFunctionality().size() > 0) {
-                processFunctionalities(document, project, projectFunctionality
-                        .getReferenceChildProjectFunctionality());
+                processFunctionalities(asciiDoc, project, level,
+                        projectFunctionality
+                                .getReferenceChildProjectFunctionality());
             }
+            asciiDoc.addPageBreak();
         }
     }
 
     protected void processRequirements(
-            Document document,
-            List<ProjectRequirement> projectRequirements,
-            ProjectFunctionality projectFunctionality) {
-        document.createTable(projectRequirements.size(), projectFunctionality);
-        for (ProjectRequirement projectRequirement : projectRequirements) {
-            document.addRow(projectRequirement);
+            AsciiDoc asciiDoc, ProjectFunctionality projectFunctionality)
+            throws IOException {
+        List<ProjectRequirement> projectRequirements = projectFunctionality
+                .getReferenceProjectRequirement();
+        asciiDoc.createTable(projectFunctionality.getTitle());
+        for (int i = 0; i < projectRequirements.size(); i++) {
+            asciiDoc.addRow(projectRequirements.get(i),
+                    projectFunctionality.getFunctionalityNumber(), i + 1);
         }
+        asciiDoc.endTable();
+    }
+
+    /**
+     * In some cases pandoc uses a word instead of file extension to determine
+     * the to file type. md -> markdown is an example of this
+     *
+     * @param extension The file extension
+     * @return the convert to command if the extension is not enough
+     */
+    private String getFormatTo(String extension) {
+        if (extension.equalsIgnoreCase("md")) {
+            return "markdown";
+        } else
+            return extension;
     }
 }
