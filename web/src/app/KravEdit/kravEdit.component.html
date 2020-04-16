@@ -18,14 +18,30 @@
       <button *ngIf="userData.currentProject.ownedBy === userData.userName" mat-button matTooltip="{{'KravEdit.ShareProjectTooltip' | translate}}" (click)="openShareMenu()">
         <span class="material-icons">share</span>
       </button>
-      <button mat-button (click)="enterUserEdit()">
-        <div class="flex-row-between">
-          <div class="flex-center">
-            <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+      <!--User Edit/Adminstration entering-->
+      <div *ngIf="userData._links['project-list-all'] === undefined">
+        <button mat-button (click)="enterUserEdit()">
+          <div class="flex-row-between">
+            <div class="flex-center">
+              <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+            </div>
+            <p>{{this.userData.userName}}</p>
           </div>
+        </button>
+      </div>
+      <div *ngIf="userData._links['project-list-all'] !== undefined">
+        <button mat-button (click)="enterAdminPage()">
+          <div class="flex-row-between">
+            <p>Admin</p>
+            <div class="flex-center">
+              <i class="material-icons flex-center navbar-icon icon-large">supervisor_account</i>
+            </div>
+          </div>
+        </button>
+        <button mat-button class="no-p" (click)="enterUserEdit()">
           <p>{{this.userData.userName}}</p>
-        </div>
-      </button>
+        </button>
+      </div>
       <button mat-button (click)="logout()">
         <div class="flex-column">
           <i class="material-icons flex-center navbar-icon">exit_to_app</i>

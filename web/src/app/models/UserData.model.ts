@@ -10,6 +10,7 @@ export class UserData {
   // tslint:disable-next-line:variable-name
   _links: Links;
   currentProject: Project;
+  defaultLang: string;
 
   constructor() {
     this.userName = '';
@@ -18,5 +19,6 @@ export class UserData {
     this.nav = '';
     this._links = null;
     this.currentProject = null;
+    this.defaultLang = 'Bokmål';
   }
 }

@@ -1,0 +1,75 @@
+<mat-toolbar class="flex-row-between" color="primary" style="padding: 0">
+  <div class="flex-row-left">
+    <div class="flex-row-evenlyer">
+      <button class="no-p" mat-button (click)="goToMainMenu()">
+        <div class="flex-row-left no-m">
+          <div class="flex-row-evenlyer no-m">
+            <div class="flex-column flex-center">
+              <div class="Grouse-Avatar"></div>
+            </div>
+            <p>Grouse</p>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="flex-row-right">
+    <div class="flex-row-between">
+      <button mat-button (click)="enterUserEdit()">
+        <div class="flex-row-between">
+          <div class="flex-center">
+            <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+          </div>
+          <p>{{this.userData.userName}}</p>
+        </div>
+      </button>
+      <button mat-button (click)="logout()">
+        <div class="flex-column">
+          <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+          <p class="no-m">{{'KravEdit.Logout' | translate}}</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<div class="main-div">
+  <div class="secondary-div">
+    <mat-card>
+      <!--List of users with search functionality-->
+      <mat-tab-group>
+        <mat-tab (select)="usermode = true" label="Brukere">
+          <mat-form-field class="w-70 search-bar m-lr-10 m-t-10">
+            <mat-label>Søk:</mat-label>
+            <input type="email" matInput [(ngModel)]="searchUser" placeholder="Søk etter bruker" (change)="getListOfUsers()">
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <div class="list-div">
+            <mat-list>
+              <div *ngFor="let user of listOfUsers">
+                <button mat-button class="w-100" >
+                  <mat-list-item class="w-100 no-p">
+                    <div class="w-100 flex-row-between">
+                      <p>{{user.username}}</p>
+                      <i *ngIf="" class="material-icons flex-center navbar-icon">check</i>
+                    </div>
+                    <mat-divider></mat-divider>
+                  </mat-list-item>
+                </button>
+              </div>
+            </mat-list>
+          </div>
+        </mat-tab>
+        <!--List of projects with search functionality-->
+        <mat-tab (select)="usermode = false" label="Prosjekter">
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
+  <div class="secondary-div">
+    <mat-card>
+      <mat-card-header>
+        <h3>Detaljer :</h3>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</div>

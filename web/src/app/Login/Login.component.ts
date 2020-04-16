@@ -1,13 +1,13 @@
-import {Component, Inject, inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Animations} from '../app.animations';
-import {FormGroup, FormBuilder, FormControl, Validators, CheckboxRequiredValidator} from '@angular/forms';
+import {FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {RegisterModel} from '../models/register.model';
 import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {UserData} from '../models/UserData.model';
 import {MatSnackBar} from '@angular/material';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from "@ngx-translate/core";
 import {startUrl} from '../common';
 import {Links} from '../models/links.model';
@@ -52,18 +52,27 @@ export class LoginComponent implements  OnInit {
   private userData: UserData;
   private snackBar: MatSnackBar;
 
+  // Email validator
   email = new FormControl('',
     [Validators.required, Validators.email]);
 
   @Input()
   Checked: boolean;
 
+  /**
+   * getErrorMessage
+   * Fetches error message for the form to display if not valid
+   */
   getErrorMessage() {
     // @ts-ignore
     // tslint:disable-next-line:max-line-length
     return this.email.hasError('required') ? this.translate.get('ErrorsAndWarns.MustEnterEmail').value : this.email.hasError('email') ? this.translate.get('ErrorsAndWarns.InnvalidEmail').value : '';
   }
 
+  /**
+   * ngOnInit
+   * Runs inital code for the page when it loads, builds form validators and fetches userData from local storage
+   */
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       email: [this.regUser.email, [
@@ -98,16 +107,18 @@ export class LoginComponent implements  OnInit {
     console.log(this.userData);
   }
 
+  /**
+   * ReadGDPR
+   * Opens the dialogbox containing the GDPR statment
+   */
   ReadGDPR() {
-    console.log('Read GDPR TEST');
-    const dialogRef = this.dialog.open(GDPRContent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(GDPRContent);
   }
 
-  // Creates a new user
+  /**
+   * registerSubmitt
+   * Sends a request to the server requesting the creation of a new user with information from this class that is edited by the user
+   */
   registerSubmit() {
     console.log('New user request called with e-mail: ' + this.regUser.email);
     this.shake = false;
@@ -140,14 +151,20 @@ export class LoginComponent implements  OnInit {
     }
   }
 
+  /**
+   * loginSubmit
+   * Sends a request for an auth token with supplied information from the user
+   */
   loginSubmit() {
     // Resolves an error where refreshed user might have gotten an error due to unwanted data retention
     if (this.userData.oauthClientSecret !== 'secret') {
       this.userData.oauthClientSecret = 'secret';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
     }
+
     console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData._links['login OAuth2'].href);
     this.shake = false; // Resets the shake animation
+
     // Sends login info to the server
 
     // Constructs the parameters that will be sendt to the server
@@ -182,6 +199,10 @@ export class LoginComponent implements  OnInit {
     );
   }
 
+  /**
+   * getFurtherApiDetails
+   * Fetches API details requried after the user has signed in this is then used in the menu.component
+   */
   getFurtherApiDetails() {
     this.http.get<IAPIResponse>(startUrl, {
       headers: new HttpHeaders({
@@ -199,8 +220,23 @@ export class LoginComponent implements  OnInit {
     });
   }
 
+  /**
+   * changeMode
+   * Swithces between
+   */
   public changeMode() {
     this.login = !this.login;
+  }
+
+  /**
+   * changeLang
+   * Changes the current language to the inputed via the lang parameter
+   * @param lang The language to change into
+   */
+  changeLang(lang: string) {
+    this.translate.use(lang);
+    this.userData.defaultLang = lang;
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
   }
 }
 
@@ -212,17 +248,28 @@ export class GDPRContent {
   constructor(public dialogRef: MatDialogRef<GDPRContent>) {
   }
 
+  /**
+   * Is called once the dialog closes in this instance it will just close the dialog
+   */
   OnNoClick() {
     this.dialogRef.close();
   }
 
 }
 
+/**
+ * INewUser
+ * Contains two strings, the password and the username(email)
+ */
 interface INewUser {
   username: string;
   password: string;
 }
 
+/**
+ * IAPIResponse
+ * AN interface that represents what the client expects when it asks for API-details
+ */
 interface IAPIResponse {
   _links: Links;
 }

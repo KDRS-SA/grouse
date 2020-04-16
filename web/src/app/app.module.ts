@@ -21,7 +21,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import {DeleteProjectDialog, MenuComponent, NewProjectDialog} from './Menu/menu.component';
 import {AppComponent} from './app.component';
-import {Data} from './data.service';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -34,6 +33,7 @@ import {DeleteUserDialog, PasswordChangeConfirmedDialog, userEditComponent} from
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {adminComponent} from "./Admin/Admin.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -52,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteProjectDialog,
     PasswordChangeConfirmedDialog,
     DeleteUserDialog,
-    ShareMenu
+    ShareMenu,
+    adminComponent
   ],
     imports: [
         BrowserModule,
@@ -67,7 +68,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         HttpClientModule,
         AppRoutingModule,
         MatProgressSpinnerModule,
-        Data,
         MatSnackBarModule,
         MatToolbarModule,
         MatListModule,

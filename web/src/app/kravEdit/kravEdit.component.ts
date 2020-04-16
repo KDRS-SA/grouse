@@ -59,14 +59,34 @@ export class kravEditComponent implements OnInit {
     translate.setDefaultLang('Bokmål');
   }
 
+  /**
+   * enterUserEdit
+   * Opens the user edit page
+   */
   enterUserEdit() {
     this.userData.nav = 'userEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/userEdit']);
   }
 
+  /**
+   * enterAdminPage
+   * Opens the administration page, only available to admins
+   */
+  enterAdminPage() {
+    if (this.userData._links["project-list-all"] === undefined){
+      // The button should not be visible unless you have admin privileges
+      console.warn('This user does not have admin privileges, you shouldt have been able to do this please contact an administrator!');
+    } else {
+      this.userData.nav = 'Admin';
+      localStorage.setItem('UserData', JSON.stringify(this.userData));
+      this.router.navigate(['/Admin'])
+    }
+  }
+
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
+    this.translate.setDefaultLang(this.userData.defaultLang);
     this.projectLink = this.userData.currentProject._links.function.href;
     console.log(this.userData.currentProject._links.function.href);
     this.fetchMainData();
@@ -241,6 +261,10 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * downloadDocument
+   * Downloads the document from the server to the users local machine
+   */
   downloadDocument() {
     console.log(this.userData.currentProject);
     this.http.get(this.userData.currentProject._links.document.href, {
@@ -741,6 +765,10 @@ export class kravEditComponent implements OnInit {
     this.statpageData.loaded = true;
   }
 
+  /**
+   * openShareMenu
+   * Opens a dialog where the user can add or remove other users from having acces to the current project*
+   */
   openShareMenu() {
     this.dialog.open(ShareMenu, {
       data: this.userData,
@@ -784,7 +812,10 @@ export class DeleteRequirmentDialog {
     '../common.css'
   ]
 })
-// tslint:disable-next-line:component-class-suffix
+/**
+ * ShareMenu
+ * The dialog where a user can select other users to partake in the work of a project
+ */
 export class ShareMenu {
   private http: HttpClient;
   private userData: UserData;
@@ -792,6 +823,13 @@ export class ShareMenu {
   private formgroup: FormGroup;
   private newShare: string;
 
+  /**
+   * ShareMenuConstructor
+   * @param dialogRef This dialogrefrence
+   * @param data Data wich the dialog can use, in this case the userData
+   * @param http The HTTP Client wich the dialog will use to comunicate with the server
+   * @param formBuilder The form Builder wich will be used to validate that the user enters valid emails
+   */
   constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: UserData, http: HttpClient, private formBuilder: FormBuilder) {
     this.userData = data;
     this.http = http;

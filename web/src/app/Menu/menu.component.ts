@@ -52,6 +52,7 @@ export class MenuComponent implements OnInit {
   getUserData() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
     console.log(this.userData);
+    this.translate.setDefaultLang(this.userData.defaultLang);
     this.getActiveProjects();
   }
 
@@ -201,6 +202,32 @@ export class MenuComponent implements OnInit {
    */
   getMyProjects(): Project[] {
     return this.projects.filter(project => project.ownedBy === this.userData.userName);
+  }
+
+  /**
+   * changeLang
+   * Changes the current language to the inputed via the lang parameter
+   * @param lang The language to change into
+   */
+  changeLang(lang: string) {
+    this.translate.use(lang);
+    this.userData.defaultLang = lang;
+    localStorage.setItem('UserData', JSON.stringify(this.userData));
+  }
+
+  /**
+   * enterAdminPage
+   * Opens the administration page, only available to admins
+   */
+  enterAdminPage() {
+    if (this.userData._links["project-list-all"] === undefined){
+      // The button should not be visible unless you have admin privileges
+      console.warn('This user does not have admin privileges, you shouldt have been able to do this please contact an administrator!');
+    } else {
+      this.userData.nav = 'Admin';
+      localStorage.setItem('UserData', JSON.stringify(this.userData));
+      this.router.navigate(['/Admin'])
+    }
   }
 }
 
