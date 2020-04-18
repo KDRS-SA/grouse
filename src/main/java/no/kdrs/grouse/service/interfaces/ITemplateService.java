@@ -1,6 +1,8 @@
 package no.kdrs.grouse.service.interfaces;
 
 
+import no.kdrs.grouse.model.AccessControl;
+import no.kdrs.grouse.model.GrouseUser;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.utils.PatchObjects;
@@ -28,7 +30,15 @@ public interface ITemplateService {
 
     List<Template> findByOwnedBy(String ownedBy);
 
-    TemplateFunctionality createFunctionality(@NotNull final UUID templateId,
-                                              @NotNull TemplateFunctionality
-                                                      templateFunctionality);
+    Page<Template> findAllForUser(Pageable page);
+
+    TemplateFunctionality createFunctionality(
+            @NotNull final UUID templateId,
+            @NotNull TemplateFunctionality templateFunctionality);
+
+    AccessControl shareTemplate(UUID templateId, String username);
+
+    Page<GrouseUser> getTemplateUsers(UUID templateId, Pageable pageable);
+
+    void deleteTemplateShare(UUID templateId, String username);
 }
