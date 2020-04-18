@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +25,6 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 @Table(name = TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME)
 @EntityListeners(AuditingEntityListener.class)
 public class TemplateFunctionality
-        extends RepresentationModel
         implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,8 +26,7 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 @Table(name = PROJECT_TABLE_NAME)
 @EntityListeners(AuditingEntityListener.class)
 @XmlRootElement
-public class Project
-        extends RepresentationModel<Project> {
+public class Project {
 
     private static final long serialVersionUID = 1L;
 
