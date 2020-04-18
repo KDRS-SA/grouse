@@ -1,6 +1,7 @@
 package no.kdrs.grouse.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,6 +14,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.xml.bind.annotation.XmlAccessType.FIELD;
 import static no.kdrs.grouse.utils.Constants.*;
@@ -94,6 +96,10 @@ public class TemplateRequirement
             referencedColumnName = FUNCTIONALITY_NUMBER)
     private TemplateFunctionality referenceFunctionality;
 
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
+    private Template referenceTemplate;
+
     public Long getRequirementId() {
         return requirementId;
     }
@@ -132,6 +138,14 @@ public class TemplateRequirement
 
     public void setFunctionality(TemplateFunctionality functionality) {
         this.referenceFunctionality = functionality;
+    }
+
+    public Template getReferenceTemplate() {
+        return referenceTemplate;
+    }
+
+    public void setReferenceTemplate(Template referenceTemplate) {
+        this.referenceTemplate = referenceTemplate;
     }
 
     public String getRequirementNumber() {

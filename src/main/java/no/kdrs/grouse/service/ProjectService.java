@@ -114,6 +114,7 @@ public class ProjectService
         Project project = getProjectOrThrow(projectId);
         project.addProjectFunctionality(projectFunctionality);
         projectFunctionality.setReferenceProject(project);
+        projectFunctionality.setOwnedBy(project.getOwnedBy());
         return projectFunctionalityRepository.save(projectFunctionality);
     }
 

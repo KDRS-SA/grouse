@@ -6,12 +6,9 @@ import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import no.kdrs.grouse.service.interfaces.ITemplateFunctionalityService;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,9 +23,6 @@ import java.util.Optional;
 public class TemplateFunctionalityService
         extends GrouseService
         implements ITemplateFunctionalityService {
-
-    private static final Logger logger =
-            LoggerFactory.getLogger(TemplateFunctionalityService.class);
 
     private ITemplateRequirementRepository templateRequirementRepository;
     private ITemplateFunctionalityRepository templateFunctionalityRepository;
@@ -73,14 +67,15 @@ public class TemplateFunctionalityService
     public TemplateRequirement createTemplateRequirement(
             Long templateFunctionalityId, TemplateRequirement templateRequirement) {
 
-        Optional<TemplateFunctionality> templateFunctionality =
+        Optional<TemplateFunctionality> templateFunctionalityOpt =
                 templateFunctionalityRepository.findById(templateFunctionalityId);
-        if (templateFunctionality.isPresent()) {
-            String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
-                    .getName();
-            templateRequirement.setOwnedBy(loggedInUser);
-            templateRequirement.setFunctionality(
-                    templateFunctionality.get());
+        if (templateFunctionalityOpt.isPresent()) {
+            TemplateFunctionality templateFunctionality =
+                    templateFunctionalityOpt.get();
+            templateRequirement.setOwnedBy(templateFunctionality.getOwnedBy());
+            templateRequirement.setFunctionality(templateFunctionality);
+            templateFunctionality.setReferenceTemplate(
+                    templateFunctionality.getReferenceTemplate());
         } else {
             throw new EntityNotFoundException(
                     "Cannot find TemplateFunctionality [" +
@@ -88,6 +83,28 @@ public class TemplateFunctionalityService
         }
 
         return templateRequirementRepository.save(templateRequirement);
+    }
+
+    @Override
+    public TemplateFunctionality createChildFunctionality(
+            Long templateFunctionalityId,
+            TemplateFunctionality incomingFunctionality) {
+        Optional<TemplateFunctionality> templateFunctionalityOpt =
+                templateFunctionalityRepository.findById(templateFunctionalityId);
+        if (templateFunctionalityOpt.isPresent()) {
+            TemplateFunctionality templateFunctionality =
+                    templateFunctionalityOpt.get();
+            incomingFunctionality.setOwnedBy(templateFunctionality.getOwnedBy());
+            incomingFunctionality
+                    .setReferenceParentFunctionality(templateFunctionality);
+            incomingFunctionality.setReferenceTemplate(templateFunctionality
+                    .getReferenceTemplate());
+        } else {
+            throw new EntityNotFoundException(
+                    "Cannot find TemplateFunctionality [" +
+                            templateFunctionalityId + "]");
+        }
+        return templateFunctionalityRepository.save(incomingFunctionality);
     }
 
 
@@ -124,12 +141,11 @@ public class TemplateFunctionalityService
     private TemplateFunctionality getTemplateFunctionalityOrThrow(
             @NotNull Long id)
             throws EntityNotFoundException, AccessDeniedException {
-        TemplateFunctionality templateFunctionality =
+        return
                 templateFunctionalityRepository.findById(id)
                         .orElseThrow(() ->
                                 new EntityNotFoundException(
                                         "No TemplateRequirement exists with Id "
                                                 + id));
-        return templateFunctionality;
     }
 }

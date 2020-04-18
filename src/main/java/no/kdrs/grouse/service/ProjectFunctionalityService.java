@@ -9,7 +9,6 @@ import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,17 +67,40 @@ public class ProjectFunctionalityService
     }
 
     @Override
+    public ProjectFunctionality createChildFunctionality(
+            Long projectFunctionalityId,
+            ProjectFunctionality incomingFunctionality) {
+        Optional<ProjectFunctionality> projectFunctionalityOpt =
+                projectFunctionalityRepository.findById(projectFunctionalityId);
+        if (projectFunctionalityOpt.isPresent()) {
+            ProjectFunctionality projectFunctionality =
+                    projectFunctionalityOpt.get();
+            incomingFunctionality.setOwnedBy(projectFunctionality.getOwnedBy());
+            incomingFunctionality
+                    .setReferenceParentFunctionality(projectFunctionality);
+            incomingFunctionality.setReferenceProject(projectFunctionality
+                    .getReferenceProject());
+        } else {
+            throw new EntityNotFoundException(
+                    "Cannot find ProjectFunctionality [" +
+                            projectFunctionalityId + "]");
+        }
+        return projectFunctionalityRepository.save(incomingFunctionality);
+    }
+
+    @Override
     public ProjectRequirement createProjectRequirement(
             Long projectFunctionalityId, ProjectRequirement projectRequirement) {
 
-        Optional<ProjectFunctionality> projectFunctionality =
+        Optional<ProjectFunctionality> projectFunctionalityOpt =
                 projectFunctionalityRepository.findById(projectFunctionalityId);
-        if (projectFunctionality.isPresent()) {
-            String loggedInUser = SecurityContextHolder.getContext().getAuthentication()
-                    .getName();
-            projectRequirement.setOwnedBy(loggedInUser);
-            projectRequirement.setReferenceFunctionality(
-                    projectFunctionality.get());
+        if (projectFunctionalityOpt.isPresent()) {
+            ProjectFunctionality projectFunctionality =
+                    projectFunctionalityOpt.get();
+            projectRequirement.setOwnedBy(projectFunctionality.getOwnedBy());
+            projectRequirement.setReferenceFunctionality(projectFunctionality);
+            projectRequirement.setReferenceProject(projectFunctionality
+                    .getReferenceProject());
         } else {
             throw new EntityNotFoundException(
                     "Cannot find ProjectFunctionality [" +
@@ -87,7 +109,6 @@ public class ProjectFunctionalityService
 
         return projectRequirementRepository.save(projectRequirement);
     }
-
 
     @Override
     public ProjectFunctionality updateProjectFunctionality(

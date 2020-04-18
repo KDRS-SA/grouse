@@ -17,6 +17,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
@@ -109,8 +110,10 @@ public class TemplateFunctionality
     @Column(name = VERSION)
     private Long version;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = TEMPLATE_PK_ID,
+            referencedColumnName = TEMPLATE_PK_ID)
     private Template referenceTemplate;
 
     // Link to parent TemplateFunctionality

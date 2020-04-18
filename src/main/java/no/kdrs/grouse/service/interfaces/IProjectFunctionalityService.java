@@ -21,6 +21,10 @@ public interface IProjectFunctionalityService {
     ProjectRequirement createProjectRequirement(
             Long functionalityNumber, ProjectRequirement projectRequirement);
 
+    ProjectFunctionality createChildFunctionality(
+            Long projectFunctionalityId,
+            ProjectFunctionality incomingFunctionality);
+
     ProjectFunctionality updateProjectFunctionality(PatchObjects patchObjects,
                                                     Long functionalityNumber)
             throws Exception;
