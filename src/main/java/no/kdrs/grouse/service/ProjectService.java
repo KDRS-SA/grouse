@@ -11,16 +11,13 @@ import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
-import no.kdrs.grouse.utils.RoleValidator;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +36,6 @@ public class ProjectService
         extends GrouseService
         implements IProjectService {
 
-    private EntityManager entityManager;
     private IProjectRequirementService projectRequirementService;
     private IProjectRepository projectRepository;
     private IGrouseUserRepository userRepository;
@@ -48,14 +44,12 @@ public class ProjectService
     private IProjectFunctionalityRepository projectFunctionalityRepository;
     private ITemplateService templateService;
     private ApplicationEventPublisher applicationEventPublisher;
-    private RoleValidator roleValidator;
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
             new ArrayList<>(Arrays.asList("projectName",
                     "fileNameInternal", "ownedBy"));
 
     public ProjectService(
-            EntityManager entityManager,
             IProjectRequirementService projectRequirementService,
             IProjectRepository projectRepository,
             IGrouseUserRepository userRepository,
@@ -63,9 +57,7 @@ public class ProjectService
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository,
             ITemplateService templateService,
-            ApplicationEventPublisher applicationEventPublisher,
-            RoleValidator roleValidator) {
-        this.entityManager = entityManager;
+            ApplicationEventPublisher applicationEventPublisher) {
         this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
@@ -74,23 +66,6 @@ public class ProjectService
         this.projectFunctionalityRepository = projectFunctionalityRepository;
         this.templateService = templateService;
         this.applicationEventPublisher = applicationEventPublisher;
-        this.roleValidator = roleValidator;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<ProjectRequirement> findByProjectIdOrderByProjectName(
-            UUID projectId, String functionalityNumber) {
-        String queryString =
-                "select p from ProjectRequirement as p where " +
-                        "p.referenceProject.projectId = :projectId " +
-                        "AND p.referenceFunctionality.functionalityNumber = " +
-                        ":functionalityNumber";
-
-        Query query = entityManager.createQuery(queryString);
-        query.setParameter("projectId", projectId);
-        query.setParameter("functionalityNumber", functionalityNumber);
-        return query.getResultList();
     }
 
     /**
@@ -276,11 +251,6 @@ public class ProjectService
         checkAccess(project.getProjectId());
         return (Project) handlePatch(getProjectOrThrow(projectId),
                 patchObjects);
-    }
-
-    @Override
-    public Page<Project> findByOwnedBy(String ownedBy, Pageable pageable) {
-        return projectRepository.findByOwnedBy(ownedBy, pageable);
     }
 
     @Override
