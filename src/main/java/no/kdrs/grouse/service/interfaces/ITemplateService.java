@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.UUID;
 
 public interface ITemplateService {
@@ -27,8 +26,6 @@ public interface ITemplateService {
     Template update(UUID id, PatchObjects patchObjects) throws Exception;
 
     void delete(UUID id);
-
-    List<Template> findByOwnedBy(String ownedBy);
 
     Page<Template> findAllForUser(Pageable page);
 
