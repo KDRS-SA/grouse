@@ -121,11 +121,6 @@ public class TemplateService
         return (Template) handlePatch(getTemplateOrThrow(id), patchObjects);
     }
 
-    @Override
-    public List<Template> findByOwnedBy(String ownedBy) {
-        return templateRepository.findByOwnedBy(ownedBy);
-    }
-
     /**
      * delete the template identified by the id. Find all children related to
      * the template. These are templateRequirements and templateFunctionality.
