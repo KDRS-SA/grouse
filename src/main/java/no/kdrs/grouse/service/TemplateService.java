@@ -7,8 +7,6 @@ import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,17 +22,11 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import static no.kdrs.grouse.utils.Constants.TEMPLATE;
 
-/**
- * Created by tsodring on 9/25/17.
- */
 @Service
 @Transactional
 public class TemplateService
         extends GrouseService
         implements ITemplateService {
-
-    private static final Logger logger =
-            LoggerFactory.getLogger(TemplateService.class);
 
     private ITemplateRepository templateRepository;
     private ITemplateRequirementRepository templateRequirementRepository;
@@ -43,7 +35,7 @@ public class TemplateService
 
     // Columns that it is possible to update via a PATCH request
     private ArrayList<String> allowableColumns =
-            new ArrayList<String>(Arrays.asList("templateName",
+            new ArrayList<>(Arrays.asList("templateName",
                     "fileNameInternal", "ownedBy"));
 
     public TemplateService(
@@ -96,7 +88,9 @@ public class TemplateService
 
     @Override
     public Template findById(@NotNull UUID id) {
-        return getTemplateOrThrow(id);
+        Template template = getTemplateOrThrow(id);
+        checkAccess(template.getTemplateId());
+        return template;
     }
 
 
@@ -118,7 +112,9 @@ public class TemplateService
     @Override
     public Template update(UUID id, PatchObjects patchObjects)
             throws EntityNotFoundException {
-        return (Template) handlePatch(getTemplateOrThrow(id), patchObjects);
+        Template template = getTemplateOrThrow(id);
+        checkAccess(template.getTemplateId());
+        return (Template) handlePatch(template, patchObjects);
     }
 
     /**
@@ -131,6 +127,7 @@ public class TemplateService
     @Override
     public void delete(UUID id) {
         Template template = getTemplateOrThrow(id);
+        checkOwner(template.getOwnedBy(), TEMPLATE);
         deleteFunctionalities(template.getReferenceTemplateFunctionality());
         templateRepository.delete(template);
     }
@@ -169,7 +166,6 @@ public class TemplateService
 
     @Override
     public AccessControl shareTemplate(UUID templateId, String username) {
-
         Template template = getTemplateOrThrow(templateId);
         checkOwner(template.getOwnedBy(), TEMPLATE);
         AccessControl accessControl = new AccessControl();
