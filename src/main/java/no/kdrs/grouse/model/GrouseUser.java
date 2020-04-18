@@ -1,6 +1,7 @@
 package no.kdrs.grouse.model;
 
 import no.kdrs.grouse.model.user.Authority;
+import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -134,6 +135,14 @@ public class GrouseUser
 
     public Long getVersion() {
         return version;
+    }
+
+    public void setVersion(Long version) {
+        if (!this.version.equals(version)) {
+            throw new ConcurrencyException(
+                    "Concurrency Exception. Old version [" + this.version +
+                            "], new version [" + version + "]");
+        }
     }
 
     @Override
