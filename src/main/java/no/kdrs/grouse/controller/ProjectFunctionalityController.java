@@ -1,6 +1,7 @@
 
 package no.kdrs.grouse.controller;
 
+import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.ProjectRequirement;
 import no.kdrs.grouse.model.links.LinksProjectFunctionality;
 import no.kdrs.grouse.model.links.LinksProjectRequirement;
@@ -60,7 +61,7 @@ public class ProjectFunctionalityController {
         return commonController.addPagedProjectRequirementLinks(
                 projectFunctionalityService.getRequirements(page,
                         projectFunctionalityId), OK);
- }
+    }
 
     @PostMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + REQUIREMENT)
     public ResponseEntity<LinksProjectRequirement> createProjectRequirement(
@@ -70,6 +71,16 @@ public class ProjectFunctionalityController {
                 projectFunctionalityService.
                         createProjectRequirement(projectFunctionalityId,
                                 projectRequirement), CREATED);
+    }
+
+    @PostMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
+    public ResponseEntity<LinksProjectFunctionality> createProjectFunctionality(
+            @PathVariable(FUNCTIONALITY) Long projectFunctionalityId,
+            @RequestBody ProjectFunctionality projectFunctionality) {
+        return commonController.addProjectFunctionalityLinks(
+                projectFunctionalityService.
+                        createChildFunctionality(projectFunctionalityId,
+                                projectFunctionality), CREATED);
     }
 
     @PatchMapping(value = FUNCTIONALITY_PARAMETER)
