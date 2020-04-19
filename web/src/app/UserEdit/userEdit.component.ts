@@ -118,6 +118,7 @@ export class userEditComponent implements  OnInit {
    * After all checks have been fulfilled sends a request to the server to update the password of the current user
    */
   submittNewPassword() {
+    console.log([{op: 'replace', path: '/password', value: this.newPassword}]);
     this.http.patch(this.userData._links.konto.href, [{op: 'replace', path: '/password', value: this.newPassword}], {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret

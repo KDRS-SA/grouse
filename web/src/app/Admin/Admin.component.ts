@@ -32,6 +32,7 @@ export class adminComponent {
   private usermode: boolean;
   private selectedUser: User;
   private selectedProject: Project;
+  private usersOfThisProject: User[];
 
   constructor(http: HttpClient, router: Router, dialogBox: MatDialog, public translate: TranslateService) {
     this.http = http;
@@ -59,6 +60,10 @@ export class adminComponent {
     this.getListOfProjects();
   }
 
+  /**
+   * getListOfUsers
+   * Fetches list from server of all users
+   */
   getListOfUsers() {
     this.http.get(this.userData._links["create-user"].href, {
       headers: new HttpHeaders({
@@ -78,16 +83,40 @@ export class adminComponent {
     });
   }
 
-  selectThisUser(username: string) {
+  /**
+   * selectThisUserName
+   * Selects a user with given username
+   * @param inn The username of the user to switch to
+   */
+  selectThisUserName(inn: string) {
+    this.selectThisUser(this.listOfUsers.find(user => user.username === inn));
+  }
+
+  /**
+   * selectThisUser
+   * Selects a given user
+   * @param inn the user to select
+   */
+  selectThisUser(inn: User) {
     this.usermode = true;
-    this.selectedUser = this.listOfUsers.find(user => user.username === username);
+    this.selectedUser = inn;
   }
 
-  selectThisProject(id: string) {
+  /**
+   * selectThisProject
+   * Selects a given project
+   * @param inn the project to select
+   */
+  selectThisProject(inn: Project) {
     this.usermode = false;
-    this.selectedProject = this.listOfProjects.find(project => project.projectId === id);
+    this.selectedProject = inn;
+    this.getUsersAssociatedWithProject(inn);
   }
 
+  /**
+   * getListOfProjects
+   * Fetches a list of all projects from the server
+   */
   getListOfProjects() {
     this.http.get(this.userData._links["project-list-all"].href, {
       headers: new HttpHeaders({
@@ -96,12 +125,41 @@ export class adminComponent {
     }).subscribe(result => {
       if (this.searchProject !== "") {
         // @ts-ignore
-        this.listOfProjects = result._embedded.projects.filter(project => project.projectName.includes(this.searchUser));
+        this.listOfProjects = result._embedded.projects.filter(project => project.projectName.includes(this.searchProject));
       } else {
         // @ts-ignore
         this.listOfProjects = result._embedded.projects;
       }
       console.log(this.listOfProjects);
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  /**
+   * filterProjectsByUser
+   * Returns a list of projects filtered by the current selected user
+   */
+  filterProjectsByUser(): Project[] {
+    return this.listOfProjects.filter(project => project.ownedBy === this.selectedUser.username);
+  }
+
+  /**
+   * getUsersAssociatedWithProject
+   * Fetches users that are associated with the current project including shares
+   * @param project wich project to find users of
+   */
+  getUsersAssociatedWithProject(project: Project){
+    // Resets the the array of users so that a loading spinner can be displayed
+    this.usersOfThisProject = null;
+    this.http.get(project._links.access.href, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      // @ts-ignore
+      this.usersOfThisProject = result._embedded.users;
+      // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.error(error);
     });

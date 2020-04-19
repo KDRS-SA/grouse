@@ -26,3 +26,30 @@
   background-color: whitesmoke;
   margin-top: 10px;
 }
+
+.details{
+  height: 470px;
+}
+
+.projects-and-users-minibox{
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px gray;
+  height: 190px;
+  width: 95%;
+  background-color: whitesmoke;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
+  align-content: flex-start;
+}
+
+.box-button{
+  height: 50px;
+  margin: 5px;
+}
+
+.h-50{
+  height: 50px;
+}

@@ -34,10 +34,11 @@
 </mat-toolbar>
 <div class="main-div">
   <div class="secondary-div">
+
     <mat-card>
       <!--List of users with search functionality-->
-      <mat-tab-group>
-        <mat-tab (select)="usermode = true" label="Brukere">
+      <mat-tab-group [selectedIndex]="usermode ? 0 : 1">
+        <mat-tab label="Brukere">
           <mat-form-field class="w-70 search-bar m-lr-10 m-t-10">
             <mat-label>Søk:</mat-label>
             <input type="email" matInput [(ngModel)]="searchUser" placeholder="Søk etter bruker" (change)="getListOfUsers()">
@@ -46,11 +47,11 @@
           <div class="list-div">
             <mat-list>
               <div *ngFor="let user of listOfUsers">
-                <button mat-button class="w-100" >
+                <button mat-button class="w-100" (click)="selectThisUser(user)">
                   <mat-list-item class="w-100 no-p">
                     <div class="w-100 flex-row-between">
                       <p>{{user.username}}</p>
-                      <i *ngIf="" class="material-icons flex-center navbar-icon">check</i>
+                      <i *ngIf="selectedUser === user" class="material-icons flex-center navbar-icon">check</i>
                     </div>
                     <mat-divider></mat-divider>
                   </mat-list-item>
@@ -59,8 +60,29 @@
             </mat-list>
           </div>
         </mat-tab>
+
         <!--List of projects with search functionality-->
-        <mat-tab (select)="usermode = false" label="Prosjekter">
+        <mat-tab label="Prosjekter">
+          <mat-form-field class="w-70 search-bar m-lr-10 m-t-10">
+            <mat-label>Søk:</mat-label>
+            <input type="text" matInput [(ngModel)]="searchProject" placeholder="Søk etter prosjekt" (change)="getListOfProjects()">
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <div class="list-div">
+            <mat-list>
+              <div *ngFor="let project of listOfProjects">
+                <button mat-button class="w-100" (click)="selectThisProject(project)">
+                  <mat-list-item class="w-100 no-p">
+                    <div class="w-100 flex-row-between">
+                      <p>{{project.projectName}}</p>
+                      <i *ngIf="selectedProject === project" class="material-icons flex-center navbar-icon">check</i>
+                    </div>
+                    <mat-divider></mat-divider>
+                  </mat-list-item>
+                </button>
+              </div>
+            </mat-list>
+          </div>
         </mat-tab>
       </mat-tab-group>
     </mat-card>
@@ -70,6 +92,114 @@
       <mat-card-header>
         <h3>Detaljer :</h3>
       </mat-card-header>
+      <mat-card-content>
+        <!--Showing user details-->
+        <div *ngIf="this.usermode" class="details">
+          <!--User info-->
+          <div *ngIf="selectedUser !== undefined">
+            <div>
+              <mat-list>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>Brukernavn: </p>
+                    <p>{{selectedUser.username}}</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>Bruker aktiv: </p>
+                    <p *ngIf="selectedUser.accountNonExpired">Ja</p>
+                    <p *ngIf="!selectedUser.accountNonExpired">Nei</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>Passord utgått: </p>
+                    <p *ngIf="!selectedUser.accountNonExpired">Ja</p>
+                    <p *ngIf="selectedUser.accountNonExpired">Nei</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>Bruker utgått: </p>
+                    <p *ngIf="!selectedUser.accountNonExpired">Ja</p>
+                    <p *ngIf="selectedUser.accountNonExpired">Nei</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>Slett bruker: </p>
+                    <button mat-raised-button color="warn" class="h-80 m-t-10">Slett bruker</button>
+                  </div>
+                </mat-list-item>
+                <!--List of projects for this user-->
+                <mat-label>Prosjekter denne brukeren eier:</mat-label>
+                <div class="projects-and-users-minibox">
+                  <button mat-raised-button class="box-button" *ngFor="let project of filterProjectsByUser()" (click)="selectThisProject(project)">
+                    {{project.projectName}}
+                  </button>
+                </div>
+              </mat-list>
+            </div>
+          </div>
+          <!--If no user is selected-->
+          <div *ngIf="selectedUser === undefined" class="flex-center flex-column">
+            <p>Venligst velg en bruker fra listen til venstre.</p>
+          </div>
+        </div>
+        <!--Showing project details-->
+        <div *ngIf="!this.usermode && searchProject !== undefined" class="details">
+          <mat-list>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>Prosjekt ID: </p>
+                <p>{{selectedProject.projectId}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>Prosjekt navn: </p>
+                <p>{{selectedProject.projectName}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>Opprettet : </p>
+                <p>{{selectedProject.createdDate}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>Sist modifisert: </p>
+                <p>{{selectedProject.lastModifiedDate}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>Eid av: </p>
+                <button mat-raised-button class="m-t-10 h-80" (click)="selectThisUserName(selectedProject.ownedBy)">{{selectedProject.ownedBy}}</button>
+              </div>
+            </mat-list-item>
+            <mat-label>Brukere som har tilgang til dette prosjektet:</mat-label>
+            <div class="projects-and-users-minibox">
+              <div *ngFor="let user of usersOfThisProject" class="h-50 m-t-10 rounded w-100 flex-row-between">
+                <button (click)="selectThisUserName(user.username)" mat-raised-button class="w-70">
+                  {{user.username}}
+                </button>
+                <button class="h-80 box-button" mat-flat-button color="warn">Fjern Deling</button>
+              </div>
+            </div>
+          </mat-list>
+        </div>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
