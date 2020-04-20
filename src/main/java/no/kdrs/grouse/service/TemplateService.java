@@ -1,5 +1,6 @@
 package no.kdrs.grouse.service;
 
+import no.kdrs.grouse.listeners.GrouseEvent;
 import no.kdrs.grouse.model.*;
 import no.kdrs.grouse.persistence.IGrouseUserRepository;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
@@ -7,6 +8,7 @@ import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class TemplateService
     private final ITemplateRequirementRepository templateRequirementRepository;
     private final ITemplateFunctionalityRepository templateFunctionalityRepository;
     private final IGrouseUserRepository userRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     // Columns that it is possible to update via a PATCH request
     private final ArrayList<String> allowableColumns =
@@ -42,11 +45,13 @@ public class TemplateService
             ITemplateRepository templateRepository,
             ITemplateRequirementRepository templateRequirementRepository,
             ITemplateFunctionalityRepository templateFunctionalityRepository,
-            IGrouseUserRepository userRepository) {
+            IGrouseUserRepository userRepository,
+            ApplicationEventPublisher applicationEventPublisher) {
         this.templateRepository = templateRepository;
         this.templateRequirementRepository = templateRequirementRepository;
         this.templateFunctionalityRepository = templateFunctionalityRepository;
         this.userRepository = userRepository;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     /**
@@ -107,6 +112,10 @@ public class TemplateService
      */
     @Override
     public Template createTemplate(Template template) {
+        template.setTemplateId(randomUUID());
+        template.setOwnedBy(getUser());
+        template = templateRepository.save(template);
+        applicationEventPublisher.publishEvent(new GrouseEvent(this, template));
         return templateRepository.save(template);
     }
 
