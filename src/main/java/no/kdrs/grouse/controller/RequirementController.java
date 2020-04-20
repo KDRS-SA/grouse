@@ -6,28 +6,18 @@ import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 
-/**
- * Created by tsodring on 9/25/17.
- */
 @RestController
 @RequestMapping(value = SLASH + REQUIREMENT)
 public class RequirementController {
 
-    private ITemplateRequirementService requirementService;
+    private final ITemplateRequirementService requirementService;
 
     RequirementController(ITemplateRequirementService requirementService) {
         this.requirementService = requirementService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<TemplateRequirement>> getRequirements() {
-        return ResponseEntity.status(OK).
-                body(requirementService.findAll());
     }
 
     @GetMapping(value = "/{" + REQUIREMENT + ":.+}")
@@ -36,14 +26,6 @@ public class RequirementController {
         return ResponseEntity.status(OK)
                 .body(requirementService.
                         findById(requirementNumber));
-    }
-
-    @PostMapping
-    public ResponseEntity<TemplateRequirement> saveRequirement(
-            @RequestBody TemplateRequirement templateRequirement) {
-        return ResponseEntity.status(CREATED)
-                .eTag(templateRequirement.getVersion().toString())
-                .body(requirementService.save(templateRequirement));
     }
 
     @PatchMapping(value = SLASH + REQUIREMENT_PARAMETER)

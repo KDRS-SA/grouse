@@ -24,18 +24,17 @@ public class TemplateFunctionalityService
         extends GrouseService
         implements ITemplateFunctionalityService {
 
-    private ITemplateRequirementRepository templateRequirementRepository;
-    private ITemplateFunctionalityRepository templateFunctionalityRepository;
+    private final ITemplateRequirementRepository templateRequirementRepository;
+    private final ITemplateFunctionalityRepository templateFunctionalityRepository;
 
     // Columns that it is possible to update via a PATCH request
-    private ArrayList<String> allowableColumns =
+    private final ArrayList<String> allowableColumns =
             new ArrayList<>(Arrays.asList("title", "processed", "ownedBy",
                     "functionalityNumber"));
 
-    public TemplateFunctionalityService(ITemplateRequirementRepository
-                                                templateRequirementRepository,
-                                        ITemplateFunctionalityRepository
-                                                templateFunctionalityRepository) {
+    public TemplateFunctionalityService(
+            ITemplateRequirementRepository templateRequirementRepository,
+            ITemplateFunctionalityRepository templateFunctionalityRepository) {
         this.templateRequirementRepository = templateRequirementRepository;
         this.templateFunctionalityRepository = templateFunctionalityRepository;
     }
@@ -51,7 +50,8 @@ public class TemplateFunctionalityService
             Pageable pageable, Long templateFunctionalityId) {
         return templateFunctionalityRepository
                 .findByReferenceParentFunctionality(pageable,
-                        getTemplateFunctionalityOrThrow(templateFunctionalityId));
+                        getTemplateFunctionalityOrThrow(
+                                templateFunctionalityId));
     }
 
     @Override
@@ -81,7 +81,6 @@ public class TemplateFunctionalityService
                     "Cannot find TemplateFunctionality [" +
                             templateFunctionalityId + "]");
         }
-
         return templateRequirementRepository.save(templateRequirement);
     }
 
@@ -107,7 +106,6 @@ public class TemplateFunctionalityService
         return templateFunctionalityRepository.save(incomingFunctionality);
     }
 
-
     @Override
     public TemplateFunctionality updateTemplateFunctionality(
             PatchObjects patchObjects, Long requirementNumber) {
@@ -129,14 +127,15 @@ public class TemplateFunctionalityService
     /**
      * Internal helper method. Rather than having a find and try catch in
      * multiple methods, we have it here once. If you call this, be aware
-     * that you will only ever get a valid Template back. If there is no valid
-     * TemplateRequirement, a EntityNotFoundException exception is thrown
+     * that you will only ever get a valid TemplateFunctionality back. If
+     * there is no valid TemplateFunctionality, a EntityNotFoundException
+     * exception is thrown.
      * <p>
      * We also check that you only can access things you own. If you try
      * to access an object you don't own, then a AccessDeniedException is thrown.
      *
-     * @param id The id  of the TemplateRequirement object to retrieve
-     * @return the TemplateRequirement object
+     * @param id The id  of the TemplateFunctionality object to retrieve
+     * @return the TemplateFunctionality object
      */
     private TemplateFunctionality getTemplateFunctionalityOrThrow(
             @NotNull Long id)
@@ -145,7 +144,7 @@ public class TemplateFunctionalityService
                 templateFunctionalityRepository.findById(id)
                         .orElseThrow(() ->
                                 new EntityNotFoundException(
-                                        "No TemplateRequirement exists with Id "
-                                                + id));
+                                        "No TemplateFunctionality exists with" +
+                                                " Id " + id));
     }
 }

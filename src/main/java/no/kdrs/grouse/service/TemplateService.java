@@ -28,15 +28,15 @@ public class TemplateService
         extends GrouseService
         implements ITemplateService {
 
-    private ITemplateRepository templateRepository;
-    private ITemplateRequirementRepository templateRequirementRepository;
-    private ITemplateFunctionalityRepository templateFunctionalityRepository;
-    private IGrouseUserRepository userRepository;
+    private final ITemplateRepository templateRepository;
+    private final ITemplateRequirementRepository templateRequirementRepository;
+    private final ITemplateFunctionalityRepository templateFunctionalityRepository;
+    private final IGrouseUserRepository userRepository;
 
     // Columns that it is possible to update via a PATCH request
-    private ArrayList<String> allowableColumns =
-            new ArrayList<>(Arrays.asList("templateName",
-                    "fileNameInternal", "ownedBy"));
+    private final ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("templateName", "fileNameInternal",
+                    "ownedBy"));
 
     public TemplateService(
             ITemplateRepository templateRepository,
@@ -133,6 +133,12 @@ public class TemplateService
         templateRepository.delete(template);
     }
 
+    /**
+     * Note this assumes you have already done a check that you are allowed
+     * to delete the functionalities
+     *
+     * @param templateFunctionalities The list of functionalities to delete
+     */
     protected void deleteFunctionalities(
             List<TemplateFunctionality> templateFunctionalities) {
         for (TemplateFunctionality templateFunctionality :
@@ -153,6 +159,12 @@ public class TemplateService
         }
     }
 
+    /**
+     * Note this assumes you have already done a check that you are allowed
+     * to delete the requirements
+     *
+     * @param templateRequirements The list of requirements to delete
+     */
     protected void deleteRequirements(
             List<TemplateRequirement> templateRequirements) {
         for (TemplateRequirement templateRequirement : templateRequirements) {
@@ -185,9 +197,11 @@ public class TemplateService
     }
 
     @Override
-    public Page<GrouseUser> getTemplateUsers(UUID templateId, Pageable pageable) {
-        List<String> userList = aclService.getListUsers(templateId);
-        return userRepository.findByUsernameIn(userList, pageable);
+    public Page<GrouseUser> getTemplateUsers(
+            UUID templateId, Pageable pageable) {
+        checkAccess(templateId);
+        return userRepository.findByUsernameIn(
+                aclService.getListUsers(templateId), pageable);
     }
 
     /**

@@ -27,27 +27,25 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import static no.kdrs.grouse.utils.Constants.PROJECT;
 
-/**
- * Created by tsodring on 9/25/17.
- */
 @Service
 @Transactional
 public class ProjectService
         extends GrouseService
         implements IProjectService {
 
-    private IProjectRequirementService projectRequirementService;
-    private IProjectRepository projectRepository;
-    private IGrouseUserRepository userRepository;
-    private ACLService aclService;
-    private IProjectRequirementRepository projectRequirementRepository;
-    private IProjectFunctionalityRepository projectFunctionalityRepository;
-    private ITemplateService templateService;
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final IProjectRequirementService projectRequirementService;
+    private final IProjectRepository projectRepository;
+    private final IGrouseUserRepository userRepository;
+    private final ACLService aclService;
+    private final IProjectRequirementRepository projectRequirementRepository;
+    private final IProjectFunctionalityRepository projectFunctionalityRepository;
+    private final ITemplateService templateService;
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     // Columns that it is possible to update via a PATCH request
-    private ArrayList<String> allowableColumns =
-            new ArrayList<>(Arrays.asList("projectName",
-                    "fileNameInternal", "ownedBy"));
+    private final ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("projectName", "fileNameInternal",
+                    "ownedBy"));
 
     public ProjectService(
             IProjectRequirementService projectRequirementService,
@@ -112,6 +110,7 @@ public class ProjectService
     public ProjectFunctionality createFunctionality(
             UUID projectId, ProjectFunctionality projectFunctionality) {
         Project project = getProjectOrThrow(projectId);
+        checkAccess(projectId);
         project.addProjectFunctionality(projectFunctionality);
         projectFunctionality.setReferenceProject(project);
         projectFunctionality.setOwnedBy(project.getOwnedBy());
@@ -121,6 +120,7 @@ public class ProjectService
     @Override
     public Project updateProjectFinalised(UUID projectId) {
         Project project = getProjectOrThrow(projectId);
+        checkAccess(projectId);
         project.setDocumentCreated(true);
         project.setProjectComplete(true);
         return project;
@@ -309,7 +309,6 @@ public class ProjectService
 
     @Override
     public AccessControl shareProject(UUID projectId, String username) {
-
         Project project = getProjectOrThrow(projectId);
         checkOwner(project.getOwnedBy(), PROJECT);
         AccessControl accessControl = new AccessControl();
@@ -329,8 +328,9 @@ public class ProjectService
 
     @Override
     public Page<GrouseUser> getProjectUsers(UUID projectId, Pageable pageable) {
-        List<String> userList = aclService.getListUsers(projectId);
-        return userRepository.findByUsernameIn(userList, pageable);
+        checkAccess(projectId);
+        return userRepository.findByUsernameIn(
+                aclService.getListUsers(projectId), pageable);
     }
 
     /**
