@@ -91,7 +91,7 @@ public class TemplateRequirement
 
     @ManyToOne
     @JoinColumn(name = FUNCTIONALITY_FK_ID,
-            referencedColumnName = FUNCTIONALITY_NUMBER)
+            referencedColumnName = FUNCTIONALITY_PK_ID)
     private TemplateFunctionality referenceFunctionality;
 
     @JsonIgnore
