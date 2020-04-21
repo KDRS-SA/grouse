@@ -89,6 +89,7 @@ public final class Constants {
     public static final String ACL_PK_ID = "access_control_id";
     public static final String TEMPLATE_FK_ID = "fk_template_id";
     public static final String FUNCTIONALITY_FK_ID = "fk_functionality_id";
+    public static final String PROJECT_FK_ID = "fk_project_id";
     public static final String CREATED_DATE = "created_date";
     public static final String CHANGED_DATE = "changed_date";
     public static final String OWNED_BY = "owned_by";

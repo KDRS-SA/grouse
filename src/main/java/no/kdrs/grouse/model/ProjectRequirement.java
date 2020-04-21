@@ -100,8 +100,8 @@ public class ProjectRequirement
 
     @JsonIgnore
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "functionality",
-            referencedColumnName = "id")
+    @JoinColumn(name = PROJECT_FK_ID,
+            referencedColumnName = PROJECT_PK_ID)
     private ProjectFunctionality referenceFunctionality;
 
     @JsonIgnore

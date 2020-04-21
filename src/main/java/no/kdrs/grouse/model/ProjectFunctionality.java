@@ -42,7 +42,7 @@ public class ProjectFunctionality
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column(name = PROJECT_PK_ID, nullable = false, updatable = false)
     private Long projectFunctionalityId;
 
     /**
