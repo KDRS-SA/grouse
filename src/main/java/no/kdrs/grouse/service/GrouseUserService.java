@@ -60,11 +60,10 @@ public class GrouseUserService
 
     @Override
     public GrouseUser update(String username, PatchObjects patchObjects) {
-        GrouseUser originalGrouseUser = getGrouseUserOrThrow(username);
+        GrouseUser grouseUser = getGrouseUserOrThrow(username);
+        checkOwner(grouseUser.getUsername(), "user");
         return (GrouseUser) handlePatch(getGrouseUserOrThrow(username),
                 patchObjects);
-        //originalGrouseUser.setPassword(encoder.encode(user.getPassword()));
-
     }
 
     @Override

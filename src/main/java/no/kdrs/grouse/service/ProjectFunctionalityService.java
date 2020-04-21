@@ -108,9 +108,11 @@ public class ProjectFunctionalityService
     @Override
     public ProjectFunctionality updateProjectFunctionality(
             PatchObjects patchObjects, Long requirementNumber) {
+        ProjectFunctionality projectFunctionality =
+                getProjectFunctionalityOrThrow(requirementNumber);
+        checkAccess(projectFunctionality.getReferenceProject().getProjectId());
         return (ProjectFunctionality)
-                handlePatch(getProjectFunctionalityOrThrow(requirementNumber),
-                        patchObjects);
+                handlePatch(projectFunctionality, patchObjects);
     }
 
     @Override

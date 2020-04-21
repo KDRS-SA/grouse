@@ -109,9 +109,12 @@ public class TemplateFunctionalityService
     @Override
     public TemplateFunctionality updateTemplateFunctionality(
             PatchObjects patchObjects, Long requirementNumber) {
+        TemplateFunctionality templateFunctionality =
+                getTemplateFunctionalityOrThrow(requirementNumber);
+        checkAccess(templateFunctionality.getReferenceTemplate()
+                .getTemplateId());
         return (TemplateFunctionality)
-                handlePatch(getTemplateFunctionalityOrThrow(requirementNumber),
-                        patchObjects);
+                handlePatch(templateFunctionality, patchObjects);
     }
 
     @Override

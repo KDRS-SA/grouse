@@ -50,9 +50,11 @@ public class ProjectRequirementService
     @Override
     public ProjectRequirement updateProjectRequirement(
             PatchObjects patchObjects, Long requirementNumber) {
+        ProjectRequirement projectRequirement =
+                getProjectRequirementOrThrow(requirementNumber);
+        checkAccess(projectRequirement.getReferenceProject().getProjectId());
         return (ProjectRequirement)
-                handlePatch(getProjectRequirementOrThrow(requirementNumber),
-                        patchObjects);
+                handlePatch(projectRequirement, patchObjects);
     }
 
     @Override
