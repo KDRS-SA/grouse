@@ -33,12 +33,7 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "project_functionality_areas",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        columnNames = {FUNCTIONALITY_NUMBER, "project_number"})
-        }
-)
+@Table(name = "project_functionality_areas")
 @XmlRootElement
 public class ProjectFunctionality
         implements Serializable {
