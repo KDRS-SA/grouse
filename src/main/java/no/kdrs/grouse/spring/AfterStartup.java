@@ -138,6 +138,7 @@ public class AfterStartup {
                 templateFunctionality
                         .setReferenceParentFunctionality(
                                 rootTemplateFunctionality);
+                templateFunctionality.setReferenceTemplate(template);
                 templateFunctionality =
                         functionalityRepository.save(templateFunctionality);
 
@@ -169,6 +170,8 @@ public class AfterStartup {
                     .build();
             templateFunctionality.setReferenceParentFunctionality(
                     parentFunctionality);
+            templateFunctionality.setReferenceTemplate(
+                    parentFunctionality.getReferenceTemplate());
             templateFunctionality =
                     functionalityRepository.save(templateFunctionality);
             if (section.getRequirements() != null) {
@@ -185,6 +188,8 @@ public class AfterStartup {
             List<TemplateRequirement> templateRequirements) {
         for (TemplateRequirement templateRequirement : templateRequirements) {
             templateRequirement.setFunctionality(templateFunctionality);
+            templateRequirement.setReferenceTemplate(
+                    templateFunctionality.getReferenceTemplate());
             requirementRepository.save(templateRequirement);
         }
     }
