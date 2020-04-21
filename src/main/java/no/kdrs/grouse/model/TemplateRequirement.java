@@ -96,6 +96,8 @@ public class TemplateRequirement
 
     @JsonIgnore
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = TEMPLATE_FK_ID,
+            referencedColumnName = TEMPLATE_PK_ID)
     private Template referenceTemplate;
 
     public Long getRequirementId() {
