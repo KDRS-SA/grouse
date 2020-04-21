@@ -132,14 +132,6 @@ public class TemplateRequirement
         this.priority = priority;
     }
 
-    public TemplateFunctionality getFunctionality() {
-        return referenceFunctionality;
-    }
-
-    public void setFunctionality(TemplateFunctionality functionality) {
-        this.referenceFunctionality = functionality;
-    }
-
     public Template getReferenceTemplate() {
         return referenceTemplate;
     }
@@ -180,8 +172,13 @@ public class TemplateRequirement
         this.ownedBy = ownedBy;
     }
 
-    public TemplateFunctionality getReferenceTemplateFunctionality() {
+    public TemplateFunctionality getReferenceFunctionality() {
         return referenceFunctionality;
+    }
+
+    public void setReferenceFunctionality(
+            TemplateFunctionality referenceFunctionality) {
+        this.referenceFunctionality = referenceFunctionality;
     }
 
     public Long getVersion() {

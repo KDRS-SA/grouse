@@ -173,7 +173,7 @@ public class ProjectService
         project = projectRepository.save(project);
 
         for (TemplateFunctionality templateFunctionality :
-                template.getReferenceTemplateFunctionality()) {
+                template.getReferenceFunctionality()) {
             processFunctionalities(project, null,
                     templateFunctionality
                             .getReferenceChildTemplateFunctionality());

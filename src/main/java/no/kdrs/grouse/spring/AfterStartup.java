@@ -187,7 +187,7 @@ public class AfterStartup {
             TemplateFunctionality templateFunctionality,
             List<TemplateRequirement> templateRequirements) {
         for (TemplateRequirement templateRequirement : templateRequirements) {
-            templateRequirement.setFunctionality(templateFunctionality);
+            templateRequirement.setReferenceFunctionality(templateFunctionality);
             templateRequirement.setReferenceTemplate(
                     templateFunctionality.getReferenceTemplate());
             requirementRepository.save(templateRequirement);

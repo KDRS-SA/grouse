@@ -175,7 +175,7 @@ public class Template {
         }
     }
 
-    public List<TemplateFunctionality> getReferenceTemplateFunctionality() {
+    public List<TemplateFunctionality> getReferenceFunctionality() {
         return referenceTemplateFunctionality;
     }
 

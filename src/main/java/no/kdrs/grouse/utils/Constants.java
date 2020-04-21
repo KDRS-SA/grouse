@@ -31,6 +31,8 @@ public final class Constants {
     public static final String REL_TEMPLATE_LIST = "template-list";
     public static final String REL_PROJECT_LIST_ALL = "project-list-all";
     public static final String REL_TEMPLATE_LIST_ALL = "template-list-all";
+    public static final String REL_PARENT_FUNCTIONALITY =
+            "parent-functionality";
     public static final String GROUSE = "grouse";
     public static final String CONTEXT_PATH = GROUSE;
     public static final String SYSTEM_USER = "grouse";

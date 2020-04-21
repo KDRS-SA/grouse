@@ -1,5 +1,6 @@
 package no.kdrs.grouse.assemblers;
 
+import no.kdrs.grouse.controller.ProjectController;
 import no.kdrs.grouse.controller.ProjectFunctionalityController;
 import no.kdrs.grouse.model.ProjectFunctionality;
 import no.kdrs.grouse.model.links.LinksProjectFunctionality;
@@ -7,8 +8,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
-import static no.kdrs.grouse.utils.Constants.REQUIREMENT;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -47,6 +47,20 @@ public class ProjectFunctionalityAssembler
                                     .getProjectFunctionalityId()))
                             .withRel(REQUIREMENT));
         }
+        if (null != projectFunctionality.getReferenceParentFunctionality()) {
+            linksProjectFunctionality
+                    .add(linkTo(methodOn(ProjectFunctionalityController.class)
+                            .getProjectFunctionality(projectFunctionality
+                                    .getReferenceParentFunctionality()
+                                    .getProjectFunctionalityId()))
+                            .withRel(REL_PARENT_FUNCTIONALITY));
+        }
+        linksProjectFunctionality
+                .add(linkTo(methodOn(ProjectController.class)
+                        .getProject(projectFunctionality
+                                .getReferenceProject().getProjectId()))
+                        .withRel(PROJECT));
+
         linksProjectFunctionality
                 .add(linkTo(methodOn(ProjectFunctionalityController.class)
                         .getProjectFunctionality(projectFunctionality

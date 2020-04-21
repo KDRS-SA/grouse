@@ -1,5 +1,6 @@
 package no.kdrs.grouse.assemblers;
 
+import no.kdrs.grouse.controller.TemplateController;
 import no.kdrs.grouse.controller.TemplateFunctionalityController;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.links.LinksTemplateFunctionality;
@@ -57,6 +58,19 @@ public class TemplateFunctionalityAssembler
                                     .getFunctionalityId()))
                             .withRel(REL_REQUIREMENT_LIST));
         }
+        if (null != templateFunctionality.getReferenceParentFunctionality()) {
+            linksTemplateFunctionality
+                    .add(linkTo(methodOn(TemplateFunctionalityController.class)
+                            .getTemplateFunctionality(templateFunctionality
+                                    .getReferenceParentFunctionality()
+                                    .getFunctionalityId()))
+                            .withRel(REL_PARENT_FUNCTIONALITY));
+        }
+        linksTemplateFunctionality
+                .add(linkTo(methodOn(TemplateController.class)
+                        .getTemplate(templateFunctionality
+                                .getReferenceTemplate().getTemplateId()))
+                        .withRel(TEMPLATE));
         linksTemplateFunctionality
                 .add(linkTo(methodOn(TemplateFunctionalityController.class)
                         .getTemplateFunctionality(templateFunctionality

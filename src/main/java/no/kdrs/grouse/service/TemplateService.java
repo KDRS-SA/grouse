@@ -137,7 +137,7 @@ public class TemplateService
     public void delete(UUID id) {
         Template template = getTemplateOrThrow(id);
         checkOwner(template.getOwnedBy(), TEMPLATE);
-        deleteFunctionalities(template.getReferenceTemplateFunctionality());
+        deleteFunctionalities(template.getReferenceFunctionality());
         templateRepository.delete(template);
     }
 
