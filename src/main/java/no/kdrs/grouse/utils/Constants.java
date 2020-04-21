@@ -25,10 +25,14 @@ public final class Constants {
     public static final String TEMPLATE = "template";
     public static final String REQUIREMENT = "requirement";
     public static final String REL_PROJECT_LIST = "project-list";
+    public static final String REL_FUNCTIONALITY_LIST = "functionality-list";
+    public static final String REL_REQUIREMENT_LIST = "requirement-list";
     public static final String REL_PROJECT_USER_LIST = "project-user-list";
     public static final String REL_TEMPLATE_LIST = "template-list";
     public static final String REL_PROJECT_LIST_ALL = "project-list-all";
     public static final String REL_TEMPLATE_LIST_ALL = "template-list-all";
+    public static final String REL_PARENT_FUNCTIONALITY =
+            "parent-functionality";
     public static final String GROUSE = "grouse";
     public static final String CONTEXT_PATH = GROUSE;
     public static final String SYSTEM_USER = "grouse";
@@ -89,6 +93,7 @@ public final class Constants {
     public static final String ACL_PK_ID = "access_control_id";
     public static final String TEMPLATE_FK_ID = "fk_template_id";
     public static final String FUNCTIONALITY_FK_ID = "fk_functionality_id";
+    public static final String PROJECT_FK_ID = "fk_project_id";
     public static final String CREATED_DATE = "created_date";
     public static final String CHANGED_DATE = "changed_date";
     public static final String OWNED_BY = "owned_by";
@@ -105,12 +110,14 @@ public final class Constants {
 
     public static final String PROJECT_TABLE_NAME = "projects";
 
-    public static final String TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME =
+    public static final String TEMPLATE_FUNCTIONALITY_TABLE_NAME =
             "template_functionality";
     public static final String TEMPLATE_REQUIREMENT_TABLE_NAME =
             "template_requirements";
     public static final String PROJECT_REQUIREMENT_TABLE_NAME =
             "project_requirements";
+    public static final String PROJECT_FUNCTIONALITY_TABLE_NAME =
+            "project_functionality";
     public static final String USER_TABLE_NAME = "user";
     public static final String ACL_TABLE_NAME = "access_control";
     public static final String AUTHORITY_TABLE_NAME = "authority";

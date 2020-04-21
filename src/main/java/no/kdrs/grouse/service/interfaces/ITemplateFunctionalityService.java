@@ -20,6 +20,10 @@ public interface ITemplateFunctionalityService {
     TemplateRequirement createTemplateRequirement(
             Long functionalityNumber, TemplateRequirement templateRequirement);
 
+    TemplateFunctionality createChildFunctionality(
+            Long templateFunctionalityId,
+            TemplateFunctionality incomingFunctionality);
+
     TemplateFunctionality updateTemplateFunctionality(PatchObjects patchObjects,
                                                       Long functionalityNumber)
             throws Exception;

@@ -1,5 +1,6 @@
 package no.kdrs.grouse.assemblers;
 
+import no.kdrs.grouse.controller.TemplateController;
 import no.kdrs.grouse.controller.TemplateFunctionalityController;
 import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.links.LinksTemplateFunctionality;
@@ -7,8 +8,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import static no.kdrs.grouse.utils.Constants.FUNCTIONALITY;
-import static no.kdrs.grouse.utils.Constants.REQUIREMENT;
+import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -28,6 +28,12 @@ public class TemplateFunctionalityAssembler
         LinksTemplateFunctionality linksTemplateFunctionality =
                 instantiateModel(templateFunctionality);
         copyValues(linksTemplateFunctionality, templateFunctionality);
+
+        linksTemplateFunctionality
+                .add(linkTo(methodOn(TemplateFunctionalityController.class)
+                        .createTemplateFunctionality(linksTemplateFunctionality
+                                .getTemplateFunctionalityId(), null))
+                        .withRel(FUNCTIONALITY));
         if (templateFunctionality
                 .getReferenceChildTemplateFunctionality()
                 .size() > 0) {
@@ -36,8 +42,13 @@ public class TemplateFunctionalityAssembler
                             .getTemplateChildFunctionality(null,
                                     linksTemplateFunctionality
                                             .getTemplateFunctionalityId()))
-                            .withRel(FUNCTIONALITY));
+                            .withRel(REL_FUNCTIONALITY_LIST));
         }
+        linksTemplateFunctionality
+                .add(linkTo(methodOn(TemplateFunctionalityController.class)
+                        .createTemplateRequirement(templateFunctionality
+                                .getFunctionalityId(), null))
+                        .withRel(REQUIREMENT));
         if (templateFunctionality
                 .getReferenceTemplateRequirement()
                 .size() > 0) {
@@ -45,8 +56,21 @@ public class TemplateFunctionalityAssembler
                     .add(linkTo(methodOn(TemplateFunctionalityController.class)
                             .getTemplateRequirements(null, templateFunctionality
                                     .getFunctionalityId()))
-                            .withRel(REQUIREMENT));
+                            .withRel(REL_REQUIREMENT_LIST));
         }
+        if (null != templateFunctionality.getReferenceParentFunctionality()) {
+            linksTemplateFunctionality
+                    .add(linkTo(methodOn(TemplateFunctionalityController.class)
+                            .getTemplateFunctionality(templateFunctionality
+                                    .getReferenceParentFunctionality()
+                                    .getFunctionalityId()))
+                            .withRel(REL_PARENT_FUNCTIONALITY));
+        }
+        linksTemplateFunctionality
+                .add(linkTo(methodOn(TemplateController.class)
+                        .getTemplate(templateFunctionality
+                                .getReferenceTemplate().getTemplateId()))
+                        .withRel(TEMPLATE));
         linksTemplateFunctionality
                 .add(linkTo(methodOn(TemplateFunctionalityController.class)
                         .getTemplateFunctionality(templateFunctionality

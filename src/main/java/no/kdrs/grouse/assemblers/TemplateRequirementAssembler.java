@@ -1,5 +1,7 @@
 package no.kdrs.grouse.assemblers;
 
+import no.kdrs.grouse.controller.TemplateController;
+import no.kdrs.grouse.controller.TemplateFunctionalityController;
 import no.kdrs.grouse.controller.TemplateRequirementController;
 import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.model.links.LinksTemplateRequirement;
@@ -7,6 +9,8 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import static no.kdrs.grouse.utils.Constants.REL_PARENT_FUNCTIONALITY;
+import static no.kdrs.grouse.utils.Constants.TEMPLATE;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -40,6 +44,20 @@ public class TemplateRequirementAssembler
         linksTemplateRequirement.setPriority(templateRequirement.getPriority());
         linksTemplateRequirement.setRequirement(
                 templateRequirement.getRequirement());
+
+        if (null != templateRequirement.getReferenceFunctionality()) {
+            linksTemplateRequirement
+                    .add(linkTo(methodOn(TemplateFunctionalityController.class)
+                            .getTemplateFunctionality(templateRequirement
+                                    .getReferenceFunctionality()
+                                    .getFunctionalityId()))
+                            .withRel(REL_PARENT_FUNCTIONALITY));
+        }
+        linksTemplateRequirement
+                .add(linkTo(methodOn(TemplateController.class)
+                        .getTemplate(templateRequirement
+                                .getReferenceTemplate().getTemplateId()))
+                        .withRel(TEMPLATE));
 
         linksTemplateRequirement.add(
                 linkTo(methodOn(TemplateRequirementController.class)

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -37,7 +36,6 @@ import static no.kdrs.grouse.utils.Constants.*;
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = PROJECT_REQUIREMENT_TABLE_NAME)
 public class ProjectRequirement
-    extends RepresentationModel
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -102,8 +100,8 @@ public class ProjectRequirement
 
     @JsonIgnore
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "functionality",
-            referencedColumnName = "id")
+    @JoinColumn(name = PROJECT_FK_ID,
+            referencedColumnName = PROJECT_PK_ID)
     private ProjectFunctionality referenceFunctionality;
 
     @JsonIgnore

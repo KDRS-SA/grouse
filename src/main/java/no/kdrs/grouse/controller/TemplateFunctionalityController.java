@@ -1,5 +1,6 @@
 package no.kdrs.grouse.controller;
 
+import no.kdrs.grouse.model.TemplateFunctionality;
 import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.model.links.LinksTemplateFunctionality;
 import no.kdrs.grouse.model.links.LinksTemplateRequirement;
@@ -66,6 +67,16 @@ public class TemplateFunctionalityController {
                 templateFunctionalityService.
                         createTemplateRequirement(templateFunctionalityId,
                                 templateRequirement), CREATED);
+    }
+
+    @PostMapping(value = SLASH + FUNCTIONALITY_PARAMETER + SLASH + FUNCTIONALITY)
+    public ResponseEntity<LinksTemplateFunctionality> createTemplateFunctionality(
+            @PathVariable(FUNCTIONALITY) Long templateFunctionalityId,
+            @RequestBody TemplateFunctionality templateFunctionality) {
+        return commonController.addTemplateFunctionalityLinks(
+                templateFunctionalityService.
+                        createChildFunctionality(templateFunctionalityId,
+                                templateFunctionality), CREATED);
     }
 
     @PatchMapping(value = FUNCTIONALITY_PARAMETER)

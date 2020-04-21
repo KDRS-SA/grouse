@@ -50,12 +50,34 @@ public class GrouseService {
                 "getUser()");
     }
 
+    /**
+     * An implementation of part of the PATCH (RFC 6902) standard
+     * <p>
+     * [
+     * { "op": "replace", "path": "/requirementText", "value": "hello"},
+     * ]
+     * <p>
+     * In this application "replace" is the only operation we support. For
+     * this application this is acceptable.
+     *
+     * @param object       The object to update
+     * @param patchObjects Multiple pathObject commands in one object
+     *                     (contains an array)
+     * @return The object after it was persisted
+     * @throws SecurityException if denied
+     *                           NoSuchMethodException method does not exist
+     *                           IllegalArgumentException problem with argument
+     *                           IllegalAccessException problem with access
+     *                           InvocationTargetException if it can't handle the syntax for some reason
+     */
     protected Object handlePatch(Object object, PatchObjects patchObjects) {
         for (PatchObject patchObject : patchObjects.getPatchObjects()) {
+            // Only support replace
             if ("replace".equalsIgnoreCase(patchObject.getOp())
+                    // Make sure that path contains a column to change
                     && null != patchObject.getPath()
-                    && patchObject.getPath().length() > 2
-                    && null != patchObject.getValue()) {
+                    // and that there is at least one letter after the slash
+                    && patchObject.getPath().length() > 1) {
                 String path = patchObject.getPath();
                 if ("/".equals(path.substring(0, 1))) {
                     path = path.substring(1);
@@ -82,11 +104,21 @@ public class GrouseService {
                     // If the variable (path) you are trying to update is a
                     // password then you have to encode the new password
                     if (PASSWORD.equalsIgnoreCase(path)) {
-                        setMethod.invoke(object,
-                                encoder.encode(patchObject.getValue()
-                                        .toString()));
+                        // Not possible to set password to null
+                        if (null != patchObject.getValue()) {
+                            setMethod.invoke(object,
+                                    encoder.encode(patchObject.getValue()
+                                            .toString()));
+                        }
                     } else {
-                        setMethod.invoke(object, patchObject.getValue());
+                        // null could likely be handled in a better way. This
+                        // is left to later refactoring, if the patch is to be
+                        // revisited
+                        if (null != patchObject.getValue()) {
+                            setMethod.invoke(object, patchObject.getValue());
+                        } else {
+                            setMethod.invoke(object, new Object[]{null});
+                        }
                         versionMethod.invoke(object, getETag());
                     }
                 } catch (SecurityException | NoSuchMethodException |
@@ -97,7 +129,6 @@ public class GrouseService {
                     if (e.getCause() instanceof ConcurrencyException) {
                         throw (ConcurrencyException) e.getCause();
                     }
-
                     String error = "Cannot find internal method from Patch : " +
                             patchObject.toString() + " : " + e.getMessage();
                     logger.error(error);
@@ -135,7 +166,7 @@ public class GrouseService {
      * @return the etag value without quotes
      */
     private Long parseETAG(String quotedETAG) {
-        long etagVal = -1L;
+        long etagVal;
         if (quotedETAG != null) {
             try {
                 etagVal = Long.parseLong(

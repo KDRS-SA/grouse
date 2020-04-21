@@ -7,7 +7,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,15 +16,15 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 import static no.kdrs.grouse.utils.Constants.*;
 import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME;
 
 @Entity
-@Table(name = TEMPLATE_FUNCTIONALITY_AREAS_TABLE_NAME)
+@Table(name = TEMPLATE_FUNCTIONALITY_TABLE_NAME)
 @EntityListeners(AuditingEntityListener.class)
 public class TemplateFunctionality
-        extends RepresentationModel
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,7 +38,7 @@ public class TemplateFunctionality
     @Column(name = FUNCTIONALITY_PK_ID, nullable = false, updatable = false)
     private Long functionalityId;
 
-    @Column(name = FUNCTIONALITY_NUMBER, nullable = false, updatable = false)
+    @Column(name = FUNCTIONALITY_NUMBER)
     private String functionalityNumber;
 
     /**
@@ -109,8 +108,10 @@ public class TemplateFunctionality
     @Column(name = VERSION)
     private Long version;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = TEMPLATE_PK_ID,
+            referencedColumnName = TEMPLATE_PK_ID)
     private Template referenceTemplate;
 
     // Link to parent TemplateFunctionality
