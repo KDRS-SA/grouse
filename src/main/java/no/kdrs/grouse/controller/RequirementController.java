@@ -39,11 +39,12 @@ public class RequirementController {
                 .body(templateRequirement);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteRequirement(@PathVariable Long id) {
-        requirementService.delete(id);
+    @DeleteMapping(value = SLASH + REQUIREMENT_PARAMETER)
+    public ResponseEntity<String> deleteRequirement(
+            @PathVariable(REQUIREMENT) Long requirementNumber) {
+        requirementService.delete(requirementNumber);
         return ResponseEntity.status(NO_CONTENT)
-                .body("{\"status\" : \"TemplateRequirement " + id +
-                        " was deleted\"}");
+                .body("{\"status\" : \"TemplateRequirement " +
+                        requirementNumber + " was deleted\"}");
     }
 }
