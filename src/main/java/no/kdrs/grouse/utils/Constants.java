@@ -25,6 +25,8 @@ public final class Constants {
     public static final String TEMPLATE = "template";
     public static final String REQUIREMENT = "requirement";
     public static final String REL_PROJECT_LIST = "project-list";
+    public static final String REL_FUNCTIONALITY_LIST = "functionality-list";
+    public static final String REL_REQUIREMENT_LIST = "requirement-list";
     public static final String REL_PROJECT_USER_LIST = "project-user-list";
     public static final String REL_TEMPLATE_LIST = "template-list";
     public static final String REL_PROJECT_LIST_ALL = "project-list-all";

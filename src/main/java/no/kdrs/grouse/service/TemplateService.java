@@ -95,7 +95,6 @@ public class TemplateService
     @Override
     public Template findById(@NotNull UUID id) {
         Template template = getTemplateOrThrow(id);
-        checkAccess(template.getTemplateId());
         return template;
     }
 
