@@ -38,9 +38,11 @@ public class TemplateRequirementService
     @Override
     public TemplateRequirement updateTemplateRequirement(
             PatchObjects patchObjects, Long requirementNumber) {
-        return (TemplateRequirement)
-                handlePatch(getRequirementOrThrow(requirementNumber),
-                        patchObjects);
+        TemplateRequirement templateRequirement =
+                getRequirementOrThrow(requirementNumber);
+        checkAccess(templateRequirement.getReferenceTemplate().getTemplateId());
+        return (TemplateRequirement) handlePatch(templateRequirement,
+                patchObjects);
     }
 
     @Override
