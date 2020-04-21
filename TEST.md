@@ -1546,3 +1546,242 @@ Grouse generates the requirements document at the same time the document is down
     curl --output file.docx -v -H 'Accept: application/vnd.openxmlformats-officedocument.wordprocessingml.document' -X GET http://localhost:9294/grouse/project/37d6ea88-348f-4dea-a75e-e83a6bd3cc05/document -H 'Authorization: Bearer 9536be09-7851-40fc-879f-6333256071a5'  
 
 For the basic Noark template it takes about 3 seconds to generate and download the requirements document in each of the supported formats.
+
+## Creating a template
+
+Take a look at the application root:
+
+     curl -v -X GET http://localhost:9294/grouse/ -H 'Authorization: Bearer feb460c5-5526-423d-a2c1-48dd64728fc5' | jq
+
+Make a note of the _"template"_ rel/href pair. The href can be used to create a  template with a POST request:
+
+    {
+      "_links": {
+        "login OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/token?parameters={parameters}",
+          "templated": true
+        },
+        "create-user": {
+          "href": "http://localhost:9294/grouse/user"
+        },
+        "konto": {
+          "href": "http://localhost:9294/grouse/user/user1@example.com"
+        },
+        "project-list": {
+          "href": "http://localhost:9294/grouse/project"
+        },
+        "supported-formats": {
+          "href": "http://localhost:9294/grouse/document/supported-formats"
+        },
+        "template-list": {
+          "href": "http://localhost:9294/grouse/template/template-list-all"
+        },
+        "template": {
+          "href": "http://localhost:9294/grouse/template"
+        },
+        "logout OAuth2": {
+          "href": "http://localhost:9294/grouse/oauth/revoke-token"
+        }
+      }
+    }
+    
+Make a note of the function href/rel in the returned payload
+    
+    {
+      "templateId": "b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a",
+      "templateName": "Fantastic template",
+      "createdDate": "2020-04-21T14:26:33.711367+02:00",
+      "lastModifiedDate": "2020-04-21T14:26:33.711367+02:00",
+      "ownedBy": "template@example.com",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a/function"
+        },
+        "project": {
+          "href": "http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a/project"
+        }
+      }
+    }
+
+To create a functionality use href corresponding to the _"function"_ rel: 
+
+    curl -v -X POST http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a/function -H 'Content-type: application/json' --data '{ "functionalityNumber": "1.2", "title": "Test title", "description": "description text", "consequence": "consequence text", "explanation": "explanation text", "type" : "Functional requirements"}' -H 'Authorization: Bearer b498671d-c144-4db0-96a5-46c9442067d7' | jq
+
+
+This generates the functionality and issues the following reponse:
+
+    {
+      "templateFunctionalityId": 718,
+      "functionalityNumber": "1.2",
+      "title": "Test title",
+      "description": "description text",
+      "consequence": "consequence text",
+      "explanation": "explanation text",
+      "type": "Functional requirements",
+      "ownedBy": "template@example.com",
+      "version": 0,
+      "_links": {
+        "function": {
+          "href": "http://localhost:9294/grouse/template/function/718/function"
+        },
+        "requirement": {
+          "href": "http://localhost:9294/grouse/template/function/718/requirement"
+        },
+        "self": {
+          "href": "http://localhost:9294/grouse/template/function/718"
+        }
+      }
+    }
+
+From here the client can create a "sub"-functionality or a requirement. First we create a "sub"-functionality
+    
+    curl -v -X POST http://localhost:9294/grouse/template/function/718/function -H 'Content-type: application/json' --data '{ "functionalityNumber": "1.2.1", "title": "Test title 1.2.1", "description": "description text", "consequence": "consequence text", "explanation": "explanation text", "type" : "Functional requirements"}' -H 'Authorization: Bearer b498671d-c144-4db0-96a5-46c9442067d7' | jq
+    
+This creates a new functionality and issues the following response:
+
+    {
+      "templateFunctionalityId": 719,
+      "functionalityNumber": "1.2.1",
+      "title": "Test title 1.2.1",
+      "description": "description text",
+      "consequence": "consequence text",
+      "explanation": "explanation text",
+      "type": "Functional requirements",
+      "ownedBy": "template@example.com",
+      "version": 0,
+      "_links": {
+        "function": {
+          "href": "http://localhost:9294/grouse/template/function/719/function"
+        },
+        "requirement": {
+          "href": "http://localhost:9294/grouse/template/function/719/requirement"
+        },
+        "self": {
+          "href": "http://localhost:9294/grouse/template/function/719"
+        }
+      }
+    }    
+
+Now we can add a requirement:
+
+    curl -v -X POST http://localhost:9294/grouse/template/function/719/requirement -H 'Content-type: application/json' --data '{ "requirementText": "requirementText title", "priority": "O", "requirementNumber": "2.1"}' -H 'Authorization: Bearer b498671d-c144-4db0-96a5-46c9442067d7' | jq
+    
+
+The requirement is created and the following response is generated:
+
+    {
+      "requirementId": 720,
+      "requirementText": "requirementText title",
+      "requirementNumber": "2.1",
+      "priority": "O",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/templateRequirement/720"
+        }
+      }
+    }
+
+If we now retrieve a list of templates, our new template should be in the list:
+
+
+     curl -v -X GET http://localhost:9294/grouse/template/template-list-all/ -H 'Authorization: Bearer b498671d-c144-4db0-96a5-46c9442067d7' | jq
+
+We will now have two templates:
+
+    {
+      "_embedded": {
+        "templates": [
+          {
+            "templateId": "b920dd07-89bd-4702-b1e6-b36910d1482b",
+            "templateName": "Noark 5",
+            "createdDate": "2020-04-21T14:21:51+02:00",
+            "lastModifiedDate": "2020-04-21T14:21:51+02:00",
+            "ownedBy": "grouse",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b"
+              },
+              "function": {
+                "href": "http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/function"
+              },
+              "project": {
+                "href": "http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project"
+              }
+            }
+          },
+          {
+            "templateId": "b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a",
+            "templateName": "Fantastic template",
+            "createdDate": "2020-04-21T14:26:34+02:00",
+            "lastModifiedDate": "2020-04-21T14:26:34+02:00",
+            "ownedBy": "template@example.com",
+            "_links": {
+              "self": {
+                "href": "http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a"
+              },
+              "function": {
+                "href": "http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a/function"
+              },
+              "project": {
+                "href": "http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a/project"
+              }
+            }
+          }
+        ]
+      },
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/template/template-list-all/?page=0&size=10"
+        }
+      },
+      "page": {
+        "size": 10,
+        "totalElements": 2,
+        "totalPages": 1,
+        "number": 0
+      }
+    }
+
+Using the href associated with the _"project"_ rel we cna create a project from out template:
+     
+    curl -v -X POST http://localhost:9294/grouse/template/b81b70bc-8e88-4cd6-bcc1-dd74e7691e2a/project -H 'Content-type: application/json'  --data '{ "projectName": "Fantastic Requirements"}' -H 'Authorization: Bearer b498671d-c144-4db0-96a5-46c9442067d7' | jq
+    
+    
+A new project is created based on the template:
+
+    {
+      "projectId": "c72e3083-cf6f-4452-b18e-00c5ddf9423a",
+      "projectName": "Fantastic Requirements",
+      "createdDate": "2020-04-21T14:39:27.229094+02:00",
+      "lastModifiedDate": "2020-04-21T14:39:27.229094+02:00",
+      "ownedBy": "template@example.com",
+      "projectComplete": false,
+      "documentCreated": false,
+      "_links": {
+        "self": {
+          "href": "http://localhost:9294/grouse/project/c72e3083-cf6f-4452-b18e-00c5ddf9423a"
+        },
+        "function": {
+          "href": "http://localhost:9294/grouse/project/c72e3083-cf6f-4452-b18e-00c5ddf9423a/function"
+        },
+        "document": {
+          "href": "http://localhost:9294/grouse/project/c72e3083-cf6f-4452-b18e-00c5ddf9423a/document"
+        },
+        "supported-formats": {
+          "href": "http://localhost:9294/grouse/document/supported-formats"
+        },
+        "share": {
+          "href": "http://localhost:9294/grouse/project/c72e3083-cf6f-4452-b18e-00c5ddf9423a/share/user_email_address"
+        },
+        "access": {
+          "href": "http://localhost:9294/grouse/project/c72e3083-cf6f-4452-b18e-00c5ddf9423a/access"
+        }
+      }
+    }
+    
+
+
+    
