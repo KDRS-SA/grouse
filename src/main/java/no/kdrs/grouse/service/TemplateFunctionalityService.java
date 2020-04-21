@@ -73,8 +73,8 @@ public class TemplateFunctionalityService
             TemplateFunctionality templateFunctionality =
                     templateFunctionalityOpt.get();
             templateRequirement.setOwnedBy(templateFunctionality.getOwnedBy());
-            templateRequirement.setFunctionality(templateFunctionality);
-            templateFunctionality.setReferenceTemplate(
+            templateRequirement.setReferenceFunctionality(templateFunctionality);
+            templateRequirement.setReferenceTemplate(
                     templateFunctionality.getReferenceTemplate());
         } else {
             throw new EntityNotFoundException(
