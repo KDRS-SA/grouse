@@ -38,7 +38,7 @@ public class TemplateFunctionality
     @Column(name = FUNCTIONALITY_PK_ID, nullable = false, updatable = false)
     private Long functionalityId;
 
-    @Column(name = FUNCTIONALITY_NUMBER, nullable = false, updatable = false)
+    @Column(name = FUNCTIONALITY_NUMBER)
     private String functionalityNumber;
 
     /**
