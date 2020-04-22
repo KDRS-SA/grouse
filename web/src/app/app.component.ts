@@ -34,6 +34,8 @@ export class AppComponent implements OnInit {
     // Uses allready existing variables if the user refreshed the page
     if (localStorage.getItem('UserData') !== null) {
       this.userData = JSON.parse(localStorage.getItem('UserData'));
+    } else {
+      this.userData = new UserData();
     }
     // Runs the function beneath that fetches API info from the server
     this.getApiDetails();

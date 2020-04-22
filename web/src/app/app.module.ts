@@ -33,7 +33,7 @@ import {DeleteUserDialog, PasswordChangeConfirmedDialog, userEditComponent} from
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {adminComponent} from "./Admin/Admin.component";
+import {adminComponent, AdminDeleteUserDialog} from "./Admin/Admin.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -53,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordChangeConfirmedDialog,
     DeleteUserDialog,
     ShareMenu,
-    adminComponent
+    adminComponent,
+    AdminDeleteUserDialog
   ],
     imports: [
         BrowserModule,
@@ -101,7 +102,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteProjectDialog,
     PasswordChangeConfirmedDialog,
     DeleteUserDialog,
-    ShareMenu
+    ShareMenu,
+    AdminDeleteUserDialog
   ],
   entryComponents: [
     NewProjectDialog,
@@ -110,7 +112,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteProjectDialog,
     PasswordChangeConfirmedDialog,
     DeleteUserDialog,
-    ShareMenu
+    ShareMenu,
+    AdminDeleteUserDialog
   ]
 })
 export class AppModule { }

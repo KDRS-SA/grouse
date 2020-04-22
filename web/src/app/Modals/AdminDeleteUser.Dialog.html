@@ -1,0 +1,13 @@
+<div class="flex-row-between no-p no-m">
+  <h1 mat-dialog-title>Slett bruker</h1>
+  <button mat-button class="no-p no-m h-80" color="warn" (click)="onNoClick()">X</button>
+</div>
+<mat-dialog-content>
+  <p>Dette er en handling som ikke kan angres, denne brukeren vil ikke lenger ha muligheten til å logge på og alle dens prosjekter vil bli slettet</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="flex-row-between w-100">
+    <button mat-raised-button (click)="onNoClick()">{{'New.Cancel' | translate}}</button>
+    <button mat-raised-button [mat-dialog-close]="data" color="warn">Slett brukeren</button>
+  </div>
+</mat-dialog-actions>

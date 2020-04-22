@@ -133,7 +133,7 @@
                 <mat-list-item>
                   <div class="flex-row-between w-100">
                     <p>Slett bruker: </p>
-                    <button mat-raised-button color="warn" class="h-80 m-t-10">Slett bruker</button>
+                    <button mat-raised-button color="warn" class="h-80 m-t-10" (click)="deleteUser()">Slett bruker</button>
                   </div>
                 </mat-list-item>
                 <!--List of projects for this user-->
@@ -180,22 +180,32 @@
                 <p>Sist modifisert: </p>
                 <p>{{selectedProject.lastModifiedDate}}</p>
               </div>
-              <mat-divider></mat-divider>
             </mat-list-item>
-            <mat-list-item>
-              <div class="flex-row-between w-100">
-                <p>Eid av: </p>
-                <button mat-raised-button class="m-t-10 h-80" (click)="selectThisUserName(selectedProject.ownedBy)">{{selectedProject.ownedBy}}</button>
-              </div>
-            </mat-list-item>
-            <mat-label>Brukere som har tilgang til dette prosjektet:</mat-label>
-            <div class="projects-and-users-minibox">
-              <div *ngFor="let user of usersOfThisProject" class="h-50 m-t-10 rounded w-100 flex-row-between">
-                <button (click)="selectThisUserName(user.username)" mat-raised-button class="w-70">
-                  {{user.username}}
-                </button>
-                <button class="h-80 box-button" mat-flat-button color="warn">Fjern Deling</button>
-              </div>
+            <mat-label class="m-t-14">Brukere som har tilgang til dette prosjektet:</mat-label>
+            <div class="projects-and-users-minibox project-box">
+              <mat-list class="w-100">
+                <mat-list-item *ngFor="let user of usersOfThisProject">
+                  <div class="w-100 flex-row-between">
+                    <!--Label-->
+                    <div class="p-20">
+                      <mat-label *ngIf="user.username === selectedProject.ownedBy">Eier: </mat-label>
+                      <mat-label *ngIf="user.username !== selectedProject.ownedBy">Delt: </mat-label>
+                    </div>
+                    <div class="p-10">
+                      <!--User button-->
+                      <button (click)="selectThisUserName(user.username)" mat-raised-button class="w-100">
+                        {{user.username}}
+                      </button>
+                    </div>
+                    <div class="p-10">
+                      <!--Red button-->
+                      <button *ngIf="user.username === selectedProject.ownedBy" mat-flat-button color="warn" (click)="deleteProject()">Slett prosjekt</button>
+                      <button *ngIf="user.username !== selectedProject.ownedBy" mat-flat-button color="warn" (click)="revokeShare(user)">Fjern Deling  </button>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+              </mat-list>
             </div>
           </mat-list>
         </div>

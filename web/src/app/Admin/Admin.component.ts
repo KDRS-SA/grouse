@@ -1,13 +1,14 @@
-import {Component} from "@angular/core";
+import {Component, Inject} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {UserData} from "../models/UserData.model";
 import {Project} from "../models/Project.model";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {TranslateService} from "@ngx-translate/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../models/User";
 import {startUrl} from "../common";
+import {DeleteProjectDialog} from "../Menu/menu.component";
 
 @Component({
   selector: 'app-root',
@@ -77,7 +78,6 @@ export class adminComponent {
         // @ts-ignore
         this.listOfUsers = result._embedded.users;
       }
-      console.log(this.listOfUsers);
     }, error => {
       console.error(error);
     });
@@ -130,7 +130,6 @@ export class adminComponent {
         // @ts-ignore
         this.listOfProjects = result._embedded.projects;
       }
-      console.log(this.listOfProjects);
     }, error => {
       console.error(error);
     });
@@ -162,6 +161,76 @@ export class adminComponent {
       // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.error(error);
+    });
+  }
+
+  /**
+   * deleteProject
+   * Opens a dialog pulled from the main menu (is pulled from menu.component.ts) as a deletion prompt for deleting a project
+   * didnt need remaking
+   *
+   * @param inn Which project to delete
+   */
+  deleteProject() {
+    const dialogRef = this.dialogBox.open(DeleteProjectDialog, {
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.http.delete(
+          this.selectedProject._links.self.href,
+          {
+            headers: new HttpHeaders({
+              Authorization: 'Bearer ' + this.userData.oauthClientSecret
+            })
+          }).subscribe(
+          // tslint:disable-next-line:no-shadowed-variable
+          result => {
+            this.getListOfProjects();
+          }, error => console.error(error));
+      }});
+  }
+
+  /**
+   * revokeShare
+   * Removes a sharing link for the specified user on the currently selected project
+   *
+   * @param user Which user to remove the share for
+   */
+  revokeShare(user: User){
+    this.http.delete(this.selectedProject._links.share.href.replace('user_email_address', user.username), {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      this.getUsersAssociatedWithProject(this.selectedProject);
+    }, error => {
+      console.error(error);
+    });
+  }
+
+  /**
+   * deleteUser
+   * Deletes the currently selected user
+   */
+  deleteUser() {
+    const dialogRef = this.dialogBox.open(AdminDeleteUserDialog, {
+      width: '300px'
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.http.delete(this.selectedUser._links.self.href, {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + this.userData.oauthClientSecret
+          })
+        }).subscribe(result => {
+          this.getListOfUsers();
+        }, error => {
+          console.error(error);
+        });
+      }
     });
   }
 
@@ -205,5 +274,24 @@ export class adminComponent {
     this.userData.nav = 'userEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/userEdit']);
+  }
+}
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'AdminDeleteUser.Dialog',
+  templateUrl: '../Modals/AdminDeleteUser.Dialog.html',
+  styleUrls: [
+    './Admin.component.css',
+    '../common.css'
+  ]
+})
+export class AdminDeleteUserDialog {
+  constructor(public dialogRef: MatDialogRef<AdminDeleteUserDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
+    this.data = true;
+  }
+
+  onNoClick() {
+    this.dialogRef.close();
   }
 }

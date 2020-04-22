@@ -17,7 +17,7 @@ export class UserData {
     this.oauthClientId = 'grouse-client';
     this.oauthClientSecret = 'secret';
     this.nav = '';
-    this._links = null;
+    this._links = new Links();
     this.currentProject = null;
     this.defaultLang = 'Bokmål';
   }
