@@ -14,6 +14,7 @@ export class projectFunctionality{
   referenceProjectRequirement: ProjectRequirment[];
   parent: projectFunctionality;
   _links: Links;
+  etag: string;
 
   constructor() {}
 }

@@ -9,4 +9,5 @@ export class ProjectRequirment {
   ownedBy: string;
   links: legacyLink[];
   _links: Links;
+  etag: string;
 }

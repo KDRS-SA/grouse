@@ -59,7 +59,7 @@
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-        <button mat-button class="fill no-p" (click)="changeReq(node.id)">
+        <button mat-button class="fill no-p" (click)="changeFunctionality(node.id)">
           <li class="mat-tree-node">
             <!-- use a disabled button to provide padding for tree leaf -->
             {{node.name}}
@@ -184,7 +184,7 @@
               <button mat-button matTooltip="{{'KravEdit.Un-finished-req-Tooltip' | translate}}"><i class="material-icons">help</i></button>
             </div>
             <div class="unfinished-box">
-              <button mat-raised-button class="color-lightgray unfinished-button" *ngFor="let req of statpageData.unfinished" matTooltip="{{req.title}}" (click)="changeReq(req.projectFunctionalityId); this.statusPage = !this.statusPage">
+              <button mat-raised-button class="color-lightgray unfinished-button" *ngFor="let req of statpageData.unfinished" matTooltip="{{req.title}}" (click)="changeFunctionality(req.projectFunctionalityId); this.statusPage = !this.statusPage">
                 <p class="no-m">{{req.functionalityNumber}}</p>
               </button>
             </div>
@@ -231,7 +231,7 @@
           <div class="flex-center">
             <div class="flex-column flex-center status-bar-button-container">
               <div *ngFor="let req of this.statusbarData">
-                <button mat-raised-button matTooltip="{{req.title}}" (click)="changeReq(req.projectFunctionalityId)" [ngClass]="{
+                <button mat-raised-button matTooltip="{{req.title}}" (click)="changeFunctionality(req.projectFunctionalityId)" [ngClass]="{
                   'mat-accent' : this.currentReq.projectFunctionalityId === req.projectFunctionalityId,
                   'color-success' : req.processed && req.projectFunctionalityId !== this.currentReq.projectFunctionalityId,
                   'color-lightgray' : !req.processed && req.projectFunctionalityId < this.currentReq.projectFunctionalityId,

@@ -11,6 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ProjectRequirment} from '../models/ProjectRequirment.model';
 import {User} from '../models/User';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -111,7 +112,6 @@ export class kravEditComponent implements OnInit {
         }
       )
     }).subscribe(result => {
-      console.log(result);
       const newlyLoaded = (this.mainData === undefined);
       // @ts-ignore
       this.mainData = result._embedded.projectFunctionalities;
@@ -128,11 +128,13 @@ export class kravEditComponent implements OnInit {
           calls++;
           this.http.get(prime._links.function.href, {
             headers: new HttpHeaders({
-                Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                Authorization: 'Bearer ' + this.userData.oauthClientSecret,
               }
-            )
+            ),
+
             // tslint:disable-next-line:no-shadowed-variable
           }).subscribe(result => {
+            console.log(result);
             calls--;
             // @ts-ignore
             prime.referenceChildProjectFunctionality = result._embedded.projectFunctionalities;
@@ -153,10 +155,8 @@ export class kravEditComponent implements OnInit {
                   )
                   // tslint:disable-next-line:no-shadowed-variable
                 }).subscribe(result => {
-                  calls--;
                   // @ts-ignore
                   secondary.referenceChildProjectFunctionality = result._embedded.projectFunctionalities;
-
                   // Does it all again again for the next generation
                   for (const tertiary of secondary.referenceChildProjectFunctionality) {
                     tertiary.parent = secondary;
@@ -173,12 +173,19 @@ export class kravEditComponent implements OnInit {
                         )
                         // tslint:disable-next-line:no-shadowed-variable
                       }).subscribe(result => {
-                        calls--;
                         // @ts-ignore
                         tertiary.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
-                        if (calls === 0) {
-                          this.crunchGatheredData(newlyLoaded);
-                        }
+
+                        // Fetches Etags for theese requirments
+                        this.getEtag(tertiary.referenceProjectRequirement).subscribe(etags => {
+                          tertiary.referenceProjectRequirement = etags;
+                          calls--;
+
+                          //If this was the last call that returned data collection is finished
+                          if (calls === 0) {
+                            this.crunchGatheredData(newlyLoaded);
+                          }
+                        });
                         // tslint:disable-next-line:no-shadowed-variable
                       }, error => {
                         console.error(error);
@@ -188,10 +195,17 @@ export class kravEditComponent implements OnInit {
                       this.maxID = tertiary.projectFunctionalityId;
                     }
                   }
-                  // If this was the last call exits to next step
-                  if (calls === 0) {
-                    this.crunchGatheredData(newlyLoaded);
-                  }
+
+                  // Fetches Etags for theese requirments
+                  this.getEtag(secondary.referenceChildProjectFunctionality).subscribe(etags => {
+                    secondary.referenceChildProjectFunctionality = etags;
+                    calls--;
+
+                    //If this was the last call that returned data collection is finished
+                    if (calls === 0) {
+                      this.crunchGatheredData(newlyLoaded);
+                    }
+                  });
                   // tslint:disable-next-line:no-shadowed-variable
                 }, error => {
                   console.error(error);
@@ -205,12 +219,19 @@ export class kravEditComponent implements OnInit {
                   )
                   // tslint:disable-next-line:no-shadowed-variable
                 }).subscribe(result => {
-                  calls--;
                   // @ts-ignore
                   secondary.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
-                  if (calls === 0) {
-                    this.crunchGatheredData(newlyLoaded);
-                  }
+
+                  // Fetches Etags for theese requirments
+                  this.getEtag(secondary.referenceProjectRequirement).subscribe(etags => {
+                    secondary.referenceProjectRequirement = etags;
+                    calls--;
+
+                    //If this was the last call that returned data collection is finished
+                    if (calls === 0) {
+                      this.crunchGatheredData(newlyLoaded);
+                    }
+                  });
                   // tslint:disable-next-line:no-shadowed-variable
                 }, error => {
                   console.error(error);
@@ -221,10 +242,17 @@ export class kravEditComponent implements OnInit {
               }
               NavReqP.children.push(NavReqS);
             }
-            // If this was the last call exits to next step
-            if (calls === 0) {
-              this.crunchGatheredData(newlyLoaded);
-            }
+
+            // Fetches Etags for theese functionalities
+            this.getEtag(prime.referenceChildProjectFunctionality).subscribe(etags => {
+              prime.referenceChildProjectFunctionality = etags;
+              calls--;
+
+              //If this was the last call that returned data collection is finished
+              if (calls === 0) {
+                this.crunchGatheredData(newlyLoaded);
+              }
+            });
             // tslint:disable-next-line:no-shadowed-variable
           }, error => {
             console.error(error);
@@ -238,12 +266,19 @@ export class kravEditComponent implements OnInit {
             )
             // tslint:disable-next-line:no-shadowed-variable
           }).subscribe(result => {
-            calls--;
             // @ts-ignore
             prime.referenceProjectRequirement = this.fixRequirmentsText(result._embedded.projectRequirements);
-            if (calls === 0) {
-              this.crunchGatheredData(newlyLoaded);
-            }
+
+            // Fetches Etags for theese requirments
+            this.getEtag(prime.referenceProjectRequirement).subscribe(etags => {
+              prime.referenceProjectRequirement = etags;
+              calls--;
+
+              //If this was the last call that returned data collection is finished
+              if (calls === 0) {
+                this.crunchGatheredData(newlyLoaded);
+              }
+            });
             // tslint:disable-next-line:no-shadowed-variable
           }, error => {
             console.log(error);
@@ -258,6 +293,35 @@ export class kravEditComponent implements OnInit {
       // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.error(error);
+    });
+  }
+
+  /**
+   * getEtag
+   * Fetches Etags for all requirments or projectFunctionalities in given array, this is asyncrounous so it returns a subscribable observable
+   * @param data The array of requirments to fetch etags for
+   */
+  getEtag(data: ProjectRequirment[] | projectFunctionality[]): Observable<any>{
+    let calls = 0;
+    return new Observable<ProjectRequirment[] | projectFunctionality[]>(observer => {
+      for (let element of data) {
+        calls++;
+        this.http.get(element._links.self.href, {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + this.userData.oauthClientSecret
+          }),
+          observe: "response"
+        }).subscribe(result => {
+          calls--;
+          element.etag = result.headers.get("etag");
+          if (calls === 0) {
+            observer.next(data);
+            observer.complete();
+          }
+        }, error => {
+          console.error(error);
+        })
+      }
     });
   }
 
@@ -328,6 +392,7 @@ export class kravEditComponent implements OnInit {
    */
   crunchGatheredData(newlyLoaded: boolean) {
     this.loading = false;
+    this.sortMainData();
     console.log(this.mainData);
     // this.convertLegacyLinks();
     if (newlyLoaded) {
@@ -339,9 +404,33 @@ export class kravEditComponent implements OnInit {
       }
       this.selectedTab = 0;
     } else {
-      this.changeReq(this.currentReq.projectFunctionalityId);
+      this.changeFunctionality(this.currentReq.projectFunctionalityId);
     }
     this.statusBarInfo();
+  }
+
+  /**
+   * sortMainData
+   * Sorts the main data in ascending order
+   */
+  sortMainData() {
+    this.mainData.sort((a, b) => {
+      return parseInt(a.functionalityNumber) - parseInt(b.functionalityNumber)
+    });
+    for (let primary of this.mainData) {
+      if(primary.referenceChildProjectFunctionality !== undefined && primary.referenceChildProjectFunctionality.length > 0){
+        for (let secondary of primary.referenceChildProjectFunctionality) {
+          if (secondary.referenceChildProjectFunctionality !== undefined && secondary.referenceChildProjectFunctionality.length > 0) {
+            secondary.referenceChildProjectFunctionality.sort((a, b) => {
+              return parseInt(a.functionalityNumber) - parseInt(b.functionalityNumber)
+            });
+          }
+        }
+        primary.referenceChildProjectFunctionality.sort((a, b) => {
+          return parseInt(a.functionalityNumber) - parseInt(b.functionalityNumber)
+        });
+      }
+    }
   }
 
   /**
@@ -377,19 +466,73 @@ export class kravEditComponent implements OnInit {
   }
 
   /**
-   * changeReq
+   * updateFunctionalityEtag
+   * Updates the etag that is stored in memory to the one that is sent in as a parameter
+   *
+   * This is only used to update the etag when you change the processed state, if i find a better way to solve
+   * this i will implement it, so this might disappear later
+   *
+   * @param functionality The updated functionality to update the memory to
+   */
+  updateFunctionalityEtag(functionality: projectFunctionality) {
+    const inMemory = this.findFunctionality(functionality.projectFunctionalityId);
+
+    if( inMemory !== null) {
+      if (inMemory.parent === undefined) {
+        const index = this.mainData.indexOf(
+          this.mainData.find(func => func.projectFunctionalityId === functionality.projectFunctionalityId
+          ));
+        if (index !== -1) {
+          this.mainData[index].etag = functionality.etag;
+        }
+      } else if (inMemory.parent !== undefined) {
+
+        if (inMemory.parent.parent !== undefined) {
+          const primeIndex = this.mainData.indexOf(
+            this.mainData.find(func => func.projectFunctionalityId === inMemory.parent.parent.projectFunctionalityId
+            ));
+          const secIndex = this.mainData[primeIndex].referenceChildProjectFunctionality.indexOf(
+            this.mainData[primeIndex].referenceChildProjectFunctionality.find(
+              func => func.projectFunctionalityId === inMemory.parent.projectFunctionalityId
+            ));
+          const trdIndex = this.mainData[primeIndex].referenceChildProjectFunctionality[secIndex].referenceChildProjectFunctionality.indexOf(
+            this.mainData[primeIndex].referenceChildProjectFunctionality[secIndex].referenceChildProjectFunctionality.find(
+              func => func.projectFunctionalityId === inMemory.projectFunctionalityId
+            )
+          );
+
+          this.mainData[primeIndex].referenceChildProjectFunctionality[secIndex].referenceChildProjectFunctionality[trdIndex].etag = functionality.etag;
+        } else {
+
+          const primeIndex = this.mainData.indexOf(
+            this.mainData.find(func => func.projectFunctionalityId === inMemory.parent.projectFunctionalityId
+            ));
+          const secIndex = this.mainData[primeIndex].referenceChildProjectFunctionality.indexOf(
+            this.mainData[primeIndex].referenceChildProjectFunctionality.find(
+              func => func.projectFunctionalityId === inMemory.projectFunctionalityId
+            )
+          );
+
+          this.mainData[primeIndex].referenceChildProjectFunctionality[secIndex].etag = functionality.etag;
+        }
+      }
+    }
+  }
+
+  /**
+   * changeFunctionality
    *
    * Takes the ID of a projectFunctionality and jumps to that functionality, used to select between different parts of the project
    *
    * @param id
    * Wich id to change to
    */
-  changeReq(id: number) {
+  changeFunctionality(id: number) {
     if (id === 0) { // Loads the statuspage
       this.statusPage = !this.statusPage;
       this.statPageLoad();
     } else {
-      this.currentReq = this.findReq(id);
+      this.currentReq = this.findFunctionality(id);
       this.newReqPriority = 'O';
       this.selectedTab = 0;
       this.statusBarInfo();
@@ -398,34 +541,39 @@ export class kravEditComponent implements OnInit {
   }
 
   /**
-   * findReq
+   * findFunctionality
    *
    * Finds the requirment inn main data with the specified id
    * @param id
    * Wich id to look for
    */
-  findReq(id: number): projectFunctionality {
+  findFunctionality(id: number): projectFunctionality {
     // Primary level
-    for (const primary of this.mainData) {
-      if (primary.referenceChildProjectFunctionality.length > 0) {
-        // Secondary level
-        for (const secondary of primary.referenceChildProjectFunctionality) {
-          if (secondary.referenceChildProjectFunctionality !== undefined) {
-            // Tertiary level
-            for (const tertiary of secondary.referenceChildProjectFunctionality) {
-              if (tertiary.projectFunctionalityId === id) {
-                return  tertiary;
+    let pfound = this.mainData.find(functionality => functionality.projectFunctionalityId === id);
+    if(pfound === undefined) {
+      for (let primary of this.mainData) {
+        if (primary.referenceChildProjectFunctionality.length > 0) {
+          // Secondary level
+          for (const secondary of primary.referenceChildProjectFunctionality) {
+            if (secondary.referenceChildProjectFunctionality !== undefined) {
+              // Tertiary level
+              for (const tertiary of secondary.referenceChildProjectFunctionality) {
+                if (tertiary.projectFunctionalityId === id) {
+                  return tertiary;
+                }
               }
+            } else if (secondary.projectFunctionalityId === id) {
+              return secondary;
             }
-          } else if (secondary.projectFunctionalityId === id) {
-            return secondary;
           }
+        } else if (primary.projectFunctionalityId === id) {
+          return primary;
         }
-      } else if (primary.projectFunctionalityId === id) {
-        return  primary;
       }
+      return null;
+    } else {
+      return pfound;
     }
-    return null;
   }
 
   /**
@@ -439,10 +587,11 @@ export class kravEditComponent implements OnInit {
     // @ts-ignore
     req.requirementText = document.getElementById('field-' + index).value;
 
-    const patchString = '[{ "op": "replace", "path": "/requirementText", "value": "' +
-      req.requirementText + '"}]';
+    const patch = [{ op: "replace", path: "/requirementText", value: req.requirementText}];
 
-    this.sendPatch(patchString, req._links.self.href);
+    this.sendPatch(patch, req._links.self.href, req.etag).subscribe(result => {
+      this.currentReq.referenceProjectRequirement[index] = result;
+    });
   }
 
   /**
@@ -456,23 +605,25 @@ export class kravEditComponent implements OnInit {
   updateFunctionalityProcessed(functionality: projectFunctionality) {
     functionality.processed = !functionality.processed;
 
-    const patchString = '[{ "op": "replace", "path": "/processed", "value": ' +
-      functionality.processed + '}]';
+    const patch = [{ op: "replace", path: "/processed", value:
+      functionality.processed}];
 
-    this.sendPatch(patchString, functionality._links.self.href);
+    this.sendPatch(patch, functionality._links.self.href, functionality.etag).subscribe(result => {
+      this.updateFunctionalityEtag(result);
 
-    // Cheks to se if all children of current parent has been processed unless this is a prime
-    if (functionality.parent !== undefined && functionality.parent !== null) {
-      let check = true;
-      for (const child of functionality.parent.referenceChildProjectFunctionality) {
-        if (!child.processed) {
-          check = false;
+      // Cheks to se if all children of current parent has been processed unless this is a prime
+      if (functionality.parent !== undefined && functionality.parent !== null) {
+        let check = true;
+        for (const child of functionality.parent.referenceChildProjectFunctionality) {
+          if (!child.processed) {
+            check = false;
+          }
+        }
+        if (check !== functionality.parent.processed) {
+          this.updateFunctionalityProcessed(functionality.parent);
         }
       }
-      if (check !== functionality.parent.processed) {
-        this.updateFunctionalityProcessed(functionality.parent);
-      }
-    }
+    });
   }
 
   /**
@@ -487,34 +638,49 @@ export class kravEditComponent implements OnInit {
    * The priority to assign the requirment
    */
   updateRequirementPriority(index: number, priority: string) {
-    const patchString = '[{ "op": "replace", "path": "/priority", "value": "' +
-      priority + '"}]';
+    const patch = [{ op: "replace", path: "/priority", value:
+      priority}];
 
-    this.sendPatch(patchString, this.currentReq.referenceProjectRequirement[index]._links.self.href);
+    let req = this.currentReq.referenceProjectRequirement[index];
+
+    this.sendPatch(patch, req._links.self.href, req.etag).subscribe(result => {
+      this.currentReq.referenceProjectRequirement[index] = result;
+    });
   }
 
   /**
    * sendPatch
    *
-   * Sends patches to the server, used by all update functions
+   * Sends patches to the server, used by all update functions that deal with requirements returns an observable with the updated data so that it can be shifted into memory
    *
-   * @param patchString
-   * Inputted patchstring to send
+   * @param patch
+   * Inputted patch to send
    *
    * @param url
    * Inputted url to send patchstring to
+   *
+   * @param etag
+   * Etag to accompany the patch
    */
-  sendPatch(patchString: string, url: string) {
-    console.log(patchString);
-    this.http.patch(url, JSON.parse(patchString), {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.userData.oauthClientSecret
-      })
-    }).subscribe(result => {
-      // console.log(result);
-      // tslint:disable-next-line:no-shadowed-variable
-    }, error => {
-      console.error(error);
+  sendPatch(patch: object, url: string, etag?: string): Observable<any> {
+    return new Observable<ProjectRequirment>(observer => {
+      this.http.patch(url, patch, {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + this.userData.oauthClientSecret,
+          ETAG: etag
+        }),
+        observe: "response"
+      }).subscribe(result => {
+        // @ts-ignore
+        let returned: any = result.body;
+        returned.etag = result.headers.get("etag");
+        observer.next(returned);
+        observer.complete();
+      }, error => {
+        if (error !== null) {
+          console.error(error);
+        }
+      });
     });
   }
 
@@ -601,7 +767,6 @@ export class kravEditComponent implements OnInit {
       this.currentReq = switchto;
       this.newReqPriority = 'O';
       this.selectedTab = 0;
-      // this.loadRequirment();
     } else {
       this.statusPage = !this.statusPage;
       this.statPageLoad();
@@ -624,7 +789,10 @@ export class kravEditComponent implements OnInit {
       if (id > this.maxID) {
         return null;
       }
-      switchto = this.findReq(id);
+      switchto = this.findFunctionality(id);
+      if (switchto !== null && switchto.referenceProjectRequirement === undefined) {
+        switchto = null;
+      }
       id++;
     }
     return switchto;
@@ -660,7 +828,10 @@ export class kravEditComponent implements OnInit {
       if (id < this.mainData[0].projectFunctionalityId) {
         return null;
       }
-      switchto = this.findReq(id);
+      switchto = this.findFunctionality(id);
+      if (switchto !== null && switchto.referenceProjectRequirement === undefined) {
+        switchto = null;
+      }
       id--;
     }
     return switchto;
@@ -722,13 +893,13 @@ export class kravEditComponent implements OnInit {
         add = null;
       }
     }
-    this.statpageData.finished = true;
-    // Cheks if the project is finished, i could have used the values from progress instead, but this felt more reliable
-    for (const req of this.mainData) {
-      if ( !req.processed ) {
-        this.statpageData.finished = false;
-      }
+
+    if (this.statpageData.unfinished.length === 0) {
+      this.statpageData.finished = true;
+    } else {
+      this.statpageData.finished = false;
     }
+    
     if (!this.statpageData.finished) {
       add = this.mainData[0];
       let lastID = 0;
@@ -743,24 +914,8 @@ export class kravEditComponent implements OnInit {
         numberOfReqs++;
       }
       this.statpageData.progress = Math.round((finished / numberOfReqs) * 100);
-      console.log(this.mainData);
     } else {
       this.statpageData.progress = 100;
-
-      // Calls a post to generate document if download is finnished
-      this.statpageData.generatingDocument = true;
-      this.http.post(this.userData.currentProject._links.document.href, null, {
-        headers: new HttpHeaders({
-            Authorization: 'Bearer ' + this.userData.oauthClientSecret
-          }
-        )
-      }).subscribe(result => {
-        this.statpageData.generatingDocument = false;
-        // tslint:disable-next-line:no-shadowed-variable
-      }, error => {
-        console.log(error);
-        alert(error);
-      });
     }
     this.statpageData.loaded = true;
   }
