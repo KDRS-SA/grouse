@@ -1,7 +1,63 @@
 <h1 mat-dialog-title>Det eksisterer en nyere versjon av dette</h1>
-<div mat-dialog-content>
+<div mat-dialog-content class="concurrency-main">
+  <mat-radio-group [(ngModel)]="radioOption">
+    <div class="concurrency-top-container">
+      <div class="concurrency-choice-container">
+        <div class="flex-row-left">
+          <mat-label>Bruk din versjon: </mat-label>
+          <mat-radio-button value="client" class="m-lr-10"></mat-radio-button>
+        </div>
+        <mat-form-field *ngIf="type === 'requirementText'" class="concurrency-textfield" [formGroup]="formControl">
+          <mat-label>Din versjon</mat-label>
+          <textarea class="concurrency-textfield" matInput placeholder="Skriv her for å endre" id="NyttKrav" [value]="clientVersion" (input)="clientVersion = $event.target.value"></textarea>
+        </mat-form-field>
+        <div class="flex-center w-100 h-100">
+          <div *ngIf="type === 'priority'" class="concurrency-textfield" [formGroup]="formControl">
+            <mat-button-toggle [checked]="clientVersion == 'O'" (click)="updateRequirementPriority('client', 'O')">O</mat-button-toggle>
+            <mat-button-toggle [checked]="clientVersion == '1'" (click)="updateRequirementPriority('client', '1')">1</mat-button-toggle>
+            <mat-button-toggle [checked]="clientVersion == '2'" (click)="updateRequirementPriority('client', '2')">2</mat-button-toggle>
+            <mat-button-toggle [checked]="clientVersion == 'O (i)'" (click)="updateRequirementPriority('client', 'O (i)')">O(i)</mat-button-toggle>
+            <mat-button-toggle [checked]="clientVersion == '1 (i)'" (click)="updateRequirementPriority('client', '1 (i)')">1(i)</mat-button-toggle>
+            <mat-button-toggle [checked]="clientVersion == '2 (i)'" (click)="updateRequirementPriority('client', '2 (i)')">2(i)</mat-button-toggle>
+          </div>
+        </div>
+      </div>
 
+      <div class="concurrency-choice-container">
+        <div class="flex-row-left">
+          <mat-label>Bruk versjonen på server: </mat-label>
+          <mat-radio-button value="server" class="m-lr-10"></mat-radio-button>
+        </div>
+        <mat-form-field *ngIf="type === 'requirementText'" class="concurrency-textfield" [formGroup]="formControl">
+          <mat-label>Versjon på server</mat-label>
+          <textarea class="concurrency-textfield"  matInput placeholder="Skriv her for å endre" [value]="serverVersion" (input)="serverVersion = $event.target.value"></textarea>
+        </mat-form-field>
+        <div class="flex-center w-100 h-100">
+          <div *ngIf="type === 'priority'" class="concurrency-textfield" [formGroup]="formControl">
+            <mat-button-toggle [checked]="serverVersion == 'O'" (click)="updateRequirementPriority('server', 'O')">O</mat-button-toggle>
+            <mat-button-toggle [checked]="serverVersion == '1'" (click)="updateRequirementPriority('server', '1')">1</mat-button-toggle>
+            <mat-button-toggle [checked]="serverVersion == '2'" (click)="updateRequirementPriority('server', '2')">2</mat-button-toggle>
+            <mat-button-toggle [checked]="serverVersion == 'O (i)'" (click)="updateRequirementPriority('server', 'O (i)')">O(i)</mat-button-toggle>
+            <mat-button-toggle [checked]="serverVersion == '1 (i)'" (click)="updateRequirementPriority('server', '1 (i)')">1(i)</mat-button-toggle>
+            <mat-button-toggle [checked]="serverVersion == '2 (i)'" (click)="updateRequirementPriority('server', '2 (i)')">2(i)</mat-button-toggle>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex-center p-20">
+      <div class="concurrency-choice-container w-100 p-20">
+        <div class="flex-row-left" *ngIf="type === 'requirementText'">
+          <mat-label>Bruk ny versjon: </mat-label>
+          <mat-radio-button value="new" class="m-lr-10"></mat-radio-button>
+        </div>
+        <mat-form-field *ngIf="type === 'requirementText'" class="concurrency-textfield" [formGroup]="formControl">
+          <mat-label>Ny versjon</mat-label>
+          <textarea class="concurrency-textfield" matInput placeholder="Skriv ny tekst her" (input)="newVersion = $event.target.value"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-radio-group>
 </div>
-<div mat-dialog-actions class="flex-row-between">
-  <button mat-raised-button (click)="onNoClick()">Returner</button>
+<div mat-dialog-actions class="flex-row-right">
+  <button color="primary" [disabled]="radioOption === ''" mat-raised-button (click)="onNoClick()">Bekreft</button>
 </div>

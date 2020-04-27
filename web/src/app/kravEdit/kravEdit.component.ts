@@ -12,6 +12,7 @@ import {ProjectRequirment} from '../models/ProjectRequirment.model';
 import {User} from '../models/User';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from "rxjs";
+import validate = WebAssembly.validate;
 
 @Component({
   selector: 'app-root',
@@ -407,6 +408,8 @@ export class kravEditComponent implements OnInit {
       this.changeFunctionality(this.currentReq.projectFunctionalityId);
     }
     this.statusBarInfo();
+
+    const patch = [{ op: "replace", path: "/priority", value: "O"}];
   }
 
   /**
@@ -677,21 +680,44 @@ export class kravEditComponent implements OnInit {
         observer.next(returned);
         observer.complete();
       }, error => {
-        // Concurrency detected
-        if (error.error.status === 409) {
-          const data: IConcurrencyDetails = {
-            url: url,
-            patch: patch
+        if (error.error !== undefined) {
+          // Concurrency error detected
+          if (error.error.status === 409) {
+            // Catches concurrency errors, ignores concurrency errors for processed, as this is not necessary
+            if (patch[0].path !== "/processed") {
+              this.resolveConcurrencyError(url, patch).subscribe(result => {
+                observer.next(result);
+                observer.complete();
+              });
+            } else {
+              // "ignoring" processed
+              this.http.get(url, {
+                headers: new HttpHeaders({
+                  Authorization: 'Bearer ' + this.userData.oauthClientSecret
+                }),
+                observe: "response"
+              }).subscribe(result => {
+                this.http.patch(url, patch, {
+                  headers: new HttpHeaders({
+                    Authorization: 'Bearer ' + this.userData.oauthClientSecret,
+                    ETAG: result.headers.get('etag')
+                  }),
+                  observe: "response"
+                }).subscribe(result => {
+                  let returned: any = result.body;
+                  returned.etag = result.headers.get("etag");
+                  observer.next(returned);
+                  observer.complete();
+                }, error2 => {
+                  console.error(error2);
+                });
+              }, error1 => {
+                console.error(error1)
+              });
+            }
+          } else {
+            console.error(error);
           }
-
-          const dialogRef = this.dialog.open(ConcurrencyResolver, {
-            data: data,
-            width: '400px'
-          });
-
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-          })
         }
       });
     });
@@ -944,12 +970,38 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  resolveConcurrencyError(url: string, patch: IPatchObject[]): Observable<ProjectRequirment> {
+    const data: IConcurrencyDetails = {
+      url: url,
+      patch: patch,
+      token: this.userData.oauthClientSecret
+    }
+
+    const dialogRef = this.dialog.open(ConcurrencyResolver, {
+      data: data,
+      width: '90%',
+      minWidth: '500px',
+      maxWidth: '1000px',
+      height: '90%',
+      minHeight: '750px',
+      maxHeight: '100px'
+    });
+
+    return new Observable<ProjectRequirment>(observer => {
+      dialogRef.afterClosed().subscribe(result => {
+        observer.next(result);
+        observer.complete();
+      });
+    });
+  }
+
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
 }
 
 export interface IConcurrencyDetails {
   url: string;
   patch: IPatchObject[];
+  token: string;
 }
 
 export interface IPatchObject {
@@ -1080,15 +1132,91 @@ export class ShareMenu {
 export class ConcurrencyResolver {
   private http: HttpClient;
   private ConcurrencyDetails: IConcurrencyDetails;
-
+  private formControl: FormGroup;
+  private clientVersion: string;
+  private serverVersion: string;
+  private newVersion: string;
+  private type: string;
+  private currentEtag: string;
+  private radioOption: string;
 
   constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: IConcurrencyDetails, http: HttpClient, private formBuilder: FormBuilder) {
     this.ConcurrencyDetails = data;
     this.http = http;
     this.dialogRef.disableClose = true;
+    this.type = data.patch[0].path.substr(1);
+    this.formControl = formBuilder.group({});
+    this.clientVersion = data.patch[0].value;
+    this.serverVersion = "";
+    this.currentEtag = '"0"';
+    this.radioOption = "";
+    this.fetchFromServer();
+  }
+
+  fetchFromServer(){
+    this.http.get(this.data.url, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.data.token
+      }),
+      observe: "response"
+    }).subscribe(result => {
+      if( this.type === "requirementText") {
+        // @ts-ignore
+        this.serverVersion = result.body.requirementText;
+      } else if ( this.type === "priority") {
+        // @ts-ignore
+        this.serverVersion = result.body.priority;
+      } else {
+        console.error("Wrong type!")
+        console.error(result.body);
+        this.dialogRef.close(null);
+      }
+      this.currentEtag = result.headers.get('etag');
+    }, error => {
+      console.error(error);
+    })
+  }
+
+  updateRequirementPriority(field: string, update: string) {
+    if (field === "client") {
+      this.clientVersion = update;
+    } else if (field === "server") {
+      this.serverVersion = update;
+    }
   }
 
   onNoClick() {
-    this.dialogRef.close(this.data);
+    //The value that was selected
+    let value = "";
+    if(this.radioOption === "client") {
+      value = this.clientVersion;
+    } else if (this.radioOption === "server") {
+      value = this.serverVersion;
+    } else if (this.radioOption === "new") {
+      value = this.newVersion;
+    }
+
+    // Creating the patch object
+    let patch = [{}];
+    if (this.type === "requirementText") {
+      patch = [{op: "replace", path: "/requirementText", value: value}];
+    } else if ( this.type === "priority") {
+      patch = [{op: "replace", path: "/priority", value: value}]
+    }
+
+    this.http.patch(this.data.url, patch, {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.data.token,
+        ETAG: this.currentEtag
+      }),
+      observe: "response"
+    }).subscribe(result => {
+      let returned: any = result.body;
+      returned.etag = result.headers.get("etag");
+      this.dialogRef.close(returned);
+    }, error => {
+      console.error(error);
+      this.dialogRef.close(null);
+    })
   }
 }

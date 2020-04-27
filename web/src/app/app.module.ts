@@ -34,6 +34,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {adminComponent, AdminDeleteUserDialog} from "./Admin/Admin.component";
+import {MatRadioModule} from "@angular/material/radio";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -92,7 +93,8 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         ),
         MatSelectModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatRadioModule
     ],
   providers: [],
   bootstrap: [AppComponent],

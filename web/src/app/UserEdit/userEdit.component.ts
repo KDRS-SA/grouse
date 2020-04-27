@@ -185,7 +185,6 @@ export class userEditComponent implements  OnInit {
 }
 
 
-
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'PasswordChangeConfirmed.Dialog',
