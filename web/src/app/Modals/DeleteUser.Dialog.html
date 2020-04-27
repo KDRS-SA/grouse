@@ -3,7 +3,7 @@
   <button mat-button class="no-p no-m h-80" color="warn" (click)="onNoClick()" *ngIf="!loading && !deleted">X</button>
   <button mat-button class="no-p no-m h-80" color="warn" (click)="logout()" *ngIf="!loading && deleted">X</button>
 </div>
-<div mat-dialog-content class="w-100" style="overflow-y: hidden">
+<div mat-dialog-content class="w-100 h-80" style="overflow-y: hidden">
   <!--Information about deletion-->
   <div *ngIf="!loading && !deleted && (error === null)">
     <h3>{{'UserEdit.DeleteUserUH1' | translate}}</h3>

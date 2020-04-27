@@ -605,7 +605,7 @@ export class kravEditComponent implements OnInit {
   updateFunctionalityProcessed(functionality: projectFunctionality) {
     functionality.processed = !functionality.processed;
 
-    const patch = [{ op: "replace", path: "/processed", value:
+    const patch: IPatchObject[] = [{ op: "replace", path: "/processed", value:
       functionality.processed}];
 
     this.sendPatch(patch, functionality._links.self.href, functionality.etag).subscribe(result => {
@@ -662,7 +662,7 @@ export class kravEditComponent implements OnInit {
    * @param etag
    * Etag to accompany the patch
    */
-  sendPatch(patch: object, url: string, etag?: string): Observable<any> {
+  sendPatch(patch: IPatchObject[], url: string, etag?: string): Observable<any> {
     return new Observable<ProjectRequirment>(observer => {
       this.http.patch(url, patch, {
         headers: new HttpHeaders({
@@ -677,8 +677,21 @@ export class kravEditComponent implements OnInit {
         observer.next(returned);
         observer.complete();
       }, error => {
-        if (error !== null) {
-          console.error(error);
+        // Concurrency detected
+        if (error.error.status === 409) {
+          const data: IConcurrencyDetails = {
+            url: url,
+            patch: patch
+          }
+
+          const dialogRef = this.dialog.open(ConcurrencyResolver, {
+            data: data,
+            width: '400px'
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+          })
         }
       });
     });
@@ -899,7 +912,7 @@ export class kravEditComponent implements OnInit {
     } else {
       this.statpageData.finished = false;
     }
-    
+
     if (!this.statpageData.finished) {
       add = this.mainData[0];
       let lastID = 0;
@@ -932,6 +945,17 @@ export class kravEditComponent implements OnInit {
   }
 
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
+}
+
+export interface IConcurrencyDetails {
+  url: string;
+  patch: IPatchObject[];
+}
+
+export interface IPatchObject {
+  op: string;
+  path: string;
+  value: any;
 }
 
 // Needed for tree structure
@@ -1040,5 +1064,31 @@ export class ShareMenu {
 
   onNoClick() {
     this.dialogRef.close();
+  }
+}
+
+@Component({
+  // tslint:disable-next-line:component-selector
+  selector: 'ConcurrencyResolver.Dialog',
+  templateUrl: '../Modals/ConcurrencyResolver.Dialog.html',
+  styleUrls: [
+    './kravEdit.component.css',
+    '../common.css'
+  ]
+})
+
+export class ConcurrencyResolver {
+  private http: HttpClient;
+  private ConcurrencyDetails: IConcurrencyDetails;
+
+
+  constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: IConcurrencyDetails, http: HttpClient, private formBuilder: FormBuilder) {
+    this.ConcurrencyDetails = data;
+    this.http = http;
+    this.dialogRef.disableClose = true;
+  }
+
+  onNoClick() {
+    this.dialogRef.close(this.data);
   }
 }

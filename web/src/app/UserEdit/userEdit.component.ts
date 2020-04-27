@@ -175,6 +175,7 @@ export class userEditComponent implements  OnInit {
     const ref = this.dialogBox.open(DeleteUserDialog, {
       width: '80%',
       maxWidth: '600px',
+      height: '700px',
       data: this.http
     });
     ref.afterClosed().subscribe(result => {

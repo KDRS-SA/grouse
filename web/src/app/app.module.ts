@@ -26,7 +26,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
-import {DeleteRequirmentDialog, kravEditComponent, ShareMenu} from './KravEdit/kravEdit.component';
+import {ConcurrencyResolver, DeleteRequirmentDialog, kravEditComponent, ShareMenu} from './KravEdit/kravEdit.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatTreeModule} from '@angular/material/tree';
 import {DeleteUserDialog, PasswordChangeConfirmedDialog, userEditComponent} from './UserEdit/userEdit.component';
@@ -54,7 +54,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DeleteUserDialog,
     ShareMenu,
     adminComponent,
-    AdminDeleteUserDialog
+    AdminDeleteUserDialog,
+    ConcurrencyResolver
   ],
     imports: [
         BrowserModule,
@@ -103,7 +104,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordChangeConfirmedDialog,
     DeleteUserDialog,
     ShareMenu,
-    AdminDeleteUserDialog
+    AdminDeleteUserDialog,
+    ConcurrencyResolver
   ],
   entryComponents: [
     NewProjectDialog,
@@ -113,7 +115,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordChangeConfirmedDialog,
     DeleteUserDialog,
     ShareMenu,
-    AdminDeleteUserDialog
+    AdminDeleteUserDialog,
+    ConcurrencyResolver
   ]
 })
 export class AppModule { }
