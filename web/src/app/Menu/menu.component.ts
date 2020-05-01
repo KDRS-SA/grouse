@@ -7,6 +7,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {TranslateService} from '@ngx-translate/core';
 import {Template} from '../models/template';
 import {Animations} from '../app.animations';
+import { NewProjectDialog } from '../Modals/NewProject/NewProject.component';
+import { DeleteProjectDialog } from '../Modals/RemoveProject/RemoveProject.compnent';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +22,13 @@ import {Animations} from '../app.animations';
   ]
 })
 export class MenuComponent implements OnInit {
-  private http: HttpClient;
+  http: HttpClient;
   private router: Router;
-  private userData: UserData;
-  private projects: Project[];
-  private dialogBox: MatDialog;
-  private deleteMode: boolean;
-  private shaking: number;
+  userData: UserData;
+  projects: Project[];
+  dialogBox: MatDialog;
+  deleteMode: boolean;
+  shaking: number;
 
   public title = 'Grouse';
 
@@ -135,16 +137,16 @@ export class MenuComponent implements OnInit {
 
   /**
    * openProject
-   * Send the user to the kravEdit page using a specified project
+   * Send the user to the KravEdit page using a specified project
    *
    * @param project
    * The project to send the user to edit
    */
   openProject(project) {
     this.userData.currentProject = project;
-    this.userData.nav = 'kravEdit';
+    this.userData.nav = 'KravEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
-    this.router.navigate(['/kravEdit']);
+    this.router.navigate(['/KravEdit']);
   }
 
   /**
@@ -235,33 +237,4 @@ export interface INewProject {
   Name: string;
   Templates: Template[];
   SelectedTemplate: Template;
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'NewProject.Dialog',
-  templateUrl: '../Modals/NewProject.Dialog.html'
-})
-// tslint:disable-next-line:component-class-suffix
-export class NewProjectDialog {
-  constructor(public dialogRef: MatDialogRef<NewProjectDialog>, @Inject(MAT_DIALOG_DATA) public data: INewProject) {}
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'DeleteProject.Dialog',
-  templateUrl: '../Modals/RemoveProject.Dialog.html'
-})
-export class DeleteProjectDialog {
-  constructor(public dialogRef: MatDialogRef<DeleteProjectDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
-    this.data = true;
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
 }

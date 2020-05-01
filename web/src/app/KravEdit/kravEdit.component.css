@@ -21,7 +21,7 @@
 
 .sidebar{
   display: flex;
-  height: 90%;
+  height: 95%;
   width: 100%;
 }
 
@@ -130,8 +130,9 @@
 .unfinished-box{
   background-color: rgb(245, 245, 245);
   width: 90%;
-  height: 175px;
+  height: 300px;
   margin-left: 5%;
+  margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px lightgrey;
   display: flex;
@@ -199,4 +200,20 @@
 
 .concurrency-main {
   height: 600px;
+}
+
+.download-button-container{
+  width: 350px;
+  height: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  box-shadow: 1px 1px 2px dimgray;
+  border-radius: 4px 0 0 4px;
+  margin-top: 10px;
+  background-color: whitesmoke;
+}
+
+.download-button{
+  height: 80px;
 }

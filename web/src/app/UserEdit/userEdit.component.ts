@@ -6,6 +6,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {MatSnackBar} from '@angular/material';
+import {DeleteUserDialog} from "../Modals/DeleteUser/DeleteUser.component";
+import { PasswordChangeConfirmedDialog } from '../Modals/PasswordChangeConfirmed/PasswordChangeConfimred.component';
 
 @Component({
   selector: 'app-root',
@@ -18,14 +20,14 @@ import {MatSnackBar} from '@angular/material';
 
 // tslint:disable-next-line:class-name
 export class userEditComponent implements  OnInit {
-  private userData: UserData;
+  userData: UserData;
   private http: HttpClient;
   private router: Router;
-  private passwordForm: FormGroup;
-  private formBuilder: FormBuilder;
-  private newPassword: string;
-  private oldPassword: string;
-  private repeatPassword: string;
+  passwordForm: FormGroup;
+  formBuilder: FormBuilder;
+  newPassword: string;
+  oldPassword: string;
+  repeatPassword: string;
   private snackBar: MatSnackBar;
   private dialogBox: MatDialog;
 
@@ -181,125 +183,5 @@ export class userEditComponent implements  OnInit {
     ref.afterClosed().subscribe(result => {
       this.userData = JSON.parse(localStorage.getItem('UserData'));
     });
-  }
-}
-
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'PasswordChangeConfirmed.Dialog',
-  templateUrl: '../Modals/PasswordChangeConfirmed.Dialog.html',
-  styleUrls: [
-    './userEdit.component.css',
-    '../common.css'
-  ]
-})
-// tslint:disable-next-line:component-class-suffix
-export class PasswordChangeConfirmedDialog {
-  constructor(public dialogRef: MatDialogRef<PasswordChangeConfirmedDialog>) {
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'DeleteUser.Dialog',
-  templateUrl: '../Modals/DeleteUser.Dialog.html',
-  styleUrls: [
-    './userEdit.component.css',
-    '../common.css'
-  ]
-})
-// tslint:disable-next-line:component-class-suffix
-export class DeleteUserDialog {
-  private userData: UserData;
-  private checked: boolean;
-  private loading: boolean;
-  private deleted: boolean;
-  // too many states of authorization wanted to illustrate them all graphically {0 = un-authorized, 1 = checking with server, -1 = wrong password, 2 = authorized}
-  private authorized: number;
-  private error;
-  private formGroup: FormGroup;
-  private pass: string;
-
-  constructor(public dialogRef: MatDialogRef<DeleteUserDialog>, @Inject(MAT_DIALOG_DATA) public data: HttpClient, formBuilder: FormBuilder) {
-    this.checked = false;
-    this.loading = false;
-    this.deleted = false;
-    this.error = null;
-    this.authorized = 0;
-    this.pass = '';
-    this.userData = JSON.parse(localStorage.getItem('UserData'));
-    this.formGroup = formBuilder.group({
-      Pass: [ this.pass, [
-        Validators.required
-      ]]
-    });
-  }
-
-  confirm() {
-    this.loading = true;
-    this.dialogRef.disableClose = true;
-    this.data.delete(this.userData._links.konto.href, {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.userData.oauthClientSecret
-      })
-    }).subscribe(result => {
-      if (result === null) {
-        this.deleted = true;
-        this.dialogRef.disableClose = false;
-        this.loading = false;
-      }
-    }, error => {
-      this.loading = false;
-      this.error = error;
-      console.error(error);
-    });
-  }
-
-  checkPass() {
-    this.authorized = 1;
-    this.dialogRef.disableClose = true;
-    // Checks if the old password is valid (Note that this only occurs clientside and is very easely bypassed)
-    let body = new HttpParams();
-    body = body.set('grant_type', 'password');
-    body = body.append('username', this.userData.userName);
-    body = body.append('password', this.pass);
-
-    this.data.post(this.userData._links['login OAuth2'].href, body, {
-      // Constructs the headers
-      headers: new HttpHeaders({
-        Authorization: 'Basic ' + btoa(this.userData.oauthClientId + ':' + 'secret'),
-        'Content-type': 'application/x-www-form-urlencoded; charset=utf-8'
-      })
-    }).subscribe(
-      result => {
-        // @ts-ignore
-        this.userData.oauthClientSecret = result.access_token;
-        this.authorized = 2;
-      }, error => {
-        if (error.error.error_description === 'Bad credentials') {
-          // @ts-ignore
-          this.authorized = -1;
-        } else {
-          console.error(error);
-        }
-      });
-  }
-
-  onNoClick() {
-    if (this.deleted) {
-      localStorage.clear();
-      window.location.reload();
-    } else if (this.authorized) {
-      // If the token has been altered by checking for the correct password it must be updated
-      localStorage.setItem('UserData', JSON.stringify(this.userData));
-      this.dialogRef.close();
-    } else {
-      this.dialogRef.close();
-    }
   }
 }

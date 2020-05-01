@@ -1,14 +1,13 @@
-import {Component, Inject} from "@angular/core";
+import {Component} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {UserData} from "../models/UserData.model";
 import {Project} from "../models/Project.model";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {TranslateService} from "@ngx-translate/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../models/User";
-import {startUrl} from "../common";
-import {DeleteProjectDialog} from "../Menu/menu.component";
+import { AdminDeleteUserDialog } from '../Modals/AdminDeleteUser/AdminDeleteUser.component';
+import {DeleteProjectDialog} from "../Modals/RemoveProject/RemoveProject.compnent";
 
 @Component({
   selector: 'app-root',
@@ -22,18 +21,18 @@ import {DeleteProjectDialog} from "../Menu/menu.component";
 export class adminComponent {
   private http: HttpClient;
   private router: Router;
-  private userData: UserData;
+  userData: UserData;
   private dialogBox: MatDialog;
 
-  private searchUser: string;
-  private searchProject: string;
+  searchUser: string;
+  searchProject: string;
 
-  private listOfUsers: User[];
-  private listOfProjects: Project[];
-  private usermode: boolean;
-  private selectedUser: User;
-  private selectedProject: Project;
-  private usersOfThisProject: User[];
+  listOfUsers: User[];
+  listOfProjects: Project[];
+  usermode: boolean;
+  selectedUser: User;
+  selectedProject: Project;
+  usersOfThisProject: User[];
 
   constructor(http: HttpClient, router: Router, dialogBox: MatDialog, public translate: TranslateService) {
     this.http = http;
@@ -274,24 +273,5 @@ export class adminComponent {
     this.userData.nav = 'userEdit';
     localStorage.setItem('UserData', JSON.stringify(this.userData));
     this.router.navigate(['/userEdit']);
-  }
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'AdminDeleteUser.Dialog',
-  templateUrl: '../Modals/AdminDeleteUser.Dialog.html',
-  styleUrls: [
-    './Admin.component.css',
-    '../common.css'
-  ]
-})
-export class AdminDeleteUserDialog {
-  constructor(public dialogRef: MatDialogRef<AdminDeleteUserDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
-    this.data = true;
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
   }
 }

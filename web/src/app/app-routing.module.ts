@@ -10,7 +10,7 @@ import {adminComponent} from "./Admin/Admin.component";
 const routes: Routes = [
   { path: 'Login', component: LoginComponent },
   { path: 'Menu', component: MenuComponent },
-  { path: 'kravEdit', component: kravEditComponent},
+  { path: 'KravEdit', component: kravEditComponent},
   { path: 'userEdit', component: userEditComponent},
   { path: 'Admin', component: adminComponent}
 ];

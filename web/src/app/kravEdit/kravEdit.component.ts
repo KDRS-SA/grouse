@@ -12,7 +12,10 @@ import {ProjectRequirment} from '../models/ProjectRequirment.model';
 import {User} from '../models/User';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from "rxjs";
-import validate = WebAssembly.validate;
+import {Links} from "../models/links.model";
+import { ConcurrencyResolver } from '../Modals/ConcurrencyResolver/ConcurrencyResolver.component';
+import {DeleteRequirmentDialog} from "../Modals/RemoveReq/RemoveReq.component";
+import { ShareMenu } from '../Modals/ShareMenu/shareMenu.component';
 
 @Component({
   selector: 'app-root',
@@ -22,30 +25,29 @@ import validate = WebAssembly.validate;
     '../common.css'
   ]
 })
-
 // tslint:disable-next-line:class-name
 export class kravEditComponent implements OnInit {
 
   public title = 'Grouse';
-  private sideBarOpen: boolean;
-  private currentReq: projectFunctionality;
+  sideBarOpen: boolean;
+  currentReq: projectFunctionality;
   private http: HttpClient;
   private router: Router;
-  private userData: UserData;
+  userData: UserData;
   private projectLink: string;
-  private mainData: projectFunctionality[];
-  private newReqPriority: string;
-  private selectedTab: number;
-  private maxID: number;
-  private statusPage: boolean;
-  private statpageData: statusPageData;
+  mainData: projectFunctionality[];
+  newReqPriority: string;
+  selectedTab: number;
+  maxID: number;
+  statusPage: boolean;
+  statpageData: statusPageData;
 
-  private treeControl: NestedTreeControl<Requirment>;
-  private dataSource: MatTreeNestedDataSource<Requirment>;
-  private statusbarData: projectFunctionality[];
+  treeControl: NestedTreeControl<Requirment>;
+  dataSource: MatTreeNestedDataSource<Requirment>;
+  statusbarData: projectFunctionality[];
   private nav: Requirment[];
   private dialog: MatDialog;
-  private loading: boolean;
+  loading: boolean;
 
   constructor(http: HttpClient, router: Router, dialog: MatDialog, public translate: TranslateService) {
     this.loading = true;
@@ -331,20 +333,22 @@ export class kravEditComponent implements OnInit {
    * Downloads the document from the server to the users local machine
    */
   downloadDocument() {
-    console.log(this.userData.currentProject);
+    this.statpageData.generatingDocument = true;
     this.http.get(this.userData.currentProject._links.document.href, {
       headers: new HttpHeaders({
-          Authorization: 'Bearer' + this.userData.oauthClientSecret
+          Authorization: 'Bearer' + this.userData.oauthClientSecret,
+          Accept: this.statpageData.selectedFormat.type
         }
       ),
       responseType: 'blob'
     }).subscribe(result => {
+      this.statpageData.generatingDocument = false;
       const url = window.URL.createObjectURL(result);
       const a = document.createElement('a');
       a.setAttribute('style', 'display:none;');
       a.href = url;
       document.body.appendChild(a);
-      a.download = this.userData.currentProject.projectName + '.docx';
+      a.download = this.userData.currentProject.projectName + "." + this.statpageData.selectedFormat.extension;
       a.click();
       return url;
     });
@@ -410,6 +414,8 @@ export class kravEditComponent implements OnInit {
     this.statusBarInfo();
 
     const patch = [{ op: "replace", path: "/priority", value: "O"}];
+
+    this.getSupportedFormats();
   }
 
   /**
@@ -921,6 +927,7 @@ export class kravEditComponent implements OnInit {
     this.sideBarOpen = false;
     this.statpageData.loaded = false;
     this.statpageData.unfinished = [];
+    this.getSupportedFormats().subscribe(result => {this.statpageData.sportedFormats = result; console.log(result);});
     let add: projectFunctionality = this.currentReq;
     while (add !== null) {
       if (!add.processed) {
@@ -960,6 +967,70 @@ export class kravEditComponent implements OnInit {
   }
 
   /**
+   * getSupportedFormats
+   * Fetches available formats from the server
+   */
+  getSupportedFormats(): Observable<IFormat[]> {
+    return new Observable<IFormat[]>(observer => {
+      this.http.get<ISupportedFormatResponse>(this.userData.currentProject._links["supported-formats"].href, {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + this.userData.oauthClientSecret
+      })
+    }).subscribe(result => {
+      let formats: IFormat[] = [];
+        if (result.supportedFormats["application/vnd.openxmlformats-officedocument.wordprocessingml.document"] !== undefined && result.supportedFormats["application/vnd.openxmlformats-officedocument.wordprocessingml.document"] !== "") {
+          formats.push({
+            type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            extension: result.supportedFormats["application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
+          });
+        }
+        if (result.supportedFormats["application/vnd.oasis.opendocument.text"] !== undefined && result.supportedFormats["application/vnd.oasis.opendocument.text"] !== "") {
+          formats.push({
+            type: "application/vnd.oasis.opendocument.text",
+            extension: result.supportedFormats["application/vnd.oasis.opendocument.text"]
+          });
+        }
+        if (result.supportedFormats["text/html"] !== undefined && result.supportedFormats["text/html"] !== "") {
+          formats.push({
+            type: "text/html",
+            extension: result.supportedFormats["text/html"]
+          });
+        }
+        if (result.supportedFormats["application/pdf"] !== undefined && result.supportedFormats["application/pdf"] !== "") {
+          formats.push({
+            type: "application/pdf",
+            extension: result.supportedFormats["application/pdf"]
+          });
+        }
+        if (result.supportedFormats["application/rtf"] !== undefined && result.supportedFormats["application/rtf"] !== "") {
+          formats.push({
+            type: "application/rtf",
+            extension: result.supportedFormats["application/rtf"]
+          });
+        }
+        if (result.supportedFormats["text/asciidoc"] !== undefined && result.supportedFormats["text/asciidoc"] !== "") {
+          formats.push({
+            type: "text/asciidoc",
+            extension: result.supportedFormats["text/asciidoc"]
+          });
+        }
+        if (result.supportedFormats["text/markdown"] !== undefined && result.supportedFormats["text/markdown"] !== "") {
+          formats.push({
+            type: "text/markdown",
+            extension: result.supportedFormats["text/markdown"]
+          });
+        }
+        observer.next(formats);
+        observer.complete();
+      }, error => {
+        console.error(error);
+        observer.next(null);
+        observer.complete();
+      });
+    });
+  }
+
+  /**
    * openShareMenu
    * Opens a dialog where the user can add or remove other users from having acces to the current project*
    */
@@ -970,6 +1041,12 @@ export class kravEditComponent implements OnInit {
     });
   }
 
+  /**
+   * resolveConcurrencyError
+   * Opens a dialog that allows the user to resolve a concurrency error
+   * @param url The url of the requirement that is being updated
+   * @param patch The original patch that was attempted
+   */
   resolveConcurrencyError(url: string, patch: IPatchObject[]): Observable<ProjectRequirment> {
     const data: IConcurrencyDetails = {
       url: url,
@@ -998,6 +1075,26 @@ export class kravEditComponent implements OnInit {
   hasChild = (_: number, node: Requirment) => !!node.children && node.children.length > 0;
 }
 
+export interface IFormat {
+  type: string;
+  extension: string;
+}
+
+export interface ISupportedFormatResponse {
+  supportedFormats: ISupportedFormat;
+  _links: Links;
+}
+
+export interface ISupportedFormat {
+  ['application/vnd.openxmlformats-officedocument.wordprocessingml.document']: string;
+  ['application/vnd.oasis.opendocument.text']: string;
+  ['text/html']: string;
+  ['application/pdf']: string;
+  ['application/rtf']: string;
+  ['text/asciidoc']: string;
+  ['text/markdown']: string;
+}
+
 export interface IConcurrencyDetails {
   url: string;
   patch: IPatchObject[];
@@ -1018,205 +1115,3 @@ export class Requirment {
 }
 
 const TREE_DATA: Requirment[] = [];
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'DeleteRequirment.Dialog',
-  templateUrl: '../Modals/RemoveReq.Dialog.html'
-})
-// tslint:disable-next-line:component-class-suffix
-export class DeleteRequirmentDialog {
-  constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: boolean) {
-    this.data = true;
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'ShareMenu.Dialog',
-  templateUrl: '../Modals/ShareMenu.Dialog.html',
-  styleUrls: [
-    './kravEdit.component.css',
-    '../common.css'
-  ]
-})
-/**
- * ShareMenu
- * The dialog where a user can select other users to partake in the work of a project
- */
-export class ShareMenu {
-  private http: HttpClient;
-  private userData: UserData;
-  private shares: User[];
-  private formgroup: FormGroup;
-  private newShare: string;
-
-  /**
-   * ShareMenuConstructor
-   * @param dialogRef This dialogrefrence
-   * @param data Data wich the dialog can use, in this case the userData
-   * @param http The HTTP Client wich the dialog will use to comunicate with the server
-   * @param formBuilder The form Builder wich will be used to validate that the user enters valid emails
-   */
-  constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: UserData, http: HttpClient, private formBuilder: FormBuilder) {
-    this.userData = data;
-    this.http = http;
-    this.shares = [];
-    this.getActiveShares();
-
-    this.formgroup = formBuilder.group({
-      email: [this.newShare, [
-        Validators.required,
-        Validators.email
-      ]],
-    });
-  }
-
-  getActiveShares() {
-    this.http.get(this.userData.currentProject._links.access.href, {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.userData.oauthClientSecret
-      })
-    }).subscribe(result => {
-      // @ts-ignore
-      this.shares = result._embedded.users;
-      console.log(result);
-      // tslint:disable-next-line:no-shadowed-variable
-    }, error => {
-      console.error(error);
-    });
-  }
-
-  addShare() {
-    this.http.post(this.userData.currentProject._links.share.href.replace('user_email_address', this.newShare), {}, {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.userData.oauthClientSecret
-      })
-    }).subscribe(result => {
-      this.getActiveShares();
-    }, error => {
-      console.error(error);
-    });
-  }
-
-  revokeShare(user: string) {
-    this.http.delete(this.userData.currentProject._links.share.href.replace('user_email_address', user), {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.userData.oauthClientSecret
-      })
-    }).subscribe(result => {
-      this.getActiveShares();
-    }, error => {
-      console.error(error);
-    });
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'ConcurrencyResolver.Dialog',
-  templateUrl: '../Modals/ConcurrencyResolver.Dialog.html',
-  styleUrls: [
-    './kravEdit.component.css',
-    '../common.css'
-  ]
-})
-
-export class ConcurrencyResolver {
-  private http: HttpClient;
-  private ConcurrencyDetails: IConcurrencyDetails;
-  private formControl: FormGroup;
-  private clientVersion: string;
-  private serverVersion: string;
-  private newVersion: string;
-  private type: string;
-  private currentEtag: string;
-  private radioOption: string;
-
-  constructor(public dialogRef: MatDialogRef<DeleteRequirmentDialog>, @Inject(MAT_DIALOG_DATA) public data: IConcurrencyDetails, http: HttpClient, private formBuilder: FormBuilder) {
-    this.ConcurrencyDetails = data;
-    this.http = http;
-    this.dialogRef.disableClose = true;
-    this.type = data.patch[0].path.substr(1);
-    this.formControl = formBuilder.group({});
-    this.clientVersion = data.patch[0].value;
-    this.serverVersion = "";
-    this.currentEtag = '"0"';
-    this.radioOption = "";
-    this.fetchFromServer();
-  }
-
-  fetchFromServer(){
-    this.http.get(this.data.url, {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.data.token
-      }),
-      observe: "response"
-    }).subscribe(result => {
-      if( this.type === "requirementText") {
-        // @ts-ignore
-        this.serverVersion = result.body.requirementText;
-      } else if ( this.type === "priority") {
-        // @ts-ignore
-        this.serverVersion = result.body.priority;
-      } else {
-        console.error("Wrong type!")
-        console.error(result.body);
-        this.dialogRef.close(null);
-      }
-      this.currentEtag = result.headers.get('etag');
-    }, error => {
-      console.error(error);
-    })
-  }
-
-  updateRequirementPriority(field: string, update: string) {
-    if (field === "client") {
-      this.clientVersion = update;
-    } else if (field === "server") {
-      this.serverVersion = update;
-    }
-  }
-
-  onNoClick() {
-    //The value that was selected
-    let value = "";
-    if(this.radioOption === "client") {
-      value = this.clientVersion;
-    } else if (this.radioOption === "server") {
-      value = this.serverVersion;
-    } else if (this.radioOption === "new") {
-      value = this.newVersion;
-    }
-
-    // Creating the patch object
-    let patch = [{}];
-    if (this.type === "requirementText") {
-      patch = [{op: "replace", path: "/requirementText", value: value}];
-    } else if ( this.type === "priority") {
-      patch = [{op: "replace", path: "/priority", value: value}]
-    }
-
-    this.http.patch(this.data.url, patch, {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + this.data.token,
-        ETAG: this.currentEtag
-      }),
-      observe: "response"
-    }).subscribe(result => {
-      let returned: any = result.body;
-      returned.etag = result.headers.get("etag");
-      this.dialogRef.close(returned);
-    }, error => {
-      console.error(error);
-      this.dialogRef.close(null);
-    })
-  }
-}

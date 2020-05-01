@@ -163,7 +163,7 @@
     </div>
     <!--Status Page-->
     <div *ngIf="statusPage" class="status-page">
-      <mat-card class="h-80 no-p m-t-10">
+      <mat-card class="no-p m-t-10" style="height: 780px">
         <mat-card-header class="flex-row-left">
           <button mat-raised-button color="primary" (click)="this.statusPage = !this.statusPage"><i class="material-icons">arrow_left</i></button>
           <h1 class="m-lr-10">{{this.userData.currentProject.projectName}}</h1>
@@ -192,9 +192,20 @@
           <mat-divider></mat-divider>
           <div class="flex-center flex-column p-20" *ngIf="statpageData.progress === 100 && !statpageData.generatingDocument">
             <h4>{{'KravEdit.Document' | translate}}</h4>
-            <div class="color-lightgray flex-row-left rounded">
-              <p class="m-lr-10">{{userData.currentProject.projectName}}.docx</p>
-              <button mat-raised-button (click)="downloadDocument()">Last ned</button>
+            <div class="flex-row-left">
+              <div class="download-button-container">
+                <div class="w-100">
+                  <mat-form-field class="w-100">
+                    <mat-label>Format</mat-label>
+                    <mat-select>
+                      <mat-option *ngFor="let format of statpageData.sportedFormats" [value]="format.type" (click)="statpageData.selectedFormat = format">
+                        {{userData.currentProject.projectName}}.{{format.extension}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <button class="download-button" [disabled]="statpageData.selectedFormat === null" mat-raised-button (click)="downloadDocument()">Last ned</button>
             </div>
           </div>
           <div class="flex-center flex-column p-20" *ngIf="statpageData.progress !== 100 && !statpageData.generatingDocument">

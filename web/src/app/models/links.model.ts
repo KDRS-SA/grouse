@@ -17,6 +17,7 @@ export class Links {
   konto: Link;
   share: Link;
   access: Link;
+  ['supported-formats']: Link;
 
   constructor() {
   }
