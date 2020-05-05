@@ -125,7 +125,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ShareMenu,
     AdminDeleteUserDialog,
     ConcurrencyResolver,
-    DeleteRequirmentDialog
+    DeleteRequirmentDialog,
+    DeleteUserDialog
   ]
 })
 export class AppModule { }

@@ -45,6 +45,12 @@
     "Cancel": "Avbryt",
     "Delete": "Slett"
   },
+  "Delete": {
+    "Confirm": "Stadfest sletting",
+    "Sure?": "Er du sikker på at du vil sletta dette prosjektet? Denne handlinga kan ikkje angrast!!",
+    "Cancel": "Avbryt",
+    "Delete": "Slett"
+  },
   "UserEdit": {
     "Logout": "Logg ut",
     "Usersettings": "Brukerinstillinger",
@@ -116,5 +122,45 @@
   },
   "Language": {
     "Language": "Nynorsk"
+  },
+  "Admin": {
+    "Search": "Søk: ",
+    "Projects": "Prosjekt",
+    "Admin": "Admin",
+    "Users": "Brukarar",
+    "SearchDescProjects": "Søk etter prosjekt",
+    "SearchDescUsers": "Søk etter brukarar",
+    "Details" : "Detaljar: ",
+    "UsernameLabel" : "Brukarnamn: ",
+    "UserActiveLabel" : "Brukar aktiv: ",
+    "Yes" : "Ja",
+    "No" : "Nei",
+    "PasswordExpired": "Passord gått ut: ",
+    "UserExpired" : "Brukar gått ut: ",
+    "DeleteUserLabel" : "Slett brukar: ",
+    "DeleteUser" : "Slett brukar",
+    "OwnedProjectsLabel" : "Prosjekt denne brukaren har tilgang til: ",
+    "PleaseSelectUserTooltip" : "Venligst vel eit element frå lista",
+    "ProjectIdLabel" : "Prosjekt ID: ",
+    "ProjectNameLabel" : "Prosjekt namn: ",
+    "ProjectCreatedLabel" : "Prosjekt oppretta: ",
+    "LastModifiedLabel" : "Sist endra: ",
+    "UsersWithAccessLabel" : "Brukarar med tilgang til dette prosjektet: ",
+    "OwnerLabel" : "Eigar: ",
+    "SharedLabel" : "Delt: ",
+    "DeleteProject" : "Slett Prosjekt",
+    "RevokeShare" : "Fjern Deling",
+    "DeleteUserWarn" : "Dette er ei handling som ikkje kan angrast, denne brukaren vil ikkje lenger ha moglegheita til å logga på og alle prosjekta dens vil bli sletta"
+  },
+  "Concurrency" : {
+    "Title" : "Det eksisterer ein nyare versjon av dette",
+    "YourVersionLabel" : "Bruk versjonen din: ",
+    "YourVersion" : "Versjonen din",
+    "TextFieldDesc" : "Skriv her for å endra",
+    "ServerVersionLabel" : "Bruk versjon på servar",
+    "ServerVersion" : "Versjon på servar",
+    "NewVersionLabel" : "Bruk ein ny versjon: ",
+    "NewVersion" : "Ny versjon",
+    "Confirm" : "Stadfest"
   }
 }

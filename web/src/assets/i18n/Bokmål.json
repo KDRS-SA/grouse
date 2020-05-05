@@ -123,5 +123,45 @@
   },
   "Language": {
     "Language": "Bokmål"
+  },
+  "Admin": {
+    "Search": "Søk: ",
+    "Projects": "Prosjekter",
+    "Admin": "Admin",
+    "Users": "Brukere",
+    "SearchDescProjects": "Søk etter prosjekter",
+    "SearchDescUsers": "Søk etter brukere",
+    "Details" : "Detaljer: ",
+    "UsernameLabel" : "Brukernavn: ",
+    "UserActiveLabel" : "Bruker aktiv: ",
+    "Yes" : "Ja",
+    "No" : "Nei",
+    "PasswordExpired": "Passord utgått: ",
+    "UserExpired" : "Bruker utgått: ",
+    "DeleteUserLabel" : "Slett bruker: ",
+    "DeleteUser" : "Slett bruker",
+    "OwnedProjectsLabel" : "Prosjekter denne brukeren har tilgang til: ",
+    "PleaseSelectUserTooltip" : "Venligst velg et element fra listen",
+    "ProjectIdLabel" : "Prosjekt ID: ",
+    "ProjectNameLabel" : "Prosjekt navn: ",
+    "ProjectCreatedLabel" : "Prosjekt opprettet: ",
+    "LastModifiedLabel" : "Sist endret: ",
+    "UsersWithAccessLabel" : "Brukere med tilgang til dette prosjektet: ",
+    "OwnerLabel" : "Eier: ",
+    "SharedLabel" : "Delt: ",
+    "DeleteProject" : "Slett Prosjekt",
+    "RevokeShare" : "Fjern Deling",
+    "DeleteUserWarn" : "Dette er en handling som ikke kan angres, denne brukeren vil ikke lenger ha muligheten til å logge på og alle dens prosjekter vil bli slettet"
+  },
+  "Concurrency" : {
+    "Title" : "Det eksisterer en nyere versjon av dette",
+    "YourVersionLabel" : "Bruk din versjon: ",
+    "YourVersion" : "Din versjon",
+    "TextFieldDesc" : "Skriv her for å endre",
+    "ServerVersionLabel" : "Bruk versjon på server",
+    "ServerVersion" : "Versjon på server",
+    "NewVersionLabel" : "Bruk en ny versjon: ",
+    "NewVersion" : "Ny versjon",
+    "Confirm" : "Bekreft"
   }
 }

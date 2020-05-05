@@ -1,15 +1,15 @@
-<h1 mat-dialog-title>Det eksisterer en nyere versjon av dette</h1>
+<h1 mat-dialog-title>{{"Concurrency.Title" | translate}}</h1>
 <div mat-dialog-content class="concurrency-main">
   <mat-radio-group [(ngModel)]="radioOption">
     <div class="concurrency-top-container">
       <div class="concurrency-choice-container">
         <div class="flex-row-left">
-          <mat-label>Bruk din versjon: </mat-label>
+          <mat-label>{{"Concurrency.YourVersionLabel" | translate}}</mat-label>
           <mat-radio-button value="client" class="m-lr-10"></mat-radio-button>
         </div>
         <mat-form-field *ngIf="type === 'requirementText'" class="concurrency-textfield" [formGroup]="formControl">
-          <mat-label>Din versjon</mat-label>
-          <textarea class="concurrency-textfield" matInput placeholder="Skriv her for å endre" id="NyttKrav" [value]="clientVersion" (input)="clientVersion = $event.target.value"></textarea>
+          <mat-label>{{"Concurrency.YourVersion" | translate}}</mat-label>
+          <textarea class="concurrency-textfield" matInput placeholder="{{'Concurrency.TextFieldDesc' | translate}}" id="NyttKrav" [value]="clientVersion" (input)="clientVersion = $event.target.value"></textarea>
         </mat-form-field>
         <div class="flex-center w-100 h-100">
           <div *ngIf="type === 'priority'" class="concurrency-textfield" [formGroup]="formControl">
@@ -25,12 +25,12 @@
 
       <div class="concurrency-choice-container">
         <div class="flex-row-left">
-          <mat-label>Bruk versjonen på server: </mat-label>
+          <mat-label>{{"Concurrency.ServerVersionLabel" | translate}}</mat-label>
           <mat-radio-button value="server" class="m-lr-10"></mat-radio-button>
         </div>
         <mat-form-field *ngIf="type === 'requirementText'" class="concurrency-textfield" [formGroup]="formControl">
-          <mat-label>Versjon på server</mat-label>
-          <textarea class="concurrency-textfield"  matInput placeholder="Skriv her for å endre" [value]="serverVersion" (input)="serverVersion = $event.target.value"></textarea>
+          <mat-label>{{"Concurrency.ServerVersion" | translate}}</mat-label>
+          <textarea class="concurrency-textfield"  matInput placeholder="{{'Concurrency.TextFieldDesc' | translate}}" [value]="serverVersion" (input)="serverVersion = $event.target.value"></textarea>
         </mat-form-field>
         <div class="flex-center w-100 h-100">
           <div *ngIf="type === 'priority'" class="concurrency-textfield" [formGroup]="formControl">
@@ -47,17 +47,17 @@
     <div class="flex-center p-20">
       <div class="concurrency-choice-container w-100 p-20">
         <div class="flex-row-left" *ngIf="type === 'requirementText'">
-          <mat-label>Bruk ny versjon: </mat-label>
+          <mat-label>{{'Concurrency.NewVersionLabel' | translate}}</mat-label>
           <mat-radio-button value="new" class="m-lr-10"></mat-radio-button>
         </div>
         <mat-form-field *ngIf="type === 'requirementText'" class="concurrency-textfield" [formGroup]="formControl">
-          <mat-label>Ny versjon</mat-label>
-          <textarea class="concurrency-textfield" matInput placeholder="Skriv ny tekst her" (input)="newVersion = $event.target.value"></textarea>
+          <mat-label>{{'Concurrency.NewVersion' | translate}}</mat-label>
+          <textarea class="concurrency-textfield" matInput placeholder="{{'Concurrency.TextFieldDesc' | translate}}" (input)="newVersion = $event.target.value"></textarea>
         </mat-form-field>
       </div>
     </div>
   </mat-radio-group>
 </div>
 <div mat-dialog-actions class="flex-row-right">
-  <button color="primary" [disabled]="radioOption === ''" mat-raised-button (click)="onNoClick()">Bekreft</button>
+  <button color="primary" [disabled]="radioOption === ''" mat-raised-button (click)="onNoClick()">{{'Concurrency.Confirm' | translate}}</button>
 </div>

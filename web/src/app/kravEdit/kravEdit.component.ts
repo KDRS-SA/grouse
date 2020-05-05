@@ -92,7 +92,6 @@ export class kravEditComponent implements OnInit {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
     this.translate.setDefaultLang(this.userData.defaultLang);
     this.projectLink = this.userData.currentProject._links.function.href;
-    console.log(this.userData.currentProject._links.function.href);
     this.fetchMainData();
     this.treeControl = new NestedTreeControl<Requirment>(
       node => node.children
@@ -137,7 +136,6 @@ export class kravEditComponent implements OnInit {
 
             // tslint:disable-next-line:no-shadowed-variable
           }).subscribe(result => {
-            console.log(result);
             calls--;
             // @ts-ignore
             prime.referenceChildProjectFunctionality = result._embedded.projectFunctionalities;
@@ -284,7 +282,7 @@ export class kravEditComponent implements OnInit {
             });
             // tslint:disable-next-line:no-shadowed-variable
           }, error => {
-            console.log(error);
+            console.error(error);
           });
         }
         if (this.maxID < prime.projectFunctionalityId) {
@@ -398,7 +396,6 @@ export class kravEditComponent implements OnInit {
   crunchGatheredData(newlyLoaded: boolean) {
     this.loading = false;
     this.sortMainData();
-    console.log(this.mainData);
     // this.convertLegacyLinks();
     if (newlyLoaded) {
       const first = this.mainData[0];
@@ -468,7 +465,7 @@ export class kravEditComponent implements OnInit {
     }).subscribe(result => {
       // tslint:disable-next-line:no-shadowed-variable
     }, error => {
-      console.log(error);
+      console.error(error);
     });
     this.router.navigate(['/']);
     location.reload();
@@ -765,13 +762,11 @@ export class kravEditComponent implements OnInit {
    * Wich index of the requirment array withtin the currently selected projectFunctionality to delete
    */
   removeRequirment(index: number) {
-    console.log(this.currentReq.referenceProjectRequirement[index]);
     const dialogref = this.dialog.open(DeleteRequirmentDialog, {
       width: '300px'
     });
 
     dialogref.afterClosed().subscribe(result => {
-      console.log(this.currentReq.referenceProjectRequirement[index]._links.self.href);
       if (result) {
         this.http.delete(
           this.currentReq.referenceProjectRequirement[index]._links.self.href,
@@ -927,7 +922,7 @@ export class kravEditComponent implements OnInit {
     this.sideBarOpen = false;
     this.statpageData.loaded = false;
     this.statpageData.unfinished = [];
-    this.getSupportedFormats().subscribe(result => {this.statpageData.sportedFormats = result; console.log(result);});
+    this.getSupportedFormats().subscribe(result => {this.statpageData.sportedFormats = result;});
     let add: projectFunctionality = this.currentReq;
     while (add !== null) {
       if (!add.processed) {

@@ -38,10 +38,10 @@
     <mat-card>
       <!--List of users with search functionality-->
       <mat-tab-group [selectedIndex]="usermode ? 0 : 1">
-        <mat-tab label="Brukere">
+        <mat-tab label="{{'Admin.Users' | translate}}">
           <mat-form-field class="w-70 search-bar m-lr-10 m-t-10">
-            <mat-label>Søk:</mat-label>
-            <input type="email" matInput [(ngModel)]="searchUser" placeholder="Søk etter bruker" (change)="getListOfUsers()">
+            <mat-label>{{'Admin.Search' | translate}}</mat-label>
+            <input type="email" matInput [(ngModel)]="searchUser" placeholder="{{'Admin.SearchDescPUsers' | translate}}" (change)="getListOfUsers()">
           </mat-form-field>
           <mat-divider></mat-divider>
           <div class="list-div">
@@ -62,10 +62,10 @@
         </mat-tab>
 
         <!--List of projects with search functionality-->
-        <mat-tab label="Prosjekter">
+        <mat-tab label="{{'Admin.Projects' | translate}}">
           <mat-form-field class="w-70 search-bar m-lr-10 m-t-10">
-            <mat-label>Søk:</mat-label>
-            <input type="text" matInput [(ngModel)]="searchProject" placeholder="Søk etter prosjekt" (change)="getListOfProjects()">
+            <mat-label>{{'Admin.Search' | translate}}</mat-label>
+            <input type="text" matInput [(ngModel)]="searchProject" placeholder="{{'Admin.SearchDescProjects' | translate}}" (change)="getListOfProjects()">
           </mat-form-field>
           <mat-divider></mat-divider>
           <div class="list-div">
@@ -90,7 +90,7 @@
   <div class="secondary-div">
     <mat-card>
       <mat-card-header>
-        <h3>Detaljer :</h3>
+        <h3>{{'Admin.Details' | translate}}</h3>
       </mat-card-header>
       <mat-card-content>
         <!--Showing user details-->
@@ -101,43 +101,43 @@
               <mat-list>
                 <mat-list-item>
                   <div class="flex-row-between w-100">
-                    <p>Brukernavn: </p>
+                    <p>{{'Admin.UsernameLabel' | translate}}</p>
                     <p>{{selectedUser.username}}</p>
                   </div>
                   <mat-divider></mat-divider>
                 </mat-list-item>
                 <mat-list-item>
                   <div class="flex-row-between w-100">
-                    <p>Bruker aktiv: </p>
-                    <p *ngIf="selectedUser.accountNonExpired">Ja</p>
-                    <p *ngIf="!selectedUser.accountNonExpired">Nei</p>
+                    <p>{{'Admin.UserActiveLabel' | translate}}</p>
+                    <p *ngIf="selectedUser.accountNonExpired">{{'Admin.Yes' | translate}}</p>
+                    <p *ngIf="!selectedUser.accountNonExpired">{{'Admin.No' | translate}}</p>
                   </div>
                   <mat-divider></mat-divider>
                 </mat-list-item>
                 <mat-list-item>
                   <div class="flex-row-between w-100">
-                    <p>Passord utgått: </p>
-                    <p *ngIf="!selectedUser.accountNonExpired">Ja</p>
-                    <p *ngIf="selectedUser.accountNonExpired">Nei</p>
+                    <p>{{'Admin.PasswordExpired' | translate}}</p>
+                    <p *ngIf="!selectedUser.accountNonExpired">{{'Admin.Yes' | translate}}</p>
+                    <p *ngIf="selectedUser.accountNonExpired">{{'Admin.No' | translate}}</p>
                   </div>
                   <mat-divider></mat-divider>
                 </mat-list-item>
                 <mat-list-item>
                   <div class="flex-row-between w-100">
-                    <p>Bruker utgått: </p>
-                    <p *ngIf="!selectedUser.accountNonExpired">Ja</p>
-                    <p *ngIf="selectedUser.accountNonExpired">Nei</p>
+                    <p>{{'Admin.UserExpired' | translate}}</p>
+                    <p *ngIf="!selectedUser.accountNonExpired">{{'Admin.Yes' | translate}}</p>
+                    <p *ngIf="selectedUser.accountNonExpired">{{'Admin.No' | translate}}</p>
                   </div>
                   <mat-divider></mat-divider>
                 </mat-list-item>
                 <mat-list-item>
                   <div class="flex-row-between w-100">
-                    <p>Slett bruker: </p>
-                    <button mat-raised-button color="warn" class="h-80 m-t-10" (click)="deleteUser()">Slett bruker</button>
+                    <p>{{'Admin.DeleteUserLabel' | translate}}</p>
+                    <button mat-raised-button color="warn" class="h-80 m-t-10" (click)="deleteUser()">{{'Admin.DeleteUser' | translate}}</button>
                   </div>
                 </mat-list-item>
                 <!--List of projects for this user-->
-                <mat-label>Prosjekter denne brukeren eier:</mat-label>
+                <mat-label>{{'Admin.OwnedProjectsLabel' | translate}}</mat-label>
                 <div class="projects-and-users-minibox">
                   <button mat-raised-button class="box-button" *ngFor="let project of filterProjectsByUser()" (click)="selectThisProject(project)">
                     {{project.projectName}}
@@ -148,7 +148,7 @@
           </div>
           <!--If no user is selected-->
           <div *ngIf="selectedUser === undefined" class="flex-center flex-column">
-            <p>Venligst velg en bruker fra listen til venstre.</p>
+            <p>{{'Admin.PleaseSelectUserTooltip' | translate}}</p>
           </div>
         </div>
         <!--Showing project details-->
@@ -156,40 +156,40 @@
           <mat-list>
             <mat-list-item>
               <div class="flex-row-between w-100">
-                <p>Prosjekt ID: </p>
+                <p>{{'Admin.ProjectIdLabel' | translate}}</p>
                 <p>{{selectedProject.projectId}}</p>
               </div>
               <mat-divider></mat-divider>
             </mat-list-item>
             <mat-list-item>
               <div class="flex-row-between w-100">
-                <p>Prosjekt navn: </p>
+                <p>{{'Admin.ProjectNameLabel' | translate}}</p>
                 <p>{{selectedProject.projectName}}</p>
               </div>
               <mat-divider></mat-divider>
             </mat-list-item>
             <mat-list-item>
               <div class="flex-row-between w-100">
-                <p>Opprettet : </p>
+                <p>{{'Admin.ProjectCreatedLabel' | translate}}</p>
                 <p>{{selectedProject.createdDate}}</p>
               </div>
               <mat-divider></mat-divider>
             </mat-list-item>
             <mat-list-item>
               <div class="flex-row-between w-100">
-                <p>Sist modifisert: </p>
+                <p>{{'Admin.LastModifiedLabel' | translate}}</p>
                 <p>{{selectedProject.lastModifiedDate}}</p>
               </div>
             </mat-list-item>
-            <mat-label class="m-t-14">Brukere som har tilgang til dette prosjektet:</mat-label>
+            <mat-label class="m-t-14">{{'Admin.UsersWithAccessLabel' | translate}}</mat-label>
             <div class="projects-and-users-minibox project-box">
               <mat-list class="w-100">
                 <mat-list-item *ngFor="let user of usersOfThisProject">
                   <div class="w-100 flex-row-between">
                     <!--Label-->
                     <div class="p-20">
-                      <mat-label *ngIf="user.username === selectedProject.ownedBy">Eier: </mat-label>
-                      <mat-label *ngIf="user.username !== selectedProject.ownedBy">Delt: </mat-label>
+                      <mat-label *ngIf="user.username === selectedProject.ownedBy">{{'Admin.OwnerLabel' | translate}}</mat-label>
+                      <mat-label *ngIf="user.username !== selectedProject.ownedBy">{{'Admin.SharedLabel' | translate}}</mat-label>
                     </div>
                     <div class="p-10">
                       <!--User button-->
@@ -199,8 +199,8 @@
                     </div>
                     <div class="p-10">
                       <!--Red button-->
-                      <button *ngIf="user.username === selectedProject.ownedBy" mat-flat-button color="warn" (click)="deleteProject()">Slett prosjekt</button>
-                      <button *ngIf="user.username !== selectedProject.ownedBy" mat-flat-button color="warn" (click)="revokeShare(user)">Fjern Deling  </button>
+                      <button *ngIf="user.username === selectedProject.ownedBy" mat-flat-button color="warn" (click)="deleteProject()">{{'Admin.DeleteProject' | translate}}</button>
+                      <button *ngIf="user.username !== selectedProject.ownedBy" mat-flat-button color="warn" (click)="revokeShare(user)">{{'Admin.RevokeShare' | translate}}</button>
                     </div>
                   </div>
                   <mat-divider></mat-divider>

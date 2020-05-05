@@ -53,7 +53,6 @@ export class MenuComponent implements OnInit {
    */
   getUserData() {
     this.userData = JSON.parse(localStorage.getItem('UserData'));
-    console.log(this.userData);
     this.translate.setDefaultLang(this.userData.defaultLang);
     this.getActiveProjects();
   }
@@ -72,7 +71,7 @@ export class MenuComponent implements OnInit {
     }, error => {
       this.router.navigate(['/']);
       location.reload();
-      console.log(error);
+      console.error(error);
     });
     this.router.navigate(['/']);
     location.reload();
@@ -88,7 +87,6 @@ export class MenuComponent implements OnInit {
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
-      console.log(result);
       // @ts-ignore
       if (result._embedded !== undefined) {
         // @ts-ignore

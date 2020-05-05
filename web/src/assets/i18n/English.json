@@ -45,6 +45,12 @@
     "Cancel": "Cancel",
     "Delete": "Delete"
   },
+  "Delete": {
+    "Confirm": "Confirm deletion",
+    "Sure?": "Are you sure you want to delete this project? This action is irreversible!!",
+    "Cancel": "Cancel",
+    "Delete": "Delete"
+  },
   "UserEdit": {
     "Logout": "Logout",
     "Usersettings": "User settings",
@@ -116,5 +122,45 @@
   },
   "Language": {
     "Language": "English"
+  },
+  "Admin": {
+    "Search": "Search: ",
+    "Projects": "Projects",
+    "Admin": "Admin",
+    "Users": "Users",
+    "SearchDescProjects": "Search for projects",
+    "SearchDescUsers": "Search for users",
+    "Details" : "Details: ",
+    "UsernameLabel" : "Username: ",
+    "UserActiveLabel" : "User active: ",
+    "Yes" : "Yes",
+    "No" : "No",
+    "PasswordExpired": "Password expired: ",
+    "UserExpired" : "User expired: ",
+    "DeleteUserLabel" : "Delete user: ",
+    "DeleteUser" : "Delete user",
+    "OwnedProjectsLabel" : "Projects that this user has access to: ",
+    "PleaseSelectUserTooltip" : "Please select a element from the list",
+    "ProjectIdLabel" : "Project ID: ",
+    "ProjectNameLabel" : "Project name: ",
+    "ProjectCreatedLabel" : "Project created: ",
+    "LastModifiedLabel" : "Last changed: ",
+    "UsersWithAccessLabel" : "Users with access to this project: ",
+    "OwnerLabel" : "Owner: ",
+    "SharedLabel" : "Shared: ",
+    "DeleteProject" : "Delete project",
+    "RevokeShare" : "Revoke share",
+    "DeleteUserWarn" : "Warning! This action cannot be undone, this user will loose access to their account and all their projects will be deleted!"
+  },
+  "Concurrency" : {
+    "Title" : "There exists a newer version of this",
+    "YourVersionLabel" : "Use your version: ",
+    "YourVersion" : "Your version",
+    "TextFieldDesc" : "Write here to edit",
+    "ServerVersionLabel" : "Use the version that is on the server",
+    "ServerVersion" : "Version on server",
+    "NewVersionLabel" : "Use a new version: ",
+    "NewVersion" : "New version",
+    "Confirm" : "Confirm"
   }
 }

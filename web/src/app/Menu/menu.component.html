@@ -11,7 +11,7 @@
   </button>
   <div class="flex-row-right">
     <div class="flex-row-between">
-      <button mat-button class="enter-delete-mode" (click)="deleteToggle()">Slett</button>
+      <button mat-button class="enter-delete-mode" (click)="deleteToggle()">{{'Delete.Delete' | translate}}</button>
       <div class="lang-test m-t-14">
         <button mat-button [matMenuTriggerFor]="langselect">{{'Language.Language' | translate}}</button>
         <mat-menu #langselect="matMenu" xPosition="after">
@@ -33,7 +33,7 @@
       <div *ngIf="userData._links['project-list-all'] !== undefined">
         <button mat-button (click)="enterAdminPage()">
           <div class="flex-row-between">
-            <p>Admin</p>
+            <p>{{'Admin.Admin' | translate}}</p>
             <div class="flex-center">
               <i class="material-icons flex-center navbar-icon icon-large">supervisor_account</i>
             </div>

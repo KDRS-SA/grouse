@@ -11,6 +11,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   templateUrl: './ShareMenu.Dialog.html',
   styleUrls: [
     '../../KravEdit/kravEdit.component.css',
+    '../../KravEdit/kravEdit.component.css',
     '../../common.css'
   ]
 })
@@ -54,7 +55,6 @@ export class ShareMenu {
     }).subscribe(result => {
       // @ts-ignore
       this.shares = result._embedded.users;
-      console.log(result);
       // tslint:disable-next-line:no-shadowed-variable
     }, error => {
       console.error(error);

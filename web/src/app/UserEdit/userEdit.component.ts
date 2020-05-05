@@ -65,7 +65,7 @@ export class userEditComponent implements  OnInit {
       })
     }).subscribe(result => {
     }, error => {
-      console.log(error);
+      console.error(error);
     });
     this.router.navigate(['/']);
     location.reload();
@@ -120,7 +120,6 @@ export class userEditComponent implements  OnInit {
    * After all checks have been fulfilled sends a request to the server to update the password of the current user
    */
   submittNewPassword() {
-    console.log([{op: 'replace', path: '/password', value: this.newPassword}]);
     this.http.patch(this.userData._links.konto.href, [{op: 'replace', path: '/password', value: this.newPassword}], {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
@@ -177,7 +176,6 @@ export class userEditComponent implements  OnInit {
     const ref = this.dialogBox.open(DeleteUserDialog, {
       width: '80%',
       maxWidth: '600px',
-      height: '700px',
       data: this.http
     });
     ref.afterClosed().subscribe(result => {

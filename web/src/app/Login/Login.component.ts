@@ -104,7 +104,6 @@ export class LoginComponent implements  OnInit {
       ]]
     });
     this.userData = JSON.parse(localStorage.getItem('UserData'));
-    console.log(this.userData);
   }
 
   /**
@@ -120,7 +119,6 @@ export class LoginComponent implements  OnInit {
    * Sends a request to the server requesting the creation of a new user with information from this class that is edited by the user
    */
   registerSubmit() {
-    console.log('New user request called with e-mail: ' + this.regUser.email);
     this.shake = false;
 
     if (this.regUser.password === this.regUser.passwordRepeat) { // Checks that passwords match
@@ -133,7 +131,6 @@ export class LoginComponent implements  OnInit {
       this.http.post(this.userData._links['create-user'].href, body).subscribe(
         result => {
           // The transmission was a succsess and the server accepted the new user
-          console.log('Account creation was a success! Signing in with the new user');
           this.loginUser.password = this.regUser.password;
           this.loginUser.email = this.regUser.email;
           this.loginSubmit();
@@ -161,8 +158,6 @@ export class LoginComponent implements  OnInit {
       this.userData.oauthClientSecret = 'secret';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
     }
-
-    console.log('Loggin request called with username: ' + this.loginUser.email + ', on adress: ' + this.userData._links['login OAuth2'].href);
     this.shake = false; // Resets the shake animation
 
     // Sends login info to the server
@@ -193,7 +188,7 @@ export class LoginComponent implements  OnInit {
         } else {
           // @ts-ignore
           alert(this.translate.get('ErrorsAndWarns.Unexpected').value);
-          console.log(error);
+          console.error(error);
         }
       }
     );
