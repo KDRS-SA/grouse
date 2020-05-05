@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, enableProdMode, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
 import {HttpClient} from '@angular/common/http';
