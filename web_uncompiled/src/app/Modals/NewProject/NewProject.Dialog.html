@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>{{'New.Title' | translate}}</h1>
+<div mat-dialog-content>
+  <p>{{'New.Name' | translate}}</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.Name">
+  </mat-form-field>
+  <mat-divider></mat-divider>
+  <div class="flex-column">
+    <mat-form-field>
+      <mat-label>Velg Mal</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let template of data.Templates" [value]="template" class="w-100" (click)="data.SelectedTemplate = template">
+          <p>{{template.templateName}} - Laget av {{template.ownedBy}}</p>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions class="flex-row-between">
+  <button mat-raised-button color="warn" (click)="onNoClick()">{{'New.Cancel' | translate}}</button>
+  <button mat-raised-button color="primary" [disabled]="data.SelectedTemplate === undefined" [mat-dialog-close]="data">{{'New.Create' | translate}}</button>
+</div>

@@ -1,0 +1,44 @@
+curl -v -X POST https://nikita.oslomet.no/grouse2/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "test"}' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+ 2311  curl -v -X GET https://nikita.oslomet.no/grouse2/projectFunctionality/1378/function -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "test"}' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' https://nikita.oslomet.no/grouse2/oauth/token -d grant_type=password -d username=user@example.com -d password=password
+
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/projectFunctionality/1372 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X POST https://nikita.oslomet.no/grouse2/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "test"}' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X PATCH https://nikita.oslomet.no/grouse2/projectRequirement/990 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' --data '[{ "op": "replace", "path": "/showOrder", "value": 18}]' | jq
+
+
+curl -v -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '[{ "op": "replace", "path": "/processed", "value": true}]'  -X PATCH https://nikita.oslomet.no/grouse2/projectFunctionality/1378  -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '[{ "op": "replace", "path": "/title", "value": "hello"}]'  -X PATCH https://nikita.oslomet.no/grouse2/projectFunctionality/1378  -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/projectFunctionality/1378/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/project/718 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/projectFunctionality/727/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/projectFunctionality/727/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/projectFunctionality/897/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/projectFunctionality/980/requirement -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+
+
+curl -v -X GET https://nikita.oslomet.no/grouse2/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer 0091c8b0-50cf-46bc-af9c-7734e1453225' | jq
+

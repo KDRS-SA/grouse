@@ -1,0 +1,215 @@
+<mat-toolbar class="flex-row-between" color="primary" style="padding: 0">
+  <div class="flex-row-left">
+    <div class="flex-row-evenlyer">
+      <button class="no-p" mat-button (click)="goToMainMenu()">
+        <div class="flex-row-left no-m">
+          <div class="flex-row-evenlyer no-m">
+            <div class="flex-column flex-center">
+              <div class="Grouse-Avatar"></div>
+            </div>
+            <p>Grouse</p>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="flex-row-right">
+    <div class="flex-row-between">
+      <button mat-button (click)="enterUserEdit()">
+        <div class="flex-row-between">
+          <div class="flex-center">
+            <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+          </div>
+          <p>{{this.userData.userName}}</p>
+        </div>
+      </button>
+      <button mat-button (click)="logout()">
+        <div class="flex-column">
+          <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+          <p class="no-m">{{'KravEdit.Logout' | translate}}</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<div class="main-div">
+  <div class="secondary-div">
+
+    <mat-card>
+      <!--List of users with search functionality-->
+      <mat-tab-group [selectedIndex]="usermode ? 0 : 1">
+        <mat-tab label="{{'Admin.Users' | translate}}">
+          <mat-form-field class="w-70 search-bar m-lr-10 m-t-10">
+            <mat-label>{{'Admin.Search' | translate}}</mat-label>
+            <input type="email" matInput [(ngModel)]="searchUser" placeholder="{{'Admin.SearchDescPUsers' | translate}}" (change)="getListOfUsers()">
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <div class="list-div">
+            <mat-list>
+              <div *ngFor="let user of listOfUsers">
+                <button mat-button class="w-100" (click)="selectThisUser(user)">
+                  <mat-list-item class="w-100 no-p">
+                    <div class="w-100 flex-row-between">
+                      <p>{{user.username}}</p>
+                      <i *ngIf="selectedUser === user" class="material-icons flex-center navbar-icon">check</i>
+                    </div>
+                    <mat-divider></mat-divider>
+                  </mat-list-item>
+                </button>
+              </div>
+            </mat-list>
+          </div>
+        </mat-tab>
+
+        <!--List of projects with search functionality-->
+        <mat-tab label="{{'Admin.Projects' | translate}}">
+          <mat-form-field class="w-70 search-bar m-lr-10 m-t-10">
+            <mat-label>{{'Admin.Search' | translate}}</mat-label>
+            <input type="text" matInput [(ngModel)]="searchProject" placeholder="{{'Admin.SearchDescProjects' | translate}}" (change)="getListOfProjects()">
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <div class="list-div">
+            <mat-list>
+              <div *ngFor="let project of listOfProjects">
+                <button mat-button class="w-100" (click)="selectThisProject(project)">
+                  <mat-list-item class="w-100 no-p">
+                    <div class="w-100 flex-row-between">
+                      <p>{{project.projectName}}</p>
+                      <i *ngIf="selectedProject === project" class="material-icons flex-center navbar-icon">check</i>
+                    </div>
+                    <mat-divider></mat-divider>
+                  </mat-list-item>
+                </button>
+              </div>
+            </mat-list>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
+  <div class="secondary-div">
+    <mat-card>
+      <mat-card-header>
+        <h3>{{'Admin.Details' | translate}}</h3>
+      </mat-card-header>
+      <mat-card-content>
+        <!--Showing user details-->
+        <div *ngIf="this.usermode" class="details">
+          <!--User info-->
+          <div *ngIf="selectedUser !== undefined">
+            <div>
+              <mat-list>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>{{'Admin.UsernameLabel' | translate}}</p>
+                    <p>{{selectedUser.username}}</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>{{'Admin.UserActiveLabel' | translate}}</p>
+                    <p *ngIf="selectedUser.accountNonExpired">{{'Admin.Yes' | translate}}</p>
+                    <p *ngIf="!selectedUser.accountNonExpired">{{'Admin.No' | translate}}</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>{{'Admin.PasswordExpired' | translate}}</p>
+                    <p *ngIf="!selectedUser.accountNonExpired">{{'Admin.Yes' | translate}}</p>
+                    <p *ngIf="selectedUser.accountNonExpired">{{'Admin.No' | translate}}</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>{{'Admin.UserExpired' | translate}}</p>
+                    <p *ngIf="!selectedUser.accountNonExpired">{{'Admin.Yes' | translate}}</p>
+                    <p *ngIf="selectedUser.accountNonExpired">{{'Admin.No' | translate}}</p>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+                <mat-list-item>
+                  <div class="flex-row-between w-100">
+                    <p>{{'Admin.DeleteUserLabel' | translate}}</p>
+                    <button mat-raised-button color="warn" class="h-80 m-t-10" (click)="deleteUser()">{{'Admin.DeleteUser' | translate}}</button>
+                  </div>
+                </mat-list-item>
+                <!--List of projects for this user-->
+                <mat-label>{{'Admin.OwnedProjectsLabel' | translate}}</mat-label>
+                <div class="projects-and-users-minibox">
+                  <button mat-raised-button class="box-button" *ngFor="let project of filterProjectsByUser()" (click)="selectThisProject(project)">
+                    {{project.projectName}}
+                  </button>
+                </div>
+              </mat-list>
+            </div>
+          </div>
+          <!--If no user is selected-->
+          <div *ngIf="selectedUser === undefined" class="flex-center flex-column">
+            <p>{{'Admin.PleaseSelectUserTooltip' | translate}}</p>
+          </div>
+        </div>
+        <!--Showing project details-->
+        <div *ngIf="!this.usermode && searchProject !== undefined" class="details">
+          <mat-list>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>{{'Admin.ProjectIdLabel' | translate}}</p>
+                <p>{{selectedProject.projectId}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>{{'Admin.ProjectNameLabel' | translate}}</p>
+                <p>{{selectedProject.projectName}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>{{'Admin.ProjectCreatedLabel' | translate}}</p>
+                <p>{{selectedProject.createdDate}}</p>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <mat-list-item>
+              <div class="flex-row-between w-100">
+                <p>{{'Admin.LastModifiedLabel' | translate}}</p>
+                <p>{{selectedProject.lastModifiedDate}}</p>
+              </div>
+            </mat-list-item>
+            <mat-label class="m-t-14">{{'Admin.UsersWithAccessLabel' | translate}}</mat-label>
+            <div class="projects-and-users-minibox project-box">
+              <mat-list class="w-100">
+                <mat-list-item *ngFor="let user of usersOfThisProject">
+                  <div class="w-100 flex-row-between">
+                    <!--Label-->
+                    <div class="p-20">
+                      <mat-label *ngIf="user.username === selectedProject.ownedBy">{{'Admin.OwnerLabel' | translate}}</mat-label>
+                      <mat-label *ngIf="user.username !== selectedProject.ownedBy">{{'Admin.SharedLabel' | translate}}</mat-label>
+                    </div>
+                    <div class="p-10">
+                      <!--User button-->
+                      <button (click)="selectThisUserName(user.username)" mat-raised-button class="w-100">
+                        {{user.username}}
+                      </button>
+                    </div>
+                    <div class="p-10">
+                      <!--Red button-->
+                      <button *ngIf="user.username === selectedProject.ownedBy" mat-flat-button color="warn" (click)="deleteProject()">{{'Admin.DeleteProject' | translate}}</button>
+                      <button *ngIf="user.username !== selectedProject.ownedBy" mat-flat-button color="warn" (click)="revokeShare(user)">{{'Admin.RevokeShare' | translate}}</button>
+                    </div>
+                  </div>
+                  <mat-divider></mat-divider>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </mat-list>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

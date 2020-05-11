@@ -1,0 +1,256 @@
+<mat-toolbar class="flex-row-between" color="primary" style="padding: 0">
+  <div class="flex-row-left">
+    <div class="flex-row-evenlyer">
+      <button class="no-p" mat-button (click)="goToMainMenu()">
+        <div class="flex-row-left no-m">
+          <div class="flex-row-evenlyer no-m">
+            <div class="flex-column flex-center">
+              <div class="Grouse-Avatar"></div>
+            </div>
+            <p>Grouse</p>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <div class="flex-row-right">
+    <div class="flex-row-between">
+      <button *ngIf="userData.currentProject.ownedBy === userData.userName" mat-button matTooltip="{{'KravEdit.ShareProjectTooltip' | translate}}" (click)="openShareMenu()">
+        <span class="material-icons">share</span>
+      </button>
+      <!--User Edit/Adminstration entering-->
+      <div *ngIf="userData._links['project-list-all'] === undefined">
+        <button mat-button (click)="enterUserEdit()">
+          <div class="flex-row-between">
+            <div class="flex-center">
+              <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+            </div>
+            <p>{{this.userData.userName}}</p>
+          </div>
+        </button>
+      </div>
+      <div *ngIf="userData._links['project-list-all'] !== undefined">
+        <button mat-button (click)="enterAdminPage()">
+          <div class="flex-row-between">
+            <p>Admin</p>
+            <div class="flex-center">
+              <i class="material-icons flex-center navbar-icon icon-large">supervisor_account</i>
+            </div>
+          </div>
+        </button>
+        <button mat-button class="no-p" (click)="enterUserEdit()">
+          <p>{{this.userData.userName}}</p>
+        </button>
+      </div>
+      <button mat-button (click)="logout()">
+        <div class="flex-column">
+          <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+          <p class="no-m">{{'KravEdit.Logout' | translate}}</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-sidenav-container *ngIf="!loading" class="sidebar" hasBackdrop="true">
+  <mat-sidenav mode="over" [opened]="sideBarOpen" class="sidenav">
+
+    <!-- Tree DONT TOUCH IT FOR THE LOVE OF EVERYTHING HOLY-->
+
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+      <!-- This is the tree node template for leaf nodes -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+        <button mat-button class="fill no-p" (click)="changeFunctionality(node.id)">
+          <li class="mat-tree-node">
+            <!-- use a disabled button to provide padding for tree leaf -->
+            {{node.name}}
+          </li>
+          <mat-divider></mat-divider>
+        </button>
+      </mat-tree-node>
+      <!-- This is the tree node template for expandable nodes -->
+      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+          <li>
+            <div class="mat-tree-node">
+              <button mat-icon-button matTreeNodeToggle
+                      [attr.aria-label]="'toggle ' + node.name">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+              {{node.name}}
+            </div>
+            <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+              <ng-container matTreeNodeOutlet></ng-container>
+            </ul>
+          </li>
+        <mat-divider></mat-divider>
+      </mat-nested-tree-node>
+    </mat-tree>
+    <button *ngIf="!statusPage" class="w-100" mat-button (click)="statusPage = true; this.statPageLoad()">{{'KravEdit.Summary' | translate}}</button>
+    <button *ngIf="statusPage" class="w-100" mat-button (click)="statusPage = false; sideBarOpen = false">{{'KravEdit.Document' | translate}}</button>
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content flex-row-between" (mouseover)="sideBarOpen = false">
+    <button mat-raised-button class="no-p no-m" (click)="sideBarOpen = !sideBarOpen">
+      <i class="material-icons">
+        list
+      </i>
+    </button>
+    <!--The centre column where you edit stuff-->
+    <div *ngIf="!statusPage && currentReq !== undefined" class="edit-column">
+      <mat-card class="Krav-card-edit">
+        <!--Edit part (with the tabs and the text fields)-->
+        <mat-tab-group [selectedIndex]="selectedTab" (selectedIndexChange)="selectedTab = $event">
+          <mat-tab *ngFor="let req of this.currentReq.referenceProjectRequirement; let i = index" label="{{i+1}}">
+            <div class="flex-column">
+              <mat-form-field class="Krav-form">
+                <mat-label>{{'KravEdit.Requirement' | translate}}</mat-label>
+                <textarea id="field-{{i}}" class="Krav-input" matInput value="{{req.requirementText}}" (change)="updateRequirementText(i)"></textarea>
+              </mat-form-field>
+              <mat-label>{{'KravEdit.Priority' | translate}}</mat-label>
+              <div class="Krav-options flex-row-between p-10">
+                <mat-button-toggle-group>
+                  <mat-button-toggle [checked]="req.priority == 'O'" (click)="updateRequirementPriority(i, 'O')">O</mat-button-toggle>
+                  <mat-button-toggle [checked]="req.priority == '1'" (click)="updateRequirementPriority(i, '1')">1</mat-button-toggle>
+                  <mat-button-toggle [checked]="req.priority == '2'" (click)="updateRequirementPriority(i, '2')">2</mat-button-toggle>
+                  <mat-button-toggle [checked]="req.priority == 'O (i)'" (click)="updateRequirementPriority(i, 'O (i)')">O(i)</mat-button-toggle>
+                  <mat-button-toggle [checked]="req.priority == '1 (i)'" (click)="updateRequirementPriority(i, '1 (i)')">1(i)</mat-button-toggle>
+                  <mat-button-toggle [checked]="req.priority == '2 (i)'" (click)="updateRequirementPriority(i, '2 (i)')">2(i)</mat-button-toggle>
+                </mat-button-toggle-group>
+                <br>
+                <div>
+                  <button matTooltip="{{'KravEdit.Delete-warning' | translate}}" color="warn" mat-raised-button (click)="removeRequirment(i)" class="Krav-options-button"><i class="material-icons">delete_forever</i></button>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <!--New Requirment-->
+          <mat-tab label="{{'KravEdit.New' | translate}}">
+            <div class="flex-column">
+              <mat-form-field class="Krav-form">
+                <mat-label>{{'KravEdit.Requirement' | translate}}</mat-label>
+                <textarea class="Krav-input" matInput placeholder="{{'KravEdit.New-Req' | translate}}" id="NyttKrav"></textarea>
+              </mat-form-field>
+              <mat-label>{{'KravEdit.Priority' | translate}}</mat-label>
+              <div class="Krav-options flex-row-between p-10">
+                <mat-button-toggle-group id="NewReqPriorityButtons">
+                  <mat-button-toggle (click)="newReqPriorityChange('O')" checked>O</mat-button-toggle>
+                  <mat-button-toggle (click)="newReqPriorityChange('1')">1</mat-button-toggle>
+                  <mat-button-toggle (click)="newReqPriorityChange('2')">2</mat-button-toggle>
+                  <mat-button-toggle (click)="newReqPriorityChange('O (i)')">O(i)</mat-button-toggle>
+                  <mat-button-toggle (click)="newReqPriorityChange('1 (i)')">1(i)</mat-button-toggle>
+                  <mat-button-toggle (click)="newReqPriorityChange('2 (i)')">2(i)</mat-button-toggle>
+                </mat-button-toggle-group>
+                <br>
+                <button mat-raised-button (click)="addRequirment()">{{'KravEdit.Add-Req' | translate}}</button>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+      <mat-card class="Krav-card">
+        <mat-card-header>
+          <h2>{{currentReq.title}}</h2>
+        </mat-card-header>
+        <mat-card-content>
+          <h4>{{'KravEdit.Description' | translate}}</h4>
+          <div>{{currentReq.description}}</div>
+          <h4>{{'KravEdit.Explaination' | translate}}</h4>
+          <div>{{currentReq.explanation}}</div>
+          <h4>{{'KravEdit.Consequence' | translate}}</h4>
+          <div>{{currentReq.consequence}}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!--Status Page-->
+    <div *ngIf="statusPage" class="status-page">
+      <mat-card class="no-p m-t-10" style="height: 780px">
+        <mat-card-header class="flex-row-left">
+          <button mat-raised-button color="primary" (click)="this.statusPage = !this.statusPage"><i class="material-icons">arrow_left</i></button>
+          <h1 class="m-lr-10">{{this.userData.currentProject.projectName}}</h1>
+        </mat-card-header>
+        <!--Loading-->
+        <mat-card-content *ngIf="!statpageData.loaded" class="flex-column p-10">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card-content>
+        <mat-card-content *ngIf="statpageData.loaded" class="p-20">
+          <div class="flex-column">
+            <h4>{{'KravEdit.Progress' | translate}} {{statpageData.progress}}%</h4>
+            <mat-progress-bar mode="determinate" value="{{statpageData.progress}}"></mat-progress-bar>
+          </div>
+          <mat-divider class="m-t-10"></mat-divider>
+          <div class="m-t-10">
+            <div class="flex-row-between p-10">
+              <h4>{{'KravEdit.Un-finished-req' | translate}} </h4>
+              <button mat-button matTooltip="{{'KravEdit.Un-finished-req-Tooltip' | translate}}"><i class="material-icons">help</i></button>
+            </div>
+            <div class="unfinished-box">
+              <button mat-raised-button class="color-lightgray unfinished-button" *ngFor="let req of statpageData.unfinished" matTooltip="{{req.title}}" (click)="changeFunctionality(req.projectFunctionalityId); this.statusPage = !this.statusPage">
+                <p class="no-m">{{req.functionalityNumber}}</p>
+              </button>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="flex-center flex-column p-20" *ngIf="!statpageData.generatingDocument">
+            <h4>{{'KravEdit.Document' | translate}}</h4>
+            <div class="flex-row-left">
+              <div class="download-button-container">
+                <div class="w-100">
+                  <mat-form-field class="w-100">
+                    <mat-label>Format</mat-label>
+                    <mat-select>
+                      <mat-option *ngFor="let format of statpageData.sportedFormats" [value]="format.type" (click)="statpageData.selectedFormat = format">
+                        {{userData.currentProject.projectName}}.{{format.extension}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <button class="download-button" [disabled]="statpageData.selectedFormat === null" mat-raised-button (click)="downloadDocument()">Last ned</button>
+            </div>
+          </div>
+          <div class="flex-center flex-column p-20" *ngIf="statpageData.generatingDocument">
+            <h4>{{'KravEdit.Document' | translate}}</h4>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            <p>{{'KravEdit.GeneratingDoc' | translate}}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <!--The progress bar that shows the users progress-->
+    <div *ngIf="!statusPage" class="status-bar flex-column m-lr-10">
+      <mat-card>
+        <!--Actions for movment, goes forwards and backwards also aproves the current requirment-->
+        <mat-card-actions class="nav flex-row">
+          <button matTooltip="{{'KravEdit.Previous-req' | translate}}" mat-raised-button color="primary" (click)="previousReq()">
+            <i class="material-icons">arrow_left</i>
+          </button>
+          <button mat-raised-button matTooltip="{{'KravEdit.Accept-Deny' | translate}}"
+            [ngClass]="{'mat-primary' : !currentReq.processed, 'color-success' : currentReq.processed}"
+            (click)="updateFunctionalityProcessed(currentReq)">
+            <i class="material-icons">done_outline</i>
+          </button>
+          <button matTooltip="{{'KravEdit.Next-req' | translate}}" mat-raised-button class="no-m" color="primary" (click)="nextReq()">
+            <i class="material-icons">arrow_right</i>
+          </button>
+        </mat-card-actions>
+        <!--Status indicator for how far along you are-->
+        <mat-card-content>
+          <div class="flex-center">
+            <div class="flex-column flex-center status-bar-button-container">
+              <div *ngFor="let req of this.statusbarData">
+                <button mat-raised-button matTooltip="{{req.title}}" (click)="changeFunctionality(req.projectFunctionalityId)" [ngClass]="{
+                  'mat-accent' : this.currentReq.projectFunctionalityId === req.projectFunctionalityId,
+                  'color-success' : req.processed && req.projectFunctionalityId !== this.currentReq.projectFunctionalityId,
+                  'color-lightgray' : !req.processed && req.projectFunctionalityId < this.currentReq.projectFunctionalityId,
+                  'big-button' : req.projectFunctionalityId === 0 || this.currentReq.projectFunctionalityId === req.projectFunctionalityId
+                }">
+                  {{req.functionalityNumber}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

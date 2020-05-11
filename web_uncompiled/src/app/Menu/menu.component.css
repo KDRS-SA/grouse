@@ -1,0 +1,16 @@
+.delete-button{
+  height: 70px;
+  width: 100px;
+  position: fixed;
+  bottom: 0px;
+}
+
+.mal-button{
+  height: 100px;
+  width: 175px;
+}
+
+.enter-delete-mode{
+  border-radius: 0px;
+  background-color: rgb(230, 0, 0);
+}

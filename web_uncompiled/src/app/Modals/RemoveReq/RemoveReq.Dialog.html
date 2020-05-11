@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{'Remove.Confirm' | translate}}</h1>
+<div mat-dialog-content>
+  <p>{{'Remove.Sure?' | translate}}</p>
+</div>
+<div mat-dialog-actions class="flex-row-evenlyer">
+  <button mat-raised-button (click)="onNoClick()">{{'Remove.Cancel' | translate}}</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="data">{{'Remove.Delete' | translate}}</button>
+</div>
