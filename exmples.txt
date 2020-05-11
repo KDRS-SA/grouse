@@ -1,0 +1,44 @@
+curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "test"}' -H 'Authorization: Bearer 591c98c6-1f67-4816-ae66-54543086b42b' | jq
+
+ 2311  curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1378/function -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "test"}' -H 'Authorization: Bearer 591c98c6-1f67-4816-ae66-54543086b42b' | jq
+
+curl -v -X POST  -H 'Authorization: Basic Z3JvdXNlLWNsaWVudDpzZWNyZXQ=' http://localhost:9294/grouse/oauth/token -d grant_type=password -d username=user@example.com -d password=password
+
+
+curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1372 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+
+
+curl -v -X GET http://localhost:9294/grouse/template -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -X POST http://localhost:9294/grouse/template/b920dd07-89bd-4702-b1e6-b36910d1482b/project -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '{ "projectName": "test"}' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -X PATCH http://localhost:9294/grouse/projectRequirement/990 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' --data '[{ "op": "replace", "path": "/showOrder", "value": 18}]' | jq
+
+
+curl -v -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '[{ "op": "replace", "path": "/processed", "value": true}]'  -X PATCH http://localhost:9294/grouse/projectFunctionality/1378  -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -H 'Accept: application/hal+json' -H 'Content-type: application/json'  --data '[{ "op": "replace", "path": "/title", "value": "hello"}]'  -X PATCH http://localhost:9294/grouse/projectFunctionality/1378  -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+
+curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+
+curl -v -X GET http://localhost:9294/grouse/projectFunctionality/1378/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -X GET http://localhost:9294/grouse/project -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -X GET http://localhost:9294/grouse/project/718 -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+
+curl -v -X GET http://localhost:9294/grouse/projectFunctionality/727/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -X GET http://localhost:9294/grouse/projectFunctionality/897/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+curl -v -X GET http://localhost:9294/grouse/projectFunctionality/980/requirement -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+
+
+curl -v -X GET http://localhost:9294/grouse/project/718/function -H 'Accept: application/hal+json' -H 'Content-type: application/json' -H 'Authorization: Bearer dc5d0aab-5029-478d-bb9a-c601279cd0b5' | jq
+

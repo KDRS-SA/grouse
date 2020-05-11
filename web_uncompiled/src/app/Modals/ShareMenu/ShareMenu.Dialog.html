@@ -1,0 +1,36 @@
+<div class="flex-row-between no-p no-m">
+  <h1 mat-dialog-title>{{'KravEdit.Share' | translate}}</h1>
+  <button mat-button class="no-p no-m h-80" color="warn" (click)="onNoClick()">X</button>
+</div>
+<div mat-dialog-content>
+  <!--Active Shares-->
+  <div class="w-100 share-menu-list-box">
+    <mat-list>
+      <mat-list-item *ngFor="let share of shares">
+        <div class="flex-row-between w-100">
+          <p>{{share.username}}</p>
+          <button mat-raised-button color="warn" class="h-80 m-t-10 w-120px" *ngIf="share.username !== userData.userName" (click)="revokeShare(share.username)">{{"KravEdit.RevokeShare" | translate}}</button>
+          <div class="color-success you-marker" *ngIf="share.username === userData.userName">{{"KravEdit.You" | translate}}</div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <!--New sharing-->
+  <mat-divider></mat-divider>
+  <form [formGroup]="formgroup" (ngSubmit)="addShare()">
+    <div class="flex-row-evenlyer p-10">
+      <mat-form-field class="w-100">
+        <mat-label>{{"KravEdit.EmailLabel" | translate}}</mat-label>
+        <input id="email" matInput formControlName="email" [(ngModel)]="newShare" required placeholder="{{'Login.placeholder-email' |translate}}">
+        <mat-icon matSuffix>mail</mat-icon>
+        <mat-error *ngIf="formgroup.invalid">{{formgroup.errors}}</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="formgroup.invalid" class="h-80  m-t-10">{{"KravEdit.Share" | translate}}</button>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="flex-row-right">
+  <button mat-raised-button (click)="onNoClick()">{{'ErrorsAndWarns.Close' | translate}}</button>
+</div>

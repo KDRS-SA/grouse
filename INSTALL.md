@@ -63,7 +63,7 @@ You should be able to see which REST calls are available from the logging
 information that was written to the terminal. Search for Mapped and you can 
 easily see a list. You will find something similar to the following:
  
- 	`Mapped "{[/krav/{krav:.+}],methods=[GET]}"` 
+ 	Mapped "{[/krav/{krav:.+}],methods=[GET]}"
 
 Grouse uses springs OAuth2 implementation. To interact with Grouse you need to login
 and get a token. If you are testing Grouse fresh from a clone, be aware of the following.
@@ -74,7 +74,39 @@ should be able to get an Authorization token using the following command:
 
 ## GUI
 
-Grouse uses webjars to download required js resources. You can use make 
-install-gui to force download of required js files. But this should also be 
-done when make builds the project. You will require a HTTP server to serve web
-content. 
+To run and test the GUI you will need a webserver like [Apache](https://httpd.apache.org/) or [Nginx](https://www.nginx.com/)
+And this server will need to be configured to use deep links, this means that when the browser tries to load links within
+the application like _grouse/Login_ it wont actualy try to serve the browser a file named Login.html but it will instead serve index.html.
+The settup of this varies from web server to web server, but an easy setup for Apache is to include a _.htaccess_ file on the same level as _index.html_
+containing the following: 
+
+	<IfModule mod_rewrite.c>
+		RewriteEngine On
+		RewriteBase /
+		RewriteRule ^index\.html$ - [L]
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteCond %{REQUEST_FILENAME} !-d
+		RewriteRule . index.html [L]
+	</IfModule>
+
+This will essentialy tell the webserver that if the client tries to access a file it cannot find it will serve index.html instead.
+For this to work though you will also need to have the `mod_rewrite` module from Apache installed and `AllowOveride all` enabled 
+on the directory of the files. 
+
+You might need `sudo` for all of theese.
+
+To install the `mod_rewrite` module simply:
+
+	a2enmod rewrite
+	
+To enable `AllowOveride all` if your webserver is largely unconfigured you can do this simply by changing the default configuration file a bit.
+
+Open `/etc/apache2/sites-enabled/000-default.conf` and paste:
+
+	<Directory "/var/www/html">
+		AllowOverride All
+	</Directory>
+	
+within the `VirtualHost` block, assuming that the directory of _index.html_ is `/var/www/html`
+
+Finally do a `service apache2 restart` and everything should work nicely.

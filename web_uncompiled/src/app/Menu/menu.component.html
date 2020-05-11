@@ -1,0 +1,86 @@
+<mat-toolbar class="flex-row-between" [ngClass]="{'mat-primary' : !deleteMode, 'mat-warn' : deleteMode}" style="padding: 0">
+  <button mat-button>
+    <div class="flex-row-left">
+      <div class="flex-row-evenlyer">
+        <div class="flex-column flex-center">
+          <div class="Grouse-Avatar"></div>
+        </div>
+        <p>Grouse</p>
+      </div>
+    </div>
+  </button>
+  <div class="flex-row-right">
+    <div class="flex-row-between">
+      <button mat-button class="enter-delete-mode" (click)="deleteToggle()">{{'Delete.Delete' | translate}}</button>
+      <div class="lang-test m-t-14">
+        <button mat-button [matMenuTriggerFor]="langselect">{{'Language.Language' | translate}}</button>
+        <mat-menu #langselect="matMenu" xPosition="after">
+          <button mat-menu-item (click)="changeLang('Bokmål')">Bokmål</button>
+          <button mat-menu-item (click)="changeLang('Nynorsk')">Nynorsk</button>
+          <button mat-menu-item (click)="changeLang('English')">English</button>
+        </mat-menu>
+      </div>
+      <div *ngIf="userData._links['project-list-all'] === undefined">
+        <button mat-button (click)="enterUserEdit()">
+          <div class="flex-row-between">
+            <div class="flex-center">
+              <i class="material-icons flex-center navbar-icon icon-large">account_box</i>
+            </div>
+            <p>{{this.userData.userName}}</p>
+          </div>
+        </button>
+      </div>
+      <div *ngIf="userData._links['project-list-all'] !== undefined">
+        <button mat-button (click)="enterAdminPage()">
+          <div class="flex-row-between">
+            <p>{{'Admin.Admin' | translate}}</p>
+            <div class="flex-center">
+              <i class="material-icons flex-center navbar-icon icon-large">supervisor_account</i>
+            </div>
+          </div>
+        </button>
+        <button mat-button class="no-p" (click)="enterUserEdit()">
+            <p>{{this.userData.userName}}</p>
+        </button>
+      </div>
+      <button mat-button (click)="logout()">
+        <div class="flex-column">
+          <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+          <p class="no-m">{{'Menu.Logout' | translate}}</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+<div *ngIf="!deleteMode" class="flex-row-left mal-container">
+  <button mat-raised-button class="flex-column flex-center mal-card" (click)="newProject()">
+    <i class="material-icons">add_circle_outline</i>
+    <p>{{'Menu.NewProject' | translate}}</p>
+  </button>
+  <button
+    mat-raised-button class="mal-card"
+    *ngFor="let project of projects"
+    (click)="openProject(project);">
+    <div class="flex-column-squish">
+      <p>{{project.ownedBy}}</p>
+      <h3>{{project.projectName}}</h3>
+      <h6>{{'Menu.Lastviewed' | translate}} {{project.lastModifiedDate.split('-')[2].split('T')[0]}}.{{project.lastModifiedDate.split('-')[1]}}.{{project.lastModifiedDate.split('-')[0]}}</h6>
+    </div>
+  </button>
+</div>
+<!--Delete mode-->
+<div *ngIf="deleteMode" class="flex-row-left mal-container">
+  <button
+    mat-raised-button class="mal-card"
+    *ngFor="let project of getMyProjects(); let i = index"
+    (click)="removeProject(project);"
+    (mouseover)="shaking = i+1"
+    (mouseleave)="shaking = 0"
+    [@shake]="shaking === i+1 ? 'end' : ''">
+    <div class="flex-column-squish">
+      <p>{{project.ownedBy}}</p>
+      <h3>{{project.projectName}}</h3>
+      <h6>{{'Menu.Lastviewed' | translate}} {{project.lastModifiedDate.split('-')[2].split('T')[0]}}.{{project.lastModifiedDate.split('-')[1]}}.{{project.lastModifiedDate.split('-')[0]}}</h6>
+    </div>
+  </button>
+</div>

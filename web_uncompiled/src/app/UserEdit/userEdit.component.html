@@ -1,0 +1,80 @@
+<mat-toolbar color="primary" class="flex-row-between">
+  <button class="no-p" mat-button (click)="goToMainMenu()">
+    <div class="flex-row-left no-m">
+      <div class="flex-row-evenlyer no-m">
+        <div class="flex-column flex-center">
+          <div class="Grouse-Avatar"></div>
+        </div>
+        <p>Grouse</p>
+      </div>
+    </div>
+  </button>
+  <button mat-button (click)="logout()">
+    <div class="flex-column">
+      <i class="material-icons flex-center navbar-icon">exit_to_app</i>
+      <p class="no-m">{{'UserEdit.Logout' | translate}}</p>
+    </div>
+  </button>
+</mat-toolbar>
+<div class="flex-column-start p-20">
+  <div class="flex-row-between">
+    <h3>{{'UserEdit.Usersettings' | translate}}</h3>
+    <p>{{this.userData.userName}}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="main-container">
+
+    <!--User info-->
+    <mat-card class="cards no-p">
+      <mat-card-header class="no-p flex-center">
+        <h4>{{'UserEdit.Details' | translate}}</h4>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="flex-row-between m-lr-10">
+          <p class="bold">{{'UserEdit.Email' | translate}}</p>
+          <p>{{this.userData.userName}}</p>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+      <div class="flex-column-end user-info-bottom">
+        <div class="flex-row flex-center">
+          <button mat-raised-button color="warn" (click)="deleteUser()">Slett Bruker</button>
+        </div>
+      </div>
+    </mat-card>
+
+    <!-- Password and e-mail options-->
+    <mat-card class="cards no-p">
+      <mat-card-header class="no-p flex-center">
+        <h4>{{'UserEdit.Administration' | translate}}</h4>
+      </mat-card-header>
+      <mat-card-content class="p-10">
+        <!--Password-->
+        <mat-card class="m-t-10">
+          <form [formGroup]="passwordForm" (ngSubmit)="passwordForm && newPasswordSubmit()" novalidate>
+            <mat-card-content>
+              <mat-form-field style="width: 100%" appearance="legacy">
+                <mat-label>{{'UserEdit.Password-Old' | translate}}</mat-label>
+                <input matInput formControlName="oldP" [(ngModel)]="oldPassword" [type]="'password'" placeholder="{{'UserEdit.Password-Old-Placeholder' | translate}}">
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+              <mat-form-field style="width: 100%" appearance="legacy">
+                <mat-label>{{'UserEdit.Password-New' | translate}}</mat-label>
+                <input matInput formControlName="newP" #newPassord [(ngModel)]="newPassword" [type]="'password'" placeholder="{{'UserEdit.Password-Old-Placeholder' | translate}}">
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+              <mat-form-field style="width: 100%" appearance="legacy">
+                <mat-label>{{'UserEdit.Password-New-rep' | translate}}</mat-label>
+                <input matInput formControlName="repP" [(ngModel)]="repeatPassword" [type]="'password'" placeholder="{{'UserEdit.Password-Old-Placeholder' | translate}}">
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions class="flex-row-right no-p">
+              <button type="submit" mat-raised-button color="primary" [disabled]="passwordForm.invalid" class="no-m">{{'UserEdit.Password-Change' | translate}}</button>
+            </mat-card-actions>
+          </form>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
