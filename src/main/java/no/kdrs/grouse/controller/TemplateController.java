@@ -3,13 +3,12 @@ package no.kdrs.grouse.controller;
 import no.kdrs.grouse.model.Project;
 import no.kdrs.grouse.model.Template;
 import no.kdrs.grouse.model.TemplateFunctionality;
-import no.kdrs.grouse.model.links.LinksProject;
-import no.kdrs.grouse.model.links.LinksTemplate;
-import no.kdrs.grouse.model.links.LinksTemplateFunctionality;
+import no.kdrs.grouse.model.links.*;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
+import no.kdrs.grouse.utils.exception.BadRequestException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
@@ -40,15 +39,22 @@ public class TemplateController {
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER)
     public ResponseEntity<LinksTemplate> getTemplate(
             @PathVariable(TEMPLATE_ID) UUID templateId) {
-        return commonController.
-                addTemplateLinks(templateService.findById(templateId), OK);
+        return commonController.addTemplateLinks(templateService
+                .findById(templateId), OK);
+    }
+
+    @GetMapping(value = SLASH + REL_TEMPLATE_LIST_ALL)
+    public ResponseEntity<PagedModel<LinksTemplate>>
+    getTemplates(Pageable pageable) {
+        return commonController.addPagedTemplateLinks(templateService
+                .findAll(pageable), OK);
     }
 
     @GetMapping
     public ResponseEntity<PagedModel<LinksTemplate>>
-    getTemplates(Pageable pageable) {
-        return commonController.addPagedTemplateLinks(
-                templateService.findAll(pageable), OK);
+    getTemplatesForUser(Pageable pageable) {
+        return commonController.addPagedTemplateLinks(templateService
+                .findAllForUser(pageable), OK);
     }
 
     @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH +
@@ -60,6 +66,27 @@ public class TemplateController {
         return commonController.addPagedTemplateFunctionalityLinks(
                 templateService.findFunctionalityForTemplate(
                         pageable, templateId), OK);
+    }
+
+    @GetMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + ACCESS)
+    public ResponseEntity<PagedModel<LinksUser>> getTemplateUsers(
+            @PathVariable(TEMPLATE_ID) UUID templateId,
+            Pageable pageable) {
+        return commonController.addPagedUserLinks(templateService
+                .getTemplateUsers(templateId, pageable), OK);
+    }
+
+    @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + SHARE +
+            SLASH + USER_PARAMETER)
+    public ResponseEntity<LinksAccessControl> shareTemplate(
+            @PathVariable(TEMPLATE_ID) UUID templateId,
+            @PathVariable(USER) String username) {
+        if (USER_EMAIL_ADDRESS.equalsIgnoreCase(username)) {
+            throw new BadRequestException("Cannot reuse user_email_address " +
+                    "template");
+        }
+        return commonController.addACLLinks(templateService
+                .shareTemplate(templateId, username), OK);
     }
 
     @PostMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + PROJECT)
@@ -92,6 +119,17 @@ public class TemplateController {
             @RequestBody PatchObjects patchObjects) throws Exception {
         return commonController.addTemplateLinks(templateService.update(
                 templateId, patchObjects), OK);
+    }
+
+    @DeleteMapping(value = SLASH + TEMPLATE_ID_PARAMETER + SLASH + SHARE +
+            SLASH + USER_PARAMETER)
+    public ResponseEntity<String> deleteTemplateShare(
+            @PathVariable(TEMPLATE_ID) UUID templateId,
+            @PathVariable(USER) String username) {
+        templateService.deleteTemplateShare(templateId, username);
+        return ResponseEntity.status(NO_CONTENT)
+                .body("{\"status\" : \"Share on " + templateId + " for user " +
+                        username + " was deleted\"}");
     }
 
     @DeleteMapping(SLASH + TEMPLATE_ID_PARAMETER)

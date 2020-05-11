@@ -4,14 +4,13 @@ import no.kdrs.grouse.model.TemplateRequirement;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import no.kdrs.grouse.service.interfaces.ITemplateRequirementService;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Service
 @Transactional
@@ -19,18 +18,16 @@ public class TemplateRequirementService
         extends GrouseService
         implements ITemplateRequirementService {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(TemplateRequirementService.class);
+    // Columns that it is possible to update via a PATCH request
+    private final ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("requirementText", "showOrder",
+                    "ownedBy", "priority", "requirementNumber"));
 
-    private ITemplateRequirementRepository requirementRepository;
+    private final ITemplateRequirementRepository requirementRepository;
 
     public TemplateRequirementService(
             ITemplateRequirementRepository requirementRepository) {
         this.requirementRepository = requirementRepository;
-    }
-
-    public List<TemplateRequirement> findAll() {
-        return (List<TemplateRequirement>) requirementRepository.findAll();
     }
 
     @Override
@@ -39,16 +36,18 @@ public class TemplateRequirementService
     }
 
     @Override
-    public TemplateRequirement save(TemplateRequirement TemplateRequirement) {
-        return requirementRepository.save(TemplateRequirement);
+    public TemplateRequirement updateTemplateRequirement(
+            PatchObjects patchObjects, Long requirementNumber) {
+        TemplateRequirement templateRequirement =
+                getRequirementOrThrow(requirementNumber);
+        checkAccess(templateRequirement.getReferenceTemplate().getTemplateId());
+        return (TemplateRequirement) handlePatch(templateRequirement,
+                patchObjects);
     }
 
     @Override
-    public TemplateRequirement updateTemplateRequirement(
-            PatchObjects patchObjects, Long requirementNumber) {
-        return (TemplateRequirement)
-                handlePatch(getRequirementOrThrow(requirementNumber),
-                        patchObjects);
+    protected boolean checkColumnUpdatable(String path) {
+        return allowableColumns.contains(path);
     }
 
     @Override

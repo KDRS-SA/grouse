@@ -26,7 +26,7 @@ public class APIAssembler
 
     private static final Logger logger =
             LoggerFactory.getLogger(APIAssembler.class);
-    private RoleValidator role;
+    private final RoleValidator role;
 
     public APIAssembler(RoleValidator role) {
         super(ApplicationController.class, LinksAPIDetail.class);
@@ -64,6 +64,9 @@ public class APIAssembler
             linksAPIDetail.add(linkTo(methodOn(TemplateController.class)
                     .getTemplates(null))
                     .withRel(REL_TEMPLATE_LIST));
+            linksAPIDetail.add(linkTo(methodOn(TemplateController.class)
+                    .createTemplate(null))
+                    .withRel(TEMPLATE));
             linksAPIDetail.add(linkTo(methodOn(OAuthController.class)
                     .logout(null))
                     .withRel(REL_LOGOUT_OAUTH));

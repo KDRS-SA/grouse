@@ -1,84 +1,46 @@
-
 package no.kdrs.grouse.controller;
 
-import no.kdrs.grouse.model.ProjectRequirement;
+import no.kdrs.grouse.model.links.LinksProjectRequirement;
 import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
+import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 
-/**
- * Created by tsodring on 29/03/18.
- */
 @RestController
 @RequestMapping(value = SLASH + PROJECT_REQUIREMENT)
 public class ProjectRequirementController {
 
     private IProjectRequirementService projectRequirementService;
+    private CommonController commonController;
 
     public ProjectRequirementController(
-            IProjectRequirementService projectRequirementService) {
+            IProjectRequirementService projectRequirementService,
+            CommonController commonController) {
         this.projectRequirementService = projectRequirementService;
+        this.commonController = commonController;
     }
 
     @GetMapping(value = SLASH + REQUIREMENT_PARAMETER)
-    public ResponseEntity<ProjectRequirement> getRequirement(
+    public ResponseEntity<LinksProjectRequirement> getRequirement(
             @PathVariable(REQUIREMENT) Long requirementNumber) {
-
-        ProjectRequirement projectRequirement = projectRequirementService.
-                getProjectRequirement(requirementNumber);
-
-        projectRequirement.add(linkTo(methodOn
-                (ProjectRequirementController.class).
-                getRequirement(projectRequirement.getRequirementId())).
-                withSelfRel());
-
-        return ResponseEntity.status(OK)
-                .body(projectRequirement);
+        return commonController.addProjectRequirementLinks(
+                projectRequirementService.getProjectRequirement(
+                        requirementNumber), OK);
     }
 
     @PatchMapping(value = SLASH + REQUIREMENT_PARAMETER)
-    public ResponseEntity<ProjectRequirement> patchRequirement(
+    public ResponseEntity<LinksProjectRequirement> patchRequirement(
             @PathVariable(REQUIREMENT) Long requirementNumber,
             @RequestBody PatchObjects patchObjects)
-                throws Exception {
-
-        ProjectRequirement projectRequirement = projectRequirementService.
-                updateProjectRequirement(patchObjects, requirementNumber);
-
-        projectRequirement.add(linkTo(methodOn
-                (ProjectRequirementController.class).
-                getRequirement(projectRequirement.getRequirementId())).
-                withSelfRel());
-
-        return ResponseEntity.status(OK)
-                .body(projectRequirement);
-    }
-
-    @PostMapping(value = "/{prosjekt}/funksjonalitet/{funksjonalitet}")
-    public ResponseEntity<ProjectRequirement> createRequirement(
-            @PathVariable("prosjekt") UUID projectId,
-            @PathVariable("funksjonalitet") String functionality,
-            @RequestBody ProjectRequirement projectRequirement) {
-
-        projectRequirementService.
-                createProjectRequirement(projectId, functionality,
-                        projectRequirement);
-
-        projectRequirement.add(linkTo(methodOn
-                (ProjectRequirementController.class).
-                getRequirement(projectRequirement.getRequirementId())).
-                withSelfRel());
-
-        return ResponseEntity.status(CREATED)
-                .body(projectRequirement);
+            throws Exception {
+        return commonController.addProjectRequirementLinks(
+                projectRequirementService.updateProjectRequirement(
+                        patchObjects, requirementNumber), OK);
     }
 
     @DeleteMapping(value = SLASH + REQUIREMENT_PARAMETER)

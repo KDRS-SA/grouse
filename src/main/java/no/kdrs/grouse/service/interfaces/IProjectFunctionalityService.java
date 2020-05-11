@@ -6,9 +6,6 @@ import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-/**
- * Created by tsodring on 01/04/18.
- */
 public interface IProjectFunctionalityService {
     ProjectFunctionality getProjectFunctionality(Long id);
 
@@ -20,6 +17,10 @@ public interface IProjectFunctionalityService {
 
     ProjectRequirement createProjectRequirement(
             Long functionalityNumber, ProjectRequirement projectRequirement);
+
+    ProjectFunctionality createChildFunctionality(
+            Long projectFunctionalityId,
+            ProjectFunctionality incomingFunctionality);
 
     ProjectFunctionality updateProjectFunctionality(PatchObjects patchObjects,
                                                     Long functionalityNumber)

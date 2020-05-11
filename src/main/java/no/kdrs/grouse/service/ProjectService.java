@@ -11,16 +11,13 @@ import no.kdrs.grouse.service.interfaces.IProjectRequirementService;
 import no.kdrs.grouse.service.interfaces.IProjectService;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
-import no.kdrs.grouse.utils.RoleValidator;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Query;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,32 +27,27 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import static no.kdrs.grouse.utils.Constants.PROJECT;
 
-/**
- * Created by tsodring on 9/25/17.
- */
 @Service
 @Transactional
 public class ProjectService
         extends GrouseService
         implements IProjectService {
 
-    private EntityManager entityManager;
-    private IProjectRequirementService projectRequirementService;
-    private IProjectRepository projectRepository;
-    private IGrouseUserRepository userRepository;
-    private ACLService aclService;
-    private IProjectRequirementRepository projectRequirementRepository;
-    private IProjectFunctionalityRepository projectFunctionalityRepository;
-    private ITemplateService templateService;
-    private ApplicationEventPublisher applicationEventPublisher;
-    private RoleValidator roleValidator;
+    private final IProjectRequirementService projectRequirementService;
+    private final IProjectRepository projectRepository;
+    private final IGrouseUserRepository userRepository;
+    private final ACLService aclService;
+    private final IProjectRequirementRepository projectRequirementRepository;
+    private final IProjectFunctionalityRepository projectFunctionalityRepository;
+    private final ITemplateService templateService;
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     // Columns that it is possible to update via a PATCH request
-    private ArrayList<String> allowableColumns =
-            new ArrayList<>(Arrays.asList("projectName",
-                    "fileNameInternal", "ownedBy"));
+    private final ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("projectName", "fileNameInternal",
+                    "ownedBy"));
 
     public ProjectService(
-            EntityManager entityManager,
             IProjectRequirementService projectRequirementService,
             IProjectRepository projectRepository,
             IGrouseUserRepository userRepository,
@@ -63,9 +55,7 @@ public class ProjectService
             IProjectRequirementRepository projectRequirementRepository,
             IProjectFunctionalityRepository projectFunctionalityRepository,
             ITemplateService templateService,
-            ApplicationEventPublisher applicationEventPublisher,
-            RoleValidator roleValidator) {
-        this.entityManager = entityManager;
+            ApplicationEventPublisher applicationEventPublisher) {
         this.projectRequirementService = projectRequirementService;
         this.projectRepository = projectRepository;
         this.userRepository = userRepository;
@@ -74,23 +64,6 @@ public class ProjectService
         this.projectFunctionalityRepository = projectFunctionalityRepository;
         this.templateService = templateService;
         this.applicationEventPublisher = applicationEventPublisher;
-        this.roleValidator = roleValidator;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<ProjectRequirement> findByProjectIdOrderByProjectName(
-            UUID projectId, String functionalityNumber) {
-        String queryString =
-                "select p from ProjectRequirement as p where " +
-                        "p.referenceProject.projectId = :projectId " +
-                        "AND p.referenceFunctionality.functionalityNumber = " +
-                        ":functionalityNumber";
-
-        Query query = entityManager.createQuery(queryString);
-        query.setParameter("projectId", projectId);
-        query.setParameter("functionalityNumber", functionalityNumber);
-        return query.getResultList();
     }
 
     /**
@@ -137,14 +110,17 @@ public class ProjectService
     public ProjectFunctionality createFunctionality(
             UUID projectId, ProjectFunctionality projectFunctionality) {
         Project project = getProjectOrThrow(projectId);
+        checkAccess(projectId);
         project.addProjectFunctionality(projectFunctionality);
         projectFunctionality.setReferenceProject(project);
+        projectFunctionality.setOwnedBy(project.getOwnedBy());
         return projectFunctionalityRepository.save(projectFunctionality);
     }
 
     @Override
     public Project updateProjectFinalised(UUID projectId) {
         Project project = getProjectOrThrow(projectId);
+        checkAccess(projectId);
         project.setDocumentCreated(true);
         project.setProjectComplete(true);
         return project;
@@ -197,7 +173,7 @@ public class ProjectService
         project = projectRepository.save(project);
 
         for (TemplateFunctionality templateFunctionality :
-                template.getReferenceTemplateFunctionality()) {
+                template.getReferenceFunctionality()) {
             processFunctionalities(project, null,
                     templateFunctionality
                             .getReferenceChildTemplateFunctionality());
@@ -279,11 +255,6 @@ public class ProjectService
     }
 
     @Override
-    public Page<Project> findByOwnedBy(String ownedBy, Pageable pageable) {
-        return projectRepository.findByOwnedBy(ownedBy, pageable);
-    }
-
-    @Override
     public Iterable<Project> findByOwnedBy(String username) {
         return projectRepository.findByOwnedBy(username);
     }
@@ -338,7 +309,6 @@ public class ProjectService
 
     @Override
     public AccessControl shareProject(UUID projectId, String username) {
-
         Project project = getProjectOrThrow(projectId);
         checkOwner(project.getOwnedBy(), PROJECT);
         AccessControl accessControl = new AccessControl();
@@ -358,8 +328,9 @@ public class ProjectService
 
     @Override
     public Page<GrouseUser> getProjectUsers(UUID projectId, Pageable pageable) {
-        List<String> userList = aclService.getListUsers(projectId);
-        return userRepository.findByUsernameIn(userList, pageable);
+        checkAccess(projectId);
+        return userRepository.findByUsernameIn(
+                aclService.getListUsers(projectId), pageable);
     }
 
     /**

@@ -1,81 +1,44 @@
-
 package no.kdrs.grouse.controller;
 
-import no.kdrs.grouse.model.TemplateRequirement;
+import no.kdrs.grouse.model.links.LinksTemplateRequirement;
 import no.kdrs.grouse.service.interfaces.ITemplateRequirementService;
+import no.kdrs.grouse.utils.CommonController;
 import no.kdrs.grouse.utils.PatchObjects;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static no.kdrs.grouse.utils.Constants.*;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.OK;
 
-
-/**
- * Created by tsodring on 29/03/18.
- */
 @RestController
 @RequestMapping(value = SLASH + TEMPLATE_REQUIREMENT)
 public class TemplateRequirementController {
 
     private ITemplateRequirementService templateRequirementService;
+    private CommonController commonController;
 
     public TemplateRequirementController(
-            ITemplateRequirementService templateRequirementService) {
+            ITemplateRequirementService templateRequirementService,
+            CommonController commonController) {
         this.templateRequirementService = templateRequirementService;
+        this.commonController = commonController;
     }
 
     @GetMapping(value = SLASH + REQUIREMENT_PARAMETER)
-    public ResponseEntity<TemplateRequirement> getRequirement(
+    public ResponseEntity<LinksTemplateRequirement> getRequirement(
             @PathVariable(REQUIREMENT) Long requirementNumber) {
-
-        TemplateRequirement templateRequirement = templateRequirementService.
-                findById(requirementNumber);
-
-        templateRequirement.add(linkTo(methodOn
-                (TemplateRequirementController.class).
-                getRequirement(templateRequirement.getRequirementId())).
-                withSelfRel());
-
-        return ResponseEntity.status(OK)
-                .body(templateRequirement);
+        return commonController.addTemplateRequirementLinks(
+                templateRequirementService.findById(requirementNumber), OK);
     }
 
     @PatchMapping(value = SLASH + REQUIREMENT_PARAMETER)
-    public ResponseEntity<TemplateRequirement> patchRequirement(
+    public ResponseEntity<LinksTemplateRequirement> patchRequirement(
             @PathVariable(REQUIREMENT) Long requirementNumber,
             @RequestBody PatchObjects patchObjects) {
-
-        TemplateRequirement templateRequirement = templateRequirementService.
-                updateTemplateRequirement(patchObjects, requirementNumber);
-
-        templateRequirement.add(linkTo(methodOn
-                (TemplateRequirementController.class).
-                getRequirement(templateRequirement.getRequirementId())).
-                withSelfRel());
-
-        return ResponseEntity.status(OK)
-                .body(templateRequirement);
-    }
-
-    @PostMapping(value = "/{prosjekt}/funksjonalitet/{funksjonalitet}")
-    public ResponseEntity<TemplateRequirement> createRequirement(
-            @PathVariable("prosjekt") Long templateId,
-            @PathVariable("funksjonalitet") String functionality,
-            @RequestBody TemplateRequirement templateRequirement) {
-
-        templateRequirementService.save(templateRequirement);
-
-        templateRequirement.add(linkTo(methodOn
-                (TemplateRequirementController.class).
-                getRequirement(templateRequirement.getRequirementId())).
-                withSelfRel());
-
-        return ResponseEntity.status(CREATED)
-                .eTag(templateRequirement.getVersion().toString())
-                .body(templateRequirement);
+        return commonController.addTemplateRequirementLinks(
+                templateRequirementService.updateTemplateRequirement(
+                        patchObjects, requirementNumber), OK);
     }
 
     @DeleteMapping(value = SLASH + REQUIREMENT_PARAMETER)

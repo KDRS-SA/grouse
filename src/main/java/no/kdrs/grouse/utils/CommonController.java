@@ -16,8 +16,6 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
-import java.util.Map;
-
 import static no.kdrs.grouse.utils.Constants.NO_ACCESS_OTHER_USER;
 
 /**
@@ -72,6 +70,7 @@ public class CommonController {
             ProjectRequirementAssembler projectRequirementAssembler,
             TemplateRequirementAssembler templateRequirementAssembler,
             ProjectFunctionalityAssembler projectFunctionalityAssembler,
+            TemplateFunctionalityAssembler templateFunctionalityAssembler,
             SupportedFormatAssembler supportedFormatAssembler) {
         this.role = role;
         this.pagedUserResourcesAssembler = pagedUserResourcesAssembler;
@@ -93,6 +92,7 @@ public class CommonController {
         this.projectFunctionalityAssembler = projectFunctionalityAssembler;
         this.projectRequirementAssembler = projectRequirementAssembler;
         this.supportedFormatAssembler = supportedFormatAssembler;
+        this.templateFunctionalityAssembler = templateFunctionalityAssembler;
     }
 
     public void checkAccess(String ownedBy) {

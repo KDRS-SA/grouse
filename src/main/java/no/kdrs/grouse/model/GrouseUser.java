@@ -1,10 +1,10 @@
 package no.kdrs.grouse.model;
 
 import no.kdrs.grouse.model.user.Authority;
+import no.kdrs.grouse.utils.exception.ConcurrencyException;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,8 +27,7 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 @Entity
 @Table(name = USER_TABLE_NAME)
 @EntityListeners(AuditingEntityListener.class)
-public class GrouseUser
-        extends RepresentationModel<GrouseUser> {
+public class GrouseUser {
 
     @Id
     @Email
@@ -134,6 +133,14 @@ public class GrouseUser
 
     public Long getVersion() {
         return version;
+    }
+
+    public void setVersion(Long version) {
+        if (!this.version.equals(version)) {
+            throw new ConcurrencyException(
+                    "Concurrency Exception. Old version [" + this.version +
+                            "], new version [" + version + "]");
+        }
     }
 
     @Override

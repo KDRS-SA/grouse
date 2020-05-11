@@ -1,21 +1,19 @@
 package no.kdrs.grouse.service;
 
-import no.kdrs.grouse.model.Template;
-import no.kdrs.grouse.model.TemplateFunctionality;
-import no.kdrs.grouse.model.TemplateRequirement;
+import no.kdrs.grouse.listeners.GrouseEvent;
+import no.kdrs.grouse.model.*;
+import no.kdrs.grouse.persistence.IGrouseUserRepository;
 import no.kdrs.grouse.persistence.ITemplateFunctionalityRepository;
 import no.kdrs.grouse.persistence.ITemplateRepository;
 import no.kdrs.grouse.persistence.ITemplateRequirementRepository;
 import no.kdrs.grouse.service.interfaces.ITemplateService;
 import no.kdrs.grouse.utils.PatchObjects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -23,43 +21,37 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by tsodring on 9/25/17.
- */
+import static java.util.UUID.randomUUID;
+import static no.kdrs.grouse.utils.Constants.TEMPLATE;
+
 @Service
 @Transactional
 public class TemplateService
         extends GrouseService
         implements ITemplateService {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(TemplateService.class);
-
-    private EntityManager entityManager;
-    private ITemplateRepository templateRepository;
-    private ITemplateRequirementRepository requirementRepository;
-    private ITemplateFunctionalityRepository functionalityRepository;
-    private ITemplateRequirementRepository templateRequirementRepository;
-    private ITemplateFunctionalityRepository templateFunctionalityRepository;
+    private final ITemplateRepository templateRepository;
+    private final ITemplateRequirementRepository templateRequirementRepository;
+    private final ITemplateFunctionalityRepository templateFunctionalityRepository;
+    private final IGrouseUserRepository userRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     // Columns that it is possible to update via a PATCH request
-    private ArrayList<String> allowableColumns =
-            new ArrayList<String>(Arrays.asList("templateName",
-                    "fileNameInternal", "ownedBy"));
+    private final ArrayList<String> allowableColumns =
+            new ArrayList<>(Arrays.asList("templateName", "fileNameInternal",
+                    "ownedBy"));
 
     public TemplateService(
-            EntityManager entityManager,
             ITemplateRepository templateRepository,
-            ITemplateRequirementRepository requirementRepository,
-            ITemplateFunctionalityRepository functionalityRepository,
             ITemplateRequirementRepository templateRequirementRepository,
-            ITemplateFunctionalityRepository templateFunctionalityRepository) {
-        this.entityManager = entityManager;
+            ITemplateFunctionalityRepository templateFunctionalityRepository,
+            IGrouseUserRepository userRepository,
+            ApplicationEventPublisher applicationEventPublisher) {
         this.templateRepository = templateRepository;
-        this.requirementRepository = requirementRepository;
-        this.functionalityRepository = functionalityRepository;
         this.templateRequirementRepository = templateRequirementRepository;
         this.templateFunctionalityRepository = templateFunctionalityRepository;
+        this.userRepository = userRepository;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     /**
@@ -81,10 +73,11 @@ public class TemplateService
     @Override
     public TemplateFunctionality createFunctionality(
             @NotNull final UUID templateId,
-            TemplateFunctionality templateFunctionality) {
+            @NotNull TemplateFunctionality templateFunctionality) {
         Template template = getTemplateOrThrow(templateId);
         template.addTemplateFunctionality(templateFunctionality);
         templateFunctionality.setReferenceTemplate(template);
+        templateFunctionality.setOwnedBy(template.getOwnedBy());
         return templateFunctionalityRepository.save(templateFunctionality);
     }
 
@@ -94,8 +87,15 @@ public class TemplateService
     }
 
     @Override
+    public Page<Template> findAllForUser(Pageable page) {
+        List<UUID> templateIdList = aclService.getListUUIDs(getUser(), TEMPLATE);
+        return templateRepository.findByTemplateIdIn(templateIdList, page);
+    }
+
+    @Override
     public Template findById(@NotNull UUID id) {
-        return getTemplateOrThrow(id);
+        Template template = getTemplateOrThrow(id);
+        return template;
     }
 
 
@@ -111,18 +111,19 @@ public class TemplateService
      */
     @Override
     public Template createTemplate(Template template) {
+        template.setTemplateId(randomUUID());
+        template.setOwnedBy(getUser());
+        template = templateRepository.save(template);
+        applicationEventPublisher.publishEvent(new GrouseEvent(this, template));
         return templateRepository.save(template);
     }
 
     @Override
     public Template update(UUID id, PatchObjects patchObjects)
             throws EntityNotFoundException {
-        return (Template) handlePatch(getTemplateOrThrow(id), patchObjects);
-    }
-
-    @Override
-    public List<Template> findByOwnedBy(String ownedBy) {
-        return templateRepository.findByOwnedBy(ownedBy);
+        Template template = getTemplateOrThrow(id);
+        checkAccess(template.getTemplateId());
+        return (Template) handlePatch(template, patchObjects);
     }
 
     /**
@@ -135,10 +136,17 @@ public class TemplateService
     @Override
     public void delete(UUID id) {
         Template template = getTemplateOrThrow(id);
-        deleteFunctionalities(template.getReferenceTemplateFunctionality());
+        checkOwner(template.getOwnedBy(), TEMPLATE);
+        deleteFunctionalities(template.getReferenceFunctionality());
         templateRepository.delete(template);
     }
 
+    /**
+     * Note this assumes you have already done a check that you are allowed
+     * to delete the functionalities
+     *
+     * @param templateFunctionalities The list of functionalities to delete
+     */
     protected void deleteFunctionalities(
             List<TemplateFunctionality> templateFunctionalities) {
         for (TemplateFunctionality templateFunctionality :
@@ -159,6 +167,12 @@ public class TemplateService
         }
     }
 
+    /**
+     * Note this assumes you have already done a check that you are allowed
+     * to delete the requirements
+     *
+     * @param templateRequirements The list of requirements to delete
+     */
     protected void deleteRequirements(
             List<TemplateRequirement> templateRequirements) {
         for (TemplateRequirement templateRequirement : templateRequirements) {
@@ -169,6 +183,33 @@ public class TemplateService
     @Override
     protected boolean checkColumnUpdatable(String path) {
         return allowableColumns.contains(path);
+    }
+
+    @Override
+    public AccessControl shareTemplate(UUID templateId, String username) {
+        Template template = getTemplateOrThrow(templateId);
+        checkOwner(template.getOwnedBy(), TEMPLATE);
+        AccessControl accessControl = new AccessControl();
+        accessControl.setAclId(randomUUID());
+        accessControl.setObjectType(TEMPLATE);
+        accessControl.setGrouseObject(template.getTemplateId());
+        accessControl.setGrouseUser(username);
+        return aclService.createACLEntry(template.getTemplateId(), accessControl);
+    }
+
+    @Override
+    public void deleteTemplateShare(UUID templateId, String username) {
+        Template template = getTemplateOrThrow(templateId);
+        checkOwner(template.getOwnedBy(), TEMPLATE);
+        aclService.deleteACLEntry(template.getTemplateId(), username);
+    }
+
+    @Override
+    public Page<GrouseUser> getTemplateUsers(
+            UUID templateId, Pageable pageable) {
+        checkAccess(templateId);
+        return userRepository.findByUsernameIn(
+                aclService.getListUsers(templateId), pageable);
     }
 
     /**
