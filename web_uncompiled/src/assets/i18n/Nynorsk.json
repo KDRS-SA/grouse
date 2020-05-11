@@ -25,7 +25,8 @@
     "InfoDelete": "Sletting av informasjon",
     "InfoDeleteTXT": "Når du er logga inn vil du kunna gå inn på instillingene for brukaren din. Inne på instillingene vil det vera ein knapp for å sletta brukaren og all tilhøyrande innformasjon. Trykkar du på denne vil du måtta stadfesta at du vil fjærne all informasjon tilhøyrande brukaren din. Dette er ikkje reverserbart. Når du har sletta alt er det ikkje mogleg og gjennopprette brukaren og tilhøyrande informasjon.",
     "OBS!": "OBS! Dette vil IKKJE sletta prosjekt du ikkje er eigar av.",
-    "Close": "Lukk vindauge"
+    "Close": "Lukk vindauge",
+    "localStorage" : "Grouse nyttar seg av data som blir lagra på maskina di i form av local-storage. Dette dataet blir brukt til å hugsa informasjon relatert til pålogging (hugs meg funksjonalitet) og ikkje noko anna. Denne informasjonen er låst til Grouse det vil seia at andre nettstader du besæker ikkje kan bruka han. Ved å registrera ein brukar godkjenner du denne bruken av data lagra på maskina di."
   },
   "Menu": {
     "Logout": "Logg ut",

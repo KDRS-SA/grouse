@@ -25,7 +25,8 @@
     "InfoDelete": "Deleting information",
     "InfoDeleteTXT": "Once logged in you will be able to access the settings for your user. Inside the settings there will be a button to delete the user and all related information. Pressing this you will need to confirm that you want to remove all information belonging to your user. This is not reversible. After deleting everything it is not possible to recover the user and associated information. ",
     "OBS!": "Attention! This will NOT delete projects you do not own.",
-    "Close": "Close window"
+    "Close": "Close window",
+    "localStorage" : "Grouse utilizes localstorage which means that some data will be stored on your computer. This data is used to store login information ('remember me' functionality) and nothing else. This data is locked to Grouse, which means that other sites that you visit will not be able to use this data. By registering a user you approve of the use of this data."
   },
   "Menu": {
     "Logout": "Logout",

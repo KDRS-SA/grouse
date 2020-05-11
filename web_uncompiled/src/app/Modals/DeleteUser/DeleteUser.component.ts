@@ -1,9 +1,9 @@
-import {Component, Inject} from "@angular/core";
-import {UserData} from "../../models/UserData.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {Component, Inject} from '@angular/core';
+import {UserData} from '../../models/UserData.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -27,11 +27,13 @@ export class DeleteUserDialog {
   pass: string;
 
   private router: Router;
+  private http: HttpClient;
 
-  constructor(public dialogRef: MatDialogRef<DeleteUserDialog>, @Inject(MAT_DIALOG_DATA) public data: HttpClient, formBuilder: FormBuilder, router: Router) {
+  constructor(public dialogRef: MatDialogRef<DeleteUserDialog>, http: HttpClient, formBuilder: FormBuilder, router: Router) {
     this.checked = false;
     this.loading = false;
     this.deleted = false;
+    this.http = http;
     this.error = null;
     this.authorized = 0;
     this.pass = '';
@@ -47,20 +49,20 @@ export class DeleteUserDialog {
   confirm() {
     this.loading = true;
     this.dialogRef.disableClose = true;
-    this.data.delete(this.userData._links.konto.href, {
+    this.http.delete(this.userData._links.konto.href, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })
     }).subscribe(result => {
       if (result === null) {
         this.deleted = true;
-        this.dialogRef.disableClose = false;
         this.loading = false;
       }
     }, error => {
       this.loading = false;
       this.error = error;
       console.error(error);
+      this.dialogRef.disableClose = false;
     });
   }
 
@@ -73,7 +75,7 @@ export class DeleteUserDialog {
     body = body.append('username', this.userData.userName);
     body = body.append('password', this.pass);
 
-    this.data.post(this.userData._links['login OAuth2'].href, body, {
+    this.http.post(this.userData._links['login OAuth2'].href, body, {
       // Constructs the headers
       headers: new HttpHeaders({
         Authorization: 'Basic ' + btoa(this.userData.oauthClientId + ':' + 'secret'),
@@ -96,7 +98,7 @@ export class DeleteUserDialog {
 
   logout() {
     localStorage.clear();
-    this.data.get(this.userData._links['logout OAuth2'].href, {
+    this.http.get(this.userData._links['logout OAuth2'].href, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + this.userData.oauthClientSecret
       })

@@ -1,4 +1,3 @@
-import {Link} from './link.model';
 import {Links} from './links.model';
 import {Project} from './Project.model';
 

@@ -32,7 +32,7 @@ import {MatRadioModule} from "@angular/material/radio";
 
 import {userEditComponent} from './UserEdit/userEdit.component';
 import {kravEditComponent} from './KravEdit/kravEdit.component';
-import {GDPRContent, LoginComponent} from './Login/Login.component';
+import {LoginComponent} from './Login/Login.component';
 import {MenuComponent} from './Menu/menu.component';
 import {adminComponent} from "./Admin/Admin.component";
 import {AdminDeleteUserDialog} from './Modals/AdminDeleteUser/AdminDeleteUser.component';
@@ -43,6 +43,7 @@ import {DeleteProjectDialog} from "./Modals/RemoveProject/RemoveProject.compnent
 import { PasswordChangeConfirmedDialog } from './Modals/PasswordChangeConfirmed/PasswordChangeConfimred.component';
 import {ShareMenu} from "./Modals/ShareMenu/shareMenu.component";
 import {DeleteRequirmentDialog} from "./Modals/RemoveReq/RemoveReq.component";
+import {GDPRContent} from './Modals/GDPR/GDPR.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -110,11 +111,14 @@ export function HttpLoaderFactory(http: HttpClient) {
   exports: [
     NewProjectDialog,
     GDPRContent,
+    DeleteRequirmentDialog,
     DeleteProjectDialog,
     PasswordChangeConfirmedDialog,
-    DeleteUserDialog,
     ShareMenu,
     AdminDeleteUserDialog,
+    ConcurrencyResolver,
+    DeleteRequirmentDialog,
+    DeleteUserDialog
   ],
   entryComponents: [
     NewProjectDialog,

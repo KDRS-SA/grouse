@@ -1,7 +1,7 @@
-import {Component, enableProdMode, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {REL_LOGIN_OAUTH, REL_LOGOUT_OAUTH, REL_USER, startUrl} from './common';
-import {HttpClient} from '@angular/common/http';
+import {startUrl} from './common';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserData} from './models/UserData.model';
 import {Link} from './models/link.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -34,11 +34,23 @@ export class AppComponent implements OnInit {
     // Uses allready existing variables if the user refreshed the page
     if (localStorage.getItem('UserData') !== null) {
       this.userData = JSON.parse(localStorage.getItem('UserData'));
+      this.http.get(startUrl, {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + this.userData.oauthClientSecret
+          })
+        }).subscribe(result => {
+          // Runs the function beneath that fetches API info from the server
+          this.getApiDetails();
+        }, error => {
+          this.userData = new UserData();
+          // Runs the function beneath that fetches API info from the server
+          this.getApiDetails();
+        });
     } else {
       this.userData = new UserData();
+      // Runs the function beneath that fetches API info from the server
+      this.getApiDetails();
     }
-    // Runs the function beneath that fetches API info from the server
-    this.getApiDetails();
   }
 
   // Fetches ApiDetails from the server, that is utialized for further communication

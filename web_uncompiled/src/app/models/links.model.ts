@@ -18,7 +18,4 @@ export class Links {
   share: Link;
   access: Link;
   ['supported-formats']: Link;
-
-  constructor() {
-  }
 }

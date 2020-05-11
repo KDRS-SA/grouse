@@ -7,10 +7,11 @@ import {LoginModel} from '../models/login.model';
 import {Router} from '@angular/router';
 import {UserData} from '../models/UserData.model';
 import {MatSnackBar} from '@angular/material';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {TranslateService} from "@ngx-translate/core";
 import {startUrl} from '../common';
 import {Links} from '../models/links.model';
+import { GDPRContent } from '../Modals/GDPR/GDPR.component';
 
 @Component({
   selector: 'app-root',
@@ -233,23 +234,6 @@ export class LoginComponent implements  OnInit {
     this.userData.defaultLang = lang;
     localStorage.setItem('UserData', JSON.stringify(this.userData));
   }
-}
-
-@Component({
-  selector: 'GDPR.Content',
-  templateUrl: './GDPRContent.html',
-})
-export class GDPRContent {
-  constructor(public dialogRef: MatDialogRef<GDPRContent>) {
-  }
-
-  /**
-   * Is called once the dialog closes in this instance it will just close the dialog
-   */
-  OnNoClick() {
-    this.dialogRef.close();
-  }
-
 }
 
 /**

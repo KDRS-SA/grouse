@@ -25,7 +25,8 @@
     "InfoDelete": "Sletting av informasjon",
     "InfoDeleteTXT": "Når du er logget inn vil du kunne gå inn på instillingene for din bruker. Inne på instillingene vil det være en knapp for å slette brukeren og all tilhørende innformasjon. Trykker du på denne vil du måtte bekrefte at du vil fjærne all informasjon tilhørende din bruker. Dette er ikke reverserbart. Når du har slettet alt er det ikke mulig og gjennopprette brukeren og tilhørende informasjon.",
     "OBS!": "OBS! Dette vil IKKE slette prosjekter du ikke er eier av.",
-    "Close": "Lukk vindu"
+    "Close": "Lukk vindu",
+    "localStorage" : "Grouse benytter seg av data som lagres på din maskin i form av local-storage. Denne dataen blir brukt til å huske informasjon relatert til pålogging (husk meg funksjonalitet) og ikke noe annet. Denne informasjonen er låst til Grouse det vil si at andre nettsteder du besøker ikke kan bruke den. Ved å registrere en bruker godkjenner du denne bruken av data lagret på din maskin."
   },
   "Menu": {
     "Logout": "Logg ut",
@@ -57,7 +58,7 @@
     "Details": "Detaljer: ",
     "Email": "E-post",
     "Created": "Konto opprettet:",
-    "Administration": "E-Post og passord administrasjon:",
+    "Administration": "Bytt passord: ",
     "Email-new": "E-post",
     "Email-Invalid": "E-posten mangler, eller står på feil format",
     "Email-Change": "Endre e-post",

@@ -15,6 +15,4 @@ export class projectFunctionality{
   parent: projectFunctionality;
   _links: Links;
   etag: string;
-
-  constructor() {}
 }

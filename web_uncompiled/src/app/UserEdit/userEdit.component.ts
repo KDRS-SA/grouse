@@ -1,9 +1,9 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserData} from '../models/UserData.model';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {TranslateService} from '@ngx-translate/core';
 import {MatSnackBar} from '@angular/material';
 import {DeleteUserDialog} from "../Modals/DeleteUser/DeleteUser.component";
@@ -176,8 +176,7 @@ export class userEditComponent implements  OnInit {
   deleteUser() {
     const ref = this.dialogBox.open(DeleteUserDialog, {
       width: '80%',
-      maxWidth: '600px',
-      data: this.http
+      maxWidth: '600px'
     });
     ref.afterClosed().subscribe(result => {
       this.userData = JSON.parse(localStorage.getItem('UserData'));

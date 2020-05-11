@@ -60,7 +60,7 @@ export class ConcurrencyResolver {
       this.currentEtag = result.headers.get('etag');
     }, error => {
       console.error(error);
-    })
+    });
   }
 
   updateRequirementPriority(field: string, update: string) {
@@ -87,7 +87,7 @@ export class ConcurrencyResolver {
     if (this.type === "requirementText") {
       patch = [{op: "replace", path: "/requirementText", value: value}];
     } else if ( this.type === "priority") {
-      patch = [{op: "replace", path: "/priority", value: value}]
+      patch = [{op: "replace", path: "/priority", value: value}];
     }
 
     this.http.patch(this.data.url, patch, {
@@ -103,6 +103,6 @@ export class ConcurrencyResolver {
     }, error => {
       console.error(error);
       this.dialogRef.close(null);
-    })
+    });
   }
 }

@@ -1,16 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {UserData} from '../models/UserData.model';
 import {projectFunctionality} from '../models/projectFunctionality.model';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {statusPageData} from '../models/statusPageData.model';
 import {TranslateService} from '@ngx-translate/core';
 import {ProjectRequirment} from '../models/ProjectRequirment.model';
-import {User} from '../models/User';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from "rxjs";
 import {Links} from "../models/links.model";
 import { ConcurrencyResolver } from '../Modals/ConcurrencyResolver/ConcurrencyResolver.component';
@@ -410,8 +408,6 @@ export class kravEditComponent implements OnInit {
       this.changeFunctionality(this.currentReq.projectFunctionalityId);
     }
     this.statusBarInfo();
-
-    const patch = [{ op: "replace", path: "/priority", value: "O"}];
 
     this.getSupportedFormats();
   }
