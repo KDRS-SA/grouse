@@ -38,8 +38,8 @@ export class MenuComponent implements OnInit {
     this.router = router;
     this.userData = new UserData();
     this.dialogBox = dialogBox;
-    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
-    translate.setDefaultLang('Bokmål');
+    translate.addLangs(['Bokmaal', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmaal');
     this.shaking = 0;
     this.deleteMode = false;
   }
@@ -227,7 +227,7 @@ export class MenuComponent implements OnInit {
     } else {
       this.userData.nav = 'Admin';
       localStorage.setItem('UserData', JSON.stringify(this.userData));
-      this.router.navigate(['/Admin'])
+      this.router.navigate(['/Admin']);
     }
   }
 }

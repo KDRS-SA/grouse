@@ -58,8 +58,8 @@ export class kravEditComponent implements OnInit {
     this.statusbarData = [];
     this.statusPage = false;
     this.statpageData = new statusPageData();
-    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
-    translate.setDefaultLang('Bokmål');
+    translate.addLangs(['Bokmaal', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmaal');
   }
 
   /**

@@ -38,8 +38,8 @@ export class userEditComponent implements  OnInit {
     this.formBuilder = formBuilder;
     this.snackBar = snackBar;
     this.dialogBox = dialog;
-    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
-    translate.setDefaultLang('Bokmål');
+    translate.addLangs(['Bokmaal', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmaal');
   }
 
   ngOnInit(): void {
