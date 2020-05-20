@@ -1,5 +1,5 @@
-<div class="Login-Background"></div>
-<div class="Login-page flex-center" style="overflow: hidden">
+<div class="Login-Background" style="height: calc(100% - 15px)"></div>
+<div class="Login-page flex-center" style="overflow: hidden; height: calc(100% - 15px)">
   <mat-card class="login-div" [@shake]="this.shake ? 'end' : ''">
     <div>
       <div>
@@ -10,7 +10,7 @@
           <div class="lang-test">
             <button mat-button [matMenuTriggerFor]="langselect">{{'Language.Language' | translate}}</button>
             <mat-menu #langselect="matMenu" xPosition="after">
-              <button mat-menu-item (click)="changeLang('Bokmål')">Bokmål</button>
+              <button mat-menu-item (click)="changeLang('Bokmaal')">Bokmål</button>
               <button mat-menu-item (click)="changeLang('Nynorsk')">Nynorsk</button>
               <button mat-menu-item (click)="changeLang('English')">English</button>
             </mat-menu>
@@ -103,5 +103,9 @@
       </div>
     </div>
   </mat-card>
+</div>
+<div class="color-lightgray w-100 no-m flex-row-left">
+  <p class="no-m" style="font-size: small">(Jakub Fryš 14.10.2018) Used with rights under:</p>
+  <a class="no-m" style="font-size: small" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
 </div>
 

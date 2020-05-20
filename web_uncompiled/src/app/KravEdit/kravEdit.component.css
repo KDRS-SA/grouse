@@ -41,6 +41,7 @@
 }
 .sidenav-content{
   width: 100%;
+  max-height: 98%;
 }
 
 .Krav-card{
@@ -125,6 +126,7 @@
 .status-page{
   width: 80%;
   margin-right: 10%;
+  max-height: 80%;
 }
 
 .unfinished-box{
