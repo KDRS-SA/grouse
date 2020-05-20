@@ -417,7 +417,7 @@ Apache-2.0
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
-
+ 
 
 
 zone.js
@@ -444,5 +444,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-Login page backround picture used under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
-Original by Jakub Fryš 14.10.2018
+The login backround picture created by (Jakub Fryš 14.10.2018) is used under: CC BY-SA 4.0
