@@ -35,8 +35,8 @@ export class LoginComponent implements  OnInit {
     this.userData = new UserData();
     this.shake = false;
     this.snackBar = snackBar;
-    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
-    translate.setDefaultLang('Bokmål');
+    translate.addLangs(['Bokmaal', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmaal');
   }
 
   public title = 'Grouse';

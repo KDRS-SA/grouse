@@ -18,6 +18,6 @@ export class UserData {
     this.nav = '';
     this._links = new Links();
     this.currentProject = null;
-    this.defaultLang = 'Bokmål';
+    this.defaultLang = 'Bokmaal';
   }
 }

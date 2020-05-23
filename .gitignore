@@ -97,3 +97,5 @@ local.properties
 .recommenders/
 
 .vagrant
+
+web/node_modules/

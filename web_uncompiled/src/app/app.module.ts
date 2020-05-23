@@ -46,7 +46,7 @@ import {DeleteRequirmentDialog} from "./Modals/RemoveReq/RemoveReq.component";
 import {GDPRContent} from './Modals/GDPR/GDPR.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, './assets/i18n/');
 }
 
 @NgModule({

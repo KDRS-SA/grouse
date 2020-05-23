@@ -38,8 +38,8 @@ export class adminComponent {
     this.router = router;
     this.dialogBox = dialogBox;
     this.translate = translate;
-    translate.addLangs(['Bokmål', 'English', 'Nynorsk']);
-    translate.setDefaultLang('Bokmål');
+    translate.addLangs(['Bokmaal', 'English', 'Nynorsk']);
+    translate.setDefaultLang('Bokmaal');
     this.searchProject = "";
     this.searchUser = "";
     this.listOfProjects = [];
